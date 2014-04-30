@@ -9,6 +9,8 @@ struct KW_GUI {
   SDL_Renderer * renderer;
   KW_Widget * rootwidget; /* the parent to all parent-less widgets :) */
   TTF_Font * font;
+  
+  KW_Widget * currentmouseover; /* the current widget that has mouse over */
 };
 
 typedef struct KW_GUI KW_GUI;

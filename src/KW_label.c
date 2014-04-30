@@ -29,7 +29,7 @@ KW_Widget * KW_CreateLabel(KW_GUI * gui, KW_Widget * parent, const char * text, 
   KW_Widget * widget = KW_CreateWidget(gui, parent, KW_WIDGETTYPE_LABEL, geometry, PaintLabel, DestroyLabel, label);
   KW_SetLabelFont(widget, KW_GetFont(gui));
   KW_SetLabelText(widget, text);
-  KW_SetLabelAlignment(widget, LABEL_ALIGN_CENTER, 0, LABEL_ALIGN_MIDDLE, 0);
+  KW_SetLabelAlignment(widget, KW_LABEL_ALIGN_CENTER, 0, KW_LABEL_ALIGN_MIDDLE, 0);
   return widget;
 }
 
@@ -98,16 +98,16 @@ void PaintLabel(KW_Widget * widget) {
   /* calculate x according to halign */
   switch (label->halign) {
     
-    case LABEL_ALIGN_RIGHT:
+    case KW_LABEL_ALIGN_RIGHT:
       dst.x = dst.x + dst.w - src.w;
       break;
       
-    case LABEL_ALIGN_CENTER:
+    case KW_LABEL_ALIGN_CENTER:
       dst.x = dst.x + dst.w/2 - src.w/2;
       break;
       
     /* easiest. do nothing */
-    case LABEL_ALIGN_LEFT:
+    case KW_LABEL_ALIGN_LEFT:
     default:
         break;
   };
@@ -116,15 +116,15 @@ void PaintLabel(KW_Widget * widget) {
   
   /* calculate y according to valign */
   switch (label->valign) {
-    case LABEL_ALIGN_BOTTOM:
+    case KW_LABEL_ALIGN_BOTTOM:
       dst.y = dst.y + dst.h - src.h;
       break;
       
-    case LABEL_ALIGN_MIDDLE:
+    case KW_LABEL_ALIGN_MIDDLE:
       dst.y = dst.y + dst.h/2 - src.h/2;
       break;
       
-    case LABEL_ALIGN_TOP:
+    case KW_LABEL_ALIGN_TOP:
     default:
       break;
   }

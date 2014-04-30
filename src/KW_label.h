@@ -41,14 +41,14 @@ extern "C" {
 #endif
 
 /**
- * \name LABEL_STYLE_*
+ * \name KW_LABEL_STYLE_*
  * 
  * Defines the possible text styles for the label */
-#define LABEL_STYLE_NORMAL        0x00
-#define LABEL_STYLE_BOLD          0x01
-#define LABEL_STYLE_ITALIC        0x02
-#define LABEL_STYLE_UNDERLINE     0x04
-#define LABEL_STYLE_STRIKETHROUGH 0x08
+#define KW_LABEL_STYLE_NORMAL        0x00
+#define KW_LABEL_STYLE_BOLD          0x01
+#define KW_LABEL_STYLE_ITALIC        0x02
+#define KW_LABEL_STYLE_UNDERLINE     0x04
+#define KW_LABEL_STYLE_STRIKETHROUGH 0x08
 
 
 /**
@@ -56,9 +56,9 @@ extern "C" {
  * \details Text is vertically aligned inside its defined geometry
  */
 typedef enum KW_LabelVerticalAlignment {
-  LABEL_ALIGN_TOP,     /// Vertically align label in the top of the geometry.
-  LABEL_ALIGN_MIDDLE,  /// Vertically align label in the middle of the geometry.
-  LABEL_ALIGN_BOTTOM   /// Vertically align label in the bottom of the geometry.
+  KW_LABEL_ALIGN_TOP,     /// Vertically align label in the top of the geometry.
+  KW_LABEL_ALIGN_MIDDLE,  /// Vertically align label in the middle of the geometry.
+  KW_LABEL_ALIGN_BOTTOM   /// Vertically align label in the bottom of the geometry.
 } KW_LabelVerticalAlignment;
 
 /**
@@ -66,9 +66,9 @@ typedef enum KW_LabelVerticalAlignment {
  * \details Text is horizontally aligned inside its defined geometry
  */
 typedef enum KW_LabelHorizontalAlignment {
-  LABEL_ALIGN_LEFT,    /// Horizontally align label in the left part of the geometry.
-  LABEL_ALIGN_CENTER,  /// Horizontally align label in the center part of the geometry.
-  LABEL_ALIGN_RIGHT    /// Horizontally align label in the right part of the geometry.
+  KW_LABEL_ALIGN_LEFT,    /// Horizontally align label in the left part of the geometry.
+  KW_LABEL_ALIGN_CENTER,  /// Horizontally align label in the center part of the geometry.
+  KW_LABEL_ALIGN_RIGHT    /// Horizontally align label in the right part of the geometry.
 } KW_LabelHorizontalAlignment;
 
 /**

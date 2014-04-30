@@ -28,6 +28,12 @@ extern DECLSPEC KW_GUI * KW_GetGUI(KW_Widget * widget);
 typedef void (*KW_WidgetPaintFunction)(KW_Widget * widget);
 typedef void (*KW_WidgetDestroyFunction)(KW_Widget * widget);
 
+/* mouse callbacks */
+typedef void (*KW_OnMouseOver)(KW_Widget * widget);
+typedef void (*KW_OnMouseLeave)(KW_Widget * widget);
+typedef void (*KW_OnMousePress)(KW_Widget * widget, int button);
+typedef void (*KW_OnMouseRelease)(KW_Widget * widget, int button);
+
 /**
  * \brief   The KW_WidgetType enumeration represents available widget types.
  * \details Every widget created must set a widget type even if its a custom widget.
@@ -243,11 +249,28 @@ extern DECLSPEC void KW_PaintWidget(KW_Widget * widget);
 extern DECLSPEC void KW_BlockWidgetInputEvents(KW_Widget * widget);
 
 /**
- * \brief  Unblocks this widget from receiving input events.
+ * \brief   Unblocks this widget from receiving input events.
  * \details See ::KW_BlockWidgetEvents. All children widgets will have its input evenets unblocked.
- * \param  widget The widget that will now receive input events.
+ * \param   widget The widget that will now receive input events.
  */
 extern DECLSPEC void KW_UnblockWidgetInputEvents(KW_Widget * widget);
+
+/**
+ * \brief   Adds a function that will be called whenever the mouse/cursor gets over the widget.
+ * \details If you want to know when the cursor is over the widget, you can add a handler to the list.
+ * \param   widget The widget to add a MouseOver handler.
+ * \param   handler The OnMouseOver function pointer.
+ */
+extern DECLSPEC void KW_AddWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler);
+
+
+/**
+ * \brief   Adds a function that will be called whenever the mouse/cursor leaves the widget.
+ * \details If you want to know when the cursor lefts the widget geometry, you can add a handler to the list.
+ * \param   widget The widget to add a MouseLeave handler.
+ * \param   handler The OnMouseLeave function pointer.
+ */
+extern DECLSPEC void KW_AddWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseOver handler);
 
 #ifdef __cplusplus
 }

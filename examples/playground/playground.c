@@ -24,6 +24,7 @@ int main(int argc, char ** argv) {
   KW_SetFont(gui, font);
 
   SDL_Rect geometry, g2, g3;
+  SDL_Color color = { 255, 255, 255, 128 };
 
   geometry.x = 30; geometry.y = 30; geometry.w = 200; geometry.h = 200;
   g2 = geometry;
@@ -32,7 +33,20 @@ int main(int argc, char ** argv) {
   
   KW_Widget * frame = KW_CreateFrame(gui, NULL, &geometry);
   KW_Widget * button = KW_CreateButton(gui, frame, "Button", &g3);
-  KW_Widget * alabel = KW_CreateLabel(gui, frame, "Label centered on geometry", &g2);
+  g3.y+=g2.h;
+  KW_CreateButton(gui, frame, "Button", &g3);
+  g3.y+=g2.h;
+  KW_CreateButton(gui, frame, "Button", &g3);
+  g3.y+=g2.h;
+  KW_CreateButton(gui, frame, "Button", &g3);
+  g3.y+=g2.h;
+  KW_CreateButton(gui, frame, "Button", &g3);
+  
+  g2.x = 0, g2.y = -5, g2.w = 200, g2.h = 20;
+  KW_Widget * alabel = KW_CreateLabel(gui, frame, "Chose your destiny.", &g2);
+  KW_SetLabelAlignment(alabel, KW_LABEL_ALIGN_CENTER, 0, KW_LABEL_ALIGN_TOP, 0);
+  KW_SetLabelColor(alabel, color);
+
   //KW_SetLabelStyle(alabel, LABEL_STYLE_BOLD);
   
   /* create another parent frame */
@@ -79,7 +93,7 @@ int main(int argc, char ** argv) {
     SDL_RenderClear(renderer);
     KW_Paint(gui);
     SDL_RenderPresent(renderer);
-    SDL_Delay(100);
+    SDL_Delay(1);
   }
   
   KW_Quit(gui);

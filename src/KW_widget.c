@@ -304,3 +304,81 @@ void KW_GetWidgetGeometry(KW_Widget * widget, SDL_Rect * geometry) {
 KW_GUI * KW_GetWidgetGUI(KW_Widget * widget) {
   return widget->gui;
 }
+
+void KW_AddWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler) {
+  /* don't add multiple mouse over handlers */
+  int i;
+  for (i = 0; i < widget->mouseovercount; ++i) {
+    if (widget->mouseover[i] == handler)
+      return;
+  }
+  
+  /* add the handler then */
+  widget->mouseovercount++;
+  widget->mouseover = realloc(widget->mouseover, sizeof(KW_OnMouseOver)*widget->mouseovercount);
+  widget->mouseover[widget->mouseovercount-1] = handler;
+}
+
+int KW_RemoveWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler) {
+  int i, j;
+    /* iterate to find the position of widget */
+  for (i = 0; i < widget->mouseovercount; i++) {
+    if (widget->mouseover[i] == handler) {
+      j = i;
+    }
+    
+    /* move everything in front of it */
+    if (j >= 0 && i + 1 < widget->mouseovercount) {
+      widget->mouseover[i] = widget->mouseover[i+1];
+    }
+  }
+  
+  /* realloc children array */
+  widget->mouseovercount--;
+  if (widget->mouseovercount <= 0) {
+    free(widget->mouseover);
+    widget->mouseover = NULL;
+  }
+  else
+    widget->mouseover = realloc(widget->mouseover, widget->mouseovercount * sizeof(KW_OnMouseOver *));
+  return 0;
+}
+
+void KW_AddWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler) {
+  /* don't add multiple mouse leave handlers */
+  int i;
+  for (i = 0; i < widget->mouseleavecount; ++i) {
+    if (widget->mouseleave[i] == handler)
+      return;
+  }
+  
+  /* add the handler then */
+  widget->mouseleavecount++;
+  widget->mouseleave = realloc(widget->mouseleave, sizeof(KW_OnMouseLeave)*widget->mouseleavecount);
+  widget->mouseleave[widget->mouseleavecount-1] = handler;
+}
+
+int KW_RemoveWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler) {
+  int i, j;
+    /* iterate to find the position of widget */
+  for (i = 0; i < widget->mouseleavecount; i++) {
+    if (widget->mouseleave[i] == handler) {
+      j = i;
+    }
+    
+    /* move everything in front of it */
+    if (j >= 0 && i + 1 < widget->mouseleavecount) {
+      widget->mouseleave[i] = widget->mouseleave[i+1];
+    }
+  }
+  
+  /* realloc children array */
+  widget->mouseleavecount--;
+  if (widget->mouseleavecount <= 0) {
+    free(widget->mouseleave);
+    widget->mouseleave = NULL;
+  }
+  else
+    widget->mouseleave = realloc(widget->mouseleave, widget->mouseleavecount * sizeof(KW_OnMouseLeave *));
+  return 0;
+}

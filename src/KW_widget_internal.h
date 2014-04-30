@@ -9,20 +9,25 @@ struct KW_Widget {
   int type;
   unsigned int childrencount;
   struct KW_Widget ** children;
-  struct KW_Widget * parent;
-  struct KW_GUI * gui;
-  SDL_Rect geometry;
-  SDL_Rect composed;
-  SDL_bool inputblocked;
+  struct KW_Widget *  parent;
+  struct KW_GUI *     gui;
+  SDL_Rect            geometry;
+  SDL_Rect            composed;
+  SDL_bool            inputblocked;
   
-  void (*paint)(KW_Widget *);
-  void (*destroy)(KW_Widget *);
+  void                (*paint)(KW_Widget *);
+  void                (*destroy)(KW_Widget *);
   
-  void (*mouseover)(KW_Widget *);
-  void (*mousedown)(KW_Widget *, int button);
-  void (*mouseup)(KW_Widget *, int button);
+  KW_OnMouseOver *    mouseover;
+  unsigned int        mouseovercount;
   
-  void * privdata;
+  KW_OnMouseLeave *   mouseleave;
+  unsigned int        mouseleavecount;
+
+  void                (*mousedown)(KW_Widget *, int button);
+  void                (*mouseup)(KW_Widget *, int button);
+  
+  void *              privdata;
 };
 
 KW_Widget * AllocWidget();
