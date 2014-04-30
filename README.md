@@ -22,7 +22,7 @@ If you're feeling mighty and want to try KiWi right now, these are (roughly) the
 3. Have [CMake](http://cmake.org) installed;
 4. Download this repository;
 5. Create a `build` folder inside it;
-6. Run `cmake` (or `cmake-gui`), set the binary dir to the newly created build folder and the source dir to the repository folder
+6. Run `cmake` (or `cmake-gui`), set the binary dir to the newly created build folder and the source dir to the repository folder;
 7. Build it!
 
 You can test the examples inside the `build/examples/` folder.
