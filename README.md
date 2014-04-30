@@ -18,7 +18,7 @@ Here are some screenshots, though (click on them to see code):
 If you're feeling mighty and want to try KiWi right now, these are (roughly) the steps to do it:
 
 1. Have a compiler environment ready (GCC, LLVM, MSVC, MinGW, etc);
-2. Have [SDL2], [SDL2\_ttf] and [SDL2\_image] available and properly detectable by your compiler;
+2. Have [SDL2], [SDL2_ttf] and [SDL2_image] available and properly detectable by your compiler;
 3. Have [CMake](http://cmake.org) installed;
 4. Download this repository;
 5. Create a `build` folder inside it;
