@@ -37,7 +37,7 @@ KW_Widget * CalculateMouseOver(KW_Widget * widget, int x, int y) {
     g.x += offset.x;
     g.y += offset.y;
     /* se if cursor is over this geometry */
-    if (x > g.x && x < g.x + g.w && y > g.y && y < g.y + g.h) {
+    if (!test->inputblocked && (x > g.x && x < g.x + g.w && y > g.y && y < g.y + g.h)) {
       /* recalculate offset */
       offset.x += test->geometry.x;
       offset.y += test->geometry.y;

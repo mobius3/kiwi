@@ -19,6 +19,7 @@ KW_Widget * KW_CreateWidget(KW_GUI * gui, KW_Widget * parent, KW_WidgetType type
   widget->composed = *geometry;
   KW_ReparentWidget(widget, parent);
   KW_SetWidgetGeometry(widget, geometry);
+  KW_UnblockWidgetInputEvents(widget);
   widget->privdata = priv;
   
   return widget;
@@ -49,6 +50,14 @@ void KW_GetWidgetAbsoluteGeometry(KW_Widget * widget, SDL_Rect * geometry) {
 
 void KW_SetWidgetData(KW_Widget * widget, void * data) {
   widget->privdata = data;
+}
+
+void KW_BlockWidgetInputEvents(KW_Widget * widget) {
+  widget->inputblocked = SDL_TRUE;
+}
+
+void KW_UnblockWidgetInputEvents(KW_Widget * widget) {
+  widget->inputblocked = SDL_FALSE;
 }
 
 

@@ -13,6 +13,7 @@ struct KW_Widget {
   struct KW_GUI * gui;
   SDL_Rect geometry;
   SDL_Rect composed;
+  SDL_bool inputblocked;
   
   void (*paint)(KW_Widget *);
   void (*destroy)(KW_Widget *);

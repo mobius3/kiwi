@@ -19,6 +19,7 @@ KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, const char * text,
   KW_Button * button = AllocButton();
   KW_Widget * widget = KW_CreateWidget(gui, parent, KW_WIDGETTYPE_BUTTON, geometry, PaintButton, DestroyButton, button);
   button->labelwidget = KW_CreateLabel(gui, widget, text, &labelgeom);
+  KW_BlockWidgetInputEvents(button->labelwidget);
   return widget;
 }
 

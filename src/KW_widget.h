@@ -229,7 +229,25 @@ extern DECLSPEC void KW_GetWidgetComposedGeometry(KW_Widget * widget, SDL_Rect *
  */
 extern DECLSPEC void KW_PaintWidget(KW_Widget * widget);
 
-extern DECLSPEC void KW_BlockWidgetEvents(KW_Widget * widget, int block);
+/**
+ * \brief   Block this widget from receiving input events (mouse, keyboard, touch, etc)
+ * \details You can use this function if you want to keep the widget from receiving input related events.
+ *          The widget will not know if the cursor is over it, if a key was pressed, etc.
+ *         
+ *          If you have composite widgets and want the widgets on top to not steal mouse-over or press events
+ *          from the widgets below this function might be useful to you.
+ * 
+ *          All children widgets will also have its input evenets blocked.
+ * \param   widget The widget that will stop receiving input evenets.
+ */
+extern DECLSPEC void KW_BlockWidgetInputEvents(KW_Widget * widget);
+
+/**
+ * \brief  Unblocks this widget from receiving input events.
+ * \details See ::KW_BlockWidgetEvents. All children widgets will have its input evenets unblocked.
+ * \param  widget The widget that will now receive input events.
+ */
+extern DECLSPEC void KW_UnblockWidgetInputEvents(KW_Widget * widget);
 
 #ifdef __cplusplus
 }
