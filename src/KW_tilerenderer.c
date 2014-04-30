@@ -1,6 +1,6 @@
-#include "GUI_tilerenderer.h"
+#include "KW_tilerenderer.h"
 
-void GUI_RenderTile(SDL_Renderer * renderer, SDL_Texture * tileset, int column, int line, int x, int y) {
+void KW_RenderTile(SDL_Renderer * renderer, SDL_Texture * tileset, int column, int line, int x, int y) {
   SDL_Rect clip;
   SDL_Rect target;
   clip.x = column * TILESIZE;
@@ -16,7 +16,7 @@ void GUI_RenderTile(SDL_Renderer * renderer, SDL_Texture * tileset, int column, 
   SDL_RenderCopy(renderer, tileset, &clip, &target);
 }
 
-void GUI_RenderTileFill(SDL_Renderer * renderer, SDL_Texture * tileset, int column, int line, int x, int y, int w, int h) {
+void KW_RenderTileFill(SDL_Renderer * renderer, SDL_Texture * tileset, int column, int line, int x, int y, int w, int h) {
  
   int i;
   int j;

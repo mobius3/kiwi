@@ -1,40 +1,40 @@
 #include "SDL.h"
-#include "GUI_label.h"
-#include "GUI_label_internal.h"
-#include "GUI_textrenderer.h"
-#include "GUI_gui.h"
+#include "KW_label.h"
+#include "KW_label_internal.h"
+#include "KW_textrenderer.h"
+#include "KW_gui.h"
 
-void PaintLabel(GUI_Widget * widget);
+void PaintLabel(KW_Widget * widget);
 
-void RenderLabelText(GUI_Widget * widget) {
-  GUI_Label * label = (GUI_Label *) GUI_GetWidgetData(widget);
+void RenderLabelText(KW_Widget * widget) {
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget);
   if (label->textrender != NULL) {
     SDL_DestroyTexture(label->textrender);
   }
   /* use our own font */
-  label->textrender = GUI_RenderTextLine(GUI_GetLabelFont(widget),
-                                         GUI_GetWidgetRenderer(widget),
+  label->textrender = KW_RenderTextLine(KW_GetLabelFont(widget),
+                                         KW_GetWidgetRenderer(widget),
                                          label->text, label->color, label->style);
 }
 
-void DestroyLabel(GUI_Widget * widget) {
-  GUI_Label * label = (GUI_Label *) GUI_GetWidgetData(widget);
+void DestroyLabel(KW_Widget * widget) {
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget);
   free(label->text);
   SDL_DestroyTexture(label->textrender);
   free(label);
 }
 
-GUI_Widget * GUI_CreateLabel(GUI_GUI * gui, GUI_Widget * parent, const char * text, const SDL_Rect * geometry) {
-  GUI_Label * label = calloc(sizeof(GUI_Label), 1);
-  GUI_Widget * widget = GUI_CreateWidget(gui, parent, GUI_WIDGETTYPE_LABEL, geometry, PaintLabel, DestroyLabel, label);
-  GUI_SetLabelFont(widget, GUI_GetFont(gui));
-  GUI_SetLabelText(widget, text);
-  GUI_SetLabelAlignment(widget, LABEL_ALIGN_CENTER, 0, LABEL_ALIGN_MIDDLE, 0);
+KW_Widget * KW_CreateLabel(KW_GUI * gui, KW_Widget * parent, const char * text, const SDL_Rect * geometry) {
+  KW_Label * label = calloc(sizeof(KW_Label), 1);
+  KW_Widget * widget = KW_CreateWidget(gui, parent, KW_WIDGETTYPE_LABEL, geometry, PaintLabel, DestroyLabel, label);
+  KW_SetLabelFont(widget, KW_GetFont(gui));
+  KW_SetLabelText(widget, text);
+  KW_SetLabelAlignment(widget, LABEL_ALIGN_CENTER, 0, LABEL_ALIGN_MIDDLE, 0);
   return widget;
 }
 
-void GUI_SetLabelAlignment(GUI_Widget * widget, GUI_LabelHorizontalAlignment halign, int hoffset, GUI_LabelVerticalAlignment valign, int voffset) {
-  GUI_Label * label = (GUI_Label *) GUI_GetWidgetData(widget); 
+void KW_SetLabelAlignment(KW_Widget * widget, KW_LabelHorizontalAlignment halign, int hoffset, KW_LabelVerticalAlignment valign, int voffset) {
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget); 
   label->halign = halign;
   label->hoffset = hoffset;
   label->valign = valign;
@@ -42,21 +42,21 @@ void GUI_SetLabelAlignment(GUI_Widget * widget, GUI_LabelHorizontalAlignment hal
 }
 
 
-TTF_Font * GUI_GetLabelFont(GUI_Widget * widget) {
-  GUI_Label * label = (GUI_Label *) GUI_GetWidgetData(widget);
+TTF_Font * KW_GetLabelFont(KW_Widget * widget) {
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget);
   return label->font;
 }
 
 
-void GUI_SetLabelFont(GUI_Widget * widget, TTF_Font * font) {
-  GUI_Label * label = (GUI_Label *) GUI_GetWidgetData(widget);
+void KW_SetLabelFont(KW_Widget * widget, TTF_Font * font) {
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget);
   label->font = font;
   RenderLabelText(widget);
 }
 
 
-void GUI_SetLabelText(GUI_Widget * widget, const char * text) {
-  GUI_Label * label = (GUI_Label *) GUI_GetWidgetData(widget);
+void KW_SetLabelText(KW_Widget * widget, const char * text) {
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget);
   if (label->text != NULL) {
     free(label->text);
   }
@@ -64,34 +64,34 @@ void GUI_SetLabelText(GUI_Widget * widget, const char * text) {
   RenderLabelText(widget);
 }
 
-void GUI_SetLabelStyle(GUI_Widget * widget, int style) {
-  GUI_Label * label = (GUI_Label *) GUI_GetWidgetData(widget);
+void KW_SetLabelStyle(KW_Widget * widget, int style) {
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget);
   label->style = style;
   RenderLabelText(widget);
 }
 
-void GUI_SetLabelColor(GUI_Widget * widget, SDL_Color color) {
-  GUI_Label * label = (GUI_Label *) GUI_GetWidgetData(widget);
+void KW_SetLabelColor(KW_Widget * widget, SDL_Color color) {
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget);
   label->color = color;
   RenderLabelText(widget);
 }
 
 
-void PaintLabel(GUI_Widget * widget) {
-  GUI_Label * label = (GUI_Label *) GUI_GetWidgetData(widget);
+void PaintLabel(KW_Widget * widget) {
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget);
   
   SDL_Rect orig;
   SDL_Rect dst;
   SDL_Rect src;
   
-  SDL_Renderer * renderer = GUI_GetWidgetRenderer(widget);
+  SDL_Renderer * renderer = KW_GetWidgetRenderer(widget);
   
   /* query actual w and h */
   src.x = src.y = 0;
   SDL_QueryTexture(label->textrender, NULL, NULL, &src.w, &src.h);
 
   /* calculate target x/y */  
-  GUI_GetWidgetAbsoluteGeometry(widget, &dst);
+  KW_GetWidgetAbsoluteGeometry(widget, &dst);
   orig = dst;
   
   

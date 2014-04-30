@@ -1,6 +1,6 @@
 #include "SDL.h"
-#include "GUI_gui.h"
-#include "GUI_button.h"
+#include "KW_gui.h"
+#include "KW_button.h"
 #include "SDL_image.h"
 
 int main(int argc, char ** argv) {
@@ -19,9 +19,9 @@ int main(int argc, char ** argv) {
   set = IMG_LoadTexture(renderer, "tileset.png");
   
   /* initialize gui */
-  GUI_GUI * gui = GUI_Init(renderer, set);
+  KW_GUI * gui = KW_Init(renderer, set);
   TTF_Font * font = TTF_OpenFont("Fontin-Regular.ttf", 12);
-  GUI_SetFont(gui, font);
+  KW_SetFont(gui, font);
 
   SDL_Rect geometry, g2, g3;
 
@@ -30,10 +30,10 @@ int main(int argc, char ** argv) {
   g2.x = 10, g2.y = 40, g2.w = 100, g2.h = 30;
   g3.x = 10, g3.y = 10, g3.w = 100, g3.h = 30;
   
-  GUI_Widget * frame = GUI_CreateFrame(gui, NULL, &geometry);
-  GUI_Widget * button = GUI_CreateButton(gui, frame, "Button", &g3);
-  GUI_Widget * alabel = GUI_CreateLabel(gui, frame, "Label centered on geometry", &g2);
-  //GUI_SetLabelStyle(alabel, LABEL_STYLE_BOLD);
+  KW_Widget * frame = KW_CreateFrame(gui, NULL, &geometry);
+  KW_Widget * button = KW_CreateButton(gui, frame, "Button", &g3);
+  KW_Widget * alabel = KW_CreateLabel(gui, frame, "Label centered on geometry", &g2);
+  //KW_SetLabelStyle(alabel, LABEL_STYLE_BOLD);
   
   /* create another parent frame */
   SDL_Event ev;
@@ -73,16 +73,16 @@ int main(int argc, char ** argv) {
              break;
           }
           
-          GUI_SetWidgetGeometry(frame, &geometry);
+          KW_SetWidgetGeometry(frame, &geometry);
       }
     }
     SDL_RenderClear(renderer);
-    GUI_Paint(gui);
+    KW_Paint(gui);
     SDL_RenderPresent(renderer);
     SDL_Delay(100);
   }
   
-  GUI_Quit(gui);
+  KW_Quit(gui);
   SDL_Quit();
   
   return 0;

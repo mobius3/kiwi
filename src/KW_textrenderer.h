@@ -24,17 +24,17 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef GUI_TEXTRENDERER_H
-#define GUI_TEXTREDNERER_H
+#ifndef KW_TEXTRENDERER_H
+#define KW_TEXTREDNERER_H
 #include "SDL_ttf.h"
-#include "GUI_macros.h"
+#include "KW_macros.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /**
- * \file GUI_textrenderer.h
+ * \file KW_textrenderer.h
  * 
  * Helper functions for text rendering with SDL_ttf
  */
@@ -49,7 +49,7 @@ extern "C" {
  * \param   styleflags A list of TTF_STYLE_* style flags to pass.
  * \return  The resulting texture.
  */
-SDL_Texture DECLSPEC * GUI_RenderTextLine(TTF_Font * font, SDL_Renderer * renderer, const char * text, SDL_Color color, int styleflags);
+SDL_Texture DECLSPEC * KW_RenderTextLine(TTF_Font * font, SDL_Renderer * renderer, const char * text, SDL_Color color, int styleflags);
 
 #ifdef __cplusplus
 }

@@ -1,61 +1,61 @@
-#include "GUI_widget_internal.h"
-#include "GUI_gui_internal.h"
-#include "GUI_widget.h"
+#include "KW_widget_internal.h"
+#include "KW_gui_internal.h"
+#include "KW_widget.h"
 #include <stdlib.h>
 
-GUI_Widget * AllocWidget() {
-  GUI_Widget * widget = calloc(1, sizeof(GUI_Widget));
+KW_Widget * AllocWidget() {
+  KW_Widget * widget = calloc(1, sizeof(KW_Widget));
   return widget;
 }
 
 
-GUI_Widget * GUI_CreateWidget(GUI_GUI * gui, GUI_Widget * parent, GUI_WidgetType type, const SDL_Rect * geometry, GUI_WidgetPaintFunction widgetpaint, GUI_WidgetDestroyFunction widgetdestroy, void * priv) {
-  GUI_Widget * widget = AllocWidget();
+KW_Widget * KW_CreateWidget(KW_GUI * gui, KW_Widget * parent, KW_WidgetType type, const SDL_Rect * geometry, KW_WidgetPaintFunction widgetpaint, KW_WidgetDestroyFunction widgetdestroy, void * priv) {
+  KW_Widget * widget = AllocWidget();
   widget->gui = gui;
   widget->paint = widgetpaint;
   widget->destroy = widgetdestroy;
   widget->type = type;
   /* set initial area as geometry */
   widget->composed = *geometry;
-  GUI_ReparentWidget(widget, parent);
-  GUI_SetWidgetGeometry(widget, geometry);
+  KW_ReparentWidget(widget, parent);
+  KW_SetWidgetGeometry(widget, geometry);
   widget->privdata = priv;
   
   return widget;
 }
 
-GUI_Widget * GUI_GetWidgetParent(GUI_Widget * widget) {
+KW_Widget * KW_GetWidgetParent(KW_Widget * widget) {
   return widget->parent == widget->gui->rootwidget ? NULL : widget->parent;
 }
 
-void * GUI_GetWidgetData(GUI_Widget * widget) {
+void * KW_GetWidgetData(KW_Widget * widget) {
   return widget->privdata;
 }
 
-SDL_Renderer * GUI_GetWidgetRenderer(GUI_Widget * widget) {
-  return GUI_GetRenderer(GUI_GetGUI(widget));
+SDL_Renderer * KW_GetWidgetRenderer(KW_Widget * widget) {
+  return KW_GetRenderer(KW_GetGUI(widget));
 }
 
-void GUI_GetWidgetAbsoluteGeometry(GUI_Widget * widget, SDL_Rect * geometry) {
+void KW_GetWidgetAbsoluteGeometry(KW_Widget * widget, SDL_Rect * geometry) {
   SDL_Rect tmp;
-  GUI_GetWidgetGeometry(widget, geometry);
-  for (widget = GUI_GetWidgetParent(widget); widget != NULL; widget = GUI_GetWidgetParent(widget)) {
-    GUI_GetWidgetGeometry(widget, &tmp);
+  KW_GetWidgetGeometry(widget, geometry);
+  for (widget = KW_GetWidgetParent(widget); widget != NULL; widget = KW_GetWidgetParent(widget)) {
+    KW_GetWidgetGeometry(widget, &tmp);
     geometry->x += tmp.x;
     geometry->y += tmp.y;
   }
 }
 
 
-void GUI_SetWidgetData(GUI_Widget * widget, void * data) {
+void KW_SetWidgetData(KW_Widget * widget, void * data) {
   widget->privdata = data;
 }
 
 
-void Reparent(GUI_Widget * widget, GUI_Widget * newparent);
+void Reparent(KW_Widget * widget, KW_Widget * newparent);
 
-void FreeWidget(GUI_Widget * widget, int freechildren) {
-  GUI_Widget * tofree;
+void FreeWidget(KW_Widget * widget, int freechildren) {
+  KW_Widget * tofree;
   
   /* recursively delete children */
   if (freechildren) {
@@ -78,7 +78,7 @@ void FreeWidget(GUI_Widget * widget, int freechildren) {
  * They are relative to its parent, thus, if a child has a .x coordinate less than
  * 0, it is outside the current widget box and it must be recalculated. The current
  * widget parent must also be notified of this change if we happend to be outside parent box */
-void CalculateComposedGeometry(GUI_Widget * widget) {
+void CalculateComposedGeometry(KW_Widget * widget) {
   
 #ifndef NDEBUG
   static int indent = 0;
@@ -106,7 +106,7 @@ void CalculateComposedGeometry(GUI_Widget * widget) {
 #endif
   }
   for (i = 0; i < widget->childrencount; i++) {
-    GUI_GetWidgetComposedGeometry(widget->children[i], &box);
+    KW_GetWidgetComposedGeometry(widget->children[i], &box);
     if (box.x < 0) {
       widget->composed.x = box.x;
 #ifndef NDEBUG      
@@ -157,7 +157,7 @@ void CalculateComposedGeometry(GUI_Widget * widget) {
     printf("Composed geometry did change!\n");
 #endif
     /* see if our composite geometry change is relevant to parent */
-    GUI_GetWidgetComposedGeometry(widget->parent, &box);
+    KW_GetWidgetComposedGeometry(widget->parent, &box);
     if ((    (widget->composed.x < box.x)
          || (widget->composed.y < box.y)
          || (widget->composed.w + widget->composed.x > box.w)
@@ -180,20 +180,20 @@ void CalculateComposedGeometry(GUI_Widget * widget) {
   /* TODO: callback for changed? */
 }
 
-void GUI_GetWidgetComposedGeometry(GUI_Widget * widget, SDL_Rect * composed) {
+void KW_GetWidgetComposedGeometry(KW_Widget * widget, SDL_Rect * composed) {
   *composed = widget->composed;
 }
 
 
 /* reparent version that allow us to parent to NULL */
-void Reparent(GUI_Widget * widget, GUI_Widget * newparent) {
+void Reparent(KW_Widget * widget, KW_Widget * newparent) {
 #ifndef NDEBUG
   printf("Reparenting %p: %d from %p to %p\n", (void*) widget, widget->type, (void*) widget->parent, (void*) newparent);
 #endif
   /* gotta remove from previous parent */
   int i = 0, j = -1;
   if (widget->parent != NULL) {
-    GUI_Widget * wp = widget->parent;
+    KW_Widget * wp = widget->parent;
     
     /* iterate to find the position of widget */
     for (i = 0; i < wp->childrencount; i++) {
@@ -214,7 +214,7 @@ void Reparent(GUI_Widget * widget, GUI_Widget * newparent) {
       wp->children = NULL;
     }
     else
-      wp->children = realloc(wp->children, wp->childrencount * sizeof(GUI_Widget *));
+      wp->children = realloc(wp->children, wp->childrencount * sizeof(KW_Widget *));
     
     /* need to recalculate old parent area */
     CalculateComposedGeometry(widget);    
@@ -222,7 +222,7 @@ void Reparent(GUI_Widget * widget, GUI_Widget * newparent) {
   
   if (newparent != NULL) {
     newparent->childrencount++;
-    newparent->children = realloc(newparent->children, newparent->childrencount * sizeof(GUI_Widget *));
+    newparent->children = realloc(newparent->children, newparent->childrencount * sizeof(KW_Widget *));
     newparent->children[newparent->childrencount-1] = widget;
     widget->parent = newparent;
     
@@ -235,7 +235,7 @@ void Reparent(GUI_Widget * widget, GUI_Widget * newparent) {
 
 
 /* public reparent that forces parenting to the root */
-void GUI_ReparentWidget(GUI_Widget * widget, GUI_Widget * newparent) {
+void KW_ReparentWidget(KW_Widget * widget, KW_Widget * newparent) {
   
   /* don't allow a null parent. not for users, at least. */
   if (newparent == NULL)
@@ -251,17 +251,17 @@ void GUI_ReparentWidget(GUI_Widget * widget, GUI_Widget * newparent) {
   Reparent(widget, newparent);
 }
 
-void GUI_DestroyWidget(GUI_Widget * widget, int freechildren) {
+void KW_DestroyWidget(KW_Widget * widget, int freechildren) {
   /* Reparent every child of widget to widget->parent */
   if (!freechildren) {
     while (widget->childrencount > 0) {
-      GUI_ReparentWidget(widget->children[0], widget->parent);
+      KW_ReparentWidget(widget->children[0], widget->parent);
     }
   }
   FreeWidget(widget, freechildren);
 }
 
-void GUI_PaintWidget(GUI_Widget * root) {
+void KW_PaintWidget(KW_Widget * root) {
   int i = 0;
   
   /* paint the root, then paint its childrens */
@@ -269,11 +269,11 @@ void GUI_PaintWidget(GUI_Widget * root) {
     root->paint(root);
   }
   for (i = 0; i < root->childrencount; i++) {
-    GUI_PaintWidget(root->children[i]);
+    KW_PaintWidget(root->children[i]);
   }
 }
 
-void GUI_SetWidgetGeometry(GUI_Widget * widget, const SDL_Rect * geometry) {
+void KW_SetWidgetGeometry(KW_Widget * widget, const SDL_Rect * geometry) {
   if (widget->geometry.x != geometry->x ||
       widget->geometry.y != geometry->y ||
       widget->geometry.w != geometry->w ||
@@ -287,11 +287,11 @@ void GUI_SetWidgetGeometry(GUI_Widget * widget, const SDL_Rect * geometry) {
   }
 }
 
-void GUI_GetWidgetGeometry(GUI_Widget * widget, SDL_Rect * geometry) {
+void KW_GetWidgetGeometry(KW_Widget * widget, SDL_Rect * geometry) {
   *geometry = widget->geometry;
 }
 
 
-GUI_GUI * GUI_GetWidgetGUI(GUI_Widget * widget) {
+KW_GUI * KW_GetWidgetGUI(KW_Widget * widget) {
   return widget->gui;
 }

@@ -1,21 +1,21 @@
-#include "GUI_eventwatcher.h"
-#include "GUI_gui_internal.h"
-#include "GUI_widget_internal.h"
+#include "KW_eventwatcher.h"
+#include "KW_gui_internal.h"
+#include "KW_widget_internal.h"
 
-GUI_Widget * CalculateMouseOver(GUI_Widget * widget, int x, int y) {
+KW_Widget * CalculateMouseOver(KW_Widget * widget, int x, int y) {
   /* calculate total area of this widget */
   
   
   /* walk down the children tree looking for a match */
   int i = 0;
-  GUI_Widget * test;
+  KW_Widget * test;
   SDL_Rect g;
   SDL_Rect offset;
   printf("Mouse over start\n");
   
   /* test on us first */
-  GUI_GetWidgetAbsoluteGeometry(widget, &offset);
-  GUI_GetWidgetComposedGeometry(widget, &g);
+  KW_GetWidgetAbsoluteGeometry(widget, &offset);
+  KW_GetWidgetComposedGeometry(widget, &g);
   g.x += offset.x;
   g.y += offset.y;
   if (!(x > g.x && x < g.x + g.w && y > g.y && y < g.y + g.h)) {
@@ -33,7 +33,7 @@ GUI_Widget * CalculateMouseOver(GUI_Widget * widget, int x, int y) {
   for (i = 0; i < widget->childrencount; i++) {
     /* select a children to test */
     test = widget->children[i];
-    GUI_GetWidgetComposedGeometry(test, &g);
+    KW_GetWidgetComposedGeometry(test, &g);
     g.x += offset.x;
     g.y += offset.y;
     /* se if cursor is over this geometry */
@@ -55,16 +55,16 @@ GUI_Widget * CalculateMouseOver(GUI_Widget * widget, int x, int y) {
   return widget;
 }
 
-void MouseMoved(GUI_GUI * gui, int mousex, int mousey) {
-  GUI_Widget * widget = CalculateMouseOver(gui->rootwidget, mousex, mousey);
+void MouseMoved(KW_GUI * gui, int mousex, int mousey) {
+  KW_Widget * widget = CalculateMouseOver(gui->rootwidget, mousex, mousey);
   if (widget != NULL && widget->mouseover != NULL)
     widget->mouseover(widget);
 }
 
 
 /* to capture mouse movements, clicks, types, etc */
-int GUI_EventWatcher(void * data, SDL_Event * event) {
-  GUI_GUI * gui = (GUI_GUI *) data;
+int KW_EventWatcher(void * data, SDL_Event * event) {
+  KW_GUI * gui = (KW_GUI *) data;
   switch (event->type) {
     case SDL_MOUSEMOTION:
       MouseMoved(gui, event->motion.x, event->motion.y);

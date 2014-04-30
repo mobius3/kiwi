@@ -25,15 +25,15 @@
 */
 
 /**
- * \file GUI_label.h
+ * \file KW_label.h
  * 
  * Declares functions for creating and managing labels.
  */
 
-#ifndef GUI_LABEL_H
-#define GUI_LABEL_H
+#ifndef KW_LABEL_H
+#define KW_LABEL_H
 
-#include "GUI_widget.h"
+#include "KW_widget.h"
 #include "SDL_ttf.h"
 
 #ifdef __cplusplus
@@ -55,54 +55,54 @@ extern "C" {
  * \brief Possible vertial alignments to align a label.
  * \details Text is vertically aligned inside its defined geometry
  */
-typedef enum GUI_LabelVerticalAlignment {
+typedef enum KW_LabelVerticalAlignment {
   LABEL_ALIGN_TOP,     /// Vertically align label in the top of the geometry.
   LABEL_ALIGN_MIDDLE,  /// Vertically align label in the middle of the geometry.
   LABEL_ALIGN_BOTTOM   /// Vertically align label in the bottom of the geometry.
-} GUI_LabelVerticalAlignment;
+} KW_LabelVerticalAlignment;
 
 /**
  * \brief Possible horizontal alignments to align a label
  * \details Text is horizontally aligned inside its defined geometry
  */
-typedef enum GUI_LabelHorizontalAlignment {
+typedef enum KW_LabelHorizontalAlignment {
   LABEL_ALIGN_LEFT,    /// Horizontally align label in the left part of the geometry.
   LABEL_ALIGN_CENTER,  /// Horizontally align label in the center part of the geometry.
   LABEL_ALIGN_RIGHT    /// Horizontally align label in the right part of the geometry.
-} GUI_LabelHorizontalAlignment;
+} KW_LabelHorizontalAlignment;
 
 /**
  * \brief   Creates a label widget.
- * \details The label uses the font specified in the GUI_GUI instance unless specified otherwise.
+ * \details The label uses the font specified in the KW_GUI instance unless specified otherwise.
  *          The geometry of the label is used to align horizontally and vertically the label and also
  *          to clip its contents if they exceed it.
- * \param   gui The GUI_GUI instance that will hold this widget.
+ * \param   gui The KW_GUI instance that will hold this widget.
  * \param   parent The parent widget of this widget.
  * \param   geometry The relative geometry of this label.
  * \return  The label instance.
  */
-GUI_Widget DECLSPEC * GUI_CreateLabel(GUI_GUI * gui, GUI_Widget * parent, const char * text, const SDL_Rect * geometry);
+KW_Widget DECLSPEC * KW_CreateLabel(KW_GUI * gui, KW_Widget * parent, const char * text, const SDL_Rect * geometry);
 
 /**
  * \brief   Set the text being rendered in this label.
  * \param   widget The label widget.
  * \param   text The text to render.
  */
-void DECLSPEC GUI_SetLabelText(GUI_Widget * widget, const char * text);
+void DECLSPEC KW_SetLabelText(KW_Widget * widget, const char * text);
 
 /**
  * \brief   Set the text style for this label.
  * \param   widget The label widget.
  * \param   style The style of the text
  */
-void DECLSPEC GUI_SetLabelStyle(GUI_Widget * widget, int style);
+void DECLSPEC KW_SetLabelStyle(KW_Widget * widget, int style);
 
 /**
  * \brief   Sets the color of the label text.
  * \param   widget The label instance.
  * \param   color The color to assign to the label.
  */
-void DECLSPEC GUI_SetLabelColor(GUI_Widget * widget, SDL_Color color);
+void DECLSPEC KW_SetLabelColor(KW_Widget * widget, SDL_Color color);
 
 /**
  * \brief   Changes the font of the label's text.
@@ -110,7 +110,7 @@ void DECLSPEC GUI_SetLabelColor(GUI_Widget * widget, SDL_Color color);
  * \param   widget The label widget.
  * \param   font The font to assign to the label.
  */
-void DECLSPEC GUI_SetLabelFont(GUI_Widget * widget, TTF_Font * font);
+void DECLSPEC KW_SetLabelFont(KW_Widget * widget, TTF_Font * font);
 
 /**
  * \brief   Sets label alignment inside a geometry.
@@ -120,14 +120,14 @@ void DECLSPEC GUI_SetLabelFont(GUI_Widget * widget, TTF_Font * font);
  * \param   valign The vertical alignment used.
  * \param   voffset The vertical offset to be added to the label position after its aligned.
  */
-void DECLSPEC GUI_SetLabelAlignment(GUI_Widget * widget, GUI_LabelHorizontalAlignment halign, int hoffset, GUI_LabelVerticalAlignment valign, int voffset);
+void DECLSPEC KW_SetLabelAlignment(KW_Widget * widget, KW_LabelHorizontalAlignment halign, int hoffset, KW_LabelVerticalAlignment valign, int voffset);
 
 /**
  * \brief   Gets the associated font with a label.
  * \param   widget The label widget.
  * \returns A TTF_Font pointer to the currently label's associated font.
  */
-TTF_Font DECLSPEC * GUI_GetLabelFont(GUI_Widget * widget);
+TTF_Font DECLSPEC * KW_GetLabelFont(KW_Widget * widget);
 
 #ifdef __cplusplus
 }

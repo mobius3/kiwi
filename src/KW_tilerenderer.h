@@ -24,18 +24,18 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef GUI_TILERENDERER_H
-#define GUI_TILERENDERER_H
+#ifndef KW_TILERENDERER_H
+#define KW_TILERENDERER_H
 
 /**
- * \file GUI_tilerenderer.h
+ * \file KW_tilerenderer.h
  * 
  * Declare functions for rendering tiles from a tile set.
  * The macro TILESIZE defines the size of the tile (w/h).
  */
 
 #include "SDL.h"
-#include "GUI_macros.h"
+#include "KW_macros.h"
 #define TILESIZE 8
 
 #ifdef __cplusplus
@@ -51,7 +51,7 @@ extern "C" {
  * \param   x The x coordinate in the screen to render the tile.
  * \param   y The y coordinate in the screen to render the tile.
  */
-void DECLSPEC GUI_RenderTile(SDL_Renderer * renderer, SDL_Texture * tileset, int column, int line, int x, int y);
+void DECLSPEC KW_RenderTile(SDL_Renderer * renderer, SDL_Texture * tileset, int column, int line, int x, int y);
 
 /**
  * \brief   Render a tile filling the whole w/h specified.
@@ -65,7 +65,7 @@ void DECLSPEC GUI_RenderTile(SDL_Renderer * renderer, SDL_Texture * tileset, int
  * \param   w The width to fill.
  * \param   h The height to fill.
  */
-void DECLSPEC GUI_RenderTileFill(SDL_Renderer * renderer, SDL_Texture * tileset, int column, int line, int x, int y, int w, int h);
+void DECLSPEC KW_RenderTileFill(SDL_Renderer * renderer, SDL_Texture * tileset, int column, int line, int x, int y, int w, int h);
 
 #ifdef __cplusplus
 }

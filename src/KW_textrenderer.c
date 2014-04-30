@@ -1,7 +1,7 @@
-#include "GUI_textrenderer.h"
+#include "KW_textrenderer.h"
 
 
-SDL_Texture * GUI_RenderTextLine(TTF_Font * font, SDL_Renderer * renderer, const char * text, SDL_Color color, int styleflags) {
+SDL_Texture * KW_RenderTextLine(TTF_Font * font, SDL_Renderer * renderer, const char * text, SDL_Color color, int styleflags) {
   if (font == NULL || text == NULL)
     return NULL;
   

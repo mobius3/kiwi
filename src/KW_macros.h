@@ -1,5 +1,5 @@
-#ifndef GUI_MACROS_H
-#define GUI_MACROS_H
+#ifndef KW_MACROS_H
+#define KW_MACROS_H
 
 /* this file was shamelessly copied from SDL */
 
@@ -7,7 +7,7 @@
 #ifndef DECLSPEC
 # if defined(__WIN32__)
 #  ifdef __BORLANDC__
-#   ifdef GuiGUI_EXPORTS
+#   ifdef GuiKW_EXPORTS
 #    define DECLSPEC
 #   else
 #    define DECLSPEC    __declspec(dllimport)

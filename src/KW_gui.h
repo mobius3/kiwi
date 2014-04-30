@@ -24,39 +24,39 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef GUI_GUI_H
-#define GUI_GUI_H
+#ifndef KW_GUI_H
+#define KW_GUI_H
 
 #include "SDL.h"
 #include "SDL_ttf.h"
 
-#include "GUI_macros.h"
-#include "GUI_widget.h"
-#include "GUI_frame.h"
-#include "GUI_label.h"
+#include "KW_macros.h"
+#include "KW_widget.h"
+#include "KW_frame.h"
+#include "KW_label.h"
 
 
 /** 
- * \file GUI_gui.h
+ * \file KW_gui.h
  * 
- * Main include for the GuiGUI library.
+ * Main include for the KiWi library.
  */
 
 
 /**
- *  \mainpage GuiGUI
+ *  \mainpage KiWi
  *
  *  http://www.libsdl.org/
  *
  *  \section intro_sec Introduction
  * 
- *  GuiGUI is a widget-based GUI library for 2D games using SDL2. Its widgets
+ *  KiWi is a widget-based GUI library for 2D games using SDL2. Its widgets
  *  are built from a tileset allowing you to customize the looks of your GUI
  *  by simply changing the source tile set.
  * 
  *  You can also create custom widgets.
  * 
- *  GuiGUI is based on SDL2 and SDL2_ttf, requiring these to be present.
+ *  KiWi is based on SDL2 and SDL2_ttf, requiring these to be present.
  */
 
 #ifdef __cplusplus
@@ -64,90 +64,90 @@ extern "C" {
 #endif
 
 /**
- * \brief   The GUI_GUI type holds information shared by all widgets.
- * \details You need a GUI_GUI instance to create widgets.
+ * \brief   The KW_GUI type holds information shared by all widgets.
+ * \details You need a KW_GUI instance to create widgets.
  */
-struct GUI_GUI;
-typedef struct GUI_GUI GUI_GUI;
+struct KW_GUI;
+typedef struct KW_GUI KW_GUI;
 
-struct GUI_Widget;
-typedef struct GUI_Widget GUI_Widget;
+struct KW_Widget;
+typedef struct KW_Widget KW_Widget;
 
 /**
- * \brief   Initializes a new GUI_GUI instance.
- * \details Each GUI_Widget should be associated with a GUI_GUI. For each GUI_GUI that you create,
- *          you should call GUI_Quit(gui) when quitting. GUI_GUI doesn't take ownership of either
+ * \brief   Initializes a new KW_GUI instance.
+ * \details Each KW_Widget should be associated with a KW_GUI. For each KW_GUI that you create,
+ *          you should call KW_Quit(gui) when quitting. KW_GUI doesn't take ownership of either
  *          the renderer or the tileset.
  * \param   renderer A pointer to a SDL_Renderer.
  * \param   tileset A pointer to a SDL_Texture to be used as GUI tileset.
- * \returns A initialized GUI_GUI instance.
+ * \returns A initialized KW_GUI instance.
  */
-extern DECLSPEC GUI_GUI * GUI_Init(SDL_Renderer * renderer, SDL_Texture * tileset);
+extern DECLSPEC KW_GUI * KW_Init(SDL_Renderer * renderer, SDL_Texture * tileset);
 
 /**
- * \brief   Quits this GUI_GUI instance and free its resources.
- * \details Every pointer passed to any GUI_* function will not be free'd
- *          as GUI_GUI doesn't take ownership of them, unless stated otherwise.
+ * \brief   Quits this KW_GUI instance and free its resources.
+ * \details Every pointer passed to any KW_* function will not be free'd
+ *          as KW_GUI doesn't take ownership of them, unless stated otherwise.
  *          You still have to free them yourself.
- * \param   gui The GUI_GUI instance that is being quitted.
+ * \param   gui The KW_GUI instance that is being quitted.
  */
-extern DECLSPEC void GUI_Quit(GUI_GUI * gui);
+extern DECLSPEC void KW_Quit(KW_GUI * gui);
 
 /**
- * \brief   Sets a new SDL_Renderer for this GUI_GUI instance.
+ * \brief   Sets a new SDL_Renderer for this KW_GUI instance.
  * \details If you want to render your GUI in another window, you can pass it's renderer to this function.
- * \param   gui The GUI_GUI instance.
+ * \param   gui The KW_GUI instance.
  * \param   render The SDL_Renderer instance.
  */
-extern DECLSPEC void GUI_SetRenderer(GUI_GUI * gui, SDL_Renderer * renderer);
+extern DECLSPEC void KW_SetRenderer(KW_GUI * gui, SDL_Renderer * renderer);
 
 /**
- * \brief   Returns the current associated renderer with a GUI_GUI instance.
+ * \brief   Returns the current associated renderer with a KW_GUI instance.
  * \details This is useful if you are implementing a custom widget and needs to render your textures.
- * \param   gui The GUI_GUI instance.
+ * \param   gui The KW_GUI instance.
  * \return  The associated SDL_Renderer instance.
  */
-extern DECLSPEC SDL_Renderer * GUI_GetRenderer(GUI_GUI * gui);
+extern DECLSPEC SDL_Renderer * KW_GetRenderer(KW_GUI * gui);
 
 /**
- * \brief   Set a new tileset texture to be used in this GUI_GUI instance.
+ * \brief   Set a new tileset texture to be used in this KW_GUI instance.
  * \details You may call this function anytime to switch the tileset being used to render the widgets.
- * \param   gui The GUI_GUI instance to set a new tileset texture.
+ * \param   gui The KW_GUI instance to set a new tileset texture.
  * \param   texture The texture to set. You still have to free the old one.
  */
-extern DECLSPEC void GUI_SetTileset(GUI_GUI * gui, SDL_Texture * tileset);
+extern DECLSPEC void KW_SetTileset(KW_GUI * gui, SDL_Texture * tileset);
 
 /**
- * \brief   Gets the tileset texture associated with a GUI_GUI instance.
+ * \brief   Gets the tileset texture associated with a KW_GUI instance.
  * \details This is useful if you have custom tiles or images in your tileset. You also may need to call this
- *          to free the old tileset before using GUI_SetTileset.
- * \param   gui The GUI_GUI instance to get the tileset from.
+ *          to free the old tileset before using KW_SetTileset.
+ * \param   gui The KW_GUI instance to get the tileset from.
  */
-extern DECLSPEC SDL_Texture * GUI_GetTileset(GUI_GUI * gui);
+extern DECLSPEC SDL_Texture * KW_GetTileset(KW_GUI * gui);
 
 /**
  * \brief   Sets a uniform font to be used in label-rendering widgets.
  * \details All widgets that needs a font to render text will use by default the font set with this function unless
  *          you specify otherwise in their respective SetFont calls.
- * \param   gui The GUI_GUI instance to set the font.
- * \param   font The font to associate with a GUI_GUI instance.
+ * \param   gui The KW_GUI instance to set the font.
+ * \param   font The font to associate with a KW_GUI instance.
  */
-extern DECLSPEC void GUI_SetFont(GUI_GUI * gui, TTF_Font * font);
+extern DECLSPEC void KW_SetFont(KW_GUI * gui, TTF_Font * font);
 
 /**
- * \brief   Get the current font associated with a GUI_GUI instance.
+ * \brief   Get the current font associated with a KW_GUI instance.
  * \details You might want to use this function if you need to render text in a custom widget.
- * \param   gui The GUI_GUI instance to get the font from.
- * \return  The current font associated with the GUI_GUI instance.
+ * \param   gui The KW_GUI instance to get the font from.
+ * \return  The current font associated with the KW_GUI instance.
  */
-extern DECLSPEC TTF_Font * GUI_GetFont(GUI_GUI * gui);
+extern DECLSPEC TTF_Font * KW_GetFont(KW_GUI * gui);
 
 /**
  * \brief   Paint all the widgets associated with this GUI.
  * \details This will walk the widget tree, painting all of its widgets, from bottom to top.
- * \param   gui The GUI_GUI instance holding the widget tree.
+ * \param   gui The KW_GUI instance holding the widget tree.
  */
-extern DECLSPEC void GUI_Paint(GUI_GUI * gui);
+extern DECLSPEC void KW_Paint(KW_GUI * gui);
 
 #ifdef __cplusplus
 }
