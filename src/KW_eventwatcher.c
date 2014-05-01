@@ -11,27 +11,6 @@ KW_Widget * CalculateMouseOver(KW_Widget * widget, int x, int y) {
   KW_Widget * test;
   SDL_Rect g = {0, 0, 0, 0};
   SDL_Rect offset = {0, 0, 0, 0};
-#if 0
-#ifndef NDEBUG
-  printf("Mouse over start\n");
-#endif
-  /* test on us first */
-  KW_GetWidgetAbsoluteGeometry(widget, &offset);
-  KW_GetWidgetComposedGeometry(widget, &g);
-  g.x += offset.x;
-  g.y += offset.y;
-  if (!(x > g.x && x < g.x + g.w && y > g.y && y < g.y + g.h)) {
-#ifndef NDEBUG
-    printf(" Mouse is not over this geometry.\n");
-#endif
-    return NULL;
-  }
-#ifndef NDEBUG
-  else {
-    printf(" Mouse over %p: %d\n", (void*) widget, widget->type);
-  }
-#endif
-#endif
   SDL_bool found = SDL_FALSE;
   for (i = 0; i < widget->childrencount; i++) {
     /* select a children to test */
@@ -83,12 +62,39 @@ void MouseMoved(KW_GUI * gui, int mousex, int mousey) {
 }
 
 
+void MousePressed(KW_GUI * gui, int mousex, int mousey, int button) {
+  int i;
+  KW_Widget * widget = gui->currentmouseover;
+  if (widget != NULL && widget->mousedowncount > 0) {
+    for (i = 0; i < widget->mousedowncount; i++) {
+      widget->mousedown[i](widget, button);
+    }
+  }
+}
+
+void MouseReleased(KW_GUI * gui, int mousex, int mousey, int button) {
+  int i;
+  KW_Widget * widget = gui->currentmouseover;
+  if (widget != NULL && widget->mouseupcount > 0) {
+    for (i = 0; i < widget->mouseupcount; i++) {
+      widget->mouseup[i](widget, button);
+    }
+  }
+}
+
 /* to capture mouse movements, clicks, types, etc */
 int KW_EventWatcher(void * data, SDL_Event * event) {
   KW_GUI * gui = (KW_GUI *) data;
   switch (event->type) {
     case SDL_MOUSEMOTION:
       MouseMoved(gui, event->motion.x, event->motion.y);
+      break;
+    case SDL_MOUSEBUTTONDOWN:
+      MousePressed(gui, event->button.x, event->button.y, event->button.button);
+      break;
+      
+    case SDL_MOUSEBUTTONUP:
+      MouseReleased(gui, event->button.x, event->button.y, event->button.button);
       break;
     default:
       break;

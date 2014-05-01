@@ -319,7 +319,7 @@ void KW_AddWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler) {
   widget->mouseover[widget->mouseovercount-1] = handler;
 }
 
-int KW_RemoveWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler) {
+void KW_RemoveWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler) {
   int i, j;
     /* iterate to find the position of widget */
   for (i = 0; i < widget->mouseovercount; i++) {
@@ -341,7 +341,6 @@ int KW_RemoveWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler) 
   }
   else
     widget->mouseover = realloc(widget->mouseover, widget->mouseovercount * sizeof(KW_OnMouseOver *));
-  return 0;
 }
 
 void KW_AddWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler) {
@@ -358,7 +357,7 @@ void KW_AddWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler) 
   widget->mouseleave[widget->mouseleavecount-1] = handler;
 }
 
-int KW_RemoveWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler) {
+void KW_RemoveWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler) {
   int i, j;
     /* iterate to find the position of widget */
   for (i = 0; i < widget->mouseleavecount; i++) {
@@ -380,5 +379,80 @@ int KW_RemoveWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler
   }
   else
     widget->mouseleave = realloc(widget->mouseleave, widget->mouseleavecount * sizeof(KW_OnMouseLeave *));
-  return 0;
+}
+
+void KW_AddWidgetMouseDownHandler(KW_Widget * widget, KW_OnMouseDown handler) {
+  /* don't add multiple mouse leave handlers */
+  int i;
+  for (i = 0; i < widget->mousedowncount; ++i) {
+    if (widget->mousedown[i] == handler)
+      return;
+  }
+  
+  /* add the handler then */
+  widget->mousedowncount++;
+  widget->mousedown = realloc(widget->mousedown, sizeof(KW_OnMouseLeave)*widget->mousedowncount);
+  widget->mousedown[widget->mousedowncount-1] = handler;
+}
+
+void KW_RemoveWidgetMouseDownHandler(KW_Widget * widget, KW_OnMouseDown handler) {
+  int i, j;
+    /* iterate to find the position of widget */
+  for (i = 0; i < widget->mousedowncount; i++) {
+    if (widget->mousedown[i] == handler) {
+      j = i;
+    }
+    
+    /* move everything in front of it */
+    if (j >= 0 && i + 1 < widget->mousedowncount) {
+      widget->mousedown[i] = widget->mousedown[i+1];
+    }
+  }
+  
+  /* realloc children array */
+  widget->mousedowncount--;
+  if (widget->mousedowncount <= 0) {
+    free(widget->mousedown);
+    widget->mousedown = NULL;
+  }
+  else
+    widget->mousedown = realloc(widget->mousedown, widget->mousedowncount * sizeof(KW_OnMouseLeave *));
+}
+
+void KW_AddWidgetMouseUpHandler(KW_Widget * widget, KW_OnMouseDown handler) {
+  /* don't add multiple mouse leave handlers */
+  int i;
+  for (i = 0; i < widget->mouseupcount; ++i) {
+    if (widget->mouseup[i] == handler)
+      return;
+  }
+  
+  /* add the handler then */
+  widget->mouseupcount++;
+  widget->mouseup = realloc(widget->mouseup, sizeof(KW_OnMouseLeave)*widget->mouseupcount);
+  widget->mouseup[widget->mouseupcount-1] = handler;
+}
+
+void KW_RemoveWidgetMouseUpHandler(KW_Widget * widget, KW_OnMouseDown handler) {
+  int i, j;
+    /* iterate to find the position of widget */
+  for (i = 0; i < widget->mouseupcount; i++) {
+    if (widget->mouseup[i] == handler) {
+      j = i;
+    }
+    
+    /* move everything in front of it */
+    if (j >= 0 && i + 1 < widget->mouseupcount) {
+      widget->mouseup[i] = widget->mouseup[i+1];
+    }
+  }
+  
+  /* realloc children array */
+  widget->mouseupcount--;
+  if (widget->mouseupcount <= 0) {
+    free(widget->mouseup);
+    widget->mouseup = NULL;
+  }
+  else
+    widget->mouseup = realloc(widget->mouseup, widget->mouseupcount * sizeof(KW_OnMouseLeave *));
 }

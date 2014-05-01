@@ -8,16 +8,25 @@ KW_Button * AllocButton();
 void PaintButton(KW_Widget * widget);
 void DestroyButton(KW_Widget * widget);
 
-void MouseOver(KW_Widget * widget) {
+static void MouseOver(KW_Widget * widget) {
   KW_Button * button = KW_GetWidgetData(widget);
   button->mouseover = SDL_TRUE;
 }
 
 
-void MouseLeave(KW_Widget * widget) {
+static void MouseLeave(KW_Widget * widget) {
   KW_Button * button = KW_GetWidgetData(widget);
   button->mouseover = SDL_FALSE;
+}
 
+static void MousePress(KW_Widget * widget, int b) {
+  KW_Button * button = KW_GetWidgetData(widget);
+  button->clicked = SDL_TRUE;
+}
+
+static void MouseRelease(KW_Widget * widget, int b) {
+  KW_Button * button = KW_GetWidgetData(widget);
+  button->clicked = SDL_FALSE;
 }
 
 
@@ -34,6 +43,8 @@ KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, const char * text,
   KW_BlockWidgetInputEvents(button->labelwidget);
   KW_AddWidgetMouseOverHandler(widget, MouseOver);
   KW_AddWidgetMouseLeaveHandler(widget, MouseLeave);
+  KW_AddWidgetMouseDownHandler(widget, MousePress);
+  KW_AddWidgetMouseUpHandler(widget, MouseRelease);
   return widget;
 }
 
@@ -44,6 +55,7 @@ void PaintButton(KW_Widget * widget) {
   /* base column for tile rendering */
   int basec = 0;
   if (button->mouseover) basec = 3;
+  if (button->clicked) basec = 0;
   SDL_Rect targetgeom;
   SDL_Renderer * renderer;
   SDL_Texture * tileset;

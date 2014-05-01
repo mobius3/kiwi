@@ -31,8 +31,8 @@ typedef void (*KW_WidgetDestroyFunction)(KW_Widget * widget);
 /* mouse callbacks */
 typedef void (*KW_OnMouseOver)(KW_Widget * widget);
 typedef void (*KW_OnMouseLeave)(KW_Widget * widget);
-typedef void (*KW_OnMousePress)(KW_Widget * widget, int button);
-typedef void (*KW_OnMouseRelease)(KW_Widget * widget, int button);
+typedef void (*KW_OnMouseDown)(KW_Widget * widget, int button);
+typedef void (*KW_OnMouseUp)(KW_Widget * widget, int button);
 
 /**
  * \brief   The KW_WidgetType enumeration represents available widget types.
@@ -263,6 +263,14 @@ extern DECLSPEC void KW_UnblockWidgetInputEvents(KW_Widget * widget);
  */
 extern DECLSPEC void KW_AddWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler);
 
+/**
+ * \brief   Remove a MouseOver handler from a widget
+ * \details If you're not interested anymore in MouseOver events, remove your handler.
+ * \param   widget The widget to remove the MouseOver handler.
+ * \param   handler The OnMouseOver function pointer.
+ */
+extern DECLSPEC void KW_RemoveWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler);
+
 
 /**
  * \brief   Adds a function that will be called whenever the mouse/cursor leaves the widget.
@@ -270,7 +278,39 @@ extern DECLSPEC void KW_AddWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouse
  * \param   widget The widget to add a MouseLeave handler.
  * \param   handler The OnMouseLeave function pointer.
  */
-extern DECLSPEC void KW_AddWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseOver handler);
+extern DECLSPEC void KW_AddWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler);
+
+/**
+ * \brief   Remove a MouseLeave handler from a widget
+ * \details If you're not interested anymore in MouseLeave events, remove your handler.
+ * \param   widget The widget to remove the MouseLeave handler.
+ * \param   handler The OnMouseLeave function pointer.
+ */
+extern DECLSPEC void KW_RemoveWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler);
+
+/**
+ * \brief   Adds a function that will be called whenever the mouse/cursor clicks the widget.
+ * \details If you want to know when the user clicked in your widget and with which button, insert a callback :)
+ * \param   widget The widget to add a MouseDown handler.
+ * \param   handler The OnMouseDown function pointer.
+ */
+extern DECLSPEC void KW_AddWidgetMouseDownHandler(KW_Widget * widget, KW_OnMouseDown handler);
+
+/**
+ * \brief   Remove a MouseDown handler from a widget.
+ * \details If you're not interested anymore in MouseDown events, remove your handler.
+ * \param   widget The widget to remove the MouseDown handler.
+ * \param   handler The OnMouseDown function pointer.
+ */
+extern DECLSPEC void KW_RemoveWidgetMouseDownHandler(KW_Widget * widget, KW_OnMouseDown handler);
+
+/**
+ * \brief   Adds a function that will be called whenever the mouse/cursor un-clicks the widget.
+ * \details If you want to know when the user released the cursor in your widget and with which button, insert a callback :)
+ * \param   widget The widget to add a MouseUp handler.
+ * \param   handler The OnMouseUp function pointer.
+ */
+extern DECLSPEC void KW_AddWidgetMouseUpHandler(KW_Widget * widget, KW_OnMouseDown handler);
 
 #ifdef __cplusplus
 }

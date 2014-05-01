@@ -24,8 +24,11 @@ struct KW_Widget {
   KW_OnMouseLeave *   mouseleave;
   unsigned int        mouseleavecount;
 
-  void                (*mousedown)(KW_Widget *, int button);
-  void                (*mouseup)(KW_Widget *, int button);
+  KW_OnMouseDown *    mousedown;
+  unsigned int        mousedowncount;
+
+  KW_OnMouseUp *      mouseup;
+  unsigned int        mouseupcount;
   
   void *              privdata;
 };
