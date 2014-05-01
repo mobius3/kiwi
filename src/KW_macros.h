@@ -7,7 +7,7 @@
 #ifndef DECLSPEC
 # if defined(__WIN32__)
 #  ifdef __BORLANDC__
-#   ifdef GuiKW_EXPORTS
+#   ifdef KiWi_EXPORTS
 #    define DECLSPEC
 #   else
 #    define DECLSPEC    __declspec(dllimport)
@@ -27,12 +27,12 @@
 #endif
 
 /* By default SDL uses the C calling convention */
-#ifndef GUIGUICALL
+#ifndef KIWICALL
 #if defined(__WIN32__) && !defined(__GNUC__)
-#define GUIGUICALL __cdecl
+#define KIWICALL __cdecl
 #else
-#define GUIGUICALL
+#define KIWICALL
 #endif
-#endif /* GUIGUICALL */
+#endif /* KIWICALL */
 
 #endif
