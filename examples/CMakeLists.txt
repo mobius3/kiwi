@@ -6,3 +6,6 @@ include_directories(${SDL2_INCLUDE_DIR} ${KIWI_INCLUDE_DIR})
 
 # The playground example
 add_subdirectory(playground)
+
+# Frame family example
+add_subdirectory(frame-family)

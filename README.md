@@ -12,6 +12,7 @@ Right now KiWi is under (heavy) development and any help (code patches, money, c
 Here are some screenshots, though (click on them to see code):
 
 [![alt text](https://raw.githubusercontent.com/leonardo2d/KiWi/master/examples/playground/playground-screenshot.png "Playground screenshot")](https://github.com/leonardo2d/KiWi/blob/master/examples/playground/playground.c)
+[![alt text](https://raw.githubusercontent.com/leonardo2d/KiWi/master/examples/frame-family/frame-family-screenshot.png "A Family of Frames")](https://github.com/leonardo2d/KiWi/blob/master/examples/frame-family/frame-family.c)
 
 ## Build and test KiWi:
 
