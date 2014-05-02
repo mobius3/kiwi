@@ -67,6 +67,49 @@ void DECLSPEC KW_RenderTile(SDL_Renderer * renderer, SDL_Texture * tileset, int 
  */
 void DECLSPEC KW_RenderTileFill(SDL_Renderer * renderer, SDL_Texture * tileset, int column, int line, int x, int y, int w, int h);
 
+/**
+ * \brief   Render a frame using the set of tiles specified at startcolumn and startline.
+ * \details This function will make use of the 3x3 set of tiles to draw a frame. They are addressed by column-then-line, like this:
+ *          - 0,0 is the top-left corner
+ *          - 1,0 is the top
+ *          - 2,0 is the top-right corner
+ * 
+ *          - 0,1 is the left
+ *          - 1,1 is the middle
+ *          - 2,1 is the right
+ * 
+ *          - 0,2 is the bottom-left corner
+ *          - 1,2 is the bottom
+ *          - 2,2 is the bottom-right corner
+ * 
+ *          They are read column first, line second.
+ * 
+ *          .---------.---------.---------.
+ *          |         |         |         |
+ *          |   0,0   |   1,0   |   2,0   |
+ *          |         |         |         |
+ *          .---------.---------.---------.
+ *          |         |         |         |
+ *          |   0,1   |   1,1   |   2,1   |
+ *          |         |         |         |
+ *          .---------.---------.---------.
+ *          |         |         |         |
+ *          |   0,2   |   1,2   |   2,2   |
+ *          |         |         |         |
+ *          `---------`---------`---------´
+ * 
+ * 
+ * \param   renderer The SDL_Renderer that will render this frame.
+ * \param   tileset The tileset texture to get this frame set from.
+ * \param   column The column in the tile set (starts at 0).
+ * \param   line The line in the tile set (starts at 0).
+ * \param   x The x coordinate in the screen to render the tiles.
+ * \param   y The y coordinate in the screen to render the tiles.
+ * \param   w The width to fill.
+ * \param   h The height to fill.
+ */
+void DECLSPEC KW_RenderTileFrame(SDL_Renderer * renderer, SDL_Texture * tileset, int startcolumn, int startline, int x, int y, int w, int h);
+
 #ifdef __cplusplus
 }
 #endif

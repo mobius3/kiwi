@@ -31,8 +31,8 @@ int main(int argc, char ** argv) {
   KW_Widget * frame = NULL;
   int i = 0;
   for (i = 0; i < 10; i++) {
-    frame = KW_CreateFrame(gui, frame, &framegeom);
-    KW_CreateLabel(gui, frame, "KiWi", &labelgeom);
+    frame = KW_CreateButton(gui, frame, "Yay", &framegeom);
+    //KW_CreateLabel(gui, frame, "KiWi", &labelgeom);
   }
   
   while (!SDL_QuitRequested()) {

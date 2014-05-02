@@ -16,6 +16,8 @@ struct KW_Label {
   KW_LabelVerticalAlignment valign;
   int hoffset;
   int voffset;
+  unsigned int cursor;
+  SDL_bool showcursor;
 } KW_Label;
 
 #endif

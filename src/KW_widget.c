@@ -21,12 +21,20 @@ KW_Widget * KW_CreateWidget(KW_GUI * gui, KW_Widget * parent, KW_WidgetType type
   KW_SetWidgetGeometry(widget, geometry);
   KW_UnblockWidgetInputEvents(widget);
   widget->privdata = priv;
-  
+  widget->tileset = gui->tileset;
   return widget;
 }
 
 KW_Widget * KW_GetWidgetParent(KW_Widget * widget) {
   return widget->parent == widget->gui->rootwidget ? NULL : widget->parent;
+}
+
+void KW_SetWidgetTileset(KW_Widget * widget, SDL_Texture * tileset) {
+  widget->tileset = tileset;
+}
+
+SDL_Texture * KW_GetWidgetTileset(KW_Widget * widget) {
+  return widget->tileset;
 }
 
 void * KW_GetWidgetData(KW_Widget * widget) {
@@ -306,153 +314,50 @@ KW_GUI * KW_GetWidgetGUI(KW_Widget * widget) {
 }
 
 void KW_AddWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler) {
-  /* don't add multiple mouse over handlers */
-  int i;
-  for (i = 0; i < widget->mouseovercount; ++i) {
-    if (widget->mouseover[i] == handler)
-      return;
-  }
-  
-  /* add the handler then */
-  widget->mouseovercount++;
-  widget->mouseover = realloc(widget->mouseover, sizeof(KW_OnMouseOver)*widget->mouseovercount);
-  widget->mouseover[widget->mouseovercount-1] = handler;
+  AddHandler(widget, KW_ON_MOUSEOVER, (void *) handler);
 }
 
 void KW_RemoveWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler) {
-  int i, j;
-    /* iterate to find the position of widget */
-  for (i = 0; i < widget->mouseovercount; i++) {
-    if (widget->mouseover[i] == handler) {
-      j = i;
-    }
-    
-    /* move everything in front of it */
-    if (j >= 0 && i + 1 < widget->mouseovercount) {
-      widget->mouseover[i] = widget->mouseover[i+1];
-    }
-  }
-  
-  /* realloc children array */
-  widget->mouseovercount--;
-  if (widget->mouseovercount <= 0) {
-    free(widget->mouseover);
-    widget->mouseover = NULL;
-  }
-  else
-    widget->mouseover = realloc(widget->mouseover, widget->mouseovercount * sizeof(KW_OnMouseOver *));
+  RemoveHandler(widget, KW_ON_MOUSEOVER, handler);
 }
 
 void KW_AddWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler) {
-  /* don't add multiple mouse leave handlers */
-  int i;
-  for (i = 0; i < widget->mouseleavecount; ++i) {
-    if (widget->mouseleave[i] == handler)
-      return;
-  }
-  
-  /* add the handler then */
-  widget->mouseleavecount++;
-  widget->mouseleave = realloc(widget->mouseleave, sizeof(KW_OnMouseLeave)*widget->mouseleavecount);
-  widget->mouseleave[widget->mouseleavecount-1] = handler;
+  AddHandler(widget, KW_ON_MOUSELEAVE, handler);
 }
 
 void KW_RemoveWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler) {
-  int i, j;
-    /* iterate to find the position of widget */
-  for (i = 0; i < widget->mouseleavecount; i++) {
-    if (widget->mouseleave[i] == handler) {
-      j = i;
-    }
-    
-    /* move everything in front of it */
-    if (j >= 0 && i + 1 < widget->mouseleavecount) {
-      widget->mouseleave[i] = widget->mouseleave[i+1];
-    }
-  }
-  
-  /* realloc children array */
-  widget->mouseleavecount--;
-  if (widget->mouseleavecount <= 0) {
-    free(widget->mouseleave);
-    widget->mouseleave = NULL;
-  }
-  else
-    widget->mouseleave = realloc(widget->mouseleave, widget->mouseleavecount * sizeof(KW_OnMouseLeave *));
+  RemoveHandler(widget, KW_ON_MOUSELEAVE, handler);
 }
 
 void KW_AddWidgetMouseDownHandler(KW_Widget * widget, KW_OnMouseDown handler) {
-  /* don't add multiple mouse leave handlers */
-  int i;
-  for (i = 0; i < widget->mousedowncount; ++i) {
-    if (widget->mousedown[i] == handler)
-      return;
-  }
-  
-  /* add the handler then */
-  widget->mousedowncount++;
-  widget->mousedown = realloc(widget->mousedown, sizeof(KW_OnMouseLeave)*widget->mousedowncount);
-  widget->mousedown[widget->mousedowncount-1] = handler;
+  AddHandler(widget, KW_ON_MOUSEDOWN, handler);
 }
 
 void KW_RemoveWidgetMouseDownHandler(KW_Widget * widget, KW_OnMouseDown handler) {
-  int i, j;
-    /* iterate to find the position of widget */
-  for (i = 0; i < widget->mousedowncount; i++) {
-    if (widget->mousedown[i] == handler) {
-      j = i;
-    }
-    
-    /* move everything in front of it */
-    if (j >= 0 && i + 1 < widget->mousedowncount) {
-      widget->mousedown[i] = widget->mousedown[i+1];
-    }
-  }
-  
-  /* realloc children array */
-  widget->mousedowncount--;
-  if (widget->mousedowncount <= 0) {
-    free(widget->mousedown);
-    widget->mousedown = NULL;
-  }
-  else
-    widget->mousedown = realloc(widget->mousedown, widget->mousedowncount * sizeof(KW_OnMouseLeave *));
+  RemoveHandler(widget, KW_ON_MOUSEDOWN, handler);
 }
 
 void KW_AddWidgetMouseUpHandler(KW_Widget * widget, KW_OnMouseDown handler) {
-  /* don't add multiple mouse leave handlers */
-  int i;
-  for (i = 0; i < widget->mouseupcount; ++i) {
-    if (widget->mouseup[i] == handler)
-      return;
-  }
-  
-  /* add the handler then */
-  widget->mouseupcount++;
-  widget->mouseup = realloc(widget->mouseup, sizeof(KW_OnMouseLeave)*widget->mouseupcount);
-  widget->mouseup[widget->mouseupcount-1] = handler;
+  AddHandler(widget, KW_ON_MOUSEUP, handler);
 }
 
 void KW_RemoveWidgetMouseUpHandler(KW_Widget * widget, KW_OnMouseDown handler) {
-  int i, j;
-    /* iterate to find the position of widget */
-  for (i = 0; i < widget->mouseupcount; i++) {
-    if (widget->mouseup[i] == handler) {
-      j = i;
-    }
-    
-    /* move everything in front of it */
-    if (j >= 0 && i + 1 < widget->mouseupcount) {
-      widget->mouseup[i] = widget->mouseup[i+1];
-    }
-  }
-  
-  /* realloc children array */
-  widget->mouseupcount--;
-  if (widget->mouseupcount <= 0) {
-    free(widget->mouseup);
-    widget->mouseup = NULL;
-  }
-  else
-    widget->mouseup = realloc(widget->mouseup, widget->mouseupcount * sizeof(KW_OnMouseLeave *));
+  RemoveHandler(widget, KW_ON_MOUSEUP, handler);
 }
+
+void KW_AddWidgetFocusGainHandler(KW_Widget * widget, KW_OnFocusGain handler) {
+  AddHandler(widget, KW_ON_FOCUSGAIN, handler);
+}
+
+void KW_RemoveWidgetFocusGainHandler(KW_Widget * widget, KW_OnFocusGain handler) {
+  RemoveHandler(widget, KW_ON_FOCUSLOSE, handler);
+}
+
+void KW_AddWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFocusLose handler) {
+  AddHandler(widget, KW_ON_FOCUSLOSE, handler);
+}
+
+void KW_RemoveWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFocusLose handler) {
+  RemoveHandler(widget, KW_ON_FOCUSLOSE, handler);
+}
+

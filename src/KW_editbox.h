@@ -24,41 +24,17 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef KW_MACROS_H
-#define KW_MACROS_H
+#ifndef KW_EDITBOX_H
+#define KW_EDITBOX_H
 
-/* this file was shamelessly copied from SDL */
+/**
+ * \file KW_editbox.h
+ * 
+ * Defines functions related to creating and managing edit boxes
+ */
 
-/* Some compilers use a special export keyword */
-#ifndef DECLSPEC
-# if defined(__WIN32__)
-#  ifdef __BORLANDC__
-#   ifdef GuiKW_EXPORTS
-#    define DECLSPEC
-#   else
-#    define DECLSPEC    __declspec(dllimport)
-#   endif
-#  else
-#   define DECLSPEC __declspec(dllexport)
-#  endif
-# else
-#  if defined(__GNUC__) && __GNUC__ >= 4
-#   define DECLSPEC __attribute__ ((visibility("default")))
-#  elif defined(__GNUC__) && __GNUC__ >= 2
-#   define DECLSPEC __declspec(dllexport)
-#  else
-#   define DECLSPEC
-#  endif
-# endif
-#endif
+#include "KW_widget.h"
 
-/* By default SDL uses the C calling convention */
-#ifndef GUIGUICALL
-#if defined(__WIN32__) && !defined(__GNUC__)
-#define GUIGUICALL __cdecl
-#else
-#define GUIGUICALL
-#endif
-#endif /* GUIGUICALL */
+KW_Widget * KW_CreateEditbox(KW_GUI * gui, KW_Widget * parent, const char * text, const SDL_Rect * geometry);
 
 #endif

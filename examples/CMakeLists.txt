@@ -9,3 +9,6 @@ add_subdirectory(playground)
 
 # Frame family example
 add_subdirectory(frame-family)
+
+# Editbox example
+add_subdirectory(editbox)

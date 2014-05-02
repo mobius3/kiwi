@@ -40,46 +40,80 @@ KW_Widget * CalculateMouseOver(KW_Widget * widget, int x, int y) {
 }
 
 void MouseMoved(KW_GUI * gui, int mousex, int mousey) {
-  int i;
+  int i, count;
+  KW_OnMouseOver * overhandlers;
+  KW_OnMouseLeave * leavehandlers;
   KW_Widget * current = gui->currentmouseover;
   KW_Widget * widget = CalculateMouseOver(gui->rootwidget, mousex, mousey);
   if (widget == current) return;
   
   /* gotta notify the previous mouseover */
   if (current != NULL) {
-    for (i = 0; i < current->mouseleavecount; i++) {
-      current->mouseleave[i](current);
+    count = current->eventhandlers[KW_ON_MOUSELEAVE].count;
+    leavehandlers = (KW_OnMouseLeave *) current->eventhandlers[KW_ON_MOUSELEAVE].handlers;
+    for (i = 0; i < count; i++) {
+      leavehandlers[i](current);
     }
   }
 
   /* warn the current mouseover */
   gui->currentmouseover = widget;
-  if (widget != NULL && widget->mouseovercount > 0) {
-    for (i = 0; i < widget->mouseovercount; i++) {
-      widget->mouseover[i](widget);
+  if (widget != NULL) {
+    count = widget->eventhandlers[KW_ON_MOUSEOVER].count;
+    overhandlers = (KW_OnMouseOver *) widget->eventhandlers[KW_ON_MOUSEOVER].handlers;
+    for (i = 0; i < count; i++) {
+      overhandlers[i](widget);
     }
   }
 }
 
 
 void MousePressed(KW_GUI * gui, int mousex, int mousey, int button) {
-  int i;
+  int i, count;
+  KW_OnMouseDown * handlers;
   KW_Widget * widget = gui->currentmouseover;
-  if (widget != NULL && widget->mousedowncount > 0) {
-    for (i = 0; i < widget->mousedowncount; i++) {
-      widget->mousedown[i](widget, button);
+  if (widget != NULL) {
+    count = widget->eventhandlers[KW_ON_MOUSEDOWN].count;
+    handlers = (KW_OnMouseDown *) widget->eventhandlers[KW_ON_MOUSEDOWN].handlers;
+    for (i = 0; i < count; i++) {
+      handlers[i](widget, button);
     }
   }
 }
 
 void MouseReleased(KW_GUI * gui, int mousex, int mousey, int button) {
-  int i;
+  int i, count;
+  KW_OnMouseUp * upandlers;
+  KW_OnFocusGain * gainhandlers;
+  KW_OnFocusLose * losehandlers;
   KW_Widget * widget = gui->currentmouseover;
-  if (widget != NULL && widget->mouseupcount > 0) {
-    for (i = 0; i < widget->mouseupcount; i++) {
-      widget->mouseup[i](widget, button);
+  if (widget != NULL) {
+    count = widget->eventhandlers[KW_ON_MOUSEUP].count;
+    upandlers = (KW_OnMouseUp *) widget->eventhandlers[KW_ON_MOUSEUP].handlers;
+    for (i = 0; i < count; i++) {
+      upandlers[i](widget, button);
     }
   }
+
+  
+  if (widget != NULL && widget != gui->currentfocus) {
+    /* warn that its losing focus */
+    if (gui->currentfocus != NULL) {
+      count = gui->currentfocus->eventhandlers[KW_ON_FOCUSLOSE].count;
+      losehandlers = (KW_OnFocusLose *) gui->currentfocus->eventhandlers[KW_ON_FOCUSLOSE].handlers;    
+      for (i = 0; i < count; i++) {
+        losehandlers[i](gui->currentfocus);
+      }
+    }
+    
+    /* watn that its gaining focus */
+    count = widget->eventhandlers[KW_ON_FOCUSGAIN].count;
+    gainhandlers = (KW_OnFocusGain *) widget->eventhandlers[KW_ON_FOCUSGAIN].handlers;        
+    for (i = 0; i < count; i++) {
+      gainhandlers[i](widget);
+    }
+    gui->currentfocus = widget;
+  }  
 }
 
 /* to capture mouse movements, clicks, types, etc */

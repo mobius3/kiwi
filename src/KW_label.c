@@ -2,7 +2,9 @@
 #include "KW_label.h"
 #include "KW_label_internal.h"
 #include "KW_textrenderer.h"
+#include "KW_tilerenderer.h"
 #include "KW_gui.h"
+
 
 void PaintLabel(KW_Widget * widget);
 
@@ -40,6 +42,29 @@ void KW_SetLabelAlignment(KW_Widget * widget, KW_LabelHorizontalAlignment halign
   label->valign = valign;
   label->voffset = voffset;
 }
+
+
+void KW_SetLabelCursor(KW_Widget * widget, unsigned int pos) {
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget); 
+  label->cursor = pos;
+}
+
+unsigned int KW_GetLabelCursor(KW_Widget * widget) {
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget); 
+  return label->cursor;
+}
+
+void KW_ShowLabelCursor(KW_Widget * widget) {
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget); 
+  label->showcursor = SDL_TRUE;
+}
+
+void KW_HideLabelCursor(KW_Widget * widget) {
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget); 
+  label->showcursor = SDL_FALSE;
+}
+
+
 
 
 TTF_Font * KW_GetLabelFont(KW_Widget * widget) {
@@ -85,6 +110,7 @@ void PaintLabel(KW_Widget * widget) {
   SDL_Rect src;
   
   SDL_Renderer * renderer = KW_GetWidgetRenderer(widget);
+  SDL_Texture * tileset = KW_GetWidgetTileset(widget);
   
   /* query actual w and h */
   src.x = src.y = 0;
@@ -93,6 +119,7 @@ void PaintLabel(KW_Widget * widget) {
   /* calculate target x/y */  
   KW_GetWidgetAbsoluteGeometry(widget, &dst);
   orig = dst;
+  int textw, texth;
   
   
   /* calculate x according to halign */
@@ -131,12 +158,12 @@ void PaintLabel(KW_Widget * widget) {
   
   dst.y += label->voffset;
   
-  
   /* clip texture so that it doesnt overflow desired maximum geometry */
   if (dst.x < orig.x) src.x = orig.x - dst.x;
   if (dst.y < orig.y) src.y = orig.y - dst.y;
   if (dst.x + src.w > orig.x + orig.w) src.w = orig.w + (orig.x - dst.x) - src.x;
   if (dst.y + src.h > orig.y + orig.h) src.h = orig.h + (orig.y - dst.y) - src.y;
+  else src.h = src.h - src.y;
   
   /* don stretch the image */
   dst.w = src.w;
@@ -144,4 +171,9 @@ void PaintLabel(KW_Widget * widget) {
   dst.x += src.x;
   dst.y += src.y;
   SDL_RenderCopy(renderer, label->textrender, &src, &dst);
+    
+  if (label->showcursor) {
+    TTF_SizeUTF8(KW_GetLabelFont(widget), label->text, &textw, &texth);
+    KW_RenderTileFill(renderer, tileset, 7, 7, dst.x + textw, dst.y, TILESIZE, texth);
+  }
 }

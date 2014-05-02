@@ -122,6 +122,14 @@ void DECLSPEC KW_SetLabelFont(KW_Widget * widget, TTF_Font * font);
  */
 void DECLSPEC KW_SetLabelAlignment(KW_Widget * widget, KW_LabelHorizontalAlignment halign, int hoffset, KW_LabelVerticalAlignment valign, int voffset);
 
+void DECLSPEC KW_SetLabelCursor(KW_Widget * widget, unsigned int pos);
+
+unsigned int DECLSPEC KW_GetLabelCursor(KW_Widget * widget);
+
+void DECLSPEC KW_ShowLabelCursor(KW_Widget * widget);
+
+void DECLSPEC KW_HideLabelCursor(KW_Widget * widget);
+
 /**
  * \brief   Gets the associated font with a label.
  * \param   widget The label widget.

@@ -65,33 +65,7 @@ void PaintButton(KW_Widget * widget) {
   renderer = KW_GetWidgetRenderer(widget);
   tileset = KW_GetTileset(KW_GetGUI(widget));
   
-  /* fill with background */
-  KW_RenderTileFill(renderer, tileset, 4, basec + 1, targetgeom.x + TILESIZE, targetgeom.y + TILESIZE, targetgeom.w - TILESIZE * 2, targetgeom.h - TILESIZE * 2);
-  
-  /* fill top */
-  KW_RenderTileFill(renderer, tileset, 4, basec + 0, targetgeom.x + TILESIZE, targetgeom.y, targetgeom.w - TILESIZE * 2, TILESIZE);
-  
-  /* fill bottom */
-  KW_RenderTileFill(renderer, tileset, 4, basec + 2, targetgeom.x + TILESIZE, targetgeom.y + targetgeom.h - TILESIZE, targetgeom.w - TILESIZE * 2, TILESIZE);
-  
-  /* fill left */
-  KW_RenderTileFill(renderer, tileset, 3, basec + 1, targetgeom.x, targetgeom.y + TILESIZE, TILESIZE, targetgeom.h - TILESIZE * 2);
-  
-  /* fill right */
-  KW_RenderTileFill(renderer, tileset, 5, basec + 1, targetgeom.x + (targetgeom.w - TILESIZE), targetgeom.y + TILESIZE, TILESIZE, targetgeom.h - TILESIZE * 2);
-  
-  /* render top left */
-  KW_RenderTile(renderer, tileset, 3, basec + 0, targetgeom.x, targetgeom.y);
-  
-  /* render top right */
-  KW_RenderTile(renderer, tileset, 5, basec + 0, targetgeom.x + targetgeom.w - TILESIZE, targetgeom.y);
-  
-  /* render bottom left */
-  KW_RenderTile(renderer, tileset, 3, basec + 2, targetgeom.x, targetgeom.y + targetgeom.h - TILESIZE);
-  
-  
-  /* render bottom right */
-  KW_RenderTile(renderer, tileset, 5, basec + 2, targetgeom.x + (targetgeom.w - TILESIZE), targetgeom.y + targetgeom.h - TILESIZE);
+  KW_RenderTileFrame(renderer, tileset, 3, basec, targetgeom.x, targetgeom.y, targetgeom.w, targetgeom.h);
 }
 
 void DestroyButton(KW_Widget * widget) {

@@ -86,6 +86,7 @@ int main(int argc, char ** argv) {
              geometry.x -= 10;
              break;
           }
+          printf("Got keysym %d\n", ev.key.keysym.scancode);
           
           KW_SetWidgetGeometry(frame, &geometry);
       }

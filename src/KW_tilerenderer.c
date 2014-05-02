@@ -70,5 +70,34 @@ void KW_RenderTileFill(SDL_Renderer * renderer, SDL_Texture * tileset, int colum
     
     i += TILESIZE;
   }
-  
 }
+
+void KW_RenderTileFrame(SDL_Renderer * renderer, SDL_Texture * tileset, int startcolumn, int startline, int x, int y, int w, int h) {
+  /* fill with background */
+  KW_RenderTileFill(renderer, tileset, startcolumn + 1, startline + 1, x + TILESIZE, y + TILESIZE, w - TILESIZE * 2, h - TILESIZE * 2);
+  
+  /* fill top */
+  KW_RenderTileFill(renderer, tileset, startcolumn + 1, startline + 0, x + TILESIZE, y, w - TILESIZE * 2, TILESIZE);
+  
+  /* fill bottom */
+  KW_RenderTileFill(renderer, tileset, startcolumn + 1, startline + 2, x + TILESIZE, y + h - TILESIZE, w - TILESIZE * 2, TILESIZE);
+  
+  /* fill left */
+  KW_RenderTileFill(renderer, tileset, startcolumn + 0, startline + 1, x, y + TILESIZE, TILESIZE, h - TILESIZE * 2);
+  
+  /* fill right */
+  KW_RenderTileFill(renderer, tileset, startcolumn + 2, startline + 1, x + (w - TILESIZE), y + TILESIZE, TILESIZE, h - TILESIZE * 2);
+  
+  /* render top left */
+  KW_RenderTile(renderer, tileset, startcolumn + 0, startline + 0, x, y);
+  
+  /* render top right */
+  KW_RenderTile(renderer, tileset, startcolumn + 2, startline + 0, x + w - TILESIZE, y);
+  
+  /* render bottom left */
+  KW_RenderTile(renderer, tileset, startcolumn + 0, startline + 2, x, y + h - TILESIZE);
+  
+  /* render bottom right */
+  KW_RenderTile(renderer, tileset, startcolumn + 2, startline + 2, x + (w - TILESIZE), y + h - TILESIZE);
+}
+

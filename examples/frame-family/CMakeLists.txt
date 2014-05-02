@@ -1,4 +1,4 @@
-project(playground)
+project(frame-family)
 cmake_minimum_required(VERSION 2.8)
 
 find_package(SDL2 REQUIRED)

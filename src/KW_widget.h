@@ -1,3 +1,29 @@
+/*
+  Copyright (c) 2014, Leonardo Guilherme de Freitas
+  All rights reserved.
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+
+  * Redistributions of source code must retain the above copyright notice, this
+    list of conditions and the following disclaimer.
+
+  * Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
 #ifndef KW_WIDGET_H
 #define KW_WIDGET_H
 
@@ -34,6 +60,10 @@ typedef void (*KW_OnMouseLeave)(KW_Widget * widget);
 typedef void (*KW_OnMouseDown)(KW_Widget * widget, int button);
 typedef void (*KW_OnMouseUp)(KW_Widget * widget, int button);
 
+/* focus callbacks */
+typedef void (*KW_OnFocusGain)(KW_Widget * widget);
+typedef void (*KW_OnFocusLose)(KW_Widget * widget);
+
 /**
  * \brief   The KW_WidgetType enumeration represents available widget types.
  * \details Every widget created must set a widget type even if its a custom widget.
@@ -43,6 +73,7 @@ typedef enum KW_WidgetType {
   KW_WIDGETTYPE_FRAME,
   KW_WIDGETTYPE_LABEL,
   KW_WIDGETTYPE_BUTTON,
+  KW_WIDGETTYPE_EDITBOX,
   KW_WIDGETTYPE_CUSTOM0 = 0x100000,
   KW_WIDGETTYPE_CUSTOM1,
   KW_WIDGETTYPE_CUSTOM2,
@@ -235,6 +266,8 @@ extern DECLSPEC void KW_GetWidgetComposedGeometry(KW_Widget * widget, SDL_Rect *
  */
 extern DECLSPEC void KW_PaintWidget(KW_Widget * widget);
 
+/* Stuff now related to handling of events (focus, mouse, keyboard, etc) */
+
 /**
  * \brief   Block this widget from receiving input events (mouse, keyboard, touch, etc)
  * \details You can use this function if you want to keep the widget from receiving input related events.
@@ -258,16 +291,16 @@ extern DECLSPEC void KW_UnblockWidgetInputEvents(KW_Widget * widget);
 /**
  * \brief   Adds a function that will be called whenever the mouse/cursor gets over the widget.
  * \details If you want to know when the cursor is over the widget, you can add a handler to the list.
- * \param   widget The widget to add a MouseOver handler.
- * \param   handler The OnMouseOver function pointer.
+ * \param   widget The widget to add a KW_OnMouseOver handler.
+ * \param   handler The KW_OnMouseOver function pointer.
  */
 extern DECLSPEC void KW_AddWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler);
 
 /**
- * \brief   Remove a MouseOver handler from a widget
+ * \brief   Remove a KW_OnMouseOver handler from a widget
  * \details If you're not interested anymore in MouseOver events, remove your handler.
- * \param   widget The widget to remove the MouseOver handler.
- * \param   handler The OnMouseOver function pointer.
+ * \param   widget The widget to remove the KW_OnMouseOver handler.
+ * \param   handler The KW_OnMouseOver function pointer.
  */
 extern DECLSPEC void KW_RemoveWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler);
 
@@ -275,42 +308,102 @@ extern DECLSPEC void KW_RemoveWidgetMouseOverHandler(KW_Widget * widget, KW_OnMo
 /**
  * \brief   Adds a function that will be called whenever the mouse/cursor leaves the widget.
  * \details If you want to know when the cursor lefts the widget geometry, you can add a handler to the list.
- * \param   widget The widget to add a MouseLeave handler.
- * \param   handler The OnMouseLeave function pointer.
+ * \param   widget The widget to add a KW_OnMouseLeave handler.
+ * \param   handler The KW_OnMouseLeave function pointer.
  */
 extern DECLSPEC void KW_AddWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler);
 
 /**
- * \brief   Remove a MouseLeave handler from a widget
+ * \brief   Remove a KW_OnMouseLeave handler from a widget
  * \details If you're not interested anymore in MouseLeave events, remove your handler.
- * \param   widget The widget to remove the MouseLeave handler.
- * \param   handler The OnMouseLeave function pointer.
+ * \param   widget The widget to remove the KW_OnMouseLeave handler.
+ * \param   handler The KW_OnMouseLeave function pointer.
  */
 extern DECLSPEC void KW_RemoveWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler);
 
 /**
  * \brief   Adds a function that will be called whenever the mouse/cursor clicks the widget.
  * \details If you want to know when the user clicked in your widget and with which button, insert a callback :)
- * \param   widget The widget to add a MouseDown handler.
- * \param   handler The OnMouseDown function pointer.
+ * \param   widget The widget to add a KW_OnMouseDown handler.
+ * \param   handler The KW_OnMouseDown function pointer.
  */
 extern DECLSPEC void KW_AddWidgetMouseDownHandler(KW_Widget * widget, KW_OnMouseDown handler);
 
 /**
- * \brief   Remove a MouseDown handler from a widget.
+ * \brief   Remove a KW_OnMouseDown handler from a widget.
  * \details If you're not interested anymore in MouseDown events, remove your handler.
- * \param   widget The widget to remove the MouseDown handler.
- * \param   handler The OnMouseDown function pointer.
+ * \param   widget The widget to remove the KW_OnMouseDown handler.
+ * \param   handler The KW_OnMouseDown function pointer.
  */
 extern DECLSPEC void KW_RemoveWidgetMouseDownHandler(KW_Widget * widget, KW_OnMouseDown handler);
 
 /**
  * \brief   Adds a function that will be called whenever the mouse/cursor un-clicks the widget.
  * \details If you want to know when the user released the cursor in your widget and with which button, insert a callback :)
- * \param   widget The widget to add a MouseUp handler.
- * \param   handler The OnMouseUp function pointer.
+ * \param   widget The widget to add a KW_OnMouseUp handler.
+ * \param   handler The KW_OnMouseUp function pointer.
  */
-extern DECLSPEC void KW_AddWidgetMouseUpHandler(KW_Widget * widget, KW_OnMouseDown handler);
+extern DECLSPEC void KW_AddWidgetMouseUpHandler(KW_Widget * widget, KW_OnMouseUp handler);
+
+/**
+ * \brief   Remove a KW_OnMouseUp handler from a widget.
+ * \details If you're not interested anymore in KW_OnMouseUp events, remove your handler.
+ * \param   widget The widget to remove the KW_OnMouseUp handler.
+ * \param   handler The KW_OnMouseUp function pointer.
+ */
+extern DECLSPEC void KW_RemoveWidgetMouseUpHandler(KW_Widget * widget, KW_OnMouseUp handler);
+
+
+/**
+ * \brief   Adds a function that will be called whenever the focus is gained by this widget.
+ * \details Focus usually happens when the user clicks on the widget or navigates via tab key.
+ * \param   widget The widget to add a FocusGain handler.
+ * \param   handler The OnFocusGain function pointer.
+ */
+extern DECLSPEC void KW_AddWidgetFocusGainHandler(KW_Widget * widget, KW_OnFocusGain handler);
+
+/**
+ * \brief   Remove a KW_OnFocusGain handler from a widget.
+ * \details If you're not interested anymore in FocusGain events, remove your handler.
+ * \param   widget The widget to remove the KW_OnFocusGain handler.
+ * \param   handler The KW_OnFocusGain function pointer.
+ */
+extern DECLSPEC void KW_RemoveWidgetFocusGainHandler(KW_Widget * widget, KW_OnFocusGain handler);
+
+
+
+/**
+ * \brief   Adds a function that will be called whenever the focus moves from this to another widget.
+ * \details If you want to be notified when the widget loses the focus, you should add a handler to it.
+ * \param   widget The widget to add a FocusLose handler.
+ * \param   handler The OnFocusLose function pointer.
+ */
+extern DECLSPEC void KW_AddWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFocusLose handler);
+
+
+/**
+ * \brief   Remove a KW_OnFocusLose handler from a widget.
+ * \details If you're not interested anymore in FocusLose events, remove your handler.
+ * \param   widget The widget to remove the KW_OnFocusLose handler.
+ * \param   handler The KW_OnFocusLose function pointer.
+ */
+extern DECLSPEC void KW_RemoveWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFocusLose handler);
+
+/**
+ * \brief   Change the tileset used to render this widget.
+ * \details You are still responsible for freeing the previous tileset.
+ * \param   widget The widget to change the tileset.
+ * \param   tileset The new tileset
+ */
+extern DECLSPEC void KW_SetWidgetTileset(KW_Widget * widget, SDL_Texture * tileset);
+
+/**
+ * \brief   Returns the current tileset being used by the widget.
+ * \details Keep in mind that this can be the same of the set in the KW_GUI instance.
+ * \param   widget The widget to retrieve the tileset from
+ * \returns A pointer to the SDL_Texture being used as a tileset.
+ */
+extern DECLSPEC SDL_Texture * KW_GetWidgetTileset(KW_Widget * widget);
 
 #ifdef __cplusplus
 }

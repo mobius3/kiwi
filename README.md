@@ -14,6 +14,8 @@ Here are some screenshots, though (click on them to see code):
 [![alt text](https://raw.githubusercontent.com/leonardo2d/KiWi/master/examples/playground/playground-screenshot.png "Playground screenshot")](https://github.com/leonardo2d/KiWi/blob/master/examples/playground/playground.c)
 [![alt text](https://raw.githubusercontent.com/leonardo2d/KiWi/master/examples/frame-family/frame-family-screenshot.png "A Family of Frames")](https://github.com/leonardo2d/KiWi/blob/master/examples/frame-family/frame-family.c)
 
+[![alt text](https://raw.githubusercontent.com/leonardo2d/KiWi/master/examples/frame-family/editbox-screenshot.png "Two Editboxes and a button")](https://github.com/leonardo2d/KiWi/blob/master/examples/frame-family/editboxes.c)
+
 ## Build and test KiWi:
 
 If you're feeling mighty and want to try KiWi right now, these are (roughly) the steps to do it:

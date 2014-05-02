@@ -34,6 +34,7 @@
 #include "KW_widget.h"
 #include "KW_frame.h"
 #include "KW_label.h"
+#include "KW_editbox.h"
 
 
 /** 

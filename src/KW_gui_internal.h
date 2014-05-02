@@ -11,6 +11,7 @@ struct KW_GUI {
   TTF_Font * font;
   
   KW_Widget * currentmouseover; /* the current widget that has mouse over */
+  KW_Widget * currentfocus; /* which widget was the last focused/clicked */
 };
 
 typedef struct KW_GUI KW_GUI;
