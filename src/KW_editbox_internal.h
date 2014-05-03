@@ -5,8 +5,10 @@
 
 typedef struct KW_Edtibox {
   KW_Widget * labelwidget;
-  const char * text;
+  char text[1024];
   unsigned int cursor;
+  int cursormove;
+  SDL_TimerID cursortimer;
   SDL_bool mouseover;
   SDL_bool clicked;
   SDL_bool active;

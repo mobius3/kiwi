@@ -64,6 +64,11 @@ typedef void (*KW_OnMouseUp)(KW_Widget * widget, int button);
 typedef void (*KW_OnFocusGain)(KW_Widget * widget);
 typedef void (*KW_OnFocusLose)(KW_Widget * widget);
 
+/* text and keyboard callbacks */
+typedef void (*KW_OnTextInput)(KW_Widget * widget, const char * text);
+typedef void (*KW_OnKeyDown)(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode code);
+typedef void (*KW_OnKeyUp)(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode code);
+
 /**
  * \brief   The KW_WidgetType enumeration represents available widget types.
  * \details Every widget created must set a widget type even if its a custom widget.
@@ -194,9 +199,10 @@ extern DECLSPEC KW_Widget * KW_GetWidgetParent(KW_Widget * widget);
  * \details If you are implementing a custom widget, you must call this function to access the data you
  *          set up previously when the widget was created.
  * \param   widget The widget to retrieve the data from.
- * \returns The data pointer.
+ * \param   type The widget type you're expecting @p widget to be
+ * \returns The data pointer or NULL if the widget types don't match.
  */
-extern DECLSPEC void * KW_GetWidgetData(KW_Widget * widget);
+extern DECLSPEC void * KW_GetWidgetData(KW_Widget * widget, KW_WidgetType type);
 
 /**
  * \brief   Destroys a widget and free its resources.
@@ -370,8 +376,6 @@ extern DECLSPEC void KW_AddWidgetFocusGainHandler(KW_Widget * widget, KW_OnFocus
  */
 extern DECLSPEC void KW_RemoveWidgetFocusGainHandler(KW_Widget * widget, KW_OnFocusGain handler);
 
-
-
 /**
  * \brief   Adds a function that will be called whenever the focus moves from this to another widget.
  * \details If you want to be notified when the widget loses the focus, you should add a handler to it.
@@ -380,7 +384,6 @@ extern DECLSPEC void KW_RemoveWidgetFocusGainHandler(KW_Widget * widget, KW_OnFo
  */
 extern DECLSPEC void KW_AddWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFocusLose handler);
 
-
 /**
  * \brief   Remove a KW_OnFocusLose handler from a widget.
  * \details If you're not interested anymore in FocusLose events, remove your handler.
@@ -388,6 +391,58 @@ extern DECLSPEC void KW_AddWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFocus
  * \param   handler The KW_OnFocusLose function pointer.
  */
 extern DECLSPEC void KW_RemoveWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFocusLose handler);
+
+/**
+ * \brief   Adds a function that will be called when there's new text input.
+ * \details This handler will *only* be called if this widget is the focused widget *and* you called SDL_StartTextInput().
+ * \param   widget The widget to add a KW_OnTextInput handler.
+ * \param   handler The KW_OnTextInput function pointer.
+ */
+extern DECLSPEC void KW_AddWidgetTextInputHandler(KW_Widget * widget, KW_OnTextInput handler);
+
+
+/**
+ * \brief   Remove a KW_OnTextInput handler from a widget.
+ * \details If you're not interested anymore in KW_OnTextInput events, remove your handler.
+ * \param   widget The widget to remove the KW_OnTextInput handler.
+ * \param   handler The KW_OnTextInput function pointer.
+ */
+extern DECLSPEC void KW_RemoveWidgetTextInputHandler(KW_Widget * widget, KW_OnTextInput handler);
+
+
+/**
+ * \brief   Adds a function that will be called when there's a key pressed.
+ * \details This handler will *only* be called if this widget is the focused widget.
+ * \param   widget The widget to add a KW_OnKeyDown handler.
+ * \param   handler The KW_OnKeyDown function pointer.
+ */
+extern DECLSPEC void KW_AddWidgetKeyDownHandler(KW_Widget * widget, KW_OnKeyDown handler);
+
+
+/**
+ * \brief   Remove a KW_OnKeyDown handler from a widget.
+ * \details If you're not interested anymore in KW_OnKeyDown events, remove your handler.
+ * \param   widget The widget to remove the KW_OnKeyDown handler.
+ * \param   handler The KW_OnKeyDown function pointer.
+ */
+extern DECLSPEC void KW_RemoveWidgetKeyDownHandler(KW_Widget * widget, KW_OnKeyDown handler);
+
+/**
+ * \brief   Adds a function that will be called when there's a key released.
+ * \details This handler will *only* be called if this widget is the focused widget.
+ * \param   widget The widget to add a KW_OnKeyUp handler.
+ * \param   handler The KW_OnKeyUp function pointer.
+ */
+extern DECLSPEC void KW_AddWidgetKeyUpHandler(KW_Widget * widget, KW_OnKeyUp handler);
+
+
+/**
+ * \brief   Remove a KW_OnKeyUp handler from a widget.
+ * \details If you're not interested anymore in KW_OnKeyUp events, remove your handler.
+ * \param   widget The widget to remove the KW_OnKeyUp handler.
+ * \param   handler The KW_OnKeyUp function pointer.
+ */
+extern DECLSPEC void KW_RemoveWidgetKeyUpHandler(KW_Widget * widget, KW_OnKeyUp handler);
 
 /**
  * \brief   Change the tileset used to render this widget.

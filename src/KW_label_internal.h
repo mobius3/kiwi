@@ -18,6 +18,15 @@ struct KW_Label {
   int voffset;
   unsigned int cursor;
   SDL_bool showcursor;
+  SDL_bool dirty;
+  
+  
+  int textwidth;
+  int textheight;
+  int cursorx;
+  int cursory;
+  
+  int x;
 } KW_Label;
 
 #endif

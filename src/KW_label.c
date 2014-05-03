@@ -9,7 +9,7 @@
 void PaintLabel(KW_Widget * widget);
 
 void RenderLabelText(KW_Widget * widget) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget);
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
   if (label->textrender != NULL) {
     SDL_DestroyTexture(label->textrender);
   }
@@ -17,10 +17,17 @@ void RenderLabelText(KW_Widget * widget) {
   label->textrender = KW_RenderTextLine(KW_GetLabelFont(widget),
                                          KW_GetWidgetRenderer(widget),
                                          label->text, label->color, label->style);
+
+  if (label->textrender != NULL)
+    SDL_QueryTexture(label->textrender, NULL, NULL, &(label->textwidth), &(label->textheight));
+  else
+    TTF_SizeUTF8(label->font, "", &(label->textwidth), &(label->textheight));
+  
+  KW_SetLabelCursor(widget, label->cursor);
 }
 
 void DestroyLabel(KW_Widget * widget) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget);
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
   free(label->text);
   SDL_DestroyTexture(label->textrender);
   free(label);
@@ -36,7 +43,7 @@ KW_Widget * KW_CreateLabel(KW_GUI * gui, KW_Widget * parent, const char * text, 
 }
 
 void KW_SetLabelAlignment(KW_Widget * widget, KW_LabelHorizontalAlignment halign, int hoffset, KW_LabelVerticalAlignment valign, int voffset) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget); 
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL); 
   label->halign = halign;
   label->hoffset = hoffset;
   label->valign = valign;
@@ -45,22 +52,29 @@ void KW_SetLabelAlignment(KW_Widget * widget, KW_LabelHorizontalAlignment halign
 
 
 void KW_SetLabelCursor(KW_Widget * widget, unsigned int pos) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget); 
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL); 
+  char save;
   label->cursor = pos;
+  if (label->text != NULL) {
+    save = label->text[pos];
+    label->text[pos] = '\0';
+    TTF_SizeUTF8(label->font, label->text, &(label->cursorx), &(label->cursory));
+    label->text[pos] = save;
+  }
 }
 
 unsigned int KW_GetLabelCursor(KW_Widget * widget) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget); 
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL); 
   return label->cursor;
 }
 
 void KW_ShowLabelCursor(KW_Widget * widget) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget); 
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL); 
   label->showcursor = SDL_TRUE;
 }
 
 void KW_HideLabelCursor(KW_Widget * widget) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget); 
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL); 
   label->showcursor = SDL_FALSE;
 }
 
@@ -68,42 +82,43 @@ void KW_HideLabelCursor(KW_Widget * widget) {
 
 
 TTF_Font * KW_GetLabelFont(KW_Widget * widget) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget);
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
   return label->font;
 }
 
 
 void KW_SetLabelFont(KW_Widget * widget, TTF_Font * font) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget);
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
   label->font = font;
   RenderLabelText(widget);
 }
 
 
 void KW_SetLabelText(KW_Widget * widget, const char * text) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget);
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
   if (label->text != NULL) {
     free(label->text);
   }
   label->text = SDL_strdup(text);
   RenderLabelText(widget);
+  label->dirty = SDL_TRUE;
 }
 
 void KW_SetLabelStyle(KW_Widget * widget, int style) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget);
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
   label->style = style;
   RenderLabelText(widget);
 }
 
 void KW_SetLabelColor(KW_Widget * widget, SDL_Color color) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget);
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
   label->color = color;
   RenderLabelText(widget);
 }
 
 
 void PaintLabel(KW_Widget * widget) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget);
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
   
   SDL_Rect orig;
   SDL_Rect dst;
@@ -114,14 +129,13 @@ void PaintLabel(KW_Widget * widget) {
   
   /* query actual w and h */
   src.x = src.y = 0;
-  SDL_QueryTexture(label->textrender, NULL, NULL, &src.w, &src.h);
-
+  src.w = label->textwidth;
+  src.h = label->textheight;
+  
   /* calculate target x/y */  
   KW_GetWidgetAbsoluteGeometry(widget, &dst);
   orig = dst;
-  int textw, texth;
-  
-  
+
   /* calculate x according to halign */
   switch (label->halign) {
     
@@ -139,6 +153,7 @@ void PaintLabel(KW_Widget * widget) {
         break;
   };
   
+  /* apply horizontal offset */
   dst.x += label->hoffset;
   
   /* calculate y according to valign */
@@ -156,6 +171,7 @@ void PaintLabel(KW_Widget * widget) {
       break;
   }
   
+  /* apply vertical offset */
   dst.y += label->voffset;
   
   /* clip texture so that it doesnt overflow desired maximum geometry */
@@ -170,10 +186,28 @@ void PaintLabel(KW_Widget * widget) {
   dst.h = src.h;
   dst.x += src.x;
   dst.y += src.y;
-  SDL_RenderCopy(renderer, label->textrender, &src, &dst);
+  
+  int cursorxoffset = 0;
     
   if (label->showcursor) {
-    TTF_SizeUTF8(KW_GetLabelFont(widget), label->text, &textw, &texth);
-    KW_RenderTileFill(renderer, tileset, 7, 7, dst.x + textw, dst.y, TILESIZE, texth);
+    /* check if cursor is past size label size plus previous position. */
+    if (label->cursorx > label->x + src.w) {
+      src.x = src.x + label->cursorx - src.w;
+      /* save x */
+      label->x = src.x;
+    }
+    else if (label->cursorx < label->x) {
+      src.x = label->cursorx;
+      label->x = src.x;
+    } else {
+      src.x = label->x;
+      cursorxoffset = label->cursorx - src.x;
+    }
+    
+    KW_RenderTileFill(renderer, tileset, 7, 7, dst.x + cursorxoffset, dst.y, TILESIZE, label->textheight);
+    SDL_RenderCopy(renderer, label->textrender, &src, &dst);
+  } else {
+    SDL_RenderCopy(renderer, label->textrender, &src, &dst);
   }
+  
 }

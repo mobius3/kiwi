@@ -37,7 +37,8 @@ SDL_Texture * KW_GetWidgetTileset(KW_Widget * widget) {
   return widget->tileset;
 }
 
-void * KW_GetWidgetData(KW_Widget * widget) {
+void * KW_GetWidgetData(KW_Widget * widget, KW_WidgetType type) {
+  if (widget->type != type) return NULL;
   return widget->privdata;
 }
 
@@ -246,8 +247,6 @@ void Reparent(KW_Widget * widget, KW_Widget * newparent) {
     /* need to recalculate new parent area */
     CalculateComposedGeometry(newparent);
   }
-  
-
 }
 
 
@@ -359,5 +358,29 @@ void KW_AddWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFocusLose handler) {
 
 void KW_RemoveWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFocusLose handler) {
   RemoveHandler(widget, KW_ON_FOCUSLOSE, handler);
+}
+
+void KW_AddWidgetTextInputHandler(KW_Widget * widget, KW_OnTextInput handler) {
+  AddHandler(widget, KW_ON_TEXTINPUT, handler);
+}
+
+void KW_RemoveWidgetTextInputHandler(KW_Widget * widget, KW_OnTextInput handler) {
+  RemoveHandler(widget, KW_ON_TEXTINPUT, handler);
+}
+
+void KW_AddWidgetKeyDownHandler(KW_Widget * widget, KW_OnKeyDown handler) {
+  AddHandler(widget, KW_ON_KEYDOWN, handler);
+}
+
+void KW_RemoveWidgetKeyDownHandler(KW_Widget * widget, KW_OnKeyDown handler) {
+  RemoveHandler(widget, KW_ON_KEYDOWN, handler);
+}
+
+void KW_AddWidgetKeyUpHandler(KW_Widget * widget, KW_OnKeyUp handler) {
+  AddHandler(widget, KW_ON_KEYUP, handler);
+}
+
+void KW_RemoveWidgetKeyUpHandler(KW_Widget * widget, KW_OnKeyUp handler) {
+  RemoveHandler(widget, KW_ON_KEYUP, handler);
 }
 

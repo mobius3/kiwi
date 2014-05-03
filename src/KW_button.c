@@ -9,23 +9,23 @@ void PaintButton(KW_Widget * widget);
 void DestroyButton(KW_Widget * widget);
 
 static void MouseOver(KW_Widget * widget) {
-  KW_Button * button = KW_GetWidgetData(widget);
+  KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
   button->mouseover = SDL_TRUE;
 }
 
 
 static void MouseLeave(KW_Widget * widget) {
-  KW_Button * button = KW_GetWidgetData(widget);
+  KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
   button->mouseover = SDL_FALSE;
 }
 
 static void MousePress(KW_Widget * widget, int b) {
-  KW_Button * button = KW_GetWidgetData(widget);
+  KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
   button->clicked = SDL_TRUE;
 }
 
 static void MouseRelease(KW_Widget * widget, int b) {
-  KW_Button * button = KW_GetWidgetData(widget);
+  KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
   button->clicked = SDL_FALSE;
 }
 
@@ -51,7 +51,7 @@ KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, const char * text,
 /** internal stuff **/
 
 void PaintButton(KW_Widget * widget) {
-  KW_Button * button = KW_GetWidgetData(widget);
+  KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
   /* base column for tile rendering */
   int basec = 0;
   if (button->mouseover) basec = 3;

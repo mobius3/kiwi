@@ -116,6 +116,39 @@ void MouseReleased(KW_GUI * gui, int mousex, int mousey, int button) {
   }  
 }
 
+void TextInputReady(KW_GUI * gui, const char * text) {
+  int count, i;
+  KW_OnTextInput * handlers;
+  if (gui->currentfocus == NULL) return;
+  count = gui->currentfocus->eventhandlers[KW_ON_TEXTINPUT].count;
+  handlers = (KW_OnTextInput*) gui->currentfocus->eventhandlers[KW_ON_TEXTINPUT].handlers;
+  for (i = 0; i < count; i++) {
+    handlers[i](gui->currentfocus, text);
+  }
+}
+
+void KeyUp(KW_GUI * gui, SDL_Keycode key, SDL_Scancode scan) {
+  int count, i;
+  KW_OnKeyUp * handlers;
+  if (gui->currentfocus == NULL) return;
+  count = gui->currentfocus->eventhandlers[KW_ON_KEYUP].count;
+  handlers = (KW_OnKeyUp*) gui->currentfocus->eventhandlers[KW_ON_KEYUP].handlers;
+  for (i = 0; i < count; i++) {
+    handlers[i](gui->currentfocus, key, scan);
+  }
+}
+
+void KeyDown(KW_GUI * gui, SDL_Keycode key, SDL_Scancode scan) {
+  int count, i;
+  KW_OnKeyDown * handlers;
+  if (gui->currentfocus == NULL) return;
+  count = gui->currentfocus->eventhandlers[KW_ON_KEYDOWN].count;
+  handlers = (KW_OnKeyDown*) gui->currentfocus->eventhandlers[KW_ON_KEYDOWN].handlers;
+  for (i = 0; i < count; i++) {
+    handlers[i](gui->currentfocus, key, scan);
+  }
+}
+
 /* to capture mouse movements, clicks, types, etc */
 int KW_EventWatcher(void * data, SDL_Event * event) {
   KW_GUI * gui = (KW_GUI *) data;
@@ -130,8 +163,24 @@ int KW_EventWatcher(void * data, SDL_Event * event) {
     case SDL_MOUSEBUTTONUP:
       MouseReleased(gui, event->button.x, event->button.y, event->button.button);
       break;
+      
+    case SDL_TEXTINPUT:
+      TextInputReady(gui, event->text.text);
+      break;
+      
+    case SDL_TEXTEDITING:
+      break;
+      
+    case SDL_KEYDOWN:
+      KeyDown(gui, event->key.keysym.sym, event->key.keysym.scancode);
+      break;
+    case SDL_KEYUP:
+      KeyUp(gui, event->key.keysym.sym, event->key.keysym.scancode);
+      break;      
     default:
       break;
+      
+      
   }
   
   return 1;

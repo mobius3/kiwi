@@ -12,6 +12,9 @@ typedef enum KW_WidgetEventHandlerType {
   KW_ON_MOUSEUP,
   KW_ON_FOCUSGAIN,
   KW_ON_FOCUSLOSE,
+  KW_ON_TEXTINPUT,
+  KW_ON_KEYDOWN,
+  KW_ON_KEYUP,
   KW_EVENTHANDLER_TOTAL
 } KW_WidgetEventHandlerType;
 
