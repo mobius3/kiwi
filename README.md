@@ -14,7 +14,7 @@ Here are some screenshots, though (click on them to see code):
 [![alt text](https://raw.githubusercontent.com/leonardo2d/KiWi/master/examples/playground/playground-screenshot.png "Playground screenshot")](https://github.com/leonardo2d/KiWi/blob/master/examples/playground/playground.c)
 [![alt text](https://raw.githubusercontent.com/leonardo2d/KiWi/master/examples/frame-family/frame-family-screenshot.png "A Family of Frames")](https://github.com/leonardo2d/KiWi/blob/master/examples/frame-family/frame-family.c)
 
-[![alt text](https://raw.githubusercontent.com/leonardo2d/KiWi/master/examples/frame-family/editbox-screenshot.png "Two Editboxes and a button")](https://github.com/leonardo2d/KiWi/blob/master/examples/frame-family/editboxes.c)
+[![alt text](https://raw.githubusercontent.com/leonardo2d/KiWi/master/examples/editbox/editbox-screenshot.png "Two Editboxes and a button")](https://github.com/leonardo2d/KiWi/blob/master/examples/editbox/editbox.c)
 
 ## Build and test KiWi:
 
