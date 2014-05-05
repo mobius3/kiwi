@@ -270,6 +270,11 @@ void KeyUp(KW_Widget * widget, SDL_Keycode key, SDL_Scancode scan) {
 
 
 void TextBackspace(KW_Widget * widget) {
+  AdjustCursor(widget, -1);
+  TextDelete(widget);
+}
+
+void TextDelete(KW_Widget * widget) {
   int i = 0;
   KW_Editbox * editbx = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
   if (editbx->cursor == 0) {
@@ -277,15 +282,10 @@ void TextBackspace(KW_Widget * widget) {
   }
   int len = SDL_strlen(editbx->text);
 
-  AdjustCursor(widget, -1);
   for (i = editbx->cursor; i < len; i++) {
     editbx->text[i] = editbx->text[i + 1];
   }
   RenderEditboxText(widget);
-
-}
-
-void TextDelete(KW_Widget * widget) {
 }
 
 
