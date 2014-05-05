@@ -2,8 +2,11 @@
 #define KW_EDITBOX_INTERNAL_H
 
 #include "SDL.h"
+#include "KW_widget.h"
 
 typedef struct KW_Edtibox {
+  KW_Widget * widget;         // the widget we pertain to
+  
   char text[1024];            // the actual text
   SDL_Texture * textrender;   // the rendered text
   TTF_Font * font;            // font used to render text
