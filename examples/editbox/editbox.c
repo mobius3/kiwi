@@ -11,7 +11,7 @@ int main(int argc, char ** argv) {
   SDL_Renderer * renderer;
   SDL_CreateWindowAndRenderer(320, 240, 0, &window, &renderer);
   SDL_SetRenderDrawColor(renderer, 100, 100, 200, 1);
-  
+  SDL_RenderSetLogicalSize(renderer, 320, 240);
   TTF_Init();
   
   /* load tileset */
