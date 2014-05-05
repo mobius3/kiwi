@@ -15,9 +15,7 @@ KW_GUI * KW_Init(SDL_Renderer * renderer, SDL_Texture * tileset) {
   gui->renderer = renderer;
   gui->rootwidget = AllocWidget();
   gui->rootwidget->gui = gui;
-  
-  SDL_AddEventWatch(KW_EventWatcher, gui);
-  
+
   return gui;
 }
 
@@ -69,5 +67,9 @@ KW_GUI * KW_GetGUI(KW_Widget * widget) {
 
 void KW_Paint(KW_GUI * gui) {
   KW_PaintWidget(gui->rootwidget);
+}
+
+void KW_PushEvent(KW_GUI * gui, SDL_Event * ev) {
+  KW_EventWatcher(gui, ev);
 }
 

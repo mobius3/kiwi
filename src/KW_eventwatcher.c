@@ -179,8 +179,6 @@ int KW_EventWatcher(void * data, SDL_Event * event) {
       break;      
     default:
       break;
-      
-      
   }
   
   return 1;

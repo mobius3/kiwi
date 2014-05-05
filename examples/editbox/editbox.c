@@ -45,8 +45,9 @@ int main(int argc, char ** argv) {
   l = KW_CreateLabel(gui, frame, "Again:", &labelgeom);
   KW_SetLabelAlignment(l, KW_LABEL_ALIGN_RIGHT, 0, KW_LABEL_ALIGN_MIDDLE, 0);
 
- 
+  SDL_Event ev;
   while (!SDL_QuitRequested()) {
+    while (SDL_PollEvent(&ev)) KW_PushEvent(gui, &ev);
     SDL_RenderClear(renderer);
     KW_Paint(gui);
     SDL_RenderPresent(renderer);
