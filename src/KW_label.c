@@ -22,8 +22,6 @@ void RenderLabelText(KW_Widget * widget) {
     SDL_QueryTexture(label->textrender, NULL, NULL, &(label->textwidth), &(label->textheight));
   else
     TTF_SizeUTF8(label->font, "", &(label->textwidth), &(label->textheight));
-  
-  KW_SetLabelCursor(widget, label->cursor);
 }
 
 void DestroyLabel(KW_Widget * widget) {
@@ -49,36 +47,6 @@ void KW_SetLabelAlignment(KW_Widget * widget, KW_LabelHorizontalAlignment halign
   label->valign = valign;
   label->voffset = voffset;
 }
-
-
-void KW_SetLabelCursor(KW_Widget * widget, unsigned int pos) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL); 
-  char save;
-  label->cursor = pos;
-  if (label->text != NULL) {
-    save = label->text[pos];
-    label->text[pos] = '\0';
-    TTF_SizeUTF8(label->font, label->text, &(label->cursorx), &(label->cursory));
-    label->text[pos] = save;
-  }
-}
-
-unsigned int KW_GetLabelCursor(KW_Widget * widget) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL); 
-  return label->cursor;
-}
-
-void KW_ShowLabelCursor(KW_Widget * widget) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL); 
-  label->showcursor = SDL_TRUE;
-}
-
-void KW_HideLabelCursor(KW_Widget * widget) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL); 
-  label->showcursor = SDL_FALSE;
-}
-
-
 
 
 TTF_Font * KW_GetLabelFont(KW_Widget * widget) {
@@ -125,7 +93,6 @@ void PaintLabel(KW_Widget * widget) {
   SDL_Rect src;
   
   SDL_Renderer * renderer = KW_GetWidgetRenderer(widget);
-  SDL_Texture * tileset = KW_GetWidgetTileset(widget);
   
   /* query actual w and h */
   src.x = src.y = 0;
@@ -175,39 +142,17 @@ void PaintLabel(KW_Widget * widget) {
   dst.y += label->voffset;
   
   /* clip texture so that it doesnt overflow desired maximum geometry */
-  if (dst.x < orig.x) src.x = orig.x - dst.x;
-  if (dst.y < orig.y) src.y = orig.y - dst.y;
-  if (dst.x + src.w > orig.x + orig.w) src.w = orig.w + (orig.x - dst.x) - src.x;
-  if (dst.y + src.h > orig.y + orig.h) src.h = orig.h + (orig.y - dst.y) - src.y;
+  if (dst.x < orig.x) src.x = orig.x - dst.x; // clip left part (centering and right align overflows to the left)
+  if (dst.y < orig.y) src.y = orig.y - dst.y; // clip top part (middle, bottom align migh overflow top)
+  if (dst.x + src.w > orig.x + orig.w) src.w = orig.w + (orig.x - dst.x) - src.x; // clip right part (centering, left align)
+  if (dst.y + src.h > orig.y + orig.h) src.h = orig.h + (orig.y - dst.y) - src.y; // clip bottom part (middle, top)
   else src.h = src.h - src.y;
   
   /* don stretch the image */
   dst.w = src.w;
   dst.h = src.h;
-  dst.x += src.x;
+  dst.x += src.x; // adjust dst x to consider new clipping
   dst.y += src.y;
   
-  int cursorxoffset = 0;
-    
-  if (label->showcursor) {
-    /* check if cursor is past size label size plus previous position. */
-    if (label->cursorx > label->x + src.w) {
-      src.x = src.x + label->cursorx - src.w;
-      /* save x */
-      label->x = src.x;
-    }
-    else if (label->cursorx < label->x) {
-      src.x = label->cursorx;
-      label->x = src.x;
-    } else {
-      src.x = label->x;
-      cursorxoffset = label->cursorx - src.x;
-    }
-    
-    KW_RenderTileFill(renderer, tileset, 7, 7, dst.x + cursorxoffset, dst.y, TILESIZE, label->textheight);
-    SDL_RenderCopy(renderer, label->textrender, &src, &dst);
-  } else {
-    SDL_RenderCopy(renderer, label->textrender, &src, &dst);
-  }
-  
+  SDL_RenderCopy(renderer, label->textrender, &src, &dst);
 }
