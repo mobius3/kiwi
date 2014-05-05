@@ -200,7 +200,8 @@ KW_Editbox * AllocEditbox() {
 }
 
 void DestroyEditbox(KW_Widget * widget) {
-
+  KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
+  free(editbox);
 }
 
 void AdjustCursor(KW_Editbox * editbox, int cursormove) {

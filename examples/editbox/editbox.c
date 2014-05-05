@@ -16,11 +16,11 @@ int main(int argc, char ** argv) {
   
   /* load tileset */
   SDL_Texture * set;
-  set = IMG_LoadTexture(renderer, "tileset.png");
+  set = IMG_LoadTexture_RW(renderer, SDL_RWFromFile("tileset.png", "r"), SDL_TRUE);
   
   /* initialize gui */
   KW_GUI * gui = KW_Init(renderer, set);
-  TTF_Font * font = TTF_OpenFont("Fontin-Regular.ttf", 12);
+  TTF_Font * font = TTF_OpenFontRW(SDL_RWFromFile("Fontin-Regular.ttf", "r"), SDL_TRUE, 12);
   KW_SetFont(gui, font);
 
   SDL_Rect framegeom, editgeom, labelgeom, buttongeom;
