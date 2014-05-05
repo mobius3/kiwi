@@ -233,6 +233,7 @@ void AdjustCursor(KW_Widget * widget, int cursormove) {
 }
 
 void KeyDown(KW_Widget * widget, SDL_Keycode key, SDL_Scancode scan) {
+  KW_Editbox * editbx = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);  
   switch (scan) {
       /* set up cursor states */
     case SDL_SCANCODE_LEFT:
@@ -250,6 +251,14 @@ void KeyDown(KW_Widget * widget, SDL_Keycode key, SDL_Scancode scan) {
       TextDelete(widget);
       break;
 
+    case SDL_SCANCODE_HOME:
+      AdjustCursor(widget, -SDL_strlen(editbx->text));
+      break;
+      
+    case SDL_SCANCODE_END:
+      AdjustCursor(widget, SDL_strlen(editbx->text));
+      break;
+      
     default:
       break;
   }
