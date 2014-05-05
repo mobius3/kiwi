@@ -54,6 +54,7 @@ int main(int argc, char ** argv) {
   while (!SDL_QuitRequested()) {
     
     while (SDL_PollEvent(&ev)) {
+      KW_PushEvent(gui, &ev);
       switch (ev.type) {
         case SDL_KEYDOWN:
           switch (ev.key.keysym.sym) {

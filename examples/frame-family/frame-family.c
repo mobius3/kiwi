@@ -34,8 +34,9 @@ int main(int argc, char ** argv) {
     frame = KW_CreateButton(gui, frame, "Yay", &framegeom);
     //KW_CreateLabel(gui, frame, "KiWi", &labelgeom);
   }
-  
+  SDL_Event ev;
   while (!SDL_QuitRequested()) {
+    while (SDL_PollEvent(&ev)) KW_PushEvent(gui, &ev);
     SDL_RenderClear(renderer);
     KW_Paint(gui);
     SDL_RenderPresent(renderer);
