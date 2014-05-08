@@ -12,6 +12,10 @@ struct KW_GUI {
   
   KW_Widget * currentmouseover; /* the current widget that has mouse over */
   KW_Widget * currentfocus; /* which widget was the last focused/clicked */
+  
+  SDL_Event evqueue[1024];
+  int evqueuesize;
+  SDL_mutex * evqueuelock;
 };
 
 typedef struct KW_GUI KW_GUI;

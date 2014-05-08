@@ -73,6 +73,8 @@ void KW_SetEditboxCursorPosition(KW_Widget * widget, unsigned int pos) {
 void KW_SetEditboxFont(KW_Widget * widget, TTF_Font * font) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
   editbox->font = font;
+  RenderEditboxText(editbox);
+  AdjustCursor(editbox, 1);
 }
 
 void KW_SetEditboxText(KW_Widget * widget, const char * text) {

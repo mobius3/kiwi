@@ -150,17 +150,6 @@ extern DECLSPEC TTF_Font * KW_GetFont(KW_GUI * gui);
  */
 extern DECLSPEC void KW_Paint(KW_GUI * gui);
 
-/**
- * \brief   Adds a new event to be processed by KiWi
- * \details Events needs to be pushed in the same thread that renders because
- *          some SDL calls are dangerous to call from other threads (looking
- *          at you, SDL_StartTextInput()!) on some devices (looking at you,
- *          Android!)
- * \param   gui The KW_GUI instance that will process the events.
- * \param   ev The event to be processed.
- */
-extern DECLSPEC void KW_PushEvent(KW_GUI * gui, SDL_Event * ev);
-
 #ifdef __cplusplus
 }
 #endif
