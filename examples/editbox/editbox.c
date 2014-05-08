@@ -20,7 +20,7 @@ int main(int argc, char ** argv) {
   
   /* initialize gui */
   KW_GUI * gui = KW_Init(renderer, set);
-  TTF_Font * font = TTF_OpenFontRW(SDL_RWFromFile("Fontin-Regular.ttf", "r"), SDL_TRUE, 12);
+  TTF_Font * font = TTF_OpenFontRW(SDL_RWFromFile("DejaVuSans.ttf", "r"), SDL_TRUE, 12);
   KW_SetFont(gui, font);
 
   SDL_Rect framegeom, editgeom, labelgeom, buttongeom;

@@ -4,6 +4,7 @@
 #include "KW_editbox_internal.h"
 #include "KW_tilerenderer.h"
 #include "KW_textrenderer.h"
+#include "utf8.h"
 
 /* util functions */
 void RenderEditboxText(KW_Editbox * editbox);
@@ -203,7 +204,6 @@ void DestroyEditbox(KW_Widget * widget) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
   free(editbox);
 }
-
 void AdjustCursor(KW_Editbox * editbox, int cursormove) {
   char save;
   int len = SDL_strlen(editbox->text);
@@ -219,7 +219,27 @@ void AdjustCursor(KW_Editbox * editbox, int cursormove) {
     }
   }
 
-  editbox->cursor += cursormove;
+  /* now account for UTF-8 */
+  if (cursormove > 0) {
+    /* its a UTF-8 sequence */
+    while (cursormove-- > 0) {
+      (void)(
+           isutf(editbox->text[++(editbox->cursor)])
+        || isutf(editbox->text[++(editbox->cursor)])
+        || isutf(editbox->text[++(editbox->cursor)])
+        || ++(editbox->cursor)
+      );
+    }
+  } else if (cursormove < 0) {
+    while (cursormove++ < 0) {
+      (void)(
+        isutf(editbox->text[--(editbox->cursor)])
+        || isutf(editbox->text[--(editbox->cursor)])
+        || isutf(editbox->text[--(editbox->cursor)])
+        || --(editbox->cursor)
+      );
+    }
+  }
 
   /* recalculate cursor position */
   save = editbox->text[editbox->cursor];
@@ -236,9 +256,10 @@ void TextBackspace(KW_Editbox * editbox) {
 void TextDelete(KW_Editbox * editbox) {
   int i = 0;
   int len = SDL_strlen(editbox->text);
-
+  int seq = u8_seqlen(editbox->text[editbox->cursor]);
+  printf("seqlen is %d\n", seq);
   for (i = editbox->cursor; i < len; i++) {
-    editbox->text[i] = editbox->text[i + 1];
+    editbox->text[i] = editbox->text[i + seq];
   }
   RenderEditboxText(editbox);
 }
@@ -264,11 +285,11 @@ void KeyDown(KW_Widget * widget, SDL_Keycode key, SDL_Scancode scan) {
       break;
       
     case SDL_SCANCODE_HOME:
-      AdjustCursor(editbox, -SDL_strlen(editbox->text));
+      AdjustCursor(editbox, -u8_strlen(editbox->text));
       break;
       
     case SDL_SCANCODE_END:
-      AdjustCursor(editbox, SDL_strlen(editbox->text));
+      AdjustCursor(editbox, u8_strlen(editbox->text));
       break;
       
     default:
@@ -278,11 +299,12 @@ void KeyDown(KW_Widget * widget, SDL_Keycode key, SDL_Scancode scan) {
 
 static void TextInput(KW_Widget * widget, const char * text) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
-  int i = 0, insertlen, textlen;
+  int i = 0, insertlen, textlen, cursoradjust;
 
   /* make room in the middle */
   i = editbox->cursor;
   insertlen = SDL_strlen(text);
+  cursoradjust = insertlen;
   textlen = SDL_strlen(editbox->text);
 
   for (i = textlen; i >= editbox->cursor && i > 0; i--) {
@@ -292,7 +314,11 @@ static void TextInput(KW_Widget * widget, const char * text) {
   for (i = 0; i < insertlen; i++) {
     editbox->text[editbox->cursor + i] = text[i];
   }
-  AdjustCursor(editbox, insertlen);
+  
+  /* correct insertlen if its utf8 because AdjustCursor is in terms
+   *  of perceived chars */
+  cursoradjust = u8_strlen(text);
+  AdjustCursor(editbox, cursoradjust);
   RenderEditboxText(editbox);
 }
 
