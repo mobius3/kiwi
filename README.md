@@ -16,6 +16,8 @@ Here are some screenshots, though (click on them to see code):
 
 [![alt text](https://raw.githubusercontent.com/leonardo2d/KiWi/master/examples/editbox/editbox-screenshot.png "Two Editboxes and a button")](https://github.com/leonardo2d/KiWi/blob/master/examples/editbox/editbox.c)
 
+Check the [roadmap]!
+
 ## Build and test KiWi:
 
 If you're feeling mighty and want to try KiWi right now, these are (roughly) the steps to do it:
@@ -76,3 +78,4 @@ int main(int argc, char ** argv) {
 [SDL2]: http://libsdl.org
 [SDL2_ttf]: https://www.libsdl.org/projects/SDL_ttf/
 [SDL2_image]: https://www.libsdl.org/projects/SDL_image/
+[roadmap]: https://github.com/leonardo2d/KiWi/blob/master/ROADMAP.md
