@@ -34,7 +34,7 @@ You can test the examples inside the `build/examples/` folder.
 
 Here is a very basic code that draws a label on screen:
 
-```
+```cpp
 #include "SDL.h"
 #include "SDL_ttf.h"
 #include "KW_gui.h"
