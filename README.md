@@ -15,6 +15,7 @@ Here are some screenshots, though (click on them to see code):
 [![alt text](https://raw.githubusercontent.com/leonardo2d/KiWi/master/examples/frame-family/frame-family-screenshot.png "A Family of Frames")](https://github.com/leonardo2d/KiWi/blob/master/examples/frame-family/frame-family.c)
 
 [![alt text](https://raw.githubusercontent.com/leonardo2d/KiWi/master/examples/editbox/editbox-screenshot.png "Two Editboxes and a button")](https://github.com/leonardo2d/KiWi/blob/master/examples/editbox/editbox.c)
+[![alt text](https://raw.githubusercontent.com/leonardo2d/KiWi/master/examples/styleswitcher/styleswitcher-screenshot.gif "Two Editboxes and a button")](https://github.com/leonardo2d/KiWi/blob/master/examples/styleswitcher/styleswitcher.c)
 
 Check the [roadmap]!
 
