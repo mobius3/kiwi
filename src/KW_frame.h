@@ -50,7 +50,7 @@ typedef struct KW_GUI KW_GUI;
  * \param   geometry The relative geometry of this frame.
  * \return  The frame instance.
  */
-KW_Widget * KW_CreateFrame(KW_GUI * gui, KW_Widget * parent, const SDL_Rect * geometry);
+extern DECLSPEC KW_Widget * KW_CreateFrame(KW_GUI * gui, KW_Widget * parent, const SDL_Rect * geometry);
 
 #ifdef __cplusplus
 }

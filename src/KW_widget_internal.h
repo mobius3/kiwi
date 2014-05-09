@@ -18,8 +18,8 @@ typedef enum KW_WidgetEventHandlerType {
   KW_EVENTHANDLER_TOTAL
 } KW_WidgetEventHandlerType;
 
-void AddHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype, void * handler);
-void RemoveHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype, void * handler);
+void AddWidgetHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype, void * handler);
+void RemoveWidgetHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype, void * handler);
 
 struct KW_Widget {
   int type;

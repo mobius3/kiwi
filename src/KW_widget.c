@@ -21,7 +21,7 @@ KW_Widget * KW_CreateWidget(KW_GUI * gui, KW_Widget * parent, KW_WidgetType type
   KW_SetWidgetGeometry(widget, geometry);
   KW_UnblockWidgetInputEvents(widget);
   widget->privdata = priv;
-  widget->tileset = gui->tileset;
+  widget->tileset = NULL;
   return widget;
 }
 
@@ -34,7 +34,7 @@ void KW_SetWidgetTileset(KW_Widget * widget, SDL_Texture * tileset) {
 }
 
 SDL_Texture * KW_GetWidgetTileset(KW_Widget * widget) {
-  return widget->tileset;
+  return widget->tileset == NULL ? widget->gui->tileset : widget->tileset;
 }
 
 void * KW_GetWidgetData(KW_Widget * widget, KW_WidgetType type) {
@@ -313,74 +313,74 @@ KW_GUI * KW_GetWidgetGUI(KW_Widget * widget) {
 }
 
 void KW_AddWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler) {
-  AddHandler(widget, KW_ON_MOUSEOVER, (void *) handler);
+  AddWidgetHandler(widget, KW_ON_MOUSEOVER, (void *) handler);
 }
 
 void KW_RemoveWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler) {
-  RemoveHandler(widget, KW_ON_MOUSEOVER, handler);
+  RemoveWidgetHandler(widget, KW_ON_MOUSEOVER, handler);
 }
 
 void KW_AddWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler) {
-  AddHandler(widget, KW_ON_MOUSELEAVE, handler);
+  AddWidgetHandler(widget, KW_ON_MOUSELEAVE, handler);
 }
 
 void KW_RemoveWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler) {
-  RemoveHandler(widget, KW_ON_MOUSELEAVE, handler);
+  RemoveWidgetHandler(widget, KW_ON_MOUSELEAVE, handler);
 }
 
 void KW_AddWidgetMouseDownHandler(KW_Widget * widget, KW_OnMouseDown handler) {
-  AddHandler(widget, KW_ON_MOUSEDOWN, handler);
+  AddWidgetHandler(widget, KW_ON_MOUSEDOWN, handler);
 }
 
 void KW_RemoveWidgetMouseDownHandler(KW_Widget * widget, KW_OnMouseDown handler) {
-  RemoveHandler(widget, KW_ON_MOUSEDOWN, handler);
+  RemoveWidgetHandler(widget, KW_ON_MOUSEDOWN, handler);
 }
 
 void KW_AddWidgetMouseUpHandler(KW_Widget * widget, KW_OnMouseDown handler) {
-  AddHandler(widget, KW_ON_MOUSEUP, handler);
+  AddWidgetHandler(widget, KW_ON_MOUSEUP, handler);
 }
 
 void KW_RemoveWidgetMouseUpHandler(KW_Widget * widget, KW_OnMouseDown handler) {
-  RemoveHandler(widget, KW_ON_MOUSEUP, handler);
+  RemoveWidgetHandler(widget, KW_ON_MOUSEUP, handler);
 }
 
 void KW_AddWidgetFocusGainHandler(KW_Widget * widget, KW_OnFocusGain handler) {
-  AddHandler(widget, KW_ON_FOCUSGAIN, handler);
+  AddWidgetHandler(widget, KW_ON_FOCUSGAIN, handler);
 }
 
 void KW_RemoveWidgetFocusGainHandler(KW_Widget * widget, KW_OnFocusGain handler) {
-  RemoveHandler(widget, KW_ON_FOCUSLOSE, handler);
+  RemoveWidgetHandler(widget, KW_ON_FOCUSLOSE, handler);
 }
 
 void KW_AddWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFocusLose handler) {
-  AddHandler(widget, KW_ON_FOCUSLOSE, handler);
+  AddWidgetHandler(widget, KW_ON_FOCUSLOSE, handler);
 }
 
 void KW_RemoveWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFocusLose handler) {
-  RemoveHandler(widget, KW_ON_FOCUSLOSE, handler);
+  RemoveWidgetHandler(widget, KW_ON_FOCUSLOSE, handler);
 }
 
 void KW_AddWidgetTextInputHandler(KW_Widget * widget, KW_OnTextInput handler) {
-  AddHandler(widget, KW_ON_TEXTINPUT, handler);
+  AddWidgetHandler(widget, KW_ON_TEXTINPUT, handler);
 }
 
 void KW_RemoveWidgetTextInputHandler(KW_Widget * widget, KW_OnTextInput handler) {
-  RemoveHandler(widget, KW_ON_TEXTINPUT, handler);
+  RemoveWidgetHandler(widget, KW_ON_TEXTINPUT, handler);
 }
 
 void KW_AddWidgetKeyDownHandler(KW_Widget * widget, KW_OnKeyDown handler) {
-  AddHandler(widget, KW_ON_KEYDOWN, handler);
+  AddWidgetHandler(widget, KW_ON_KEYDOWN, handler);
 }
 
 void KW_RemoveWidgetKeyDownHandler(KW_Widget * widget, KW_OnKeyDown handler) {
-  RemoveHandler(widget, KW_ON_KEYDOWN, handler);
+  RemoveWidgetHandler(widget, KW_ON_KEYDOWN, handler);
 }
 
 void KW_AddWidgetKeyUpHandler(KW_Widget * widget, KW_OnKeyUp handler) {
-  AddHandler(widget, KW_ON_KEYUP, handler);
+  AddWidgetHandler(widget, KW_ON_KEYUP, handler);
 }
 
 void KW_RemoveWidgetKeyUpHandler(KW_Widget * widget, KW_OnKeyUp handler) {
-  RemoveHandler(widget, KW_ON_KEYUP, handler);
+  RemoveWidgetHandler(widget, KW_ON_KEYUP, handler);
 }
 

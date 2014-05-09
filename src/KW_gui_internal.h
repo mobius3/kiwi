@@ -4,6 +4,11 @@
 #include "KW_widget.h"
 #include "SDL_ttf.h"
 
+typedef enum KW_GUIEventHandlerType {
+  KW_GUI_ONFONTCHANGED,
+  KW_GUIEVENTHANDLER_TOTAL
+} KW_GUIEventHandlerType;
+
 struct KW_GUI {
   SDL_Texture * tileset;
   SDL_Renderer * renderer;
@@ -16,8 +21,23 @@ struct KW_GUI {
   SDL_Event evqueue[1024];
   int evqueuesize;
   SDL_mutex * evqueuelock;
+  
+  struct {
+    struct KW_GUICallback {
+      void * handler;
+      void * priv;
+    } * handlers;
+    unsigned int      count;
+  } eventhandlers[KW_GUIEVENTHANDLER_TOTAL];  
 };
 
 typedef struct KW_GUI KW_GUI;
+
+void AddGUIHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, void * handler, void * priv);
+void RemoveGUItHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, void * handler, void * priv);
+
+
+
+
 
 #endif

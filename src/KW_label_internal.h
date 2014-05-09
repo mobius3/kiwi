@@ -29,4 +29,9 @@ struct KW_Label {
   int x;
 } KW_Label;
 
+void PaintLabel(KW_Widget * widget);
+void RenderLabelText(KW_Widget * widget);
+void DestroyLabel(KW_Widget * widget);
+void LabelFontChanged(KW_GUI * gui, void * data, TTF_Font * font);
+
 #endif

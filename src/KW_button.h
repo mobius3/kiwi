@@ -49,7 +49,7 @@ extern "C" {
  * \param   geometry The geometry of this button.
  * \return  The button instance.
  */
-KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, const char * text, const SDL_Rect * geometry);
+extern DECLSPEC KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, const char * text, const SDL_Rect * geometry);
 
 #ifdef __cplusplus
 }

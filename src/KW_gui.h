@@ -74,6 +74,8 @@ typedef struct KW_GUI KW_GUI;
 struct KW_Widget;
 typedef struct KW_Widget KW_Widget;
 
+typedef void (*KW_OnGUIFontChanged)(KW_GUI * gui, void * data, TTF_Font * font);
+
 /**
  * \brief   Initializes a new KW_GUI instance.
  * \details Each KW_Widget should be associated with a KW_GUI. For each KW_GUI that you create,
@@ -134,6 +136,26 @@ extern DECLSPEC SDL_Texture * KW_GetTileset(KW_GUI * gui);
  * \param   font The font to associate with a KW_GUI instance.
  */
 extern DECLSPEC void KW_SetFont(KW_GUI * gui, TTF_Font * font);
+
+/**
+ * \brief   Add a function to be called when the current GUI font changes.
+ * \details If you are rendering text somewhere, you might want to know when
+ *          the font changes to maintain consistency. A new handler will
+ *          be added if the pair (handler, priv) wasn't inserted yet.
+ * \param   gui The KW_GUI instance that will call your handler.
+ * \param   handler The actual handler.
+ * \param   priv Private data that will be passed to the handler.
+ */
+extern DECLSPEC void KW_AddGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, void * priv);
+
+/**
+ * \brief   Remove a previously added font changed handler.
+ * \details The pair (handler, priv) will be removed.
+ * \param   gui The KW_GUI instance to remove the handler from.
+ * \param   handler The handler to remove.
+ * \param   priv The private data to match.
+ */
+extern DECLSPEC void KW_RemoveGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, void * priv);
 
 /**
  * \brief   Get the current font associated with a KW_GUI instance.

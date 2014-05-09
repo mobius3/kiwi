@@ -2,6 +2,7 @@
 #define KW_EDITBOX_INTERNAL_H
 
 #include "SDL.h"
+#include "SDL_ttf.h"
 #include "KW_widget.h"
 
 typedef struct KW_Edtibox {
@@ -22,5 +23,30 @@ typedef struct KW_Edtibox {
   SDL_Color color;            // color used to render the text
   
 } KW_Editbox;
+
+
+/* util functions */
+void RenderEditboxText(KW_Editbox * editbox);
+void PaintEditboxText(KW_Editbox * editbox, SDL_Rect * geom);
+void AdjustCursor(KW_Editbox * editbox, int cursormove);
+KW_Editbox * AllocEditbox();
+void TextBackspace(KW_Editbox * editbox);
+void TextDelete(KW_Editbox * editbox);
+
+/* main callbacks */
+void DestroyEditbox(KW_Widget * widget);
+void PaintEditbox(KW_Widget * widget);
+
+/* event callbacks */
+void EditboxMouseOver(KW_Widget * widget);
+void EditboxMouseLeave(KW_Widget * widget);
+void EditboxMousePress(KW_Widget * widget, int b);
+void EditboxMouseRelease(KW_Widget * widget, int b);
+void EditboxFocusGain(KW_Widget * widget);
+void EditboxFocusLose(KW_Widget * widget);
+void EditboxTextInput(KW_Widget * widget, const char * text);
+void EditboxKeyDown(KW_Widget * widget, SDL_Keycode key, SDL_Scancode sym);
+void EditboxFontChanged(KW_GUI * gui, void * priv, TTF_Font * font);
+
 
 #endif

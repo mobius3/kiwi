@@ -56,8 +56,23 @@ void KW_Quit(KW_GUI * gui) {
 void KW_SetFont(KW_GUI * gui, TTF_Font * font) {
   if (font == NULL) return;
   gui->font = font;
+  int i = 0;
+  KW_OnGUIFontChanged handler;
+  for (i = 0; i < gui->eventhandlers[KW_GUI_ONFONTCHANGED].count; i++) {
+    handler = gui->eventhandlers[KW_GUI_ONFONTCHANGED].handlers[i].handler;
+    handler(gui, gui->eventhandlers[KW_GUI_ONFONTCHANGED].handlers[i].priv, font);
+  }
   return;
 }
+
+void KW_AddGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, void * priv) {
+  AddGUIHandler(gui, KW_GUI_ONFONTCHANGED, handler, priv);
+}
+
+void KW_RemoveGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, void * priv) {
+  RemoveGUItHandler(gui, KW_GUI_ONFONTCHANGED, handler, priv);
+}
+
 
 TTF_Font * KW_GetFont(KW_GUI * gui) {
   return gui->font;
@@ -71,4 +86,51 @@ KW_GUI * KW_GetGUI(KW_Widget * widget) {
 void KW_Paint(KW_GUI * gui) {
   KW_ProcessEvents(gui);
   KW_PaintWidget(gui->rootwidget);
+}
+
+/* generic handler list functions */
+
+void AddGUIHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, void * handler, void * priv) {
+  /* don't add multiple mouse over handlers */
+  unsigned int * count = &(gui->eventhandlers[handlertype].count);
+  
+  /* check if handler is there */
+  int i;
+  for (i = 0; i < *count; ++i) {
+    if (gui->eventhandlers[handlertype].handlers[i].handler == handler && gui->eventhandlers[handlertype].handlers[i].priv == priv)
+      return;
+  }
+  
+  /* add the handler then */
+  (*count)++;
+  gui->eventhandlers[handlertype].handlers = realloc(gui->eventhandlers[handlertype].handlers, sizeof(struct KW_GUICallback) * (*count));
+  gui->eventhandlers[handlertype].handlers[(*count) - 1].handler = handler;  
+  gui->eventhandlers[handlertype].handlers[(*count) - 1].priv = priv;
+}
+
+void RemoveGUItHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, void * handler, void * priv) {
+  int i, j;
+  unsigned int * count = &(gui->eventhandlers[handlertype].count);
+  
+  /* iterate to find the position of gui */
+  for (i = 0; i < *count; i++) {
+    if (gui->eventhandlers[handlertype].handlers[i].handler == handler) {
+      if (gui->eventhandlers[handlertype].handlers[i].priv == priv)
+        j = i;
+    }
+    
+    /* move everything in front of it */
+    if (j >= 0 && i + 1 < *count) {
+      gui->eventhandlers[handlertype].handlers[i] = gui->eventhandlers[handlertype].handlers[i+1];
+    }
+  }
+  
+  /* realloc children array */
+  (*count)--;
+  if (*count <= 0) {
+    free(gui->eventhandlers[handlertype].handlers);
+    gui->eventhandlers[handlertype].handlers = NULL;
+  }
+  else
+    gui->eventhandlers[handlertype].handlers = realloc(gui->eventhandlers[handlertype].handlers, *count * sizeof(struct KW_GUICallback));  
 }
