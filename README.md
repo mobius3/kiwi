@@ -75,6 +75,9 @@ int main(int argc, char ** argv) {
 }
 ```
 
+Better documentation is yet to come, but every public method is well documented.
+
+[KW_CreateWidget]: https://github.com/leonardo2d/KiWi/blob/master/src/KW_widget.h#L106
 [SDL2]: http://libsdl.org
 [SDL2_ttf]: https://www.libsdl.org/projects/SDL_ttf/
 [SDL2_image]: https://www.libsdl.org/projects/SDL_image/
