@@ -30,6 +30,49 @@ If you're feeling mighty and want to try KiWi right now, these are (roughly) the
 
 You can test the examples inside the `build/examples/` folder.
 
+## Basic usage
+
+Here is a very basic code that draws a label on screen:
+
+```
+#include "SDL.h"
+#include "SDL_ttf.h"
+#include "KW_gui.h"
+
+int main(int argc, char ** argv) {
+  /* init SDL and SDL_ttf */
+  SDL_Init(SDL_INIT_EVERYTHING);
+  SDL_Renderer * renderer;
+  SDL_Window * window;
+  SDL_CreateWindowAndRenderer(320, 240, 0, &window, &renderer);
+  SDL_SetRenderDrawColor(renderer, 200, 100, 100, 1);
+  TTF_Init();
+  
+  /* load tileset */
+  SDL_Texture * set;
+  set = IMG_LoadTexture(renderer, "tileset.png");
+  
+  /* load font */
+  TTF_Font * font = TTF_OpenFont("Fontin-Regular.ttf", 12);
+  
+  /* init KiWi */
+  KW_GUI * gui = KW_Init(renderer, set);
+  KW_SetFont(gui, font);
+  
+  /* create a frame and a label on top of it. */
+  SDL_Rect g = {0, 0, 320, 240};
+  KW_Widget * frame = KW_CreateFrame(gui, NULL, &g);
+  KW_CreateLabel(gui, frame, "Label", &g);
+  
+  while (!SDL_QuitRequested()) {
+    KW_Paint(gui);
+    SDL_Delay(1);
+  }
+  
+  return 0;
+}
+```
+
 [SDL2]: http://libsdl.org
 [SDL2_ttf]: https://www.libsdl.org/projects/SDL_ttf/
 [SDL2_image]: https://www.libsdl.org/projects/SDL_image/
