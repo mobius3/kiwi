@@ -39,6 +39,7 @@ Here is a very basic code that draws a label on screen:
 ```cpp
 #include "SDL.h"
 #include "SDL_ttf.h"
+#include "SDL_image.h"
 #include "KW_gui.h"
 
 int main(int argc, char ** argv) {
@@ -67,8 +68,10 @@ int main(int argc, char ** argv) {
   KW_CreateLabel(gui, frame, "Label", &g);
   
   while (!SDL_QuitRequested()) {
+    KW_RenderClear(renderer);
     KW_Paint(gui);
     SDL_Delay(1);
+    KW_RenderPresent(renderer);
   }
   
   return 0;
