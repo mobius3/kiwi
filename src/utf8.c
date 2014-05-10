@@ -333,54 +333,6 @@ int u8_unescape(char *buf, int sz, char *src)
     return c;
 }
 
-int u8_escape_wchar(char *buf, int sz, uint32_t ch)
-{
-    if (ch == L'\n')
-        return snprintf(buf, sz, "\\n");
-    else if (ch == L'\t')
-        return snprintf(buf, sz, "\\t");
-    else if (ch == L'\r')
-        return snprintf(buf, sz, "\\r");
-    else if (ch == L'\b')
-        return snprintf(buf, sz, "\\b");
-    else if (ch == L'\f')
-        return snprintf(buf, sz, "\\f");
-    else if (ch == L'\v')
-        return snprintf(buf, sz, "\\v");
-    else if (ch == L'\a')
-        return snprintf(buf, sz, "\\a");
-    else if (ch == L'\\')
-        return snprintf(buf, sz, "\\\\");
-    else if (ch < 32 || ch == 0x7f)
-        return snprintf(buf, sz, "\\x%hhX", (unsigned char)ch);
-    else if (ch > 0xFFFF)
-        return snprintf(buf, sz, "\\U%.8X", (uint32_t)ch);
-    else if (ch >= 0x80 && ch <= 0xFFFF)
-        return snprintf(buf, sz, "\\u%.4hX", (unsigned short)ch);
-
-    return snprintf(buf, sz, "%c", (char)ch);
-}
-
-int u8_escape(char *buf, int sz, char *src, int escape_quotes)
-{
-    int c=0, i=0, amt;
-
-    while (src[i] && c < sz) {
-        if (escape_quotes && src[i] == '"') {
-            amt = snprintf(buf, sz - c, "\\\"");
-            i++;
-        }
-        else {
-            amt = u8_escape_wchar(buf, sz - c, u8_nextchar(src, &i));
-        }
-        c += amt;
-        buf += amt;
-    }
-    if (c < sz)
-        *buf = '\0';
-    return c;
-}
-
 char *u8_strchr(char *s, uint32_t ch, int *charn)
 {
     int i = 0, lasti=0;
@@ -440,38 +392,4 @@ int u8_is_locale_utf8(char *locale)
         }
     }
     return 0;
-}
-
-int u8_vprintf(char *fmt, va_list ap)
-{
-    int cnt, sz=0;
-    char *buf;
-    uint32_t *wcs;
-
-    sz = 512;
-    buf = (char*)alloca(sz);
- try_print:
-    cnt = vsnprintf(buf, sz, fmt, ap);
-    if (cnt >= sz) {
-        buf = (char*)alloca(cnt - sz + 1);
-        sz = cnt + 1;
-        goto try_print;
-    }
-    wcs = (uint32_t*)alloca((cnt+1) * sizeof(uint32_t));
-    cnt = u8_toucs(wcs, cnt+1, buf, cnt);
-    printf("%ls", (wchar_t*)wcs);
-    return cnt;
-}
-
-int u8_printf(char *fmt, ...)
-{
-    int cnt;
-    va_list args;
-
-    va_start(args, fmt);
-
-    cnt = u8_vprintf(fmt, args);
-
-    va_end(args);
-    return cnt;
 }

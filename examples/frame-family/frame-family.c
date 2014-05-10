@@ -6,33 +6,37 @@
 int main(int argc, char ** argv) {
   
   /* initialize window and renderer */
-  SDL_Init(SDL_INIT_EVERYTHING);
   SDL_Window * window;
   SDL_Renderer * renderer;
+  SDL_Texture * set;
+  KW_GUI * gui;
+  TTF_Font * font;
+  SDL_Rect framegeom, labelgeom;
+  KW_Widget * frame;
+  int i = 0;  
+  
   SDL_CreateWindowAndRenderer(320, 240, 0, &window, &renderer);
   SDL_SetRenderDrawColor(renderer, 200, 100, 100, 1);
-  
+  SDL_Init(SDL_INIT_EVERYTHING);
   TTF_Init();
   
   /* load tileset */
-  SDL_Texture * set;
+  
   set = IMG_LoadTexture(renderer, "tileset.png");
   
   /* initialize gui */
-  KW_GUI * gui = KW_Init(renderer, set);
-  TTF_Font * font = TTF_OpenFont("Fontin-Regular.ttf", 12);
+  gui = KW_Init(renderer, set);
+  font = TTF_OpenFont("Fontin-Regular.ttf", 12);
   KW_SetFont(gui, font);
 
-  SDL_Rect framegeom, labelgeom;
+  
   framegeom.x = 10, framegeom.y = 10, framegeom.w = 160, framegeom.h = 120;
   labelgeom = framegeom; labelgeom.x = labelgeom.y = 0;
 
   /* create 10 frames and 10 labels */
-  KW_Widget * frame = NULL;
-  int i = 0;
+  frame = NULL;
   for (i = 0; i < 10; i++) {
     frame = KW_CreateButton(gui, frame, "Yay", &framegeom);
-    //KW_CreateLabel(gui, frame, "KiWi", &labelgeom);
   }
   while (!SDL_QuitRequested()) {
     SDL_RenderClear(renderer);

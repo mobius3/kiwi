@@ -88,17 +88,17 @@ void PaintLabel(KW_Widget * widget) {
   dst.y += label->voffset;
   
   /* clip texture so that it doesnt overflow desired maximum geometry */
-  if (dst.x < orig.x) src.x = orig.x - dst.x; // clip left part (centering and right align overflows to the left)
-  if (dst.y < orig.y) src.y = orig.y - dst.y; // clip top part (middle, bottom align migh overflow top)
-  if (dst.x + src.w > orig.x + orig.w) src.w = orig.w + (orig.x - dst.x) - src.x; // clip right part (centering, left align)
+  if (dst.x < orig.x) src.x = orig.x - dst.x; /* clip left part (centering and right align overflows to the left) */
+  if (dst.y < orig.y) src.y = orig.y - dst.y; /* clip top part (middle, bottom align migh overflow top) */
+  if (dst.x + src.w > orig.x + orig.w) src.w = orig.w + (orig.x - dst.x) - src.x; /* clip right part (centering, left align) */
   else src.w = src.w - src.x;
-  if (dst.y + src.h > orig.y + orig.h) src.h = orig.h + (orig.y - dst.y) - src.y; // clip bottom part (middle, top)
+  if (dst.y + src.h > orig.y + orig.h) src.h = orig.h + (orig.y - dst.y) - src.y; /* clip bottom part (middle, top) */
   else src.h = src.h - src.y;
   
   /* don stretch the image */
   dst.w = src.w;
   dst.h = src.h;
-  dst.x += src.x; // adjust dst x to consider new clipping
+  dst.x += src.x;
   dst.y += src.y;
   
   SDL_RenderCopy(renderer, label->textrender, &src, &dst);

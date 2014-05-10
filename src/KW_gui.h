@@ -66,11 +66,6 @@ extern "C" {
  * \brief   The KW_GUI type holds information shared by all widgets.
  * \details You need a KW_GUI instance to create widgets.
  */
-struct KW_GUI;
-typedef struct KW_GUI KW_GUI;
-
-struct KW_Widget;
-typedef struct KW_Widget KW_Widget;
 
 typedef void (*KW_OnGUIFontChanged)(KW_GUI * gui, void * data, TTF_Font * font);
 

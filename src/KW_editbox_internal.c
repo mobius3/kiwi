@@ -6,14 +6,15 @@
 
 /* private functions */
 void PaintEditbox(KW_Widget * widget) {
+  SDL_Rect targetgeom;  
+  SDL_Renderer * renderer;
+  SDL_Texture * tileset;  
   KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
   /* base column for tile rendering */
   int basec = 0;
   if (editbox->mouseover || editbox->active) basec = 3;
   if (editbox->clicked) basec = 0;
-  SDL_Rect targetgeom;
-  SDL_Renderer * renderer;
-  SDL_Texture * tileset;
+
 
   KW_GetWidgetAbsoluteGeometry(widget, &targetgeom);
 
@@ -33,9 +34,10 @@ void PaintEditbox(KW_Widget * widget) {
 
 /* paints the editbox text */
 void PaintEditboxText(KW_Editbox * editbox, SDL_Rect * _dst) {
-  SDL_Rect dst = *_dst; // destination rectangle
-  SDL_Rect orig = dst; // intended dst rectangle
-  SDL_Rect src;        // text clipping
+  SDL_Rect dst = *_dst; /* destination rectangle */
+  SDL_Rect orig = dst;  /* intended dst rectangle */
+  SDL_Rect src;         /* text clipping */
+  int cursorx;
 
   SDL_Renderer * renderer = KW_GetWidgetRenderer(editbox->widget);
   SDL_Texture * tileset = KW_GetWidgetTileset(editbox->widget);
@@ -46,14 +48,11 @@ void PaintEditboxText(KW_Editbox * editbox, SDL_Rect * _dst) {
   /* will paint label in the middle */
   dst.y = dst.y + dst.h / 2 - src.h / 2;
 
-  // clip right if overflows
-
-
-  // clip bottom part (middle, top)
+  /* clip bottom part (middle, top) */
   if (dst.y + src.h > orig.y + orig.h) src.h = orig.h + (orig.y - dst.y) - src.y;
 
   /* ajust text src rect and render cursor if active */
-  int cursorx = editbox->cursorx;
+  cursorx = editbox->cursorx;
   if (editbox->active) {
     int adjust = editbox->cursoradjustx;
     /* if the cursor is left to the clipping rectangle */
@@ -131,7 +130,7 @@ void AdjustCursor(KW_Editbox * editbox, int cursormove) {
   char save;
   int len = SDL_strlen(editbox->text);
 
-  // adjust cursormove, don't let it over/underflow.
+  /* adjust cursormove, don't let it over/underflow. */
   if (cursormove > 0) {
     if (editbox->cursor + cursormove > len) {
       cursormove = len - editbox->cursor;

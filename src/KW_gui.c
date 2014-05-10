@@ -54,23 +54,24 @@ void KW_Quit(KW_GUI * gui) {
 }
 
 void KW_SetFont(KW_GUI * gui, TTF_Font * font) {
-  if (font == NULL) return;
-  gui->font = font;
   int i = 0;
   KW_OnGUIFontChanged handler;
+  if (font == NULL) return;
+  gui->font = font;
+
   for (i = 0; i < gui->eventhandlers[KW_GUI_ONFONTCHANGED].count; i++) {
-    handler = gui->eventhandlers[KW_GUI_ONFONTCHANGED].handlers[i].handler;
+    handler = (KW_OnGUIFontChanged) gui->eventhandlers[KW_GUI_ONFONTCHANGED].handlers[i].handler;
     handler(gui, gui->eventhandlers[KW_GUI_ONFONTCHANGED].handlers[i].priv, font);
   }
   return;
 }
 
 void KW_AddGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, void * priv) {
-  AddGUIHandler(gui, KW_GUI_ONFONTCHANGED, handler, priv);
+  AddGUIHandler(gui, KW_GUI_ONFONTCHANGED, (GUIHandler) handler, priv);
 }
 
 void KW_RemoveGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, void * priv) {
-  RemoveGUItHandler(gui, KW_GUI_ONFONTCHANGED, handler, priv);
+  RemoveGUItHandler(gui, KW_GUI_ONFONTCHANGED, (GUIHandler) handler, priv);
 }
 
 
@@ -90,7 +91,7 @@ void KW_Paint(KW_GUI * gui) {
 
 /* generic handler list functions */
 
-void AddGUIHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, void * handler, void * priv) {
+void AddGUIHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, GUIHandler handler, void * priv) {
   /* don't add multiple mouse over handlers */
   unsigned int * count = &(gui->eventhandlers[handlertype].count);
   
@@ -108,7 +109,7 @@ void AddGUIHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, void * hand
   gui->eventhandlers[handlertype].handlers[(*count) - 1].priv = priv;
 }
 
-void RemoveGUItHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, void * handler, void * priv) {
+void RemoveGUItHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, GUIHandler handler, void * priv) {
   int i, j;
   unsigned int * count = &(gui->eventhandlers[handlertype].count);
   

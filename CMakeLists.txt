@@ -14,7 +14,7 @@ add_definitions("-Wall")
 set (CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
 
 if(CMAKE_COMPILER_IS_GNUCC)
-     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden")
+  set(CMAKE_C_FLAGS " ${CMAKE_C_FLAGS} -fvisibility=hidden -std=c89 -pedantic-errors")
 endif(CMAKE_COMPILER_IS_GNUCC)
 
 # Add subdirectories

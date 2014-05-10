@@ -97,18 +97,19 @@ void FreeWidget(KW_Widget * widget, int freechildren) {
  * 0, it is outside the current widget box and it must be recalculated. The current
  * widget parent must also be notified of this change if we happend to be outside parent box */
 void CalculateComposedGeometry(KW_Widget * widget) {
-  
-#ifndef NDEBUG
-  static int indent = 0;
-  indent++;
-  int i__;
-#endif
-  
+
   SDL_Rect box;
   int i = 0;
   short changed = 0;
+  
 #ifndef NDEBUG
-  for (i = 0; i < indent; i++) printf(" ");
+  int i__;  
+  static int indent = 0;
+  indent++;
+#endif
+
+#ifndef NDEBUG
+  for (i__ = 0; i__ < indent; i__++) printf(" ");
   printf("Recalculating composed geometry of %p: %d\n", (void*)widget, widget->type);
 #endif
   if (widget->geometry.x != widget->composed.x ||
@@ -205,11 +206,12 @@ void KW_GetWidgetComposedGeometry(KW_Widget * widget, SDL_Rect * composed) {
 
 /* reparent version that allow us to parent to NULL */
 void Reparent(KW_Widget * widget, KW_Widget * newparent) {
+  int i = 0, j = -1;  
 #ifndef NDEBUG
   printf("Reparenting %p: %d from %p to %p\n", (void*) widget, widget->type, (void*) widget->parent, (void*) newparent);
 #endif
   /* gotta remove from previous parent */
-  int i = 0, j = -1;
+
   if (widget->parent != NULL) {
     KW_Widget * wp = widget->parent;
     
@@ -313,74 +315,74 @@ KW_GUI * KW_GetWidgetGUI(KW_Widget * widget) {
 }
 
 void KW_AddWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler) {
-  AddWidgetHandler(widget, KW_ON_MOUSEOVER, (void *) handler);
+  AddWidgetHandler(widget, KW_ON_MOUSEOVER, (WidgetHandler) handler);
 }
 
 void KW_RemoveWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler) {
-  RemoveWidgetHandler(widget, KW_ON_MOUSEOVER, handler);
+  RemoveWidgetHandler(widget, KW_ON_MOUSEOVER, (WidgetHandler) handler);
 }
 
 void KW_AddWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler) {
-  AddWidgetHandler(widget, KW_ON_MOUSELEAVE, handler);
+  AddWidgetHandler(widget, KW_ON_MOUSELEAVE, (WidgetHandler) handler);
 }
 
 void KW_RemoveWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler) {
-  RemoveWidgetHandler(widget, KW_ON_MOUSELEAVE, handler);
+  RemoveWidgetHandler(widget, KW_ON_MOUSELEAVE, (WidgetHandler) handler);
 }
 
 void KW_AddWidgetMouseDownHandler(KW_Widget * widget, KW_OnMouseDown handler) {
-  AddWidgetHandler(widget, KW_ON_MOUSEDOWN, handler);
+  AddWidgetHandler(widget, KW_ON_MOUSEDOWN, (WidgetHandler) handler);
 }
 
 void KW_RemoveWidgetMouseDownHandler(KW_Widget * widget, KW_OnMouseDown handler) {
-  RemoveWidgetHandler(widget, KW_ON_MOUSEDOWN, handler);
+  RemoveWidgetHandler(widget, KW_ON_MOUSEDOWN, (WidgetHandler) handler);
 }
 
 void KW_AddWidgetMouseUpHandler(KW_Widget * widget, KW_OnMouseDown handler) {
-  AddWidgetHandler(widget, KW_ON_MOUSEUP, handler);
+  AddWidgetHandler(widget, KW_ON_MOUSEUP, (WidgetHandler) handler);
 }
 
 void KW_RemoveWidgetMouseUpHandler(KW_Widget * widget, KW_OnMouseDown handler) {
-  RemoveWidgetHandler(widget, KW_ON_MOUSEUP, handler);
+  RemoveWidgetHandler(widget, KW_ON_MOUSEUP, (WidgetHandler) handler);
 }
 
 void KW_AddWidgetFocusGainHandler(KW_Widget * widget, KW_OnFocusGain handler) {
-  AddWidgetHandler(widget, KW_ON_FOCUSGAIN, handler);
+  AddWidgetHandler(widget, KW_ON_FOCUSGAIN, (WidgetHandler) handler);
 }
 
 void KW_RemoveWidgetFocusGainHandler(KW_Widget * widget, KW_OnFocusGain handler) {
-  RemoveWidgetHandler(widget, KW_ON_FOCUSLOSE, handler);
+  RemoveWidgetHandler(widget, KW_ON_FOCUSLOSE, (WidgetHandler) handler);
 }
 
 void KW_AddWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFocusLose handler) {
-  AddWidgetHandler(widget, KW_ON_FOCUSLOSE, handler);
+  AddWidgetHandler(widget, KW_ON_FOCUSLOSE, (WidgetHandler) handler);
 }
 
 void KW_RemoveWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFocusLose handler) {
-  RemoveWidgetHandler(widget, KW_ON_FOCUSLOSE, handler);
+  RemoveWidgetHandler(widget, KW_ON_FOCUSLOSE, (WidgetHandler) handler);
 }
 
 void KW_AddWidgetTextInputHandler(KW_Widget * widget, KW_OnTextInput handler) {
-  AddWidgetHandler(widget, KW_ON_TEXTINPUT, handler);
+  AddWidgetHandler(widget, KW_ON_TEXTINPUT, (WidgetHandler) handler);
 }
 
 void KW_RemoveWidgetTextInputHandler(KW_Widget * widget, KW_OnTextInput handler) {
-  RemoveWidgetHandler(widget, KW_ON_TEXTINPUT, handler);
+  RemoveWidgetHandler(widget, KW_ON_TEXTINPUT, (WidgetHandler) handler);
 }
 
 void KW_AddWidgetKeyDownHandler(KW_Widget * widget, KW_OnKeyDown handler) {
-  AddWidgetHandler(widget, KW_ON_KEYDOWN, handler);
+  AddWidgetHandler(widget, KW_ON_KEYDOWN, (WidgetHandler) handler);
 }
 
 void KW_RemoveWidgetKeyDownHandler(KW_Widget * widget, KW_OnKeyDown handler) {
-  RemoveWidgetHandler(widget, KW_ON_KEYDOWN, handler);
+  RemoveWidgetHandler(widget, KW_ON_KEYDOWN, (WidgetHandler) handler);
 }
 
 void KW_AddWidgetKeyUpHandler(KW_Widget * widget, KW_OnKeyUp handler) {
-  AddWidgetHandler(widget, KW_ON_KEYUP, handler);
+  AddWidgetHandler(widget, KW_ON_KEYUP, (WidgetHandler) handler);
 }
 
 void KW_RemoveWidgetKeyUpHandler(KW_Widget * widget, KW_OnKeyUp handler) {
-  RemoveWidgetHandler(widget, KW_ON_KEYUP, handler);
+  RemoveWidgetHandler(widget, KW_ON_KEYUP, (WidgetHandler) handler);
 }
 

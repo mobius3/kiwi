@@ -8,7 +8,6 @@
 KW_Widget * KW_CreateLabel(KW_GUI * gui, KW_Widget * parent, const char * text, const SDL_Rect * geometry) {
   KW_Label * label = calloc(sizeof(KW_Label), 1);
   KW_Widget * widget = KW_CreateWidget(gui, parent, KW_WIDGETTYPE_LABEL, geometry, PaintLabel, DestroyLabel, label);
-  //KW_SetLabelFont(widget, KW_GetFont(gui));
   KW_SetLabelText(widget, text);
   KW_SetLabelAlignment(widget, KW_LABEL_ALIGN_CENTER, 0, KW_LABEL_ALIGN_MIDDLE, 0);
   KW_AddGUIFontChangedHandler(gui, LabelFontChanged, widget);

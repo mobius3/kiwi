@@ -37,9 +37,6 @@
 extern "C" {
 #endif
 
-struct KW_GUI;
-typedef struct KW_GUI KW_GUI;
-
 /**
  * \brief   Creates a frame widget.
  * \details The frame is constructed by arranging the the first 3x3 tiles in the tileset.

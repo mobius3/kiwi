@@ -1,6 +1,6 @@
 #include "KW_widget_internal.h"
 
-void AddWidgetHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype, void * handler) {
+void AddWidgetHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype, WidgetHandler handler) {
   /* don't add multiple mouse over handlers */
   unsigned int * count = &(widget->eventhandlers[handlertype].count);
   
@@ -17,7 +17,7 @@ void AddWidgetHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype,
   widget->eventhandlers[handlertype].handlers[(*count) - 1] = handler;  
 }
 
-void RemoveWidgetHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype, void * handler) {
+void RemoveWidgetHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype, WidgetHandler handler) {
   int i, j;
   unsigned int * count = &(widget->eventhandlers[handlertype].count);
   

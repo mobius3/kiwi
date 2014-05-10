@@ -32,13 +32,15 @@ static void MouseRelease(KW_Widget * widget, int b) {
 
 KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, const char * text, const SDL_Rect * geometry) {
   SDL_Rect labelgeom;
+  KW_Widget * widget = NULL;
+  KW_Button * button = NULL;
   labelgeom.x = TILESIZE;
   labelgeom.y = TILESIZE;
   labelgeom.w = geometry->w - TILESIZE * 2;
   labelgeom.h = geometry->h - TILESIZE * 2;
   
-  KW_Button * button = AllocButton();
-  KW_Widget * widget = KW_CreateWidget(gui, parent, KW_WIDGETTYPE_BUTTON, geometry, PaintButton, DestroyButton, button);
+  button = AllocButton();
+  widget = KW_CreateWidget(gui, parent, KW_WIDGETTYPE_BUTTON, geometry, PaintButton, DestroyButton, button);
   button->labelwidget = KW_CreateLabel(gui, widget, text, &labelgeom);
   KW_BlockWidgetInputEvents(button->labelwidget);
   KW_AddWidgetMouseOverHandler(widget, MouseOver);
@@ -51,14 +53,14 @@ KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, const char * text,
 /** internal stuff **/
 
 void PaintButton(KW_Widget * widget) {
+  SDL_Rect targetgeom;
+  SDL_Renderer * renderer;
+  SDL_Texture * tileset;
   KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
   /* base column for tile rendering */
   int basec = 0;
   if (button->mouseover) basec = 3;
   if (button->clicked) basec = 0;
-  SDL_Rect targetgeom;
-  SDL_Renderer * renderer;
-  SDL_Texture * tileset;
   
   KW_GetWidgetAbsoluteGeometry(widget, &targetgeom);
   

@@ -4,30 +4,32 @@
 #include "SDL_image.h"
 
 int main(int argc, char ** argv) {
-  
-  /* initialize window and renderer */
-  SDL_Init(SDL_INIT_EVERYTHING);
   SDL_Window * window;
   SDL_Renderer * renderer;
+  SDL_Texture * set;
+  KW_GUI * gui;
+  SDL_Rect framegeom, editgeom, labelgeom, buttongeom;  
+  KW_Widget * frame, * editbx, * label;
+  TTF_Font * fontin, * dejavu;
+  
+/* initialize window and renderer */
+  SDL_Init(SDL_INIT_EVERYTHING);
   SDL_CreateWindowAndRenderer(320, 240, 0, &window, &renderer);
   SDL_SetRenderDrawColor(renderer, 100, 100, 200, 1);
   TTF_Init();
   
   /* load tileset */
-  SDL_Texture * set;
+
   set = IMG_LoadTexture_RW(renderer, SDL_RWFromFile("tileset.png", "r"), SDL_TRUE);
   
   /* initialize gui */
-  KW_GUI * gui = KW_Init(renderer, set);
-  TTF_Font * fontin = TTF_OpenFontRW(SDL_RWFromFile("Fontin-Regular.ttf", "r"), SDL_TRUE, 12);
-  TTF_Font * dejavu = TTF_OpenFontRW(SDL_RWFromFile("DejaVuSans.ttf", "r"), SDL_TRUE, 11);
+  gui = KW_Init(renderer, set);
+  fontin = TTF_OpenFontRW(SDL_RWFromFile("Fontin-Regular.ttf", "r"), SDL_TRUE, 12);
+  dejavu = TTF_OpenFontRW(SDL_RWFromFile("DejaVuSans.ttf", "r"), SDL_TRUE, 11);
   KW_SetFont(gui, fontin);
 
-  SDL_Rect framegeom, editgeom, labelgeom, buttongeom;
   framegeom.x = 10, framegeom.y = 10, framegeom.w = 300, framegeom.h = 220;
-
-  
-  KW_Widget * frame = KW_CreateFrame(gui, NULL, &framegeom);
+  frame = KW_CreateFrame(gui, NULL, &framegeom);
   buttongeom.x = 120, buttongeom.y = 110, buttongeom.w = 170, buttongeom.h = 30;
   KW_CreateButton(gui, frame, "Friendship? Again?!", &buttongeom);
   
@@ -35,21 +37,19 @@ int main(int argc, char ** argv) {
   editgeom.x = 120, editgeom.y = 20, editgeom.w = 150, editgeom.h = 30;
   labelgeom.x = 10, labelgeom.y = 20, labelgeom.w = 110, labelgeom.h = 30;
   frame = KW_CreateFrame(gui, frame, &framegeom);
-  KW_Widget * editbx = KW_CreateEditbox(gui, frame, "Editbox #1", &editgeom);
+  editbx = KW_CreateEditbox(gui, frame, "Editbox #1", &editgeom);
   KW_SetEditboxFont(editbx, dejavu);
-  KW_Widget * l = KW_CreateLabel(gui, frame, "Type your destiny:", &labelgeom);
-  KW_SetLabelAlignment(l, KW_LABEL_ALIGN_RIGHT, 0, KW_LABEL_ALIGN_MIDDLE, 0);
+  label = KW_CreateLabel(gui, frame, "Type your destiny:", &labelgeom);
+  KW_SetLabelAlignment(label, KW_LABEL_ALIGN_RIGHT, 0, KW_LABEL_ALIGN_MIDDLE, 0);
   
   editgeom.x = 120, editgeom.y = 50, editgeom.w = 150, editgeom.h = 30;
   labelgeom.x = 10, labelgeom.y = 50, labelgeom.w = 110, labelgeom.h = 30;
   editbx = KW_CreateEditbox(gui, frame, "Editbox #2", &editgeom);
   
-  l = KW_CreateLabel(gui, frame, "Again:", &labelgeom);
-  KW_SetLabelAlignment(l, KW_LABEL_ALIGN_RIGHT, 0, KW_LABEL_ALIGN_MIDDLE, 0);
+  label = KW_CreateLabel(gui, frame, "Again:", &labelgeom);
+  KW_SetLabelAlignment(label, KW_LABEL_ALIGN_RIGHT, 0, KW_LABEL_ALIGN_MIDDLE, 0);
 
-  //SDL_Event ev;
   while (!SDL_QuitRequested()) {
-    //while (SDL_PollEvent(&ev)) KW_PushEvent(gui, &ev);
     SDL_RenderClear(renderer);
     KW_Paint(gui);
     SDL_RenderPresent(renderer);
