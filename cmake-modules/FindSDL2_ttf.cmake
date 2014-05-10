@@ -41,6 +41,8 @@ SET(SDL2_SEARCH_PATHS
 	/opt/local # DarwinPorts
 	/opt/csw # Blastwave
 	/opt
+	${SDL2_TTF_ROOT}
+	${SDL2_ROOT}
 )
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
