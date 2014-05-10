@@ -39,7 +39,7 @@ void KW_SetLabelFont(KW_Widget * widget, TTF_Font * font) {
 void KW_SetLabelText(KW_Widget * widget, const char * text) {
   KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
   if (label->text != NULL) {
-    free(label->text);
+    SDL_free(label->text);
   }
   label->text = SDL_strdup(text);
   RenderLabelText(widget);
