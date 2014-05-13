@@ -61,6 +61,7 @@ int main(int argc, char ** argv) {
   SDL_Init(SDL_INIT_EVERYTHING);
   SDL_CreateWindowAndRenderer(320, 240, 0, &window, &renderer);
   SDL_SetRenderDrawColor(renderer, 118, 152, 162, 1);
+  SDL_RenderSetLogicalSize(renderer, 320, 240);
   TTF_Init();
   
   /* load tilesets */
@@ -144,6 +145,6 @@ int main(int argc, char ** argv) {
   SDL_DestroyTexture(set);
   TTF_Quit();
   SDL_Quit();
-  
+  exit(0);
   return 0;
 }

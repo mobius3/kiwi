@@ -127,6 +127,17 @@ void TextInputReady(KW_GUI * gui, const char * text) {
   }
 }
 
+void TextEditReady(KW_GUI * gui, const char * text) {
+  int count, i;
+  KW_OnTextEdit * handlers;
+  if (gui->currentfocus == NULL) return;
+  count = gui->currentfocus->eventhandlers[KW_ON_TEXTEDIT].count;
+  handlers = (KW_OnTextEdit*) gui->currentfocus->eventhandlers[KW_ON_TEXTEDIT].handlers;
+  for (i = 0; i < count; i++) {
+    handlers[i](gui->currentfocus, text);
+  }
+}
+
 void KeyUp(KW_GUI * gui, SDL_Keycode key, SDL_Scancode scan) {
   int count, i;
   KW_OnKeyUp * handlers;
@@ -176,12 +187,11 @@ int KW_ProcessEvents(KW_GUI * gui) {
         break;
         
       case SDL_TEXTINPUT:
-        SDL_Log("Got a textready: %s\n", event->text.text);
         TextInputReady(gui, event->text.text);
         break;
         
       case SDL_TEXTEDITING:
-        SDL_Log("Got a textediting: %d %d %d %s\n", event->edit.start, event->edit.length, event->edit.type, event->edit.text);
+        TextEditReady(gui, event->edit.text);
         break;
         
       case SDL_KEYDOWN:

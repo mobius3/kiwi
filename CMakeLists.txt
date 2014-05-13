@@ -1,4 +1,4 @@
-project(sdl_gui)
+project(KiWi)
 cmake_minimum_required(VERSION 2.8)
 
 # Point to our own cmake modules
@@ -20,3 +20,35 @@ endif(CMAKE_COMPILER_IS_GNUCC)
 # Add subdirectories
 add_subdirectory(src)
 add_subdirectory(examples)
+
+# Install KiWiConfig stuff
+set(INCLUDE_INSTALL_DIR include/KiWi)
+set(LIB_INSTALL_DIR lib)
+export(PACKAGE KiWi)
+if (UNIX)
+  set(CMAKECONFIG_INSTALL_DIR "lib/cmake/${PROJECT_NAME}" CACHE STRING "Where ${PROJECT_NAME}-config.cmake and companions will be installed")
+elseif(WIN32)
+  set(CMAKECONFIG_INSTALL_DIR "cmake"  CACHE STRING "Where ${PROJECT_NAME}-config.cmake and companions will be installed")
+elseif(APPLE)
+  set(CMAKECONFIG_INSTALL_DIR "cmake" CACHE STRING "Where ${PROJECT_NAME}-config.cmake and companions will be installed")
+endif()
+
+include(CMakePackageConfigHelpers)
+configure_package_config_file(KiWiConfig.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/tmpkiwiconfig
+                              INSTALL_DESTINATION ${CMAKECONFIG_INSTALL_DIR}
+                              PATH_VARS INCLUDE_INSTALL_DIR LIB_INSTALL_DIR)
+write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/KiWiConfigVersion.cmake
+                                 VERSION 0.0.1
+                                 COMPATIBILITY SameMajorVersion)
+                                 
+install(FILES
+        ${CMAKE_CURRENT_BINARY_DIR}/KiWiConfigVersion.cmake
+        DESTINATION ${CMAKECONFIG_INSTALL_DIR})
+        
+install(FILES       
+        ${CMAKE_CURRENT_BINARY_DIR}/tmpkiwiconfig
+        RENAME KiWiConfig.cmake
+        DESTINATION ${CMAKECONFIG_INSTALL_DIR} )
+
+# install KiWiTargets.cmake
+install(EXPORT KiWiTargets DESTINATION ${CMAKECONFIG_INSTALL_DIR})

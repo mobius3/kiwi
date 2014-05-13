@@ -64,6 +64,7 @@ typedef void (*KW_OnFocusLose)(KW_Widget * widget);
 
 /* text and keyboard callbacks */
 typedef void (*KW_OnTextInput)(KW_Widget * widget, const char * text);
+typedef void (*KW_OnTextEdit)(KW_Widget * widget, const char * text);
 typedef void (*KW_OnKeyDown)(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode code);
 typedef void (*KW_OnKeyUp)(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode code);
 
@@ -407,6 +408,25 @@ extern DECLSPEC void KW_AddWidgetTextInputHandler(KW_Widget * widget, KW_OnTextI
  */
 extern DECLSPEC void KW_RemoveWidgetTextInputHandler(KW_Widget * widget, KW_OnTextInput handler);
 
+/**
+ * \brief   Adds a function that will be called when there's new text that may or may not be commited.
+ * \details Usually if the user is using swype or other IME type, KW_OnTexEdit will be called before
+ *          KW_OnTextEdit. You can decide to show it or not, but usually on android this means
+ *          showing swype text before the user starts another swype gesture (you might want to add
+ *          spaces).
+ * \param   widget The widget to add a KW_OnTextEdit handler.
+ * \param   handler The KW_OnTextEdit function pointer.
+ */
+extern DECLSPEC void KW_AddWidgetTextEditHandler(KW_Widget * widget, KW_OnTextEdit handler);
+
+
+/**
+ * \brief   Remove a KW_OnTextEdit handler from a widget.
+ * \details If you're not interested anymore in KW_OnTextEdit events, remove your handler.
+ * \param   widget The widget to remove the KW_OnTextEdit handler.
+ * \param   handler The KW_OnTextEdit function pointer.
+ */
+extern DECLSPEC void KW_RemoveWidgetTextEditHandler(KW_Widget * widget, KW_OnTextEdit handler);
 
 /**
  * \brief   Adds a function that will be called when there's a key pressed.

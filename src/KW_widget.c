@@ -370,6 +370,15 @@ void KW_RemoveWidgetTextInputHandler(KW_Widget * widget, KW_OnTextInput handler)
   RemoveWidgetHandler(widget, KW_ON_TEXTINPUT, (WidgetHandler) handler);
 }
 
+void KW_AddWidgetTextEditHandler(KW_Widget * widget, KW_OnTextEdit handler) {
+  AddWidgetHandler(widget, KW_ON_TEXTEDIT, (WidgetHandler) handler);
+}
+
+void KW_RemoveWidgetTextEditHandler(KW_Widget * widget, KW_OnTextEdit handler) {
+  RemoveWidgetHandler(widget, KW_ON_TEXTEDIT, (WidgetHandler) handler);
+}
+
+
 void KW_AddWidgetKeyDownHandler(KW_Widget * widget, KW_OnKeyDown handler) {
   AddWidgetHandler(widget, KW_ON_KEYDOWN, (WidgetHandler) handler);
 }
