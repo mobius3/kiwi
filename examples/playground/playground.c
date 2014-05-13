@@ -12,7 +12,7 @@ int main(int argc, char ** argv) {
   SDL_Rect geometry, g2, g3;
   SDL_Color color = { 255, 255, 255, 128 };  
   SDL_Event ev;
-  KW_Widget * frame, * alabel;
+  KW_Widget * frame, * button, * alabel;
   
   /* initialize window and renderer */
   SDL_Init(SDL_INIT_EVERYTHING);
@@ -35,7 +35,7 @@ int main(int argc, char ** argv) {
   g3.x = 10, g3.y = 10, g3.w = 100, g3.h = 30;
   
   frame = KW_CreateFrame(gui, NULL, &geometry);
-  KW_CreateButton(gui, frame, "Button", &g3);
+  button = KW_CreateButton(gui, frame, "Button", &g3);
   g3.y+=g2.h;
   KW_CreateButton(gui, frame, "Button", &g3);
   g3.y+=g2.h;

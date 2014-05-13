@@ -12,8 +12,6 @@ typedef struct KW_Edtibox {
   SDL_Texture * textrender;   /* the rendered text */
   TTF_Font * font;            /* font used to render text */
   unsigned int cursor;        /* in which char index is the cursor */
-  unsigned int selectcursor;  /* in which char index is the select cursor */
-  
   SDL_bool mouseover;         /* is mouse over the editbox */
   SDL_bool clicked;           /* was the editbox clicked */
   SDL_bool active;            /* is the editbox active */
@@ -21,9 +19,7 @@ typedef struct KW_Edtibox {
   int textwidth;              /* total width of the rendered text */
   int textheight;             /* total height of the rendered text */
   int cursorx;                /* cursor x position inside text texture */
-  int selectcursorx;          /* select cursor x position */
   int cursoradjustx;          /* ajudstment in src.x text texture */
-  int selectx;
   SDL_Color color;            /* color used to render the text */
   
 } KW_Editbox;
@@ -35,7 +31,7 @@ void PaintEditboxText(KW_Editbox * editbox, SDL_Rect * geom);
 void AdjustCursor(KW_Editbox * editbox, int cursormove);
 KW_Editbox * AllocEditbox();
 void TextBackspace(KW_Editbox * editbox);
-void TextDelete(KW_Editbox * editbox, int amount);
+void TextDelete(KW_Editbox * editbox);
 
 /* main callbacks */
 void DestroyEditbox(KW_Widget * widget);
@@ -49,7 +45,6 @@ void EditboxMouseRelease(KW_Widget * widget, int b);
 void EditboxFocusGain(KW_Widget * widget);
 void EditboxFocusLose(KW_Widget * widget);
 void EditboxTextInput(KW_Widget * widget, const char * text);
-void EditboxTextEdit(KW_Widget * widget, const char * text);
 void EditboxKeyDown(KW_Widget * widget, SDL_Keycode key, SDL_Scancode sym);
 void EditboxFontChanged(KW_GUI * gui, void * priv, TTF_Font * font);
 

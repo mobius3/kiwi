@@ -6,7 +6,7 @@
 
 /* private functions */
 void PaintEditbox(KW_Widget * widget) {
-  SDL_Rect targetgeom;
+  SDL_Rect targetgeom;  
   SDL_Renderer * renderer;
   SDL_Texture * tileset;  
   KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
@@ -20,6 +20,8 @@ void PaintEditbox(KW_Widget * widget) {
 
   renderer = KW_GetWidgetRenderer(widget);
   tileset = KW_GetWidgetTileset(widget);
+
+  KW_RenderTileFrame(renderer, tileset, 6, basec, targetgeom.x, targetgeom.y, targetgeom.w, targetgeom.h);
 
   /* adjust target geom */
   targetgeom.x += TILESIZE;
@@ -170,17 +172,16 @@ void AdjustCursor(KW_Editbox * editbox, int cursormove) {
 
 void TextBackspace(KW_Editbox * editbox) {
   AdjustCursor(editbox, -1);
-  TextDelete(editbox, 1);
+  TextDelete(editbox);
 }
 
-void TextDelete(KW_Editbox * editbox, int amount) {
+void TextDelete(KW_Editbox * editbox) {
   int i = 0;
-  while (amount-- > 0) {
-    int len = SDL_strlen(editbox->text);
-    int seq = u8_seqlen(editbox->text[editbox->cursor]);
-    for (i = editbox->cursor; i < len; i++) {
-      editbox->text[i] = editbox->text[i + seq];
-    }
+  int len = SDL_strlen(editbox->text);
+  int seq = u8_seqlen(editbox->text[editbox->cursor]);
+  printf("seqlen is %d\n", seq);
+  for (i = editbox->cursor; i < len; i++) {
+    editbox->text[i] = editbox->text[i + seq];
   }
   RenderEditboxText(editbox);
 }
@@ -202,7 +203,7 @@ void EditboxKeyDown(KW_Widget * widget, SDL_Keycode key, SDL_Scancode scan) {
       break;
       
     case SDL_SCANCODE_DELETE:
-      TextDelete(editbox, 1);
+      TextDelete(editbox);
       break;
       
     case SDL_SCANCODE_HOME:
@@ -213,39 +214,10 @@ void EditboxKeyDown(KW_Widget * widget, SDL_Keycode key, SDL_Scancode scan) {
       AdjustCursor(editbox, u8_strlen(editbox->text));
       break;
       
-    case SDL_SCANCODE_TAB:
-      EditboxTextEdit(widget, "Arhmaria");
-      break;
     default:
       break;
   }
 }
-
-void EditboxTextEdit(KW_Widget * widget, const char * text) {
-  int cursoradjust;
-  char save;
-  KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
-  
-  /* save old cursor */
-  cursoradjust = editbox->cursor;
-  
-  /* insert text like nothing was happening */
-  EditboxTextInput(widget, text);
-
-  /* the actual cursor becomes the select cursor. Any edit happening
-   * now will replace the text between cursor and selectcursor */
-  editbox->selectcursor = editbox->cursor;
-  
-    /* recalculate cursor position */
-  save = editbox->text[editbox->selectcursor];
-  editbox->text[editbox->selectcursor] = '\0';
-  TTF_SizeUTF8(KW_GetEditboxFont(editbox->widget), editbox->text, &editbox->selectcursorx, NULL);
-  editbox->text[editbox->selectcursor] = save;
-  
-  /* move cursor back to where it was. User mihght forfeit the edit */
-  AdjustCursor(editbox, -cursoradjust);
-}
-
 
 void EditboxTextInput(KW_Widget * widget, const char * text) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
@@ -294,9 +266,7 @@ void EditboxMouseRelease(KW_Widget * widget, int b) {
 
 void EditboxFocusGain(KW_Widget * widget) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
-  SDL_Rect r = { 0, 0, 100, 100 };
   editbox->active = SDL_TRUE;
-  SDL_SetTextInputRect(&r);
   SDL_StartTextInput();
 }
 

@@ -18,14 +18,12 @@ KW_Widget * KW_CreateEditbox(KW_GUI * gui, KW_Widget * parent, const char * text
   KW_AddWidgetFocusGainHandler(widget, EditboxFocusGain);
   KW_AddWidgetFocusLoseHandler(widget, EditboxFocusLose);
   KW_AddWidgetTextInputHandler(widget, EditboxTextInput);
-  KW_AddWidgetTextEditHandler(widget, EditboxTextEdit);
   KW_AddWidgetKeyDownHandler(widget, EditboxKeyDown);
   
   KW_AddGUIFontChangedHandler(gui, EditboxFontChanged, widget);
 
   RenderEditboxText(editbox);
   AdjustCursor(editbox, SDL_strlen(text));
-  editbox->selectcursor = editbox->cursor;
   return widget;
 }
 
