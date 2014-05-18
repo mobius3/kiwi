@@ -458,6 +458,15 @@ extern DECLSPEC void KW_SetWidgetTileset(KW_Widget * widget, SDL_Texture * tiles
  */
 extern DECLSPEC SDL_Texture * KW_GetWidgetTileset(KW_Widget * widget);
 
+/**
+ * \brief   Sets this widget to clip its children to its geometry.
+ * \details Both rendering and event calculation/reporting will be blocked for
+ *          ALL the widgets in the tree.
+ * \param   widget The widget that will have its children clipped or not.
+ * \param   shouldclip If it should clip or not.
+ */
+extern DECLSPEC void KW_SetClipChildrenWidgets(KW_Widget * widget, SDL_bool shouldclip);
+
 #ifdef __cplusplus
 }
 #endif

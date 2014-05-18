@@ -34,7 +34,7 @@ KW_Widget * CalculateMouseOver(KW_Widget * widget, int x, int y) {
   
 #if !defined(NDEBUG) && defined(MOUSEOVER_DEBUG)
   if (found)
-    printf("Top-most mouse over is %p: %d\n", (void*) widget, widget->type);
+    printf(" Top-most mouse over is %p: %d\n", (void*) widget, widget->type);
 #endif
   return found ? widget : NULL;
 }

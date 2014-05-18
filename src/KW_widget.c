@@ -91,6 +91,11 @@ void FreeWidget(KW_Widget * widget, int freechildren) {
   free(widget);
 }
 
+void KW_SetClipChildrenWidgets(KW_Widget * widget, SDL_bool shouldclip) {
+  widget->clipchildren = shouldclip;
+}
+
+
 /* recursively calculate (childs->parent->parent->...->root) all composed geometries.
  * 
  * They are relative to its parent, thus, if a child has a .x coordinate less than
@@ -127,7 +132,7 @@ void CalculateComposedGeometry(KW_Widget * widget) {
   for (i = 0; i < widget->childrencount; i++) {
     KW_GetWidgetComposedGeometry(widget->children[i], &box);
     if (box.x < 0) {
-      widget->composed.x = box.x;
+      widget->composed.x += box.x;
 #ifndef NDEBUG      
       for (i__ = 0; i__ < indent; i__++) printf(" ");
       printf("Changed x!\n");
@@ -135,7 +140,7 @@ void CalculateComposedGeometry(KW_Widget * widget) {
       changed++;
     }
     if (box.y < 0) {
-      widget->composed.y = box.y;
+      widget->composed.y += box.y;
 #ifndef NDEBUG
       for (i__ = 0; i__ < indent; i__++) printf(" ");
       printf("Changed y!\n");
@@ -286,9 +291,17 @@ void KW_PaintWidget(KW_Widget * root) {
   if (root->paint != NULL) {
     root->paint(root);
   }
+  
+  if (root->clipchildren) {
+    SDL_RenderGetClipRect(KW_GetWidgetRenderer(root), &(root->oldcliprect));
+    SDL_RenderSetClipRect(KW_GetWidgetRenderer(root), &(root->geometry));
+  }
   for (i = 0; i < root->childrencount; i++) {
     KW_PaintWidget(root->children[i]);
   }
+  if (root->clipchildren) {
+    SDL_RenderSetClipRect(KW_GetWidgetRenderer(root), &(root->oldcliprect));
+  }    
 }
 
 void KW_SetWidgetGeometry(KW_Widget * widget, const SDL_Rect * geometry) {
