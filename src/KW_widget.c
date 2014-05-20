@@ -29,6 +29,12 @@ KW_Widget * KW_GetWidgetParent(KW_Widget * widget) {
   return widget->parent == widget->gui->rootwidget ? NULL : widget->parent;
 }
 
+KW_Widget * const * KW_GetWidgetChildren(KW_Widget * widget, unsigned int * count) {
+  *count = widget->childrencount;
+  return widget->children;
+}
+
+
 void KW_SetWidgetTileset(KW_Widget * widget, SDL_Texture * tileset) {
   widget->tileset = tileset;
 }
@@ -133,6 +139,7 @@ void CalculateComposedGeometry(KW_Widget * widget) {
     KW_GetWidgetComposedGeometry(widget->children[i], &box);
     if (box.x < 0) {
       widget->composed.x += box.x;
+      widget->composed.w += -box.x;
 #ifndef NDEBUG      
       for (i__ = 0; i__ < indent; i__++) printf(" ");
       printf("Changed x!\n");
@@ -141,6 +148,7 @@ void CalculateComposedGeometry(KW_Widget * widget) {
     }
     if (box.y < 0) {
       widget->composed.y += box.y;
+      widget->composed.h += -box.y;
 #ifndef NDEBUG
       for (i__ = 0; i__ < indent; i__++) printf(" ");
       printf("Changed y!\n");
@@ -243,6 +251,7 @@ void Reparent(KW_Widget * widget, KW_Widget * newparent) {
     
     /* need to recalculate old parent area */
     CalculateComposedGeometry(widget);    
+    KW_GetWidgetAbsoluteGeometry(widget, &widget->cliprect);
   }
   
   if (newparent != NULL) {
@@ -294,7 +303,7 @@ void KW_PaintWidget(KW_Widget * root) {
   
   if (root->clipchildren) {
     SDL_RenderGetClipRect(KW_GetWidgetRenderer(root), &(root->oldcliprect));
-    SDL_RenderSetClipRect(KW_GetWidgetRenderer(root), &(root->geometry));
+    SDL_RenderSetClipRect(KW_GetWidgetRenderer(root), &(root->cliprect));
   }
   for (i = 0; i < root->childrencount; i++) {
     KW_PaintWidget(root->children[i]);
@@ -315,6 +324,7 @@ void KW_SetWidgetGeometry(KW_Widget * widget, const SDL_Rect * geometry) {
 #endif
     widget->geometry = *geometry;
     CalculateComposedGeometry(widget);
+    KW_GetWidgetAbsoluteGeometry(widget, &widget->cliprect);
   }
 }
 

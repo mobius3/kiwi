@@ -13,5 +13,8 @@ add_subdirectory(frame-family)
 # Editbox example
 add_subdirectory(editbox)
 
-
+# Styleswitcher example
 add_subdirectory(styleswitcher)
+
+# Scroll area example
+add_subdirectory(scrollbox)

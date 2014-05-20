@@ -77,6 +77,7 @@ typedef enum KW_WidgetType {
   KW_WIDGETTYPE_LABEL,
   KW_WIDGETTYPE_BUTTON,
   KW_WIDGETTYPE_EDITBOX,
+  KW_WIDGETTYPE_SCROLLBOX,
   KW_WIDGETTYPE_CUSTOM0 = 0x100000,
   KW_WIDGETTYPE_CUSTOM1,
   KW_WIDGETTYPE_CUSTOM2,
@@ -191,6 +192,18 @@ extern DECLSPEC void KW_ReparentWidget(KW_Widget * widget, KW_Widget * parent);
  * \returns The parent widget or NULL if its a top-level widget.
  */
 extern DECLSPEC KW_Widget * KW_GetWidgetParent(KW_Widget * widget);
+
+/**
+ * \brief      Returns an array of all childrens of this widget.
+ * \details    The returned array is the same as stored internally and its contents
+ *             can change if any reparenting is done after calling this function,
+ *             thus, you should not store its value.
+* \param       widget The widget to return childrens from.
+ * \param[out] count If not NULL, the unsigned int pointed by it will have the
+ *             children count of the widget.
+ * \returns    An array of constant pointers to all childrens of \p widget.
+ */
+extern DECLSPEC KW_Widget * const * KW_GetWidgetChildren(KW_Widget * widget, unsigned int * count);
 
 /**
  * \brief   Retrieves the current data associated with a widget.
