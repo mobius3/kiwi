@@ -1,26 +1,39 @@
 #include "KW_scrollbox.h"
 #include "KW_scrollbox_internal.h"
 #include "KW_tilerenderer.h"
+#include "KW_button.h"
 
 KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const SDL_Rect * geometry) {
   /* creates root scrollbox widget */
-  KW_Widget * area;
+  KW_Scrollbox * scrollbox = AllocScrollbox();
+  KW_Widget * outer, * inner, * button;
   KW_Widget * root = KW_CreateWidget(gui, parent, KW_WIDGETTYPE_SCROLLBOX,
                                          geometry, PaintScrollboxFrame,
-                                         DestroyScrollboxFrame, NULL);
+                                         DestroyScrollboxFrame, scrollbox);
   
   SDL_Rect areageom = *geometry;
+  SDL_Rect buttongeom;
   /* Ignore borders */
   areageom.x = TILESIZE;
   areageom.y = TILESIZE;
-  areageom.w = geometry->w - TILESIZE * 2;
+  areageom.w = geometry->w - TILESIZE * 4;
   areageom.h = geometry->h - TILESIZE * 2;
-  area = KW_CreateWidget(gui, root, KW_WIDGETTYPE_NONE, &areageom, NULL, NULL, NULL);
-  KW_SetClipChildrenWidgets(area, SDL_TRUE);
-  KW_AddWidgetKeyUpHandler(area, ScrollboxAreaKeyUp);
+  outer = KW_CreateWidget(gui, root, KW_WIDGETTYPE_NONE, &areageom, PaintScrollboxFrame, NULL, scrollbox);
+  areageom.x = 0; areageom.y = 0; areageom.h = areageom.w; areageom.w = areageom.h;
+  inner = KW_CreateWidget(gui, outer, KW_WIDGETTYPE_NONE, &areageom, NULL, NULL, scrollbox);
+  KW_SetClipChildrenWidgets(outer, SDL_TRUE);
+  KW_AddWidgetKeyUpHandler(root, ScrollboxKeyUp);
+  scrollbox->outer = outer;
+  scrollbox->inner = inner;
+  scrollbox->root = root;
   
+  buttongeom.x = geometry->w - TILESIZE * 3;
+  buttongeom.y = geometry->y + TILESIZE;
+  buttongeom.w = TILESIZE*2;
+  buttongeom.h = TILESIZE*2;
+  button = KW_CreateButton(gui, root, "", &buttongeom);
   /* everyone needs to be children of this area */
-  return area;
+  return inner;
 }
 
 void KW_ScrollboxVerticalScroll(KW_Widget * scrollbox, int amount) {

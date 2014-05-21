@@ -119,6 +119,11 @@ void CalculateComposedGeometry(KW_Widget * widget) {
   indent++;
 #endif
 
+  if (widget->clipchildren) {
+    indent--;
+    return;
+  }
+  
 #ifndef NDEBUG
   for (i__ = 0; i__ < indent; i__++) printf(" ");
   printf("Recalculating composed geometry of %p: %d\n", (void*)widget, widget->type);
@@ -130,6 +135,7 @@ void CalculateComposedGeometry(KW_Widget * widget) {
   {
     changed++;
     widget->composed = widget->geometry;
+    
 #ifndef NDEBUG
     for (i__ = 0; i__ < indent; i__++) printf(" ");
     printf("Changed because of geometry\n");

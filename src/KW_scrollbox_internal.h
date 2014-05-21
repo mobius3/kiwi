@@ -3,12 +3,15 @@
 
 #include "KW_widget.h"
 
-struct KW_Scrollbox {
+typedef struct KW_Scrollbox {
   KW_Widget * root;
-};
+  KW_Widget * outer;
+  KW_Widget * inner;
+} KW_Scrollbox;
 
+KW_Scrollbox * AllocScrollbox();
 void PaintScrollboxFrame(KW_Widget * widget);
 void DestroyScrollboxFrame(KW_Widget * widget);
-void ScrollboxAreaKeyUp(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode code);
+void ScrollboxKeyUp(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode code);
 
 #endif

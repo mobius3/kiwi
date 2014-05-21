@@ -22,7 +22,7 @@ int main(int argc, char ** argv) {
   
   /* load tileset */
 
-  set = IMG_LoadTexture(renderer, "tileset.png");
+  set = IMG_LoadTexture(renderer, "tileset-alloy.png");
   
   /* initialize gui */
   gui = KW_Init(renderer, set);
@@ -34,7 +34,9 @@ int main(int argc, char ** argv) {
   g2.x = 10, g2.y = 40, g2.w = 100, g2.h = 30;
   g3.x = 10, g3.y = 10, g3.w = 100, g3.h = 30;
   
-  frame = KW_CreateScrollbox(gui, NULL, &geometry);
+  frame = KW_CreateFrame(gui, NULL, &geometry);
+  geometry.x = 0; geometry.y = 0;
+  frame = KW_CreateScrollbox(gui, frame, &geometry);
   button = KW_CreateButton(gui, frame, "Button", &g3);
   g3.y+=g2.h;
   KW_CreateButton(gui, frame, "Button", &g3);
@@ -48,7 +50,6 @@ int main(int argc, char ** argv) {
   g2.x = 0, g2.y = -5, g2.w = 200, g2.h = 20;
   alabel = KW_CreateLabel(gui, frame, "Chose your destiny.", &g2);
   KW_SetLabelAlignment(alabel, KW_LABEL_ALIGN_CENTER, 0, KW_LABEL_ALIGN_TOP, 0);
-  KW_SetLabelColor(alabel, color);
 
   /* create another parent frame */
   while (!SDL_QuitRequested()) {
