@@ -6,7 +6,7 @@
 int main(int argc, char ** argv) {
   SDL_Window * window;
   SDL_Renderer * renderer;
-  SDL_Texture * set;
+  SDL_Surface * set;
   KW_GUI * gui;
   TTF_Font * font;
   SDL_Rect geometry, g2, g3;
@@ -22,7 +22,7 @@ int main(int argc, char ** argv) {
   
   /* load tileset */
 
-  set = IMG_LoadTexture(renderer, "tileset.png");
+  set = IMG_Load("tileset.png");
   
   /* initialize gui */
   gui = KW_Init(renderer, set);

@@ -27,7 +27,7 @@ int main(int argc, char ** argv) {
   /* initialize window and renderer */
   SDL_Window * window;
   SDL_Renderer * renderer;
-  SDL_Texture * set;
+  SDL_Surface * set;
   KW_GUI * gui;
   TTF_Font * font;
   SDL_Rect framegeom, labelgeom;
@@ -37,10 +37,11 @@ int main(int argc, char ** argv) {
   SDL_Init(SDL_INIT_EVERYTHING);
   SDL_CreateWindowAndRenderer(320, 240, 0, &window, &renderer);
   SDL_SetRenderDrawColor(renderer, 200, 100, 100, 1);
+  SDL_RenderSetLogicalSize(renderer, 320, 240);
   TTF_Init();
   
   /* load tileset */
-  set = IMG_LoadTexture(renderer, "tileset.png");
+  set = IMG_Load("tileset.png");
   
   /* initialize gui */
   gui = KW_Init(renderer, set);
@@ -71,7 +72,7 @@ int main(int argc, char ** argv) {
   /* free stuff */
   KW_Quit(gui);
   TTF_CloseFont(font);
-  SDL_DestroyTexture(set);
+  SDL_FreeSurface(set);
   TTF_Quit();
   SDL_Quit();
   

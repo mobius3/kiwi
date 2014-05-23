@@ -19,7 +19,7 @@ void PaintEditbox(KW_Widget * widget) {
   KW_GetWidgetAbsoluteGeometry(widget, &targetgeom);
 
   renderer = KW_GetWidgetRenderer(widget);
-  tileset = KW_GetWidgetTileset(widget);
+  tileset = KW_GetWidgetTilesetTexture(widget);
 
   KW_RenderTileFrame(renderer, tileset, 6, basec, targetgeom.x, targetgeom.y, targetgeom.w, targetgeom.h);
 
@@ -40,7 +40,7 @@ void PaintEditboxText(KW_Editbox * editbox, SDL_Rect * _dst) {
   int cursorx;
 
   SDL_Renderer * renderer = KW_GetWidgetRenderer(editbox->widget);
-  SDL_Texture * tileset = KW_GetWidgetTileset(editbox->widget);
+  SDL_Texture * tileset = KW_GetWidgetTilesetTexture(editbox->widget);
 
   /* query actual w and h */
   src.x = src.y = 0; src.w = editbox->textwidth; src.h = editbox->textheight;

@@ -8,11 +8,10 @@
 
 
 
-KW_GUI * KW_Init(SDL_Renderer * renderer, SDL_Texture * tileset) {
+KW_GUI * KW_Init(SDL_Renderer * renderer, SDL_Surface * tileset) {
   struct KW_GUI * gui = calloc(sizeof(*gui), 1);
-  
-  gui->tileset = tileset;
   gui->renderer = renderer;
+  KW_SetTilesetSurface(gui, tileset);
   gui->rootwidget = AllocWidget();
   gui->rootwidget->gui = gui;
   gui->evqueuelock = SDL_CreateMutex();
@@ -28,8 +27,9 @@ void KW_SetRender(KW_GUI * gui, SDL_Renderer * renderer) {
   gui->renderer = renderer;
 }
 
-void KW_SetTileset(KW_GUI * gui, SDL_Texture * tileset) {
-  gui->tileset = tileset;
+void KW_SetTilesetSurface(KW_GUI * gui, SDL_Surface * tileset) {
+  gui->tilesetsurface = tileset;
+  gui->tilesettexture = SDL_CreateTextureFromSurface(gui->renderer, tileset);
 }
 
 
@@ -43,8 +43,12 @@ void KW_SetRenderer(KW_GUI * gui, SDL_Renderer * renderer) {
 }
 
 
-SDL_Texture * KW_GetTileset(KW_GUI * gui) {
-  return gui->tileset;
+SDL_Texture * KW_GetTilesetTexture(KW_GUI * gui) {
+  return gui->tilesettexture;
+}
+
+SDL_Surface * KW_GetTilesetSurface(KW_GUI * gui) {
+  return gui->tilesetsurface;
 }
 
 

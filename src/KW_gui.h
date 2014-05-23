@@ -71,14 +71,18 @@ typedef void (*KW_OnGUIFontChanged)(KW_GUI * gui, void * data, TTF_Font * font);
 
 /**
  * \brief   Initializes a new KW_GUI instance.
- * \details Each KW_Widget should be associated with a KW_GUI. For each KW_GUI that you create,
- *          you should call KW_Quit(gui) when quitting. KW_GUI doesn't take ownership of either
- *          the renderer or the tileset.
+ * \details Each KW_Widget should be associated with a KW_GUI. For each KW_GUI
+ *          that you create, you should call KW_Quit(gui) when quitting. KW_GUI
+ *          doesn't take ownership of either the renderer or the tileset.
+ * 
+ *          The tileset will be available to widgets both in the surface and
+ *          texture forms. This is useful if your widget doesn'nt change a lot
+ *          and you want to compose a texture to use always.
  * \param   renderer A pointer to a SDL_Renderer.
- * \param   tileset A pointer to a SDL_Texture to be used as GUI tileset.
+ * \param   tileset The tile surface to use as a tileset.
  * \returns A initialized KW_GUI instance.
  */
-extern DECLSPEC KW_GUI * KW_Init(SDL_Renderer * renderer, SDL_Texture * tileset);
+extern DECLSPEC KW_GUI * KW_Init(SDL_Renderer * renderer, SDL_Surface * tileset);
 
 /**
  * \brief   Quits this KW_GUI instance and free its resources.
@@ -91,7 +95,8 @@ extern DECLSPEC void KW_Quit(KW_GUI * gui);
 
 /**
  * \brief   Sets a new SDL_Renderer for this KW_GUI instance.
- * \details If you want to render your GUI in another window, you can pass it's renderer to this function.
+ * \details If you want to render your GUI in another window, you can pass it's
+ *          renderer to this function.
  * \param   gui The KW_GUI instance.
  * \param   render The SDL_Renderer instance.
  */
@@ -99,27 +104,37 @@ extern DECLSPEC void KW_SetRenderer(KW_GUI * gui, SDL_Renderer * renderer);
 
 /**
  * \brief   Returns the current associated renderer with a KW_GUI instance.
- * \details This is useful if you are implementing a custom widget and needs to render your textures.
+ * \details This is useful if you are implementing a custom widget and needs to
+ *          render your textures.
  * \param   gui The KW_GUI instance.
  * \return  The associated SDL_Renderer instance.
  */
 extern DECLSPEC SDL_Renderer * KW_GetRenderer(KW_GUI * gui);
 
 /**
- * \brief   Set a new tileset texture to be used in this KW_GUI instance.
- * \details You may call this function anytime to switch the tileset being used to render the widgets.
- * \param   gui The KW_GUI instance to set a new tileset texture.
- * \param   texture The texture to set. You still have to free the old one.
+ * \brief   Set a new tileset surface to be used in this KW_GUI instance.
+ * \details You may call this function anytime to switch the tileset being used
+ *          to render the widgets. A new texture will be created based on this.
+ * \param   gui The KW_GUI instance to set a new tileset surface.
+ * \param   surface The surface to set. You still have to free the old one.
  */
-extern DECLSPEC void KW_SetTileset(KW_GUI * gui, SDL_Texture * tileset);
+extern DECLSPEC void KW_SetTilesetSurface(KW_GUI * gui, SDL_Surface * tileset);
 
 /**
  * \brief   Gets the tileset texture associated with a KW_GUI instance.
- * \details This is useful if you have custom tiles or images in your tileset. You also may need to call this
- *          to free the old tileset before using KW_SetTileset.
+ * \returns A pointer to a const SDL_Texture. You shouldn't modify this
+ *          texture as it is managed by KiWi.
  * \param   gui The KW_GUI instance to get the tileset from.
  */
-extern DECLSPEC SDL_Texture * KW_GetTileset(KW_GUI * gui);
+extern DECLSPEC SDL_Texture * KW_GetTilesetTexture(KW_GUI * gui);
+
+/**
+ * \brief   Gets the tileset surface associated with a KW_GUI instance.
+ * \returns A pointer to a SDL_Surface. You might want to use this to free
+ *          the surface.
+ * \param   gui The KW_GUI instance to get the tileset from.
+ */
+extern DECLSPEC SDL_Surface * KW_GetTilesetSurface(KW_GUI * gui);
 
 /**
  * \brief   Sets a uniform font to be used in label-rendering widgets.

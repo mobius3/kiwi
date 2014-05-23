@@ -515,17 +515,25 @@ extern DECLSPEC void KW_RemoveWidgetDragHandler(KW_Widget * widget, KW_OnDrag ha
  * \brief   Change the tileset used to render this widget.
  * \details You are still responsible for freeing the previous tileset.
  * \param   widget The widget to change the tileset.
- * \param   tileset The new tileset
+ * \param   tileset The new tileset surface.
  */
-extern DECLSPEC void KW_SetWidgetTileset(KW_Widget * widget, SDL_Texture * tileset);
+extern DECLSPEC void KW_SetWidgetTilesetSurface(KW_Widget * widget, SDL_Surface * tileset);
 
 /**
  * \brief   Returns the current tileset being used by the widget.
  * \details Keep in mind that this can be the same of the set in the KW_GUI instance.
- * \param   widget The widget to retrieve the tileset from
+ * \param   widget The widget to retrieve the tileset from.
  * \returns A pointer to the SDL_Texture being used as a tileset.
  */
-extern DECLSPEC SDL_Texture * KW_GetWidgetTileset(KW_Widget * widget);
+extern DECLSPEC SDL_Texture * KW_GetWidgetTilesetTexture(KW_Widget * widget);
+
+/**
+ * \brief   Returns the current tileset being used by the widget.
+ * \details Keep in mind that this can be the same of the set in the KW_GUI instance.
+ * \param   widget The widget to retrieve the tileset surface from.
+ * \returns A pointer to the SDL_Surface being used as a tileset.
+ */
+extern DECLSPEC SDL_Surface * KW_GetWidgetTilesetSurface(KW_Widget * widget);
 
 /**
  * \brief   Sets this widget to clip its children to its geometry.

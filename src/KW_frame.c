@@ -18,7 +18,7 @@ void PaintFrame(KW_Widget * widget) {
   KW_GetWidgetAbsoluteGeometry(widget, &targetgeom);
   
   renderer = KW_GetWidgetRenderer(widget);
-  tileset = KW_GetTileset(KW_GetGUI(widget));
+  tileset = KW_GetTilesetTexture(KW_GetGUI(widget));
   
   KW_RenderTileFrame(renderer, tileset, 0, 0, targetgeom.x, targetgeom.y, targetgeom.w, targetgeom.h);
 }

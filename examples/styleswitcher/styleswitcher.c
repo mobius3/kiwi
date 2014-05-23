@@ -3,10 +3,10 @@
 #include "KW_button.h"
 #include "SDL_image.h"
 
-SDL_Texture * setalloy;
-SDL_Texture * setfutter;
-SDL_Texture * setflat;
-SDL_Texture * set;
+SDL_Surface * setalloy;
+SDL_Surface * setfutter;
+SDL_Surface * setflat;
+SDL_Surface * set;
 
 TTF_Font * fontin;
 TTF_Font * sourcepro;
@@ -21,7 +21,7 @@ void SwitchFlatClicked(KW_Widget * widget, int b) {
   SDL_Renderer * renderer = KW_GetRenderer(gui);
   KW_SetFont(gui, sourcepro);
   SDL_SetRenderDrawColor(renderer, 200, 100, 100, 1);  
-  KW_SetTileset(gui, setflat);
+  KW_SetTilesetSurface(gui, setflat);
 }
 
 void SwitchAlloyClicked(KW_Widget * widget, int b) {
@@ -29,7 +29,7 @@ void SwitchAlloyClicked(KW_Widget * widget, int b) {
   SDL_Renderer * renderer = KW_GetRenderer(gui);
   KW_SetFont(gui, sourcepro);
   SDL_SetRenderDrawColor(renderer, 64, 67, 70, 1);  
-  KW_SetTileset(gui, setalloy);
+  KW_SetTilesetSurface(gui, setalloy);
 }
 
 void SwitchNormalClicked(KW_Widget * widget, int b) {
@@ -37,7 +37,7 @@ void SwitchNormalClicked(KW_Widget * widget, int b) {
   SDL_Renderer * renderer = KW_GetRenderer(gui);
   KW_SetFont(gui, fontin);
   SDL_SetRenderDrawColor(renderer, 100, 100, 200, 1);
-  KW_SetTileset(KW_GetGUI(widget), set);
+  KW_SetTilesetSurface(gui, set);
 }
 
 void SwitchFutterClicked(KW_Widget * widget, int b) {
@@ -45,7 +45,7 @@ void SwitchFutterClicked(KW_Widget * widget, int b) {
   SDL_Renderer * renderer = KW_GetRenderer(gui);
   KW_SetFont(gui, fontin);  
   SDL_SetRenderDrawColor(renderer, 118, 152, 162, 1);
-  KW_SetTileset(gui, setfutter);
+  KW_SetTilesetSurface(gui, setfutter);
 }
 
 int main(int argc, char ** argv) {
@@ -64,10 +64,10 @@ int main(int argc, char ** argv) {
   TTF_Init();
   
   /* load tilesets */
-  setalloy = IMG_LoadTexture_RW(renderer, SDL_RWFromFile("tileset-alloy.png", "r"), SDL_TRUE);
-  setfutter = IMG_LoadTexture_RW(renderer, SDL_RWFromFile("tileset-futterpedia.png", "r"), SDL_TRUE);
-  setflat = IMG_LoadTexture_RW(renderer, SDL_RWFromFile("tileset-flat.png", "r"), SDL_TRUE);
-  set = IMG_LoadTexture_RW(renderer, SDL_RWFromFile("tileset.png", "r"), SDL_TRUE);
+  setalloy = IMG_Load_RW(SDL_RWFromFile("tileset-alloy.png", "r"), SDL_TRUE);
+  setfutter = IMG_Load_RW(SDL_RWFromFile("tileset-futterpedia.png", "r"), SDL_TRUE);
+  setflat = IMG_Load_RW(SDL_RWFromFile("tileset-flat.png", "r"), SDL_TRUE);
+  set = IMG_Load_RW(SDL_RWFromFile("tileset.png", "r"), SDL_TRUE);
 
   
   /* initialize gui */
@@ -94,22 +94,22 @@ int main(int argc, char ** argv) {
   button = NULL;
   buttongeom.x = 10, buttongeom.y = 8, buttongeom.w = 32, buttongeom.h = 32;
   button = KW_CreateButton(gui, buttonsframe, "", &buttongeom);
-  KW_SetWidgetTileset(button, set);
+  KW_SetWidgetTilesetSurface(button, set);
   KW_AddWidgetMouseDownHandler(button, SwitchNormalClicked);
   
   buttongeom.x += 290/4;
   button = KW_CreateButton(gui, buttonsframe, "", &buttongeom);
-  KW_SetWidgetTileset(button, setalloy);
+  KW_SetWidgetTilesetSurface(button, setalloy);
   KW_AddWidgetMouseDownHandler(button, SwitchAlloyClicked);
   
   buttongeom.x += 290/4;
   button = KW_CreateButton(gui, buttonsframe, "", &buttongeom);
-  KW_SetWidgetTileset(button, setfutter);
+  KW_SetWidgetTilesetSurface(button, setfutter);
   KW_AddWidgetMouseDownHandler(button, SwitchFutterClicked);
   
   buttongeom.x += 290/4;
   button = KW_CreateButton(gui, buttonsframe, "", &buttongeom);
-  KW_SetWidgetTileset(button, setflat);
+  KW_SetWidgetTilesetSurface(button, setflat);
   KW_AddWidgetMouseDownHandler(button, SwitchFlatClicked);
   
   /* reset framegeom */
@@ -141,7 +141,10 @@ int main(int argc, char ** argv) {
   KW_Quit(gui);
   TTF_CloseFont(fontin);
   TTF_CloseFont(dejavu);
-  SDL_DestroyTexture(set);
+  SDL_FreeSurface(set);
+  SDL_FreeSurface(setalloy);
+  SDL_FreeSurface(setflat);
+  SDL_FreeSurface(setfutter);
   TTF_Quit();
   SDL_Quit();
   

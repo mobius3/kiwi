@@ -12,7 +12,8 @@ typedef enum KW_GUIEventHandlerType {
 } KW_GUIEventHandlerType;
 
 struct KW_GUI {
-  SDL_Texture * tileset;
+  SDL_Texture * tilesettexture;
+  SDL_Surface * tilesetsurface;
   SDL_Renderer * renderer;
   KW_Widget * rootwidget; /* the parent to all parent-less widgets :) */
   TTF_Font * font;

@@ -65,7 +65,7 @@ void PaintButton(KW_Widget * widget) {
   KW_GetWidgetAbsoluteGeometry(widget, &targetgeom);
   
   renderer = KW_GetWidgetRenderer(widget);
-  tileset = KW_GetWidgetTileset(widget);
+  tileset = KW_GetWidgetTilesetTexture(widget);
   
   KW_RenderTileFrame(renderer, tileset, 3, basec, targetgeom.x, targetgeom.y, targetgeom.w, targetgeom.h);
 }

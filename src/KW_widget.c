@@ -21,7 +21,8 @@ KW_Widget * KW_CreateWidget(KW_GUI * gui, KW_Widget * parent, KW_WidgetType type
   KW_SetWidgetGeometry(widget, geometry);
   KW_UnblockWidgetInputEvents(widget);
   widget->privdata = priv;
-  widget->tileset = NULL;
+  widget->tilesettexture = NULL;
+  widget->tilesetsurface = NULL;
   return widget;
 }
 
@@ -35,12 +36,17 @@ KW_Widget * const * KW_GetWidgetChildren(KW_Widget * widget, unsigned int * coun
 }
 
 
-void KW_SetWidgetTileset(KW_Widget * widget, SDL_Texture * tileset) {
-  widget->tileset = tileset;
+void KW_SetWidgetTilesetSurface(KW_Widget * widget, SDL_Surface * tileset) {
+  widget->tilesetsurface = tileset;
+  widget->tilesettexture = SDL_CreateTextureFromSurface(KW_GetWidgetRenderer(widget), tileset);
 }
 
-SDL_Texture * KW_GetWidgetTileset(KW_Widget * widget) {
-  return widget->tileset == NULL ? widget->gui->tileset : widget->tileset;
+SDL_Texture * KW_GetWidgetTilesetTexture(KW_Widget * widget) {
+  return widget->tilesettexture == NULL ? widget->gui->tilesettexture : widget->tilesettexture;
+}
+
+SDL_Surface * KW_GetWidgetTilesetSurface(KW_Widget * widget) {
+  return widget->tilesetsurface == NULL ? widget->gui->tilesetsurface : widget->tilesetsurface;
 }
 
 void * KW_GetWidgetData(KW_Widget * widget, KW_WidgetType type) {

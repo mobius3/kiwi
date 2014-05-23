@@ -36,7 +36,8 @@ struct KW_Widget {
   SDL_Rect            composed;
   SDL_bool            inputblocked;
   
-  SDL_Texture *       tileset;
+  SDL_Texture *       tilesettexture;
+  SDL_Surface *       tilesetsurface;
   
   void                (*paint)(KW_Widget *);
   void                (*destroy)(KW_Widget *);
