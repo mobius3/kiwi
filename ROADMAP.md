@@ -10,6 +10,7 @@ Label: **done (bold)**, *in progress (italics)*, to do (no style).
   - **Focus Gain/Lose**
   - *Text editing*
   - **Press/release**
+  - **Drag (Start/Move/Stop)**
 - *Widget events*
   - Geometry changed
   - Parent changed
@@ -63,7 +64,13 @@ Label: **done (bold)**, *in progress (italics)*, to do (no style).
   - Checked changed events for the items
   - Tile for not checked, hover, checked, hover-checked, clicked, clicked-checked.
   - Display labels for each item
-  
+- *Scrollboxes*
+  - **Clip children widgets to parent area** (done in the renderer)
+  - **Clip events for clipped children**
+  - *Implement the scrollbar*
+  - *Implement scroll buttons*
+  - Have scrollbars change width
+
 ### Layouts
 
 - Core
