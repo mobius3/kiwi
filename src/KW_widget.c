@@ -120,7 +120,9 @@ void CalculateComposedGeometry(KW_Widget * widget) {
 #endif
 
   if (widget->clipchildren) {
+#ifndef NDEBUG
     indent--;
+#endif
     return;
   }
   
