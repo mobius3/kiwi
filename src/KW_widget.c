@@ -343,6 +343,31 @@ KW_GUI * KW_GetWidgetGUI(KW_Widget * widget) {
   return widget->gui;
 }
 
+
+void KW_AddWidgetDragHandler(KW_Widget * widget, KW_OnDrag handler) {
+  AddWidgetHandler(widget, KW_ON_DRAG, (WidgetHandler) handler);
+}
+
+void KW_RemoveWidgetDragHandler(KW_Widget * widget, KW_OnDrag handler) {
+  RemoveWidgetHandler(widget, KW_ON_DRAG, (WidgetHandler) handler);
+}
+
+void KW_AddWidgetDragStartHandler(KW_Widget * widget, KW_OnDragStart handler) {
+  AddWidgetHandler(widget, KW_ON_DRAGSTART, (WidgetHandler) handler);
+}
+
+void KW_RemoveWidgetDragStartHandler(KW_Widget * widget, KW_OnDragStart handler) {
+  RemoveWidgetHandler(widget, KW_ON_DRAGSTART, (WidgetHandler) handler);
+}
+
+void KW_AddWidgetDragStopHandler(KW_Widget * widget, KW_OnDragStop handler) {
+  AddWidgetHandler(widget, KW_ON_DRAGSTOP, (WidgetHandler) handler);
+}
+
+void KW_RemoveWidgetDragStopHandler(KW_Widget * widget, KW_OnDragStop handler) {
+  RemoveWidgetHandler(widget, KW_ON_DRAGSTOP, (WidgetHandler) handler);
+}
+
 void KW_AddWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler) {
   AddWidgetHandler(widget, KW_ON_MOUSEOVER, (WidgetHandler) handler);
 }

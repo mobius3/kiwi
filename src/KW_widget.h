@@ -58,6 +58,11 @@ typedef void (*KW_OnMouseLeave)(KW_Widget * widget);
 typedef void (*KW_OnMouseDown)(KW_Widget * widget, int button);
 typedef void (*KW_OnMouseUp)(KW_Widget * widget, int button);
 
+/* drag callbacks */
+typedef void (*KW_OnDragStart)(KW_Widget * widget, int x, int y);
+typedef void (*KW_OnDragStop)(KW_Widget * widget, int x, int y);
+typedef void (*KW_OnDrag)(KW_Widget * widget, int x, int y, int relx, int rely);
+
 /* focus callbacks */
 typedef void (*KW_OnFocusGain)(KW_Widget * widget);
 typedef void (*KW_OnFocusLose)(KW_Widget * widget);
@@ -454,6 +459,57 @@ extern DECLSPEC void KW_AddWidgetKeyUpHandler(KW_Widget * widget, KW_OnKeyUp han
  * \param   handler The KW_OnKeyUp function pointer.
  */
 extern DECLSPEC void KW_RemoveWidgetKeyUpHandler(KW_Widget * widget, KW_OnKeyUp handler);
+
+/**
+ * \brief   Adds a function that will be called when drag is starting over the widget.
+ * \details This handler is called after the cursor is pressed and then moved.
+ * \param   widget The widget to add a KW_OnDragStart handler.
+ * \param   handler The KW_OnDragStart function pointer.
+ */
+extern DECLSPEC void KW_AddWidgetDragStartHandler(KW_Widget * widget, KW_OnDragStart handler);
+
+
+/**
+ * \brief   Remove a KW_OnDragStart handler from a widget.
+ * \details If you're not interested anymore in KW_OnDragStart events, remove your handler.
+ * \param   widget The widget to remove the KW_OnDragStart handler.
+ * \param   handler The KW_OnDragStart function pointer.
+ */
+extern DECLSPEC void KW_RemoveWidgetDragStartHandler(KW_Widget * widget, KW_OnDragStart handler);
+
+/**
+ * \brief   Adds a function to be called when a drag stops.
+ * \details The handler will be called only if the drag was started over this widget.
+ * \param   widget The widget to add a KW_OnDragStop handler.
+ * \param   handler The KW_OnDragStop function pointer.
+ */
+extern DECLSPEC void KW_AddWidgetDragStopHandler(KW_Widget * widget, KW_OnDragStop handler);
+
+
+/**
+ * \brief   Remove a KW_OnDragStop handler from a widget.
+ * \details If you're not interested anymore in KW_OnDragStop events, remove your handler.
+ * \param   widget The widget to remove the KW_OnDragStop handler.
+ * \param   handler The KW_OnDragStop function pointer.
+ */
+extern DECLSPEC void KW_RemoveWidgetDragStopHandler(KW_Widget * widget, KW_OnDragStop handler);
+
+/**
+ * \brief   Adds a function to be called when a drag event occurs.
+ * \details The handler will be called only if the drag was started over this widget and the DragStart handler was called.
+ * \param   widget The widget to add a KW_OnDragStop handler.
+ * \param   handler The KW_OnDragStop function pointer.
+ */
+extern DECLSPEC void KW_AddWidgetDragHandler(KW_Widget * widget, KW_OnDrag handler);
+
+
+/**
+ * \brief   Remove a KW_OnDrag handler from a widget.
+ * \details If you're not interested anymore in KW_OnDrag events, remove your handler.
+ * \param   widget The widget to remove the KW_OnDrag handler.
+ * \param   handler The KW_OnDrag function pointer.
+ */
+extern DECLSPEC void KW_RemoveWidgetDragHandler(KW_Widget * widget, KW_OnDrag handler);
 
 /**
  * \brief   Change the tileset used to render this widget.

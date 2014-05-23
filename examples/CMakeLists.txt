@@ -18,3 +18,6 @@ add_subdirectory(styleswitcher)
 
 # Scroll area example
 add_subdirectory(scrollbox)
+
+# Drag widget example
+add_subdirectory(drag)

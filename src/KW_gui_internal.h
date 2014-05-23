@@ -19,6 +19,8 @@ struct KW_GUI {
   
   KW_Widget * currentmouseover; /* the current widget that has mouse over */
   KW_Widget * currentfocus; /* which widget was the last focused/clicked */
+  KW_Widget * currentdrag; /* the widget where the drag started */
+  SDL_bool cursordown; /* indicates whether the cursor is clicked or not */
   
   SDL_Event evqueue[1024];
   int evqueuesize;
@@ -30,7 +32,7 @@ struct KW_GUI {
       void * priv;
     } * handlers;
     unsigned int      count;
-  } eventhandlers[KW_GUIEVENTHANDLER_TOTAL];  
+  } eventhandlers[KW_GUIEVENTHANDLER_TOTAL];
 };
 
 void AddGUIHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, GUIHandler handler, void * priv);
