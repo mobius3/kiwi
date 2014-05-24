@@ -59,15 +59,8 @@ SDL_Renderer * KW_GetWidgetRenderer(KW_Widget * widget) {
 }
 
 void KW_GetWidgetAbsoluteGeometry(KW_Widget * widget, SDL_Rect * geometry) {
-  SDL_Rect tmp;
-  KW_GetWidgetGeometry(widget, geometry);
-  for (widget = KW_GetWidgetParent(widget); widget != NULL; widget = KW_GetWidgetParent(widget)) {
-    KW_GetWidgetGeometry(widget, &tmp);
-    geometry->x += tmp.x;
-    geometry->y += tmp.y;
-  }
+  *geometry = widget->absolute;
 }
-
 
 void KW_SetWidgetData(KW_Widget * widget, void * data) {
   widget->privdata = data;
@@ -107,6 +100,23 @@ void KW_SetClipChildrenWidgets(KW_Widget * widget, SDL_bool shouldclip) {
   widget->clipchildren = shouldclip;
 }
 
+/* recursively calculate absolute geometry */
+void CalculateAbsoluteGeometry(KW_Widget * widget) {
+  int i = 0;
+  SDL_Rect oldabs = widget->absolute, parentabs;
+  KW_GetWidgetAbsoluteGeometry(widget->parent, &parentabs); /* get parent absolute */
+  widget->absolute.x = widget->geometry.x + parentabs.x;
+  widget->absolute.y = widget->geometry.y + parentabs.y;
+  widget->absolute.w = widget->geometry.w;
+  widget->absolute.h = widget->geometry.h;
+  
+  /* absolute changed, children absolute must also change */
+  if (oldabs.x != widget->absolute.x || oldabs.y != widget->absolute.y) {
+    for (i = 0; i < widget->childrencount; i++) {
+      CalculateAbsoluteGeometry(widget->children[i]);
+    }
+  }
+}
 
 /* recursively calculate (childs->parent->parent->...->root) all composed geometries.
  * 
@@ -265,7 +275,7 @@ void Reparent(KW_Widget * widget, KW_Widget * newparent) {
     
     /* need to recalculate old parent area */
     CalculateComposedGeometry(widget);    
-    KW_GetWidgetAbsoluteGeometry(widget, &widget->cliprect);
+    CalculateAbsoluteGeometry(widget);
   }
   
   if (newparent != NULL) {
@@ -317,7 +327,7 @@ void KW_PaintWidget(KW_Widget * root) {
   
   if (root->clipchildren) {
     SDL_RenderGetClipRect(KW_GetWidgetRenderer(root), &(root->oldcliprect));
-    SDL_RenderSetClipRect(KW_GetWidgetRenderer(root), &(root->cliprect));
+    SDL_RenderSetClipRect(KW_GetWidgetRenderer(root), &(root->absolute));
   }
   for (i = 0; i < root->childrencount; i++) {
     KW_PaintWidget(root->children[i]);
@@ -338,7 +348,7 @@ void KW_SetWidgetGeometry(KW_Widget * widget, const SDL_Rect * geometry) {
 #endif
     widget->geometry = *geometry;
     CalculateComposedGeometry(widget);
-    KW_GetWidgetAbsoluteGeometry(widget, &widget->cliprect);
+    CalculateAbsoluteGeometry(widget);
   }
 }
 

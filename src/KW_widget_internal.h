@@ -66,7 +66,7 @@ struct KW_Widget {
   KW_OnMouseUp *      mouseup;
   unsigned int        mouseupcount;
   
-  SDL_Rect            cliprect;
+  SDL_Rect            absolute;
   SDL_Rect            oldcliprect;
   SDL_bool            clipchildren;
   
