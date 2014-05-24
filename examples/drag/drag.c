@@ -15,7 +15,6 @@ void DragStop(KW_Widget * widget, int x, int y) {
 void Drag(KW_Widget * widget, int x, int y, int xrel, int yrel) {
   SDL_Rect g;
   KW_GetWidgetGeometry(widget, &g);
-  printf("Drag happened, moved %dx%d\n", xrel, yrel);
   g.x += xrel;
   g.y += yrel;
   KW_SetWidgetGeometry(widget, &g);
@@ -63,6 +62,7 @@ int main(int argc, char ** argv) {
   }
   
   while (!SDL_QuitRequested()) {
+    SDL_SetRenderDrawColor(renderer, 200, 100, 100, 1);
     SDL_RenderClear(renderer);
     KW_Paint(gui);
     SDL_RenderPresent(renderer);

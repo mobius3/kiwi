@@ -3,40 +3,32 @@
 #include "KW_widget_internal.h"
 
 KW_Widget * CalculateMouseOver(KW_Widget * widget, int x, int y) {
-  /* calculate total area of this widget */
+  int i;
+  KW_Widget * found = NULL;
+  SDL_Rect g = widget->composed;
+  if (widget->parent) {
+    g.x += widget->parent->absolute.x;
+    g.y += widget->parent->absolute.y;
+  }
+  /* mouseover is a input event, avoid calculating it */
+  if (widget->inputblocked) { return NULL; }
   
-  
-  /* walk down the children tree looking for a match */
-  int i = 0;
-  KW_Widget * test;
-  SDL_Rect g = {0, 0, 0, 0};
-  SDL_Rect offset = {0, 0, 0, 0};
-  SDL_bool found = SDL_FALSE;
-  for (i = 0; i < widget->childrencount; i++) {
-    /* select a children to test */
-    test = widget->children[i];
-    KW_GetWidgetComposedGeometry(test, &g);
-    g.x += offset.x;
-    g.y += offset.y;
-    /* se if cursor is over this geometry */
-    if (!test->inputblocked && (x > g.x && x < g.x + g.w && y > g.y && y < g.y + g.h)) {
-      /* recalculate offset */
-      offset.x += test->geometry.x;
-      offset.y += test->geometry.y;
-      widget = test;
-      found = SDL_TRUE;
-#if !defined(NDEBUG) && defined(MOUSEOVER_DEBUG)
-      printf(" Mouse over %p: %d [%dx%d+%dx%d] (new offx=%d, offy=%d)\n", (void*) widget, widget->type, g.x, g.y, g.w, g.h, offset.x, offset.y);
-#endif
-      i = -1;
-    }
+  /* if not in composed geometry, nothing to see here then. rootwidget always borked. */
+  if (!(x > g.x && x < g.x + g.w && y > g.y && y < g.y + g.h) && widget != widget->gui->rootwidget) { 
+    return NULL;
   }
   
-#if !defined(NDEBUG) && defined(MOUSEOVER_DEBUG)
-  if (found)
-    printf(" Top-most mouse over is %p: %d\n", (void*) widget, widget->type);
-#endif
-  return found ? widget : NULL;
+  for (i = 0; i < widget->childrencount && found == NULL; i++)
+    found = CalculateMouseOver(widget->children[i], x, y);
+  
+  /* children don't have it. Maybe its this widget then? */
+  if (found == NULL) {
+    g = widget->absolute;
+    /* use our own absolute to test, then */
+    if (x > g.x && x < g.x + g.w && y > g.y && y < g.y + g.h)
+      found = widget;
+  }
+  return found; 
 }
 
 void MouseMoved(KW_GUI * gui, int mousex, int mousey, int xrel, int yrel) {
