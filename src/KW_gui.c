@@ -28,9 +28,9 @@ void KW_SetRender(KW_GUI * gui, SDL_Renderer * renderer) {
 }
 
 void KW_SetTilesetSurface(KW_GUI * gui, SDL_Surface * tileset) {
+  gui->tilesettexture = SDL_CreateTextureFromSurface(gui->renderer, tileset);
   SDL_SetSurfaceBlendMode(tileset, SDL_BLENDMODE_NONE);
   gui->tilesetsurface = tileset;
-  gui->tilesettexture = SDL_CreateTextureFromSurface(gui->renderer, tileset);
 }
 
 
