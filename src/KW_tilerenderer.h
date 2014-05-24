@@ -51,6 +51,8 @@ extern "C" {
  */
 void DECLSPEC KW_RenderTile(SDL_Renderer * renderer, SDL_Texture * tileset, int column, int line, int x, int y);
 
+void DECLSPEC KW_BlitTile(SDL_Surface * dst, SDL_Surface * tileset, int column, int line, int x, int y);
+
 /**
  * \brief   Render a tile filling the whole w/h specified.
  * \details The tile rendering will start at x/y and will fill until x+w/y+h, clipping when necessary.
@@ -64,6 +66,8 @@ void DECLSPEC KW_RenderTile(SDL_Renderer * renderer, SDL_Texture * tileset, int 
  * \param   h The height to fill.
  */
 void DECLSPEC KW_RenderTileFill(SDL_Renderer * renderer, SDL_Texture * tileset, int column, int line, int x, int y, int w, int h);
+
+void DECLSPEC KW_BlitTileFill(SDL_Surface * dst,  SDL_Surface * tileset, int column, int line, int x, int y, int w, int h);
 
 /**
  * \brief   Render a frame using the set of tiles specified at startcolumn and startline.
@@ -107,6 +111,8 @@ void DECLSPEC KW_RenderTileFill(SDL_Renderer * renderer, SDL_Texture * tileset, 
  * \param   h The height to fill.
  */
 void DECLSPEC KW_RenderTileFrame(SDL_Renderer * renderer, SDL_Texture * tileset, int startcolumn, int startline, int x, int y, int w, int h);
+
+void DECLSPEC KW_BlitTileFrame(SDL_Surface * dst, SDL_Surface * tileset, int startcolumn, int startline, int x, int y, int w, int h);
 
 #ifdef __cplusplus
 }
