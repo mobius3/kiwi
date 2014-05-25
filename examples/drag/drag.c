@@ -55,7 +55,7 @@ int main(int argc, char ** argv) {
   framegeom.x = 10, framegeom.y = 10, framegeom.w = 160, framegeom.h = 120;
   labelgeom = framegeom; labelgeom.x = labelgeom.y = 0;
   for (i = 0; i < 10; i++) {
-    frame = KW_CreateFrame(gui, frame, &framegeom);
+    frame = KW_CreateButton(gui, frame, "Yo", &framegeom);
       KW_AddWidgetDragStartHandler(frame, DragStart);
       KW_AddWidgetDragStopHandler(frame, DragStop);
       KW_AddWidgetDragHandler(frame, Drag);

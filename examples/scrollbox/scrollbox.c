@@ -26,7 +26,8 @@ int main(int argc, char ** argv) {
   
   /* initialize gui */
   gui = KW_Init(renderer, set);
-  font = TTF_OpenFont("Fontin-Regular.ttf", 12);
+  font = TTF_OpenFont("SourceSansPro-Semibold.ttf", 12);
+  TTF_SetFontHinting(font, TTF_HINTING_NONE);
   KW_SetFont(gui, font);
 
   geometry.x = 30; geometry.y = 30; geometry.w = 200; geometry.h = 200;

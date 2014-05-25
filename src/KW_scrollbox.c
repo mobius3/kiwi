@@ -23,6 +23,7 @@ KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const SDL_Rect 
   inner = KW_CreateWidget(gui, outer, KW_WIDGETTYPE_NONE, &areageom, NULL, NULL, scrollbox);
   KW_SetClipChildrenWidgets(outer, SDL_TRUE);
   KW_AddWidgetKeyUpHandler(root, ScrollboxKeyUp);
+  KW_AddWidgetKeyUpHandler(inner, ScrollboxKeyUp);
   scrollbox->outer = outer;
   scrollbox->inner = inner;
   scrollbox->root = root;

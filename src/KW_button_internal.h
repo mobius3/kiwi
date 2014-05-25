@@ -7,6 +7,8 @@ typedef struct KW_Button {
   KW_Widget * labelwidget; /* the label inside the button frame */
   SDL_bool mouseover;
   SDL_bool clicked;
+  SDL_Texture * normal;
+  SDL_Texture * over;
 } KW_Button;
 
 

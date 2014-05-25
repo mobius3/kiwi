@@ -35,6 +35,8 @@ void DestroyScrollboxFrame(KW_Widget * widget) {
 
 void ScrollboxKeyUp(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode code) {
   KW_Scrollbox * scrollbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_SCROLLBOX);
+  if (scrollbox == NULL)
+  scrollbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_NONE);
   switch (code) {
     case SDL_SCANCODE_UP:
       KW_ScrollboxVerticalScroll(scrollbox->outer, -5);
