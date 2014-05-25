@@ -9,6 +9,13 @@ KW_Frame * AllocFrame() {
   return frame;
 }
 
+void DestroyFrame(KW_Widget * widget) {
+  KW_Frame * frame = KW_GetWidgetData(widget, KW_WIDGETTYPE_FRAME);
+  SDL_DestroyTexture(frame->framerender);
+  free(frame);
+}
+
+
 void RenderFrame(KW_Widget * widget) {
   KW_Frame * frame = KW_GetWidgetData(widget, KW_WIDGETTYPE_FRAME);
   SDL_Rect targetgeom;

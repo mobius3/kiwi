@@ -8,6 +8,7 @@ KW_Button * AllocButton();
 void PaintButton(KW_Widget * widget);
 void RenderButton(KW_Widget * widget);
 void DestroyButton(KW_Widget * widget);
+void ButtonGeometryChanged(KW_Widget * widget, const SDL_Rect * newgeom, const SDL_Rect * oldgeom);
 
 static void MouseOver(KW_Widget * widget) {
   KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
@@ -48,6 +49,7 @@ KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, const char * text,
   KW_AddWidgetMouseLeaveHandler(widget, MouseLeave);
   KW_AddWidgetMouseDownHandler(widget, MousePress);
   KW_AddWidgetMouseUpHandler(widget, MouseRelease);
+  KW_AddWidgetGeometryChangeHandler(widget, ButtonGeometryChanged);
   RenderButton(widget);
   return widget;
 }
@@ -75,17 +77,32 @@ void RenderButton(KW_Widget * widget) {
   targetgeom.x = targetgeom.y = 0;
   target = SDL_CreateRGBSurface(0, targetgeom.w, targetgeom.h, 32, tileset->format->Rmask, tileset->format->Gmask, tileset->format->Bmask, tileset->format->Amask);  
   KW_BlitTileFrame(target, tileset, 3, 3, targetgeom.x, targetgeom.y, targetgeom.w, targetgeom.h);
+  if (button->normal != NULL) SDL_DestroyTexture(button->normal);
   button->normal = SDL_CreateTextureFromSurface(KW_GetWidgetRenderer(widget), target);
   SDL_FreeSurface(target);
   target = SDL_CreateRGBSurface(0, targetgeom.w, targetgeom.h, 32, tileset->format->Rmask, tileset->format->Gmask, tileset->format->Bmask, tileset->format->Amask);  
   KW_BlitTileFrame(target, tileset, 3, 0, targetgeom.x, targetgeom.y, targetgeom.w, targetgeom.h);
+  if (button->over != NULL) SDL_DestroyTexture(button->over);
   button->over = SDL_CreateTextureFromSurface(KW_GetWidgetRenderer(widget), target);
+  SDL_FreeSurface(target);
 }
 
 void DestroyButton(KW_Widget * widget) {
   KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
   SDL_DestroyTexture(button->over);
   SDL_DestroyTexture(button->normal);
+  free(button);
+}
+
+void ButtonGeometryChanged(KW_Widget * widget, const SDL_Rect * newgeom, const SDL_Rect * oldgeom) {
+  SDL_Rect labelgeom;
+  KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
+  labelgeom.x = TILESIZE;
+  labelgeom.y = TILESIZE;
+  labelgeom.w = newgeom->w - TILESIZE * 2;
+  labelgeom.h = newgeom->h - TILESIZE * 2;
+  RenderButton(widget);
+  KW_SetWidgetGeometry(button->labelwidget, &labelgeom);
 }
 
 
