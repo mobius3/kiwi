@@ -18,7 +18,7 @@ KW_Widget * CalculateMouseOver(KW_Widget * widget, int x, int y) {
     return NULL;
   }
   
-  for (i = 0; i < widget->childrencount && found == NULL; i++)
+  for (i = widget->childrencount-1; i >= 0 && found == NULL; i--)
     found = CalculateMouseOver(widget->children[i], x, y);
   
   /* children don't have it. Maybe its this widget then? */
