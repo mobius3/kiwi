@@ -3,9 +3,14 @@
 #include "KW_button.h"
 #include "SDL_image.h"
 
+int dragmode = 0;
 
-void DragStart(KW_Widget * widget, int mousex, int mousey) {
-  printf("Drag has started at %dx%d\n", mousex, mousey);
+void DragStart(KW_Widget * widget, int x, int y) {
+  SDL_Rect g;
+  KW_GetWidgetAbsoluteGeometry(widget, &g);
+  if (x > g.x + g.w - 20 && y > g.y + g.h -20) dragmode = 1;
+  else dragmode = 0;
+  printf("Drag has started at %dx%d\n", x, y);
 }
 
 void DragStop(KW_Widget * widget, int x, int y) {
@@ -15,8 +20,13 @@ void DragStop(KW_Widget * widget, int x, int y) {
 void Drag(KW_Widget * widget, int x, int y, int xrel, int yrel) {
   SDL_Rect g;
   KW_GetWidgetGeometry(widget, &g);
-  g.x += xrel;
-  g.y += yrel;
+  if (dragmode == 1) {
+    g.w += xrel;
+    g.h += yrel;
+  } else {
+    g.x += xrel;
+    g.y += yrel;
+  }
   KW_SetWidgetGeometry(widget, &g);
 }
 
@@ -55,8 +65,8 @@ int main(int argc, char ** argv) {
   framegeom.x = 10, framegeom.y = 10, framegeom.w = 160, framegeom.h = 120;
   labelgeom = framegeom; labelgeom.x = labelgeom.y = 0;
   for (i = 0; i < 10; i++) {
-    framegeom.x = framegeom.y = i * 10;
-    frame = KW_CreateButton(gui, NULL, "Yo", &framegeom);
+    /*framegeom.x = framegeom.y = i * 10;*/
+    frame = KW_CreateFrame(gui, frame, &framegeom);
     KW_AddWidgetDragStartHandler(frame, DragStart);
     KW_AddWidgetDragStopHandler(frame, DragStop);
     KW_AddWidgetDragHandler(frame, Drag);

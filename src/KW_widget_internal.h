@@ -18,6 +18,7 @@ typedef enum KW_WidgetEventHandlerType {
   KW_ON_DRAGSTART,
   KW_ON_DRAGSTOP,
   KW_ON_DRAG,
+  KW_ON_GEOMETRYCHANGED,
   KW_EVENTHANDLER_TOTAL
 } KW_WidgetEventHandlerType;
 
@@ -47,24 +48,6 @@ struct KW_Widget {
     WidgetHandler *   handlers;
     unsigned int      count;
   } eventhandlers[KW_EVENTHANDLER_TOTAL];
-  
-  KW_OnMouseOver *    mouseover;
-  unsigned int        mouseovercount;
-  
-  KW_OnMouseLeave *   mouseleave;
-  unsigned int        mouseleavecount;
-  
-  KW_OnFocusGain *    focusgain;
-  unsigned int        focusgaincount;
-  
-  KW_OnFocusLose *    focuslose;
-  unsigned int        focuslosecount;
-
-  KW_OnMouseDown *    mousedown;
-  unsigned int        mousedowncount;
-
-  KW_OnMouseUp *      mouseup;
-  unsigned int        mouseupcount;
   
   SDL_Rect            absolute;
   SDL_Rect            oldcliprect;

@@ -72,6 +72,9 @@ typedef void (*KW_OnTextInput)(KW_Widget * widget, const char * text);
 typedef void (*KW_OnKeyDown)(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode code);
 typedef void (*KW_OnKeyUp)(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode code);
 
+/* widget internal events */
+typedef void (*KW_OnGeometryChange)(KW_Widget * widget, const SDL_Rect * newgeom, const SDL_Rect * oldgeom);
+
 /**
  * \brief   The KW_WidgetType enumeration represents available widget types.
  * \details Every widget created must set a widget type even if its a custom widget.
@@ -501,6 +504,10 @@ extern DECLSPEC void KW_RemoveWidgetDragStopHandler(KW_Widget * widget, KW_OnDra
  * \param   handler The KW_OnDragStop function pointer.
  */
 extern DECLSPEC void KW_AddWidgetDragHandler(KW_Widget * widget, KW_OnDrag handler);
+
+extern DECLSPEC void KW_AddWidgetGeometryChangeHandler(KW_Widget * widget, KW_OnGeometryChange handler);
+
+extern DECLSPEC void KW_RemoveWidgetGeometryChangeHandler(KW_Widget * widget, KW_OnGeometryChange handler);
 
 
 /**

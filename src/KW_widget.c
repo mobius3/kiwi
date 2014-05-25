@@ -353,6 +353,9 @@ void KW_PaintWidget(KW_Widget * root) {
 }
 
 void KW_SetWidgetGeometry(KW_Widget * widget, const SDL_Rect * geometry) {
+  int i;
+  SDL_Rect old;
+  KW_OnGeometryChange handler;
   if (widget->geometry.x != geometry->x ||
       widget->geometry.y != geometry->y ||
       widget->geometry.w != geometry->w ||
@@ -361,9 +364,14 @@ void KW_SetWidgetGeometry(KW_Widget * widget, const SDL_Rect * geometry) {
 #if !defined(NDEBUG) && defined(DEBUG_GEOMETRY)  
     printf("Set Geometry of %p: %d from %dx%d+%dx%d to %dx%d+%dx%d\n", (void*) widget, widget->type, widget->geometry.x, widget->geometry.y, widget->geometry.w, widget->geometry.h, geometry->x, geometry->y, geometry->w, geometry->h);
 #endif
+    old = widget->geometry;
     widget->geometry = *geometry;
     CalculateComposedGeometry(widget);
     CalculateAbsoluteGeometry(widget);
+    for (i = 0; i < widget->eventhandlers[KW_ON_GEOMETRYCHANGED].count; i++) {
+      handler = (KW_OnGeometryChange) widget->eventhandlers[KW_ON_GEOMETRYCHANGED].handlers[i];
+      handler(widget, geometry, &old);
+    }
   }
 }
 
@@ -471,5 +479,13 @@ void KW_AddWidgetKeyUpHandler(KW_Widget * widget, KW_OnKeyUp handler) {
 
 void KW_RemoveWidgetKeyUpHandler(KW_Widget * widget, KW_OnKeyUp handler) {
   RemoveWidgetHandler(widget, KW_ON_KEYUP, (WidgetHandler) handler);
+}
+
+void KW_AddWidgetGeometryChangeHandler(KW_Widget * widget, KW_OnGeometryChange handler) {
+  AddWidgetHandler(widget, KW_ON_GEOMETRYCHANGED, (WidgetHandler) handler);
+}
+
+void KW_RemoveWidgetGeometryChangeHandler(KW_Widget * widget, KW_OnGeometryChange handler) {
+  RemoveWidgetHandler(widget, KW_ON_GEOMETRYCHANGED, (WidgetHandler) handler);
 }
 

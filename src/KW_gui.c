@@ -79,7 +79,6 @@ void KW_RemoveGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, v
   RemoveGUItHandler(gui, KW_GUI_ONFONTCHANGED, (GUIHandler) handler, priv);
 }
 
-
 TTF_Font * KW_GetFont(KW_GUI * gui) {
   return gui->font;
 }
