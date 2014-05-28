@@ -505,10 +505,19 @@ extern DECLSPEC void KW_RemoveWidgetDragStopHandler(KW_Widget * widget, KW_OnDra
  */
 extern DECLSPEC void KW_AddWidgetDragHandler(KW_Widget * widget, KW_OnDrag handler);
 
+/**
+ * \brief   Adds a function to be called when this widget geometry is changed.
+ * \param   widget The widget that has its geometry changed.
+ * \param   handler The KW_OnGeometryChange function handler.
+ */
 extern DECLSPEC void KW_AddWidgetGeometryChangeHandler(KW_Widget * widget, KW_OnGeometryChange handler);
 
+/**
+ * \brief   Remove a KW_OnGeometryChange handler.
+ * \param   widget The widget to remove the KW_OnGeometryChange handler.
+ * \param   handler The KW_OnGeometryChange function pointer.
+ */
 extern DECLSPEC void KW_RemoveWidgetGeometryChangeHandler(KW_Widget * widget, KW_OnGeometryChange handler);
-
 
 /**
  * \brief   Remove a KW_OnDrag handler from a widget.

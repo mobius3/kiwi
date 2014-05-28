@@ -6,7 +6,7 @@
 KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const SDL_Rect * geometry) {
   /* creates root scrollbox widget */
   KW_Scrollbox * scrollbox = AllocScrollbox();
-  KW_Widget * outer, * inner, * button;
+  KW_Widget * outer, * inner;
   KW_Widget * root = KW_CreateWidget(gui, parent, KW_WIDGETTYPE_SCROLLBOX,
                                          geometry, PaintScrollboxFrame,
                                          DestroyScrollboxFrame, scrollbox);
@@ -18,9 +18,10 @@ KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const SDL_Rect 
   areageom.y = TILESIZE;
   areageom.w = geometry->w - TILESIZE * 4;
   areageom.h = geometry->h - TILESIZE * 2;
-  outer = KW_CreateWidget(gui, root, KW_WIDGETTYPE_NONE, &areageom, PaintScrollboxFrame, NULL, scrollbox);
-  areageom.x = 0; areageom.y = 0; areageom.h = areageom.w; areageom.w = areageom.h;
+  outer = KW_CreateWidget(gui, root, KW_WIDGETTYPE_NONE, &areageom, NULL, NULL, scrollbox);
+  areageom.x = 0; areageom.y = 0; areageom.h = 0; areageom.w = 0;
   inner = KW_CreateWidget(gui, outer, KW_WIDGETTYPE_NONE, &areageom, NULL, NULL, scrollbox);
+  KW_SetWidgetGeometry(inner, &areageom);
   KW_SetClipChildrenWidgets(outer, SDL_TRUE);
   KW_AddWidgetKeyUpHandler(root, ScrollboxKeyUp);
   KW_AddWidgetKeyUpHandler(inner, ScrollboxKeyUp);
@@ -32,8 +33,8 @@ KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const SDL_Rect 
   buttongeom.y = geometry->y + TILESIZE;
   buttongeom.w = TILESIZE*2;
   buttongeom.h = TILESIZE*2;
-  button = KW_CreateButton(gui, root, "", &buttongeom);
-  /* everyone needs to be children of this area */
+  scrollbox->vscroll = KW_CreateButton(gui, root, "", &buttongeom);
+  
   return inner;
 }
 
@@ -44,7 +45,9 @@ void KW_ScrollboxVerticalScroll(KW_Widget * scrollbox, int amount) {
   KW_Widget * const * children = KW_GetWidgetChildren(scrollbox, &count);  
   for (i = 0; i < count; i++) {
     KW_GetWidgetGeometry(children[i], &geom);
+    printf("oi! %d %d %d %d\n", geom.x, geom.y, geom.w, geom.h);
     geom.y += amount;
+    printf("xau! %d %d %d %d\n", geom.x, geom.y, geom.w, geom.h);
     KW_SetWidgetGeometry(children[i], &geom);
   }
 }

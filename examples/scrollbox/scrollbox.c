@@ -4,6 +4,14 @@
 #include "KW_scrollbox.h"
 #include "SDL_image.h"
 
+void Drag(KW_Widget * widget, int x, int y, int xrel, int yrel) {
+  SDL_Rect g;
+  KW_GetWidgetGeometry(widget, &g);
+  g.x += xrel;
+  g.y += yrel;
+  KW_SetWidgetGeometry(widget, &g);
+}
+
 int main(int argc, char ** argv) {
   SDL_Window * window;
   SDL_Renderer * renderer;
@@ -13,6 +21,8 @@ int main(int argc, char ** argv) {
   SDL_Rect geometry, g2, g3;
   SDL_Color color = { 255, 255, 255, 128 };  
   KW_Widget * frame, * button, * alabel;
+  int i;
+  char buf[1024];
   
   /* initialize window and renderer */
   SDL_Init(SDL_INIT_EVERYTHING);
@@ -38,20 +48,15 @@ int main(int argc, char ** argv) {
   frame = KW_CreateFrame(gui, NULL, &geometry);
   geometry.x = 0; geometry.y = 0;
   frame = KW_CreateScrollbox(gui, frame, &geometry);
-  button = KW_CreateButton(gui, frame, "Button", &g3);
-  g3.y+=g2.h;
-  KW_CreateButton(gui, frame, "Button", &g3);
-  g3.y+=g2.h;
-  KW_CreateButton(gui, frame, "Button", &g3);
-  g3.y+=g2.h;
-  KW_CreateButton(gui, frame, "Button", &g3);
-  g3.y+=g2.h+20;
-  KW_CreateButton(gui, frame, "Button", &g3);
+  g3.y=0;
+  for (i = 0; i < 4; i++) {
+    sprintf(buf, "%dx%d+%dx%d", g3.x, g3.y, g3.w, g3.h);
+    button = KW_CreateButton(gui, frame, buf, &g3);
+    g3.y+=g2.h;
+    KW_AddWidgetDragHandler(button, Drag);
+  }
   
   g2.x = 0, g2.y = -5, g2.w = 200, g2.h = 20;
-  alabel = KW_CreateLabel(gui, frame, "Chose your destiny.", &g2);
-  KW_SetLabelAlignment(alabel, KW_LABEL_ALIGN_CENTER, 0, KW_LABEL_ALIGN_TOP, 0);
-
   /* create another parent frame */
   while (!SDL_QuitRequested()) {
     SDL_RenderClear(renderer);

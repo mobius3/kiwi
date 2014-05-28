@@ -124,115 +124,39 @@ void CalculateAbsoluteGeometry(KW_Widget * widget) {
  * 0, it is outside the current widget box and it must be recalculated. The current
  * widget parent must also be notified of this change if we happend to be outside parent box */
 void CalculateComposedGeometry(KW_Widget * widget) {
-
-  SDL_Rect box;
+  
+  SDL_Rect composed, edges;
+  KW_Widget * children = NULL;
   int i = 0;
-  short changed = 0;
-  
-#if !defined(NDEBUG) && defined(DEBUG_GEOMETRY)
-  int i__;  
-  static int indent = 0;
-  indent++;
-#endif
-
-  if (widget->clipchildren) {
-#if !defined(NDEBUG) && defined(DEBUG_GEOMETRY)
-    indent--;
-#endif
-    return;
-  }
-  
-#if !defined(NDEBUG) && defined(DEBUG_GEOMETRY)
-  for (i__ = 0; i__ < indent; i__++) printf(" ");
-  printf("Recalculating composed geometry of %p: %d\n", (void*)widget, widget->type);
-#endif
-  if (widget->geometry.x != widget->composed.x ||
-      widget->geometry.y != widget->composed.y ||
-      widget->geometry.w != widget->composed.w ||
-      widget->geometry.h != widget->composed.h)
-  {
-    changed++;
-    widget->composed = widget->geometry;
-    
-#if !defined(NDEBUG) && defined(DEBUG_GEOMETRY)
-    for (i__ = 0; i__ < indent; i__++) printf(" ");
-    printf("Changed because of geometry\n");
-#endif
-  }
+  if (widget->parent == NULL) return;
+  edges = widget->geometry;
+  if (widget->clipchildren) return;
   for (i = 0; i < widget->childrencount; i++) {
-    KW_GetWidgetComposedGeometry(widget->children[i], &box);
-    if (box.w + box.x > widget->composed.w) {
-      widget->composed.w = box.w + box.x;
-#if !defined(NDEBUG) && defined(DEBUG_GEOMETRY)
-      for (i__ = 0; i__ < indent; i__++) printf(" ");
-      printf("Changed w!\n");
-#endif
-      changed++;
-    }
-    if (box.h + box.y > widget->composed.h) {
-      widget->composed.h = box.h + box.y;
-#if !defined(NDEBUG) && defined(DEBUG_GEOMETRY)
-      for (i__ = 0; i__ < indent; i__++) printf(" ");
-      printf("Changed h!\n");
-#endif
-      changed++;
-    }    
-    if (box.x < 0) {
-      widget->composed.x += box.x;
-      widget->composed.w += -box.x;
-#if !defined(NDEBUG) && defined(DEBUG_GEOMETRY)   
-      for (i__ = 0; i__ < indent; i__++) printf(" ");
-      printf("Changed x!\n");
-#endif
-      changed++;
-    }
-    if (box.y < 0) {
-      widget->composed.y += box.y;
-      widget->composed.h += -box.y;
-#if !defined(NDEBUG) && defined(DEBUG_GEOMETRY)
-      for (i__ = 0; i__ < indent; i__++) printf(" ");
-      printf("Changed y!\n");
-#endif
-      changed++;
-    }
+    children = widget->children[i];
+    KW_GetWidgetComposedGeometry(children, &composed);
+    if (composed.x + composed.w > edges.w) edges.w = composed.x + composed.w;
+    if (composed.y + composed.h > edges.h) edges.h = composed.y + composed.h;    
+    if (composed.x < 0) edges.x += composed.x;
+    if (composed.y < 0) edges.y += composed.y;
   }
+  if (edges.x < widget->geometry.x) edges.w += widget->geometry.x - edges.x;
+  if (edges.y < widget->geometry.y) edges.h += widget->geometry.y - edges.y;
   
-#if !defined(NDEBUG) && defined(DEBUG_GEOMETRY)
-  if (changed) {
-    for (i__ = 0; i__ < indent; i__++) printf(" ");
-    printf("new geom is %dx%d+%dx%d\n", widget->composed.x, widget->composed.y, widget->composed.w, widget->composed.h);
-  } else {
-    for (i__ = 0; i__ < indent; i__++) printf(" ");
-    printf("nothing changed\n");
-  }
-#endif
-  
-  if (changed && widget->parent != NULL) {
-#if !defined(NDEBUG) && defined(DEBUG_GEOMETRY)
-    for (i__ = 0; i__ < indent; i__++) printf(" ");
-    printf("Composed geometry did change!\n");
-#endif
-    /* see if our composite geometry change is relevant to parent */
-    KW_GetWidgetComposedGeometry(widget->parent, &box);
-    if ((    (widget->composed.x < box.x)
-         || (widget->composed.y < box.y)
-         || (widget->composed.w + widget->composed.x != box.w)
-         || (widget->composed.h + widget->composed.y != box.h)
-        )
-        ||
-        (widget->parent->parent == NULL) /* always calculate root geometry */
-       )
-    {
-#if !defined(NDEBUG) && defined(DEBUG_GEOMETRY)
-      for (i__ = 0; i__ < indent; i__++) printf(" ");
-      printf("Gotta recalculate parent geometry!\n");
-#endif
+  widget->composed = edges;
+  /* see if our composite geometry change is relevant to parent */
+  if (widget->parent == NULL) return;
+  KW_GetWidgetComposedGeometry(widget->parent, &composed);
+  if (((widget->composed.x < composed.x)
+       || (widget->composed.y < composed.y)
+       || (widget->composed.w + widget->composed.x != composed.w)
+       || (widget->composed.h + widget->composed.y != composed.h)
+      )
+      ||
+      (widget->parent->parent == NULL) /* always calculate root geometry */
+     )
+  {
       CalculateComposedGeometry(widget->parent);
-    }
   }
-#if !defined(NDEBUG) && defined(DEBUG_GEOMETRY)
-  indent--;
-#endif
   /* TODO: callback for changed? */
 }
 
@@ -244,7 +168,7 @@ void KW_GetWidgetComposedGeometry(KW_Widget * widget, SDL_Rect * composed) {
 /* reparent version that allow us to parent to NULL */
 void Reparent(KW_Widget * widget, KW_Widget * newparent) {
   int i = 0, j = -1;  
-#if !defined(NDEBUG) && defined(DEBUG_GEOMETRY)  
+#if !defined(NDEBUG) && defined(DEBUG_GEOMETRY_CHANGE)  
   printf("Reparenting %p: %d from %p to %p\n", (void*) widget, widget->type, (void*) widget->parent, (void*) newparent);
 #endif
   /* gotta remove from previous parent */
@@ -356,14 +280,13 @@ void KW_SetWidgetGeometry(KW_Widget * widget, const SDL_Rect * geometry) {
   int i;
   SDL_Rect old;
   KW_OnGeometryChange handler;
-  if (widget->geometry.x != geometry->x ||
+  if ((widget->geometry.x != geometry->x ||
       widget->geometry.y != geometry->y ||
       widget->geometry.w != geometry->w ||
       widget->geometry.h != geometry->h)
+     || 
+     (geometry->x == 0 && geometry->y == 0 && geometry->w == 0 && geometry->h == 0))
   {
-#if !defined(NDEBUG) && defined(DEBUG_GEOMETRY)  
-    printf("Set Geometry of %p: %d from %dx%d+%dx%d to %dx%d+%dx%d\n", (void*) widget, widget->type, widget->geometry.x, widget->geometry.y, widget->geometry.w, widget->geometry.h, geometry->x, geometry->y, geometry->w, geometry->h);
-#endif
     old = widget->geometry;
     widget->geometry = *geometry;
     CalculateComposedGeometry(widget);

@@ -7,6 +7,10 @@ typedef struct KW_Scrollbox {
   KW_Widget * root;
   KW_Widget * outer;
   KW_Widget * inner;
+  SDL_Rect innercomposite;
+  
+  KW_Widget * vscroll;
+  KW_Widget * hscroll;
 } KW_Scrollbox;
 
 KW_Scrollbox * AllocScrollbox();

@@ -40,13 +40,12 @@ int main(int argc, char ** argv) {
   KW_GUI * gui;
   TTF_Font * font;
   SDL_Rect framegeom, labelgeom;
-  KW_Widget * frame;
+  KW_Widget * frame, *a;
   int i = 0;  
   
   SDL_Init(SDL_INIT_EVERYTHING);
-  SDL_CreateWindowAndRenderer(320, 240, 0, &window, &renderer);
+  SDL_CreateWindowAndRenderer(640, 480, 0, &window, &renderer);
   SDL_SetRenderDrawColor(renderer, 200, 100, 100, 1);
-  SDL_RenderSetLogicalSize(renderer, 320, 240);
   TTF_Init();
   
   /* load tileset */
@@ -57,19 +56,17 @@ int main(int argc, char ** argv) {
   font = TTF_OpenFont("Fontin-Regular.ttf", 12);
   KW_SetFont(gui, font);
   
-  framegeom.x = 10, framegeom.y = 10, framegeom.w = 300, framegeom.h = 220;
-  labelgeom = framegeom; labelgeom.x = labelgeom.y = 0;
-
-  /* create 10 frames and 10 labels */
-  frame = NULL;
+  framegeom.x = 10, framegeom.y = 10, framegeom.w = 300, framegeom.h = 220;  
+  framegeom.x = 50, framegeom.y = 50, framegeom.w = 100, framegeom.h = 100;
+  frame = KW_CreateFrame(gui, frame, &framegeom);
   framegeom.x = 10, framegeom.y = 10, framegeom.w = 160, framegeom.h = 120;
-  labelgeom = framegeom; labelgeom.x = labelgeom.y = 0;
-  for (i = 0; i < 10; i++) {
-    /*framegeom.x = framegeom.y = i * 10;*/
-    frame = KW_CreateButton(gui, frame, "Yay", &framegeom);
-    KW_AddWidgetDragStartHandler(frame, DragStart);
-    KW_AddWidgetDragStopHandler(frame, DragStop);
-    KW_AddWidgetDragHandler(frame, Drag);
+  KW_AddWidgetDragHandler(frame, Drag);
+  for (i = 0; i < 2; i++) {
+    framegeom.x = framegeom.y = i * 10;
+    a = KW_CreateButton(gui, frame, "Yay", &framegeom);
+    KW_AddWidgetDragStartHandler(a, DragStart);
+    KW_AddWidgetDragStopHandler(a, DragStop);
+    KW_AddWidgetDragHandler(a, Drag);
   }
   
   while (!SDL_QuitRequested()) {
