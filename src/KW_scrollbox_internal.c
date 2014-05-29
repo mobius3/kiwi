@@ -11,7 +11,7 @@ KW_Scrollbox * AllocScrollbox() {
 }
 
 void PaintScrollboxFrame(KW_Widget * widget) {
-  SDL_Rect targetgeom, innergeom, boxgeom;
+  SDL_Rect targetgeom, innergeom, outergeom, boxgeom;
   SDL_Rect vscrollgeom;
   SDL_Renderer * renderer;
   SDL_Texture * tileset;
@@ -19,6 +19,7 @@ void PaintScrollboxFrame(KW_Widget * widget) {
   
   KW_GetWidgetAbsoluteGeometry(widget, &targetgeom);
   KW_GetWidgetGeometry(widget, &boxgeom);
+  KW_GetWidgetGeometry(sb->outer, &outergeom);
   
   /* check if inner rectancle changed size */
   KW_GetWidgetComposedGeometry(sb->inner, &innergeom);
@@ -31,10 +32,14 @@ void PaintScrollboxFrame(KW_Widget * widget) {
     KW_GetWidgetGeometry(sb->vscroll, &vscrollgeom);
     vscrollgeom.x = boxgeom.w - TILESIZE * 3;
     vscrollgeom.w = TILESIZE *2;
-    vscrollgeom.h = (boxgeom.h / (innergeom.h * 1.0f)) * boxgeom.h - TILESIZE *2;
-    vscrollgeom.y = innergeom.y / ((innergeom.h - boxgeom.h) * 1.0f);
-    printf("vsg %f %d %d %d\n", innergeom.y / ((innergeom.h - boxgeom.h) * 1.0f), innergeom.y, innergeom.h, boxgeom.h);
-    if (vscrollgeom.h > targetgeom.h  - TILESIZE *2) vscrollgeom.h = targetgeom.h - TILESIZE *2;
+    vscrollgeom.h = (outergeom.h / (innergeom.h * 1.0f)) * (outergeom.h);
+    vscrollgeom.y = ((-innergeom.y * 1.0f) / (innergeom.h - outergeom.h + vscrollgeom.h)) * outergeom.h + TILESIZE;
+    if (vscrollgeom.y < TILESIZE) {
+      vscrollgeom.h += vscrollgeom.y + TILESIZE;
+      vscrollgeom.y = TILESIZE;
+    } else if (vscrollgeom.y + vscrollgeom.h > outergeom.h + TILESIZE) {
+      vscrollgeom.h = outergeom.h - vscrollgeom.y + TILESIZE;
+    }
     KW_SetWidgetGeometry(sb->vscroll, &vscrollgeom);
   }
   
@@ -46,7 +51,6 @@ void PaintScrollboxFrame(KW_Widget * widget) {
   KW_RenderTileFrame(renderer, tileset, 9, 0, targetgeom.x, targetgeom.y, targetgeom.w, targetgeom.h);
   
   /* render percent bar */
-  KW_RenderTile(renderer, tileset, 9, 3, targetgeom.x + targetgeom.w - TILESIZE, targetgeom.y);
 }
 
 

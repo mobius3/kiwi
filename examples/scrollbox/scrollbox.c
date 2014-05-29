@@ -4,11 +4,30 @@
 #include "KW_scrollbox.h"
 #include "SDL_image.h"
 
+int dragmode = 0;
+
+void DragStart(KW_Widget * widget, int x, int y) {
+  SDL_Rect g;
+  KW_GetWidgetAbsoluteGeometry(widget, &g);
+  if (x > g.x + g.w - 20 && y > g.y + g.h -20) dragmode = 1;
+  else dragmode = 0;
+  printf("Drag has started at %dx%d\n", x, y);
+}
+
+void DragStop(KW_Widget * widget, int x, int y) {
+  printf("Drag has stopped at %dx%d\n", x, y);
+}
+
 void Drag(KW_Widget * widget, int x, int y, int xrel, int yrel) {
   SDL_Rect g;
   KW_GetWidgetGeometry(widget, &g);
-  g.x += xrel;
-  g.y += yrel;
+  if (dragmode == 1) {
+    g.w += xrel;
+    g.h += yrel;
+  } else {
+    g.x += xrel;
+    g.y += yrel;
+  }
   KW_SetWidgetGeometry(widget, &g);
 }
 
@@ -26,13 +45,13 @@ int main(int argc, char ** argv) {
   
   /* initialize window and renderer */
   SDL_Init(SDL_INIT_EVERYTHING);
-  SDL_CreateWindowAndRenderer(320, 240, 0, &window, &renderer);
+  SDL_CreateWindowAndRenderer(640, 480, 0, &window, &renderer);
   SDL_SetRenderDrawColor(renderer, 100, 100, 100, 1);
   TTF_Init();
   
   /* load tileset */
 
-  set = IMG_Load("tileset-alloy.png");
+  set = IMG_Load("tileset.png");
   
   /* initialize gui */
   gui = KW_Init(renderer, set);
@@ -40,7 +59,7 @@ int main(int argc, char ** argv) {
   TTF_SetFontHinting(font, TTF_HINTING_NONE);
   KW_SetFont(gui, font);
 
-  geometry.x = 30; geometry.y = 30; geometry.w = 200; geometry.h = 200;
+  geometry.x = 30; geometry.y = 30; geometry.w = 580; geometry.h = 400;
   g2 = geometry;
   g2.x = 10, g2.y = 40, g2.w = 100, g2.h = 30;
   g3.x = 10, g3.y = 10, g3.w = 100, g3.h = 30;
@@ -48,13 +67,11 @@ int main(int argc, char ** argv) {
   frame = KW_CreateFrame(gui, NULL, &geometry);
   geometry.x = 0; geometry.y = 0;
   frame = KW_CreateScrollbox(gui, frame, &geometry);
-  g3.y=0;
-  for (i = 0; i < 4; i++) {
-    sprintf(buf, "%dx%d+%dx%d", g3.x, g3.y, g3.w, g3.h);
-    button = KW_CreateButton(gui, frame, buf, &g3);
-    g3.y+=g2.h;
-    KW_AddWidgetDragHandler(button, Drag);
-  }
+  g3.x = 0; g3.y = 0; g3.h = 400; g3.w = 300;
+  button = KW_CreateButton(gui, frame, "Opa", &g3);
+  KW_AddWidgetDragStartHandler(button, DragStart);
+  KW_AddWidgetDragHandler(button, Drag);
+  KW_AddWidgetDragStopHandler(button, DragStop);
   
   g2.x = 0, g2.y = -5, g2.w = 200, g2.h = 20;
   /* create another parent frame */

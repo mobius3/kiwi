@@ -45,9 +45,7 @@ void KW_ScrollboxVerticalScroll(KW_Widget * scrollbox, int amount) {
   KW_Widget * const * children = KW_GetWidgetChildren(scrollbox, &count);  
   for (i = 0; i < count; i++) {
     KW_GetWidgetGeometry(children[i], &geom);
-    printf("oi! %d %d %d %d\n", geom.x, geom.y, geom.w, geom.h);
     geom.y += amount;
-    printf("xau! %d %d %d %d\n", geom.x, geom.y, geom.w, geom.h);
     KW_SetWidgetGeometry(children[i], &geom);
   }
 }
