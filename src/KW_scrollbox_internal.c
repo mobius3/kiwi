@@ -58,6 +58,15 @@ void PaintScrollboxFrame(KW_Widget * widget) {
   /* render percent bar */
 }
 
+void VerticalBarDrag(KW_Widget * widget, int x, int y, int xrel, int yrel) {
+  KW_Widget * root = KW_GetWidgetParent(widget);
+  KW_Scrollbox * sb = KW_GetWidgetData(root, KW_WIDGETTYPE_SCROLLBOX);
+  SDL_Rect outergeom;
+  KW_GetWidgetGeometry(sb->outer, &outergeom);
+  KW_ScrollboxVerticalScroll(sb->inner, -yrel * (sb->innercomposite.h / outergeom.h * 1.0f));
+}
+
+
 
 void DestroyScrollboxFrame(KW_Widget * widget) {
 

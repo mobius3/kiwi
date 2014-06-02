@@ -19,5 +19,6 @@ KW_Scrollbox * AllocScrollbox();
 void PaintScrollboxFrame(KW_Widget * widget);
 void DestroyScrollboxFrame(KW_Widget * widget);
 void ScrollboxKeyUp(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode code);
+void VerticalBarDrag(KW_Widget * widget, int x, int y, int xrel, int yrel);
 
 #endif
