@@ -8,6 +8,8 @@ typedef struct KW_Scrollbox {
   KW_Widget * outer;
   KW_Widget * inner;
   SDL_Rect innercomposite;
+  int         x;
+  int         y;
   
   KW_Widget * vscroll;
   KW_Widget * hscroll;

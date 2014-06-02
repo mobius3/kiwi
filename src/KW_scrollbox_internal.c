@@ -15,6 +15,7 @@ void PaintScrollboxFrame(KW_Widget * widget) {
   SDL_Rect vscrollgeom;
   SDL_Renderer * renderer;
   SDL_Texture * tileset;
+  float innerh, diff;
   KW_Scrollbox * sb = KW_GetWidgetData(widget, KW_WIDGETTYPE_SCROLLBOX);
   
   KW_GetWidgetAbsoluteGeometry(widget, &targetgeom);
@@ -28,17 +29,21 @@ void PaintScrollboxFrame(KW_Widget * widget) {
       sb->innercomposite.w != innergeom.w || 
       sb->innercomposite.h != innergeom.h) 
   {
+    innerh = innergeom.h;
     sb->innercomposite = innergeom;
     KW_GetWidgetGeometry(sb->vscroll, &vscrollgeom);
     vscrollgeom.x = boxgeom.w - TILESIZE * 3;
     vscrollgeom.w = TILESIZE *2;
-    vscrollgeom.h = (outergeom.h / (innergeom.h * 1.0f)) * (outergeom.h);
-    vscrollgeom.y = ((-innergeom.y * 1.0f) / (innergeom.h - outergeom.h + vscrollgeom.h)) * outergeom.h + TILESIZE;
-    if (vscrollgeom.y < TILESIZE) {
-      vscrollgeom.h += vscrollgeom.y + TILESIZE;
-      vscrollgeom.y = TILESIZE;
-    } else if (vscrollgeom.y + vscrollgeom.h > outergeom.h + TILESIZE) {
-      vscrollgeom.h = outergeom.h - vscrollgeom.y + TILESIZE;
+    vscrollgeom.h = (outergeom.h / innerh) * outergeom.h;
+    vscrollgeom.y = (-innergeom.y / innerh) * outergeom.h + TILESIZE;
+    /* underflow */
+    if (innergeom.y + innerh < outergeom.h) {
+      diff = (outergeom.h - (innergeom.y + innerh));
+      innerh += diff;
+      vscrollgeom.h = (outergeom.h / innerh) * outergeom.h;
+      vscrollgeom.y = (-innergeom.y / innerh) * outergeom.h + TILESIZE;
+      innergeom.h = innerh;
+      KW_SetWidgetGeometry(sb->inner, &innergeom);
     }
     KW_SetWidgetGeometry(sb->vscroll, &vscrollgeom);
   }

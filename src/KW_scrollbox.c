@@ -39,25 +39,26 @@ KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const SDL_Rect 
 }
 
 void KW_ScrollboxVerticalScroll(KW_Widget * scrollbox, int amount) {
-  /* remember we are dealing with the *area* widget */
-  SDL_Rect geom;
+  /* remember we are dealing with the *outer* widget */
+  SDL_Rect geom, outer;
   unsigned int i = 0, count;
-  KW_Widget * const * children = KW_GetWidgetChildren(scrollbox, &count);  
-  for (i = 0; i < count; i++) {
-    KW_GetWidgetGeometry(children[i], &geom);
-    geom.y += amount;
-    KW_SetWidgetGeometry(children[i], &geom);
-  }
+  KW_Scrollbox * sb = KW_GetWidgetData(scrollbox, KW_WIDGETTYPE_NONE);
+  KW_GetWidgetGeometry(sb->inner, &geom);
+  KW_GetWidgetGeometry(sb->outer, &outer);
+  
+  if (sb->innercomposite.y + amount > 0) amount = -sb->innercomposite.y;
+  if (sb->innercomposite.y + sb->innercomposite.h + amount < outer.h)
+    amount = outer.h - (sb->innercomposite.y + sb->innercomposite.h);
+  geom.y += amount;
+  KW_SetWidgetGeometry(sb->inner, &geom);
 }
 
 void KW_ScrollboxHorizontalScroll(KW_Widget * scrollbox, int amount) {
-  /* remember we are dealing with the *area* widget */
+  /* remember we are dealing with the *outer* widget */
   SDL_Rect geom;
   unsigned int i = 0, count;
-  KW_Widget * const * children = KW_GetWidgetChildren(scrollbox, &count);
-  for (i = 0; i < count; i++) {
-    KW_GetWidgetGeometry(children[i], &geom);
-    geom.x += amount;
-    KW_SetWidgetGeometry(children[i], &geom);
-  }
+  KW_Scrollbox * sb = KW_GetWidgetData(scrollbox, KW_WIDGETTYPE_NONE);
+  KW_GetWidgetGeometry(sb->inner, &geom);
+  geom.x += amount;
+  KW_SetWidgetGeometry(sb->inner, &geom);
 }
