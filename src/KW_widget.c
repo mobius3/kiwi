@@ -244,6 +244,7 @@ void KW_DestroyWidget(KW_Widget * widget, int freechildren) {
 void KW_PaintWidget(KW_Widget * root) {
   int i = 0;
   SDL_Renderer * renderer = KW_GetWidgetRenderer(root);
+  SDL_Rect cliprect, viewport;
 #if !defined(NDEBUG) && defined(DEBUG_PRINT_GEOMETRY_RECTANGLE)
   SDL_Rect geom = root->composed;
   Uint8 r, g, b, a;
@@ -259,7 +260,10 @@ void KW_PaintWidget(KW_Widget * root) {
   
   if (root->clipchildren) {
     SDL_RenderGetClipRect(renderer, &(root->oldcliprect));
-    SDL_RenderSetClipRect(renderer, &(root->absolute));
+    SDL_RenderGetViewport(renderer, &viewport);
+    cliprect = root->absolute;
+    cliprect.x += viewport.x; cliprect.y += viewport.y;
+    SDL_RenderSetClipRect(renderer, &cliprect);
   }
   
 #if !defined(NDEBUG) && defined(DEBUG_PRINT_GEOMETRY_RECTANGLE)  

@@ -69,7 +69,6 @@ void PaintButton(KW_Widget * widget) {
 
 void RenderButton(KW_Widget * widget) {
   SDL_Rect targetgeom;
-  SDL_Renderer * renderer;
   SDL_Surface * tileset = KW_GetWidgetTilesetSurface(widget);
   SDL_Surface * target = NULL;
   KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
@@ -97,11 +96,15 @@ void DestroyButton(KW_Widget * widget) {
 void ButtonGeometryChanged(KW_Widget * widget, const SDL_Rect * newgeom, const SDL_Rect * oldgeom) {
   SDL_Rect labelgeom;
   KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
+  
+  if (oldgeom->w != newgeom->w || oldgeom->h != newgeom->h) {
+    RenderButton(widget);
+  }
+  
   labelgeom.x = TILESIZE;
   labelgeom.y = TILESIZE;
   labelgeom.w = newgeom->w - TILESIZE * 2;
   labelgeom.h = newgeom->h - TILESIZE * 2;
-  RenderButton(widget);
   KW_SetWidgetGeometry(button->labelwidget, &labelgeom);
 }
 

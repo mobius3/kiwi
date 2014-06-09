@@ -45,8 +45,9 @@ int main(int argc, char ** argv) {
   
   /* initialize window and renderer */
   SDL_Init(SDL_INIT_EVERYTHING);
-  SDL_CreateWindowAndRenderer(640, 480, 0, &window, &renderer);
+  SDL_CreateWindowAndRenderer(1280, 768, 0, &window, &renderer);
   SDL_SetRenderDrawColor(renderer, 100, 100, 100, 1);
+  SDL_RenderSetLogicalSize(renderer, 640, 480);
   TTF_Init();
   
   /* load tileset */
@@ -73,10 +74,13 @@ int main(int argc, char ** argv) {
   KW_AddWidgetDragHandler(button, Drag);
   KW_AddWidgetDragStopHandler(button, DragStop);
   
-  g2.x = 0, g2.y = -5, g2.w = 200, g2.h = 20;
+  g2.x = 0, g2.y = 0; g2.w = 640; g2.h = 480;
   /* create another parent frame */
   while (!SDL_QuitRequested()) {
     SDL_RenderClear(renderer);
+    SDL_SetRenderDrawColor(renderer, 100, 100, 200, 1);
+    SDL_RenderFillRect(renderer, &g2);
+    SDL_SetRenderDrawColor(renderer, 100, 100, 100, 1);
     KW_Paint(gui);
     SDL_RenderPresent(renderer);
     SDL_Delay(1);
