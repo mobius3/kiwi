@@ -35,6 +35,12 @@ KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const SDL_Rect 
   buttongeom.w = TILESIZE*2;
   buttongeom.h = TILESIZE*2;
   scrollbox->vscroll = KW_CreateButton(gui, root, "", &buttongeom);
+  
+  buttongeom.x = 0;
+  buttongeom.y = geometry->h + TILESIZE;
+  buttongeom.w = TILESIZE*2;
+  buttongeom.h = TILESIZE*2;
+  scrollbox->hscroll = KW_CreateButton(gui, root, "", &buttongeom);
 
   KW_AddWidgetDragHandler(scrollbox->vscroll, VerticalBarDrag);  
   return inner;
