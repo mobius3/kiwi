@@ -74,6 +74,11 @@ int main(int argc, char ** argv) {
   KW_AddWidgetDragHandler(button, Drag);
   KW_AddWidgetDragStopHandler(button, DragStop);
   
+    button = KW_CreateButton(gui, frame, "Opa", &g3);
+  KW_AddWidgetDragStartHandler(button, DragStart);
+  KW_AddWidgetDragHandler(button, Drag);
+  KW_AddWidgetDragStopHandler(button, DragStop);
+  
   g2.x = 0, g2.y = 0; g2.w = 640; g2.h = 480;
   /* create another parent frame */
   while (!SDL_QuitRequested()) {

@@ -19,7 +19,7 @@ KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const SDL_Rect 
   areageom.w = geometry->w - TILESIZE * 4;
   areageom.h = geometry->h - TILESIZE * 2;
   outer = KW_CreateWidget(gui, root, KW_WIDGETTYPE_NONE, &areageom, NULL, NULL, scrollbox);
-  areageom.x = 0; areageom.y = 0; areageom.h = 0; areageom.w = 0;
+  areageom.x = 0; areageom.y = 0; /* areageom.h = 0; areageom.w = 0; */
   inner = KW_CreateWidget(gui, outer, KW_WIDGETTYPE_NONE, &areageom, NULL, NULL, scrollbox);
   KW_SetWidgetGeometry(inner, &areageom);
   KW_SetClipChildrenWidgets(outer, SDL_TRUE);

@@ -30,7 +30,6 @@ void PaintScrollboxFrame(KW_Widget * widget) {
       sb->innercomposite.h != innergeom.h) 
   {
     innerh = innergeom.h;
-    sb->innercomposite = innergeom;
     KW_GetWidgetGeometry(sb->vscroll, &vscrollgeom);
     vscrollgeom.x = boxgeom.w - TILESIZE * 3;
     vscrollgeom.w = TILESIZE *2;
@@ -42,11 +41,13 @@ void PaintScrollboxFrame(KW_Widget * widget) {
       innerh += diff;
       vscrollgeom.h = (outergeom.h / innerh) * outergeom.h;
       vscrollgeom.y = (-innergeom.y / innerh) * outergeom.h + TILESIZE;
-      innergeom.h = innerh;
-      KW_SetWidgetGeometry(sb->inner, &innergeom);
     }
+    innergeom.h = innerh;
+    sb->innercomposite = innergeom;
     KW_SetWidgetGeometry(sb->vscroll, &vscrollgeom);
   }
+  
+  KW_ScrollboxVerticalScroll(sb->inner, 0);
   
   
   renderer = KW_GetWidgetRenderer(widget);
@@ -54,8 +55,6 @@ void PaintScrollboxFrame(KW_Widget * widget) {
   
   /* render bg frame */
   KW_RenderTileFrame(renderer, tileset, 9, 0, targetgeom.x, targetgeom.y, targetgeom.w, targetgeom.h);
-  
-  /* render percent bar */
 }
 
 void VerticalBarDrag(KW_Widget * widget, int x, int y, int xrel, int yrel) {
