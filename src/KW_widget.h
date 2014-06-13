@@ -76,6 +76,21 @@ typedef void (*KW_OnKeyUp)(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode cod
 typedef void (*KW_OnGeometryChange)(KW_Widget * widget, const SDL_Rect * newgeom, const SDL_Rect * oldgeom);
 
 /**
+ * \brief   The event type when the children array changes.
+ * \details Whenever the direct children number of an array changes, this
+ *          enum is used to indicate if it was insertion or a removal.
+ */
+typedef enum KW_WidgetChildrenChangeEvent {
+  KW_CHILDRENCHANGE_ADDED,
+  KW_CHILDRENCHANGE_REMOVED
+} KW_WidgetChildrenChangeEvent;
+
+
+typedef void (*KW_OnWidgetChildrenChange)(KW_Widget * widget, KW_WidgetChildrenChangeEvent what, KW_Widget * child);
+
+
+
+/**
  * \brief   The KW_WidgetType enumeration represents available widget types.
  * \details Every widget created must set a widget type even if its a custom widget.
  */
@@ -518,6 +533,20 @@ extern DECLSPEC void KW_AddWidgetGeometryChangeHandler(KW_Widget * widget, KW_On
  * \param   handler The KW_OnGeometryChange function pointer.
  */
 extern DECLSPEC void KW_RemoveWidgetGeometryChangeHandler(KW_Widget * widget, KW_OnGeometryChange handler);
+
+/**
+ * \brief   Adds a function to call when this widget children count changes.
+ * \param   widget The widget that has its children count changed.
+ * \param   handler The KW_OnWidgetChildrenChange function handler.
+ */
+extern DECLSPEC void KW_AddWidgetChildrenChangeHandler(KW_Widget * widget, KW_OnWidgetChildrenChange handler);
+
+/**
+ * \brief   Remove a KW_OnWidgetChildrenChange handler.
+ * \param   widget The widget to remove the KW_OnWidgetChildrenChange handler.
+ * \param   handler The KW_OnWidgetChildrenChange function pointer.
+ */
+extern DECLSPEC void KW_RemoveWidgetChildrenChangeHandler(KW_Widget * widget, KW_OnWidgetChildrenChange handler);
 
 /**
  * \brief   Remove a KW_OnDrag handler from a widget.

@@ -19,6 +19,7 @@ typedef enum KW_WidgetEventHandlerType {
   KW_ON_DRAGSTOP,
   KW_ON_DRAG,
   KW_ON_GEOMETRYCHANGED,
+  KW_ON_CHILDRENCHANGE,
   KW_EVENTHANDLER_TOTAL
 } KW_WidgetEventHandlerType;
 
@@ -28,14 +29,17 @@ void AddWidgetHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype,
 void RemoveWidgetHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype, WidgetHandler handler);
 
 struct KW_Widget {
-  int type;
+  KW_WidgetType type;
   unsigned int childrencount;
-  struct KW_Widget ** children;
-  struct KW_Widget *  parent;
   struct KW_GUI *     gui;
+  SDL_Rect            absolute;
   SDL_Rect            geometry;
   SDL_Rect            composed;
   SDL_bool            inputblocked;
+
+  struct KW_Widget ** children;
+  struct KW_Widget *  parent;
+
   
   SDL_Texture *       tilesettexture;
   SDL_Surface *       tilesetsurface;
@@ -49,7 +53,7 @@ struct KW_Widget {
     unsigned int      count;
   } eventhandlers[KW_EVENTHANDLER_TOTAL];
   
-  SDL_Rect            absolute;
+  
   SDL_Rect            oldcliprect;
   SDL_bool            clipchildren;
   

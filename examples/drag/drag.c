@@ -39,7 +39,7 @@ int main(int argc, char ** argv) {
   SDL_Surface * set;
   KW_GUI * gui;
   TTF_Font * font;
-  SDL_Rect framegeom, labelgeom;
+  SDL_Rect framegeom;
   KW_Widget * frame, *a;
   int i = 0;  
   
@@ -55,7 +55,7 @@ int main(int argc, char ** argv) {
   gui = KW_Init(renderer, set);
   font = TTF_OpenFont("Fontin-Regular.ttf", 12);
   KW_SetFont(gui, font);
-  
+  frame = NULL;
   framegeom.x = 10, framegeom.y = 10, framegeom.w = 300, framegeom.h = 220;  
   framegeom.x = 50, framegeom.y = 50, framegeom.w = 100, framegeom.h = 100;
   frame = KW_CreateFrame(gui, frame, &framegeom);

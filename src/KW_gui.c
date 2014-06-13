@@ -6,8 +6,6 @@
 
 #include "SDL_ttf.h"
 
-
-
 KW_GUI * KW_Init(SDL_Renderer * renderer, SDL_Surface * tileset) {
   struct KW_GUI * gui = calloc(sizeof(*gui), 1);
   gui->renderer = renderer;

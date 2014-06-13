@@ -70,6 +70,7 @@ void MouseMoved(KW_GUI * gui, int mousex, int mousey, int xrel, int yrel) {
   
   widget = CalculateMouseOver(gui->rootwidget, mousex, mousey);
   if (widget == current) return;
+  if (widget != NULL && widget->type == 0)
   
   /* gotta notify the previous mouseover */
   if (current != NULL) {

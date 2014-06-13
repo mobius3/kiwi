@@ -21,5 +21,7 @@ void DestroyScrollboxFrame(KW_Widget * widget);
 void ScrollboxKeyUp(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode code);
 void VerticalBarDrag(KW_Widget * widget, int x, int y, int xrel, int yrel);
 void HorizontalBarDrag(KW_Widget * widget, int x, int y, int xrel, int yrel);
+void ChildrenChange(KW_Widget * widget, KW_WidgetChildrenChangeEvent what, KW_Widget * children);
+void RootScrollboxGeometryChange(KW_Widget * widget, const SDL_Rect * newgeom, const SDL_Rect * oldgeom);
 
 #endif

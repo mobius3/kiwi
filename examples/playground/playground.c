@@ -12,7 +12,7 @@ int main(int argc, char ** argv) {
   SDL_Rect geometry, g2, g3;
   SDL_Color color = { 255, 255, 255, 128 };  
   SDL_Event ev;
-  KW_Widget * frame, * button, * alabel;
+  KW_Widget * frame;
   
   /* initialize window and renderer */
   SDL_Init(SDL_INIT_EVERYTHING);

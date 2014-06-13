@@ -2,6 +2,7 @@
 #include "KW_gui_internal.h"
 #include "KW_widget.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 KW_Widget * AllocWidget() {
   KW_Widget * widget = calloc(1, sizeof(KW_Widget));
@@ -129,8 +130,12 @@ void CalculateComposedGeometry(KW_Widget * widget) {
   KW_Widget * children = NULL;
   int i = 0;
   if (widget->parent == NULL) return;
+  if (widget->clipchildren) {
+    widget->composed = widget->geometry;
+    return;
+  }
+  
   edges = widget->geometry;
-  if (widget->clipchildren) return;
   for (i = 0; i < widget->childrencount; i++) {
     children = widget->children[i];
     KW_GetWidgetComposedGeometry(children, &composed);
@@ -196,6 +201,13 @@ void Reparent(KW_Widget * widget, KW_Widget * newparent) {
     }
     else
       wp->children = realloc(wp->children, wp->childrencount * sizeof(KW_Widget *));
+
+    /* warn parent widget handlers that children changed */
+    for (i = 0; i < wp->eventhandlers[KW_ON_CHILDRENCHANGE].count; i++) {
+      KW_OnWidgetChildrenChange handler = (KW_OnWidgetChildrenChange) 
+          wp->eventhandlers[KW_ON_CHILDRENCHANGE].handlers[i];
+      handler(wp, KW_CHILDRENCHANGE_REMOVED, widget);
+    }
     
     /* need to recalculate old parent area */
     CalculateComposedGeometry(widget);    
@@ -207,6 +219,13 @@ void Reparent(KW_Widget * widget, KW_Widget * newparent) {
     newparent->children = realloc(newparent->children, newparent->childrencount * sizeof(KW_Widget *));
     newparent->children[newparent->childrencount-1] = widget;
     widget->parent = newparent;
+    
+    /* warn new parent widget handlers that children array changed */
+    for (i = 0; i < newparent->eventhandlers[KW_ON_CHILDRENCHANGE].count; i++) {
+      KW_OnWidgetChildrenChange handler = (KW_OnWidgetChildrenChange)
+          newparent->eventhandlers[KW_ON_CHILDRENCHANGE].handlers[i];
+      handler(newparent, KW_CHILDRENCHANGE_ADDED, widget);
+    }
     
     /* need to recalculate new parent area */
     CalculateComposedGeometry(newparent);
@@ -248,6 +267,7 @@ void KW_PaintWidget(KW_Widget * root) {
 #if !defined(NDEBUG) && defined(DEBUG_PRINT_GEOMETRY_RECTANGLE)
   SDL_Rect geom = root->composed;
   Uint8 r, g, b, a;
+  float maxrgb;
   if (root->parent) {
     geom.x += root->parent->absolute.x;
     geom.y += root->parent->absolute.y;
@@ -265,19 +285,22 @@ void KW_PaintWidget(KW_Widget * root) {
     cliprect.x += viewport.x; cliprect.y += viewport.y;
     SDL_RenderSetClipRect(renderer, &cliprect);
   }
-  
+
 #if !defined(NDEBUG) && defined(DEBUG_PRINT_GEOMETRY_RECTANGLE)  
   SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
-  SDL_SetRenderDrawColor(renderer, geom.x + 20 /  255, geom.y + 20% 255, 0, 0);
-  SDL_RenderDrawRect(renderer, &geom);
+  maxrgb = (KW_GetGUI(root)->currentmouseover == root ? 255.0f : 100.0f);
+  SDL_SetRenderDrawColor(renderer, (geom.x / (viewport.w * 1.0f) + 1) * maxrgb, (geom.y / (viewport.h * 1.0f)) * maxrgb, (geom.w + geom.h * 1.0f) / (viewport.w + viewport.h * 1.0f) * maxrgb, 128);
+  SDL_RenderFillRect(renderer, &geom);
   SDL_SetRenderDrawColor(renderer, r, g, b, a);
 #endif
   for (i = 0; i < root->childrencount; i++) {
     KW_PaintWidget(root->children[i]);
   }
+  
+  /* restore cliprect */
   if (root->clipchildren) {
     SDL_RenderSetClipRect(renderer, &(root->oldcliprect));
-  }    
+  }
 }
 
 void KW_SetWidgetGeometry(KW_Widget * widget, const SDL_Rect * geometry) {
@@ -416,3 +439,10 @@ void KW_RemoveWidgetGeometryChangeHandler(KW_Widget * widget, KW_OnGeometryChang
   RemoveWidgetHandler(widget, KW_ON_GEOMETRYCHANGED, (WidgetHandler) handler);
 }
 
+void KW_AddWidgetChildrenChangeHandler(KW_Widget * widget, KW_OnWidgetChildrenChange handler) {
+  AddWidgetHandler(widget, KW_ON_CHILDRENCHANGE, (WidgetHandler) handler);
+}
+
+void KW_RemoveWidgetChildrenChangeHandler(KW_Widget * widget, KW_OnWidgetChildrenChange handler) {
+  RemoveWidgetHandler(widget, KW_ON_CHILDRENCHANGE, (WidgetHandler) handler);
+}
