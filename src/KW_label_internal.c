@@ -24,7 +24,7 @@ void RenderLabelText(KW_Widget * widget) {
 
 void DestroyLabel(KW_Widget * widget) {
   KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
-  free(label->text);
+  SDL_free(label->text);
   SDL_DestroyTexture(label->textrender);
   free(label);
 }
