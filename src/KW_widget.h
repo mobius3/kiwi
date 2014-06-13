@@ -322,6 +322,21 @@ extern DECLSPEC void KW_GetWidgetComposedGeometry(KW_Widget * widget, SDL_Rect *
  */
 extern DECLSPEC void KW_PaintWidget(KW_Widget * widget);
 
+/**
+ * \brief   Moves widget at the back of the rendering list.
+ * \details Iterates through all of the @p widget subtree searching for a widget to
+            put it at the back of chidlren to render makeing it effectivly be on top.
+ * \param   widget The widget to apply changes to.
+ */
+extern DECLSPEC void KW_BringToFront(KW_Widget * widget);
+
+/**
+ * \brief   Moves GUI focus to given widget.
+ * \details Make given widget target of user input, notify previous target and fire events.
+ * \param   widget The widget to set focused.
+ */
+extern DECLSPEC void KW_SetFocusedWidget(KW_Widget * widget);
+
 /* Stuff now related to handling of events (focus, mouse, keyboard, etc) */
 
 /**

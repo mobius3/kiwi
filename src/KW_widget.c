@@ -2,7 +2,6 @@
 #include "KW_gui_internal.h"
 #include "KW_widget.h"
 #include <stdlib.h>
-#include <unistd.h>
 
 KW_Widget * AllocWidget() {
   KW_Widget * widget = calloc(1, sizeof(KW_Widget));
@@ -187,6 +186,65 @@ void KW_GetWidgetComposedGeometry(KW_Widget * widget, SDL_Rect * composed) {
   *composed = widget->composed;
 }
 
+void KW_SetFocusedWidget(KW_Widget * widget)
+{
+  int count = 0, i = 0;
+  KW_OnFocusGain * gainhandlers = NULL;
+  KW_OnFocusLose * losehandlers = NULL;
+  KW_GUI * gui = NULL;
+
+  if (widget == NULL || widget->gui == NULL) {
+    return;
+  }
+  gui = KW_GetWidgetGUI(widget);
+  if (widget != gui->currentfocus) {
+    /* warn that its losing focus */
+    if (gui->currentfocus != NULL) {
+      count = gui->currentfocus->eventhandlers[KW_ON_FOCUSLOSE].count;
+      losehandlers = (KW_OnFocusLose *) gui->currentfocus->eventhandlers[KW_ON_FOCUSLOSE].handlers;    
+      for (i = 0; i < count; i++) {
+        losehandlers[i](gui->currentfocus);
+      }
+    }
+    
+    /* watn that its gaining focus */
+    count = widget->eventhandlers[KW_ON_FOCUSGAIN].count;
+    gainhandlers = (KW_OnFocusGain *) widget->eventhandlers[KW_ON_FOCUSGAIN].handlers;        
+    for (i = 0; i < count; i++) {
+      gainhandlers[i](widget);
+    }
+    gui->currentfocus = widget;
+  }  
+}
+
+void KW_BringToFront(KW_Widget * widget)
+{
+  int i = 0, j = 0;
+  KW_Widget * wp = NULL;
+  if (widget == NULL || widget->parent == NULL || widget->parent->childrencount == 0) {
+    return;
+  }
+  wp = widget->parent;
+  if (wp->children[wp->childrencount - 1] == widget) {
+    /* already in front */
+    return;
+  }
+
+  /* iterate to find the position of widget */
+  for (i = 0; i < wp->childrencount; i++) {
+    if (wp->children[i] == widget) {
+      j = i;
+    }
+      
+    /* move everything in front of it */
+    if (j >= 0 && i + 1 < wp->childrencount) {
+      wp->children[i] = wp->children[i+1];
+    }
+  }
+  
+  /* put widget at the last index */
+  wp->children[wp->childrencount - 1] = widget;
+}
 
 /* reparent version that allow us to parent to NULL */
 void Reparent(KW_Widget * widget, KW_Widget * newparent) {

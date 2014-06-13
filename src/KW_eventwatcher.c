@@ -111,8 +111,6 @@ void MousePressed(KW_GUI * gui, int mousex, int mousey, int button) {
 void MouseReleased(KW_GUI * gui, int mousex, int mousey, int button) {
   int i, count;
   KW_OnMouseUp * upandlers;
-  KW_OnFocusGain * gainhandlers;
-  KW_OnFocusLose * losehandlers;
   KW_OnDragStop * dragstophandlers;
   KW_Widget * widget = gui->currentmouseover;
   
@@ -139,25 +137,7 @@ void MouseReleased(KW_GUI * gui, int mousex, int mousey, int button) {
     }
   }
 
-  
-  if (widget != NULL && widget != gui->currentfocus) {
-    /* warn that its losing focus */
-    if (gui->currentfocus != NULL) {
-      count = gui->currentfocus->eventhandlers[KW_ON_FOCUSLOSE].count;
-      losehandlers = (KW_OnFocusLose *) gui->currentfocus->eventhandlers[KW_ON_FOCUSLOSE].handlers;    
-      for (i = 0; i < count; i++) {
-        losehandlers[i](gui->currentfocus);
-      }
-    }
-    
-    /* watn that its gaining focus */
-    count = widget->eventhandlers[KW_ON_FOCUSGAIN].count;
-    gainhandlers = (KW_OnFocusGain *) widget->eventhandlers[KW_ON_FOCUSGAIN].handlers;        
-    for (i = 0; i < count; i++) {
-      gainhandlers[i](widget);
-    }
-    gui->currentfocus = widget;
-  }  
+  KW_SetFocusedWidget(widget); 
 }
 
 void TextInputReady(KW_GUI * gui, const char * text) {
