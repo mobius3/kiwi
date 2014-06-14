@@ -70,20 +70,12 @@ void PaintButton(KW_Widget * widget) {
 void RenderButton(KW_Widget * widget) {
   SDL_Rect targetgeom;
   SDL_Surface * tileset = KW_GetWidgetTilesetSurface(widget);
-  SDL_Surface * target = NULL;
   KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
   KW_GetWidgetAbsoluteGeometry(widget, &targetgeom);  
-  targetgeom.x = targetgeom.y = 0;
-  target = SDL_CreateRGBSurface(0, targetgeom.w, targetgeom.h, 32, tileset->format->Rmask, tileset->format->Gmask, tileset->format->Bmask, tileset->format->Amask);  
-  KW_BlitTileFrame(target, tileset, 3, 3, targetgeom.x, targetgeom.y, targetgeom.w, targetgeom.h);
   if (button->normal != NULL) SDL_DestroyTexture(button->normal);
-  button->normal = SDL_CreateTextureFromSurface(KW_GetWidgetRenderer(widget), target);
-  SDL_FreeSurface(target);
-  target = SDL_CreateRGBSurface(0, targetgeom.w, targetgeom.h, 32, tileset->format->Rmask, tileset->format->Gmask, tileset->format->Bmask, tileset->format->Amask);  
-  KW_BlitTileFrame(target, tileset, 3, 0, targetgeom.x, targetgeom.y, targetgeom.w, targetgeom.h);
+  button->normal = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 3, 3, targetgeom.w, targetgeom.h);
   if (button->over != NULL) SDL_DestroyTexture(button->over);
-  button->over = SDL_CreateTextureFromSurface(KW_GetWidgetRenderer(widget), target);
-  SDL_FreeSurface(target);
+  button->over = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 3, 0, targetgeom.w, targetgeom.h);
 }
 
 void DestroyButton(KW_Widget * widget) {

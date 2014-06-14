@@ -20,17 +20,9 @@ void RenderFrame(KW_Widget * widget) {
   KW_Frame * frame = KW_GetWidgetData(widget, KW_WIDGETTYPE_FRAME);
   SDL_Rect targetgeom;
   SDL_Surface * tileset = KW_GetWidgetTilesetSurface(widget);
-  SDL_Surface * target = NULL;
   KW_GetWidgetGeometry(widget, &targetgeom);
-  targetgeom.x = targetgeom.y = 0;
-
-  target = SDL_CreateRGBSurface(0, targetgeom.w, targetgeom.h, 32, tileset->format->Rmask, tileset->format->Gmask, tileset->format->Bmask, tileset->format->Amask);  
-  
-  KW_BlitTileFrame(target, tileset, 0, 0, targetgeom.x, targetgeom.y, targetgeom.w, targetgeom.h);
-  if (frame->framerender != NULL)
-    SDL_DestroyTexture(frame->framerender);
-  frame->framerender = SDL_CreateTextureFromSurface(KW_GetWidgetRenderer(widget), target);
-  SDL_FreeSurface(target);
+  if (frame->framerender != NULL) SDL_DestroyTexture(frame->framerender);
+  frame->framerender = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 0, 0, targetgeom.w, targetgeom.h);
 }
 
 void PaintFrame(KW_Widget * widget) {
