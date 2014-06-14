@@ -1,7 +1,5 @@
 #include "KW_tilerenderer.h"
 
-static SDL_Texture * render;
-
 void KW_RenderTile(SDL_Renderer * renderer, SDL_Texture * tileset, int column, int line, int x, int y) {
   SDL_Rect clip;
   SDL_Rect target;
