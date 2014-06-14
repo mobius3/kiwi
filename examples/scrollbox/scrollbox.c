@@ -47,7 +47,7 @@ int main(int argc, char ** argv) {
   /* enjoy all the screen size on android */
   i = SDL_GetNumVideoDisplays();
   if (i < 1) exit(1);
-  SDL_GetDisplayBounds(0, &g3);
+  SDL_GetDisplayBounds(0, &geometry);
 #endif
   SDL_CreateWindowAndRenderer(geometry.w, geometry.h, 0, &window, &renderer);
   SDL_SetRenderDrawColor(renderer, 100, 100, 100, 1);
