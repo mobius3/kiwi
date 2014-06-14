@@ -11,7 +11,9 @@ KW_Widget * CalculateMouseOver(KW_Widget * widget, int x, int y) {
     g.y += widget->parent->absolute.y;
   }
   /* mouseover is a input event, avoid calculating it */
-  if (widget->inputblocked) { return NULL; }
+  if (KW_IsWidgetInputEventsBlocked(widget)) { 
+    return NULL;
+  }
   
   /* if not in composed geometry, nothing to see here then. rootwidget always borked. */
   if (!(x > g.x && x < g.x + g.w && y > g.y && y < g.y + g.h) && widget != widget->gui->rootwidget) { 
