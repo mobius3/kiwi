@@ -10,11 +10,21 @@ KW_Scrollbox * AllocScrollbox() {
   return scrollbox;
 }
 
+void RenderScrollboxFrame(KW_Scrollbox * sb) {
+  SDL_Surface * tileset;
+  SDL_Rect targetgeom;
+  KW_Widget * widget = sb->root;
+  tileset = KW_GetWidgetTilesetSurface(widget);
+  KW_GetWidgetGeometry(widget, &targetgeom);
+  
+  /* render bg frame */
+  if (sb->framerender != NULL) SDL_DestroyTexture(sb->framerender);
+  sb->framerender = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 9, 0, targetgeom.w, targetgeom.h);
+}
+
 void PaintScrollboxFrame(KW_Widget * widget) {
   SDL_Rect targetgeom, innergeom, outergeom, boxgeom;
   SDL_Rect scrollgeom;
-  SDL_Renderer * renderer;
-  SDL_Texture * tileset;
   float innerh, innerw, diff;
   KW_Scrollbox * sb = KW_GetWidgetData(widget, KW_WIDGETTYPE_SCROLLBOX);
   
@@ -69,12 +79,7 @@ void PaintScrollboxFrame(KW_Widget * widget) {
   KW_ScrollboxVerticalScroll(sb->root, 0);
   KW_ScrollboxHorizontalScroll(sb->root, 0);
   
-  
-  renderer = KW_GetWidgetRenderer(widget);
-  tileset = KW_GetTilesetTexture(KW_GetGUI(widget));
-  
-  /* render bg frame */
-  KW_RenderTileFrame(renderer, tileset, 9, 0, targetgeom.x, targetgeom.y, targetgeom.w, targetgeom.h);
+  SDL_RenderCopy(KW_GetWidgetRenderer(widget), sb->framerender, NULL, &targetgeom);
 }
 
 void VerticalBarDrag(KW_Widget * widget, int x, int y, int xrel, int yrel) {
@@ -105,12 +110,17 @@ void RootScrollboxGeometryChange(KW_Widget * widget, const SDL_Rect * geometry, 
   areageom.x = TILESIZE; areageom.y = TILESIZE;
   KW_SetWidgetGeometry(sb->outer, &areageom);
   
-    /* configure inner geometry without changing x/y */
+  /* configure inner geometry without changing x/y */
   KW_GetWidgetGeometry(sb->inner, &areageom);
   areageom.w = rootgeom.w - TILESIZE * 4;
   areageom.h = rootgeom.h - TILESIZE * 4;
   KW_SetWidgetGeometry(sb->inner, &areageom);
   sb->innercomposite.x = sb->innercomposite.y = sb->innercomposite.w = sb->innercomposite.h = 0;
+
+  if (geometry->w != oldgeom->w || geometry->h != oldgeom->h) {
+    /* re-renders scrollbox frame */  
+    RenderScrollboxFrame(sb);
+  }
 }
 
 

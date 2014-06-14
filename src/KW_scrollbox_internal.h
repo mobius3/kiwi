@@ -4,15 +4,15 @@
 #include "KW_widget.h"
 
 typedef struct KW_Scrollbox {
-  KW_Widget * root;
-  KW_Widget * outer;
-  KW_Widget * inner;
-  SDL_Rect innercomposite;
-  int         x;
-  int         y;
-  
-  KW_Widget * vscroll;
-  KW_Widget * hscroll;
+  KW_Widget   * root;
+  KW_Widget   * outer;
+  KW_Widget   * inner;
+  SDL_Rect      innercomposite;
+  SDL_Texture * framerender;
+  int           x;
+  int           y;
+  KW_Widget   * vscroll;
+  KW_Widget   * hscroll;
 } KW_Scrollbox;
 
 KW_Scrollbox * AllocScrollbox();
@@ -23,5 +23,6 @@ void VerticalBarDrag(KW_Widget * widget, int x, int y, int xrel, int yrel);
 void HorizontalBarDrag(KW_Widget * widget, int x, int y, int xrel, int yrel);
 void ChildrenChange(KW_Widget * widget, KW_WidgetChildrenChangeEvent what, KW_Widget * children);
 void RootScrollboxGeometryChange(KW_Widget * widget, const SDL_Rect * newgeom, const SDL_Rect * oldgeom);
+void RenderScrollboxFrame(KW_Scrollbox * sb);
 
 #endif

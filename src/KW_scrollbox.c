@@ -48,6 +48,7 @@ KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const SDL_Rect 
   KW_AddWidgetDragHandler(scrollbox->hscroll, HorizontalBarDrag);  
   
   KW_AddWidgetGeometryChangeHandler(root, RootScrollboxGeometryChange);
+  RenderScrollboxFrame(scrollbox);
   return scrollbox->root;
 }
 
