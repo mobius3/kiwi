@@ -316,7 +316,7 @@ extern DECLSPEC void KW_PaintWidget(KW_Widget * widget);
  *          If you have composite widgets and want the widgets on top to not steal mouse-over or press events
  *          from the widgets below this function might be useful to you.
  * 
- *          All children widgets will also have its input evenets blocked.
+ *          All children widgets will also have its input events blocked.
  * \param   widget The widget that will stop receiving input evenets.
  */
 extern DECLSPEC void KW_BlockWidgetInputEvents(KW_Widget * widget);
