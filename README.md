@@ -35,7 +35,8 @@ You can test the examples inside the `build/examples/` folder.
 
 ## Basic usage
 
-Here is a very basic code that draws a label on screen:
+Here is a very basic code that draws a label on screen (taken from the 
+[playground] example:
 
 ```cpp
 #include "SDL.h"
@@ -45,35 +46,43 @@ Here is a very basic code that draws a label on screen:
 
 int main(int argc, char ** argv) {
   /* init SDL and SDL_ttf */
-  SDL_Init(SDL_INIT_EVERYTHING);
   SDL_Renderer * renderer;
   SDL_Window * window;
+  SDL_Surface * set;
+  KW_GUI * gui;
+  TTF_Font * font;
+  KW_Widget * frame;
+  SDL_Rect geometry;
+  SDL_Init(SDL_INIT_EVERYTHING);
   SDL_CreateWindowAndRenderer(320, 240, 0, &window, &renderer);
   SDL_SetRenderDrawColor(renderer, 200, 100, 100, 1);
+  
   TTF_Init();
   
-  /* load tileset */
-  SDL_Texture * set;
-  set = IMG_LoadTexture(renderer, "tileset.png");
+  /* load tileset surface */
+  
+  set = IMG_Load("tileset.png");
   
   /* load font */
-  TTF_Font * font = TTF_OpenFont("Fontin-Regular.ttf", 12);
+  font = TTF_OpenFont("Fontin-Regular.ttf", 12);
   
   /* init KiWi */
-  KW_GUI * gui = KW_Init(renderer, set);
+  gui = KW_Init(renderer, set);
   KW_SetFont(gui, font);
   
   /* create a frame and a label on top of it. */
-  SDL_Rect g = {0, 0, 320, 240};
-  KW_Widget * frame = KW_CreateFrame(gui, NULL, &g);
-  KW_CreateLabel(gui, frame, "Label", &g);
+  geometry.x = geometry.y = 0; geometry.w = 320; geometry.h = 240;
+  frame = KW_CreateFrame(gui, NULL, &geometry);
+  KW_CreateLabel(gui, frame, "Label", &geometry);
   
   while (!SDL_QuitRequested()) {
-    KW_RenderClear(renderer);
+    SDL_RenderClear(renderer);
     KW_Paint(gui);
     SDL_Delay(1);
-    KW_RenderPresent(renderer);
+    SDL_RenderPresent(renderer);
   }
+  KW_Quit(gui);
+  SDL_FreeSurface(set);
   
   return 0;
 }
@@ -81,6 +90,7 @@ int main(int argc, char ** argv) {
 
 Better documentation is yet to come, but every public method is well documented.
 
+[playground]:https://github.com/leonardo2d/KiWi/blob/master/examples/playground/playground.c
 [KW_CreateWidget]: https://github.com/leonardo2d/KiWi/blob/master/src/KW_widget.h#L106
 [SDL2]: http://libsdl.org
 [SDL2_ttf]: https://www.libsdl.org/projects/SDL_ttf/
