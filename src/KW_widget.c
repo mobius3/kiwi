@@ -264,6 +264,13 @@ void KW_PaintWidget(KW_Widget * root) {
   int i = 0;
   SDL_Renderer * renderer = KW_GetWidgetRenderer(root);
   SDL_Rect cliprect, viewport;
+  static SDL_RendererInfo info;
+  static int isopengl = -1;
+  if (isopengl < 0) {
+    SDL_GetRendererInfo(renderer, &info);
+    isopengl = (strcmp(info.name, "opengl") >= 0) ? 1 : 0;
+  }
+  
 #if !defined(NDEBUG) && defined(DEBUG_PRINT_GEOMETRY_RECTANGLE)
   SDL_Rect geom = root->composed;
   Uint8 r, g, b, a;
@@ -280,9 +287,13 @@ void KW_PaintWidget(KW_Widget * root) {
   
   if (root->clipchildren) {
     SDL_RenderGetClipRect(renderer, &(root->oldcliprect));
-    SDL_RenderGetViewport(renderer, &viewport);
     cliprect = root->absolute;
-    cliprect.x += viewport.x; cliprect.y += viewport.y;
+    if (isopengl) {
+      /* fix for SDL buggy opengl scissor test. See SDL bug 2269.
+       * Not sure about other renderers. */
+      SDL_RenderGetViewport(renderer, &viewport);
+      cliprect.x += viewport.x;  cliprect.y -= viewport.y;
+    }
     SDL_RenderSetClipRect(renderer, &cliprect);
   }
 
