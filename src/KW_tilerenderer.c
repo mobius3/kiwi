@@ -1,5 +1,7 @@
 #include "KW_tilerenderer.h"
 
+static SDL_Texture * render;
+
 void KW_RenderTile(SDL_Renderer * renderer, SDL_Texture * tileset, int column, int line, int x, int y) {
   SDL_Rect clip;
   SDL_Rect target;
@@ -202,3 +204,15 @@ void KW_BlitTileFrame(SDL_Surface * dst, SDL_Surface * tileset, int startcolumn,
   /* render bottom right */
   KW_BlitTile(dst, tileset, startcolumn + 2, startline + 2, x + (w - TILESIZE), y + h - TILESIZE);
 }
+
+SDL_Texture * KW_CreateTileFrameTexture(SDL_Renderer * renderer, SDL_Surface * tileset, int startcolumn, int startline, int w, int h) {
+  SDL_Surface * target;
+  SDL_Texture * result;
+  target = SDL_CreateRGBSurface(0, w, h, 32, tileset->format->Rmask, tileset->format->Gmask, tileset->format->Bmask, tileset->format->Amask);  
+  KW_BlitTileFrame(target, tileset, startcolumn, startline, 0, 0, w, h);
+  result = SDL_CreateTextureFromSurface(renderer, target);
+  /* TODO: proper error handling */
+  SDL_FreeSurface(target);
+  return result;
+}
+
