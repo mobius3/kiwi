@@ -266,10 +266,6 @@ void KW_PaintWidget(KW_Widget * root) {
   SDL_Rect cliprect, viewport;
   static SDL_RendererInfo info;
   static int isopengl = -1;
-  if (isopengl < 0) {
-    SDL_GetRendererInfo(renderer, &info);
-    isopengl = (strcmp(info.name, "opengl") >= 0) ? 1 : 0;
-  }
   
 #if !defined(NDEBUG) && defined(DEBUG_PRINT_GEOMETRY_RECTANGLE)
   SDL_Rect geom = root->composed;
@@ -280,6 +276,12 @@ void KW_PaintWidget(KW_Widget * root) {
     geom.y += root->parent->absolute.y;
   }
 #endif  
+
+  if (isopengl < 0) {
+    SDL_GetRendererInfo(renderer, &info);
+    isopengl = (strcmp(info.name, "opengl") >= 0) ? 1 : 0;
+  }
+
   /* paint the root, then paint its childrens */
   if (root->paint != NULL) {
     root->paint(root);
