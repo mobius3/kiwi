@@ -9,7 +9,7 @@ int dragmode = 0;
 void DragStart(KW_Widget * widget, int x, int y) {
   SDL_Rect g;
   KW_GetWidgetAbsoluteGeometry(widget, &g);
-  if (x > g.x + g.w - 20 && y > g.y + g.h -20) dragmode = 1;
+  if (x> g.x + g.w - 40 && y > g.y + g.h -40) dragmode = 1;
   else dragmode = 0;
 }
 
@@ -38,6 +38,7 @@ int main(int argc, char ** argv) {
   SDL_Rect geometry = {0, 0, 1280, 768};
   KW_Widget * frame, * button;
   int i;
+  SDL_Event ev;
   
   /* initialize SDL */
   SDL_Init(SDL_INIT_EVERYTHING);
@@ -49,9 +50,8 @@ int main(int argc, char ** argv) {
   if (i < 1) exit(1);
   SDL_GetDisplayBounds(0, &geometry);
 #endif
-  SDL_CreateWindowAndRenderer(geometry.w, geometry.h, 0, &window, &renderer);
+  SDL_CreateWindowAndRenderer(geometry.w, geometry.h, SDL_WINDOW_RESIZABLE, &window, &renderer);
   SDL_SetRenderDrawColor(renderer, 100, 100, 100, 1);
-  SDL_RenderSetLogicalSize(renderer, geometry.w, geometry.h);
   TTF_Init();
   
   /* load tileset */
@@ -64,10 +64,8 @@ int main(int argc, char ** argv) {
   TTF_SetFontHinting(font, TTF_HINTING_NONE);
   KW_SetFont(gui, font);
 
-  geometry.x = 160; geometry.y = 121; geometry.w = 960; geometry.h = 526;
-
-  frame =  NULL;
-  frame = KW_CreateScrollbox(gui, frame, &geometry);
+  geometry.x = geometry.w * 0.0625; geometry.y = geometry.h * .0625; geometry.w *= .875f; geometry.h *= .875;
+  frame = KW_CreateScrollbox(gui, NULL, &geometry);
   KW_AddWidgetDragStartHandler(frame, DragStart);
   KW_AddWidgetDragHandler(frame, Drag);
   KW_AddWidgetDragStopHandler(frame, DragStop);
@@ -86,6 +84,14 @@ int main(int argc, char ** argv) {
     
   /* create another parent frame */
   while (!SDL_QuitRequested()) {
+    while (SDL_PollEvent(&ev)) {
+      if (ev.type == SDL_WINDOWEVENT && ev.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
+        geometry.w = ev.window.data1;
+        geometry.h = ev.window.data2;
+        geometry.x = geometry.w * 0.0625; geometry.y = geometry.h * .0625; geometry.w *= .875f; geometry.h *= .875;
+        KW_SetWidgetGeometry(frame, &geometry);
+      }
+    }
     SDL_RenderClear(renderer);
     KW_Paint(gui);
     SDL_RenderPresent(renderer);
