@@ -35,15 +35,23 @@ int main(int argc, char ** argv) {
   SDL_Surface * set;
   KW_GUI * gui;
   TTF_Font * font;
-  SDL_Rect geometry, g3;
+  SDL_Rect geometry = {0, 0, 1280, 768};
   KW_Widget * frame, * button;
   int i;
   
-  /* initialize window and renderer */
+  /* initialize SDL */
   SDL_Init(SDL_INIT_EVERYTHING);
-  SDL_CreateWindowAndRenderer(1280, 768, 0, &window, &renderer);
+
+  
+#if defined(ANDROID)
+  /* enjoy all the screen size on android */
+  i = SDL_GetNumVideoDisplays();
+  if (i < 1) exit(1);
+  SDL_GetDisplayBounds(0, &g3);
+#endif
+  SDL_CreateWindowAndRenderer(geometry.w, geometry.h, 0, &window, &renderer);
   SDL_SetRenderDrawColor(renderer, 100, 100, 100, 1);
-  SDL_RenderSetLogicalSize(renderer, 1280, 768);
+  SDL_RenderSetLogicalSize(renderer, geometry.w, geometry.h);
   TTF_Init();
   
   /* load tileset */
@@ -57,8 +65,7 @@ int main(int argc, char ** argv) {
   KW_SetFont(gui, font);
 
   geometry.x = 160; geometry.y = 121; geometry.w = 960; geometry.h = 526;
-  g3.x = 10, g3.y = 10, g3.w = 100, g3.h = 30;
-  
+
   frame =  NULL;
   frame = KW_CreateScrollbox(gui, frame, &geometry);
   KW_AddWidgetDragStartHandler(frame, DragStart);
@@ -66,12 +73,12 @@ int main(int argc, char ** argv) {
   KW_AddWidgetDragStopHandler(frame, DragStop);
   SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
-  g3.x = 0; g3.y = 0; g3.h = 150; g3.w = 150;
+  geometry.x = 0; geometry.y = 0; geometry.h = 150; geometry.w = 150;
   
   for (i = 0; i < 10; i++) {
-    g3.x = i * 40; 
-    g3.y = i * 10;
-    button = KW_CreateButton(gui, frame, "Button", &g3);
+    geometry.x = i * 40; 
+    geometry.y = i * 10;
+    button = KW_CreateButton(gui, frame, "Button", &geometry);
     KW_AddWidgetDragStartHandler(button, DragStart);
     KW_AddWidgetDragHandler(button, Drag);
     KW_AddWidgetDragStopHandler(button, DragStop);
