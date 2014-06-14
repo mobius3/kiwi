@@ -35,8 +35,8 @@ struct KW_Widget {
   SDL_Rect            absolute;
   SDL_Rect            geometry;
   SDL_Rect            composed;
-  SDL_bool            inputblocked;
-
+  Uint32              hints;
+  
   struct KW_Widget ** children;
   struct KW_Widget *  parent;
 

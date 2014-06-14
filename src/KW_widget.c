@@ -68,12 +68,30 @@ void KW_SetWidgetData(KW_Widget * widget, void * data) {
 }
 
 void KW_BlockWidgetInputEvents(KW_Widget * widget) {
-  widget->inputblocked = SDL_TRUE;
+  KW_EnableWidgetHint(widget, KW_WIDGETHINT_BLOCKINPUTEVENTS);;
 }
 
 void KW_UnblockWidgetInputEvents(KW_Widget * widget) {
-  widget->inputblocked = SDL_FALSE;
+  KW_DisableWidgetHint(widget, KW_WIDGETHINT_BLOCKINPUTEVENTS);
 }
+
+SDL_bool KW_IsWidgetInputEventsBlocked(KW_Widget * widget) {
+  return KW_QueryWidgetHint(widget, KW_WIDGETHINT_BLOCKINPUTEVENTS);
+}
+
+void KW_DisableWidgetHint(KW_Widget * widget, KW_WidgetHint hint) {
+  widget->hints &= ~hint;
+}
+
+void KW_EnableWidgetHint(KW_Widget * widget, KW_WidgetHint hint) {
+  widget->hints |= hint;
+}
+
+SDL_bool KW_QueryWidgetHint(KW_Widget * widget, KW_WidgetHint hint) {
+  return ((widget->hints & hint) ? SDL_TRUE : SDL_FALSE);
+}
+
+
 
 
 void Reparent(KW_Widget * widget, KW_Widget * newparent);

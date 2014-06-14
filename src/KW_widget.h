@@ -88,8 +88,6 @@ typedef enum KW_WidgetChildrenChangeEvent {
 
 typedef void (*KW_OnWidgetChildrenChange)(KW_Widget * widget, KW_WidgetChildrenChangeEvent what, KW_Widget * child);
 
-
-
 /**
  * \brief   The KW_WidgetType enumeration represents available widget types.
  * \details Every widget created must set a widget type even if its a custom widget.
@@ -124,6 +122,24 @@ typedef enum KW_WidgetType {
   KW_WIDGETTYPE_CUSTOM20
 } KW_WidgetType;
 
+/**
+ * \brief   Set of hints to control how this widget operates.
+ * \details These hints can be queried by the widget implementation to change
+ *          its behaviour. They are also used to change KiWi's behaviour when
+ *          propagating input events, etc.
+ */
+typedef enum KW_WidgetHint {
+  /** Allow widgets to stretch tiles */
+  KW_WIDGETHINT_ALLOWTILESTRETCH = 1 << 0, 
+  
+  /** Makes KiWi avoid reporting input events to this widget and its children
+   *  widget */
+  KW_WIDGETHINT_BLOCKINPUTEVENTS = 1 << 1, 
+  
+  /** Makes KiWi avoid reporting input event to this widget but still passes to
+   * its children widgets */
+  KW_WIDGETHINT_IGNOREINPUTEVENTS = 1 << 2
+} KW_WidgetHint;
 
 /**
  * \brief   Creates a new custom widget instance.
@@ -317,16 +333,30 @@ extern DECLSPEC void KW_PaintWidget(KW_Widget * widget);
  *          from the widgets below this function might be useful to you.
  * 
  *          All children widgets will also have its input events blocked.
+ *          *This is just a wrapper of KW_EnableWidgetHint(w, KW_WIDGETHINT_BLOCKINPUTEVENTS)*
  * \param   widget The widget that will stop receiving input evenets.
  */
 extern DECLSPEC void KW_BlockWidgetInputEvents(KW_Widget * widget);
 
 /**
  * \brief   Unblocks this widget from receiving input events.
- * \details See ::KW_BlockWidgetEvents. All children widgets will have its input evenets unblocked.
+ * \details See ::KW_BlockWidgetEvents. All children widgets will have its input events unblocked.
+ *          *This is just a wrapper of KW_DisableWidgetHint(w, KW_WIDGETHINT_BLOCKINPUTEVENTS)*
  * \param   widget The widget that will now receive input events.
  */
 extern DECLSPEC void KW_UnblockWidgetInputEvents(KW_Widget * widget);
+
+/**
+ * \brief   Returns SDL_TRUE if this widget is blocking input events.
+ * \param   widget The widget to query.
+ * \details This function is a wrapper of KW_QueryWidgetHint(w, KW_WIDGETHINT_BLOCKINPUTEVENTS)
+ * \return  SDL_TRUE or SDL_FALSE in case events are blocked or not.
+ */
+extern DECLSPEC SDL_bool KW_IsWidgetInputEventsBlocked(KW_Widget * widget);
+
+extern DECLSPEC void KW_EnableWidgetHint(KW_Widget * widget, KW_WidgetHint hint);
+extern DECLSPEC void KW_DisableWidgetHint(KW_Widget * widget, KW_WidgetHint hint);
+extern DECLSPEC SDL_bool KW_QueryWidgetHint(KW_Widget * widget, KW_WidgetHint hint);
 
 /**
  * \brief   Adds a function that will be called whenever the mouse/cursor gets over the widget.
