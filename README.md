@@ -36,7 +36,7 @@ You can test the examples inside the `build/examples/` folder.
 ## Basic usage
 
 Here is a very basic code that draws a label on screen (taken from the 
-[playground] example:
+[playground] example):
 
 ```cpp
 #include "SDL.h"
