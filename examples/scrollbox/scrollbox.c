@@ -95,7 +95,8 @@ int main(int argc, char ** argv) {
     SDL_RenderPresent(renderer);
     SDL_Delay(1);
   }
-  
+  TTF_CloseFont(font);
+  TTF_Quit();
   KW_Quit(gui);
   SDL_FreeSurface(set);
   SDL_Quit();
