@@ -46,13 +46,6 @@ void PaintScrollboxFrame(KW_Widget * widget) {
     scrollgeom.w = TILESIZE *2;
     scrollgeom.h = (outergeom.h / innerh) * outergeom.h;
     scrollgeom.y = (-innergeom.y / innerh) * outergeom.h + TILESIZE;
-    /* underflow */
-    if (innergeom.y + innerh < outergeom.h) {
-      diff = (outergeom.h - (innergeom.y + innerh));
-      innerh += diff;
-      scrollgeom.h = (outergeom.h / innerh) * outergeom.h;
-      scrollgeom.y = (-innergeom.y / innerh) * outergeom.h + TILESIZE;
-    }
     innergeom.h = innerh;
     KW_SetWidgetGeometry(sb->vscroll, &scrollgeom);
     
@@ -63,16 +56,8 @@ void PaintScrollboxFrame(KW_Widget * widget) {
     scrollgeom.w = (outergeom.w / innerw) * outergeom.w;
     scrollgeom.h = TILESIZE * 2;
     scrollgeom.x = (-innergeom.x / innerw) * outergeom.w + TILESIZE;
-    
-    if (innergeom.x + innerw < outergeom.w) {
-      diff = (outergeom.w - (innergeom.x + innerw));
-      innerw += diff;
-      scrollgeom.w = SDL_ceil((outergeom.w / innerw) * outergeom.w);
-      scrollgeom.x = (-innergeom.x / innerw) * outergeom.w + TILESIZE;
-    }
     innergeom.w = innerw;
     KW_SetWidgetGeometry(sb->hscroll, &scrollgeom);
-    
     sb->innercomposite = innergeom;
   }
   
