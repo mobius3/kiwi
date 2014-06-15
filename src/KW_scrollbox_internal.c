@@ -25,7 +25,7 @@ void RenderScrollboxFrame(KW_Scrollbox * sb) {
 void PaintScrollboxFrame(KW_Widget * widget) {
   SDL_Rect targetgeom, innergeom, outergeom, boxgeom;
   SDL_Rect scrollgeom;
-  float innerh, innerw, diff;
+  float innerh, innerw;
   KW_Scrollbox * sb = KW_GetWidgetData(widget, KW_WIDGETTYPE_SCROLLBOX);
   
   KW_GetWidgetAbsoluteGeometry(widget, &targetgeom);
