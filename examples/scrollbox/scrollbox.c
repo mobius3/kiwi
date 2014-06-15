@@ -35,7 +35,7 @@ int main(int argc, char ** argv) {
   SDL_Surface * set;
   KW_GUI * gui;
   TTF_Font * font;
-  SDL_Rect geometry = {0, 0, 1280, 768};
+  SDL_Rect geometry = {0, 0, 320, 240};
   KW_Widget * frame, * button;
   int i;
   SDL_Event ev;
@@ -51,11 +51,10 @@ int main(int argc, char ** argv) {
   SDL_GetDisplayBounds(0, &geometry);
 #endif
   SDL_CreateWindowAndRenderer(geometry.w, geometry.h, SDL_WINDOW_RESIZABLE, &window, &renderer);
-  SDL_SetRenderDrawColor(renderer, 100, 100, 100, 1);
+  SDL_SetRenderDrawColor(renderer, 100, 200, 100, 1);
   TTF_Init();
   
   /* load tileset */
-
   set = IMG_Load("tileset.png");
   
   /* initialize gui */
@@ -71,15 +70,14 @@ int main(int argc, char ** argv) {
   KW_AddWidgetDragStopHandler(frame, DragStop);
   SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
-  geometry.x = 0; geometry.y = 0; geometry.h = 150; geometry.w = 150;
+  geometry.x = 10; geometry.y = 0; geometry.h = 40; geometry.w = 230;
   
-  for (i = 0; i < 10; i++) {
-    geometry.x = i * 40; 
-    geometry.y = i * 10;
-    button = KW_CreateButton(gui, frame, "Button", &geometry);
+  for (i = 0; i < 5; i++) {
+    button = KW_CreateButton(gui, frame, "Drag me, resize me.", &geometry);
     KW_AddWidgetDragStartHandler(button, DragStart);
     KW_AddWidgetDragHandler(button, Drag);
     KW_AddWidgetDragStopHandler(button, DragStop);
+    geometry.y += geometry.h;
   }
     
   /* create another parent frame */
