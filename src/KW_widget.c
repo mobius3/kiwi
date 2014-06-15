@@ -330,7 +330,13 @@ void KW_PaintWidget(KW_Widget * root) {
   
   /* restore cliprect */
   if (root->clipchildren) {
-    SDL_RenderSetClipRect(renderer, &(root->oldcliprect));
+    /* for us, empty cliprect still means clip disable.
+     * See https://bugzilla.libsdl.org/show_bug.cgi?id=2504 */
+    if (!SDL_RectEmpty(&(root->oldcliprect))) {
+      SDL_RenderSetClipRect(renderer, &(root->oldcliprect));
+    } else {
+      SDL_RenderSetClipRect(renderer, NULL);
+    }
   }
 }
 
