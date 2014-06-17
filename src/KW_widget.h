@@ -194,7 +194,7 @@ typedef enum KW_WidgetHint {
  * \param   geometry The geometry of this widget *relative* to its parent.
  * \param   widgetpaing The paint function of this widget.
  * \param   widgetdestroy The destroy function of this widget.
- * \param   data Any private data associated with this widget.
+ * \param   data Any private data associated with this widget. Mostly to be used by widget implementations.
  * \returns The new widget.
  */
 extern DECLSPEC KW_Widget * KW_CreateWidget(KW_GUI * gui, 
@@ -253,6 +253,26 @@ extern DECLSPEC KW_Widget * const * KW_GetWidgetChildren(KW_Widget * widget, uns
  * \returns The data pointer or NULL if the widget types don't match.
  */
 extern DECLSPEC void * KW_GetWidgetData(KW_Widget * widget, KW_WidgetType type);
+
+
+/**
+ * \brief   Sets a pointer to user-specific data to be read later.
+ * \details Use this if you want to store user-specific state in this widget
+ *          that could be shared among callbacks. Widget implementations should
+ *          not use this. There's no check if it had any user data before, use
+ *          with caution.
+ * \param   widget The widget to set the user data.
+ * \param   userdata The associated user data
+ */
+extern DECLSPEC void KW_SetWidgetUserData(KW_Widget * widget, void * userdata);
+
+/**
+ * \brief   Returns the associated user data of a widget.
+ * \details Use this function to access a previously stored user data pointer.
+ * \param   widget The widget to get userdata from.
+ * \returns The usertdata pointer
+ */
+extern DECLSPEC void * KW_GetWidgetUserData(const KW_Widget * widget);
 
 /**
  * \brief   Destroys a widget and free its resources.

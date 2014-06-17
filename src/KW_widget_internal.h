@@ -47,7 +47,6 @@ struct KW_Widget {
   void                (*paint)(KW_Widget *);
   void                (*destroy)(KW_Widget *);
   
-  
   struct {
     WidgetHandler *   handlers;
     unsigned int      count;
@@ -57,6 +56,7 @@ struct KW_Widget {
   SDL_Rect            oldcliprect;
   SDL_bool            clipchildren;
   
+  void *              userdata;
   void *              privdata;
 };
 

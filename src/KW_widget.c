@@ -336,6 +336,16 @@ void KW_DestroyWidget(KW_Widget * widget, int freechildren) {
   FreeWidget(widget, freechildren);
 }
 
+void KW_SetWidgetUserData(KW_Widget * widget, void * userdata) {
+  widget->userdata = userdata;
+}
+
+void * KW_GetWidgetUserData(const KW_Widget * widget) {
+  return widget->userdata;
+}
+
+
+
 void KW_PaintWidget(KW_Widget * root) {
   int i = 0;
   SDL_Renderer * renderer = KW_GetWidgetRenderer(root);
