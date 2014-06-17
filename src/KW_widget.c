@@ -26,11 +26,11 @@ KW_Widget * KW_CreateWidget(KW_GUI * gui, KW_Widget * parent, KW_WidgetType type
   return widget;
 }
 
-KW_Widget * KW_GetWidgetParent(KW_Widget * widget) {
+KW_Widget * KW_GetWidgetParent(const KW_Widget * widget) {
   return widget->parent == widget->gui->rootwidget ? NULL : widget->parent;
 }
 
-KW_Widget * const * KW_GetWidgetChildren(KW_Widget * widget, unsigned int * count) {
+KW_Widget * const * KW_GetWidgetChildren(const KW_Widget * widget, unsigned int * count) {
   *count = widget->childrencount;
   return widget->children;
 }
@@ -49,16 +49,16 @@ SDL_Surface * KW_GetWidgetTilesetSurface(KW_Widget * widget) {
   return widget->tilesetsurface == NULL ? widget->gui->tilesetsurface : widget->tilesetsurface;
 }
 
-void * KW_GetWidgetData(KW_Widget * widget, KW_WidgetType type) {
+void * KW_GetWidgetData(const KW_Widget * widget, KW_WidgetType type) {
   if (widget->type != type) return NULL;
   return widget->privdata;
 }
 
-SDL_Renderer * KW_GetWidgetRenderer(KW_Widget * widget) {
+SDL_Renderer * KW_GetWidgetRenderer(const KW_Widget * widget) {
   return KW_GetRenderer(KW_GetGUI(widget));
 }
 
-void KW_GetWidgetAbsoluteGeometry(KW_Widget * widget, SDL_Rect * geometry) {
+void KW_GetWidgetAbsoluteGeometry(const KW_Widget * widget, SDL_Rect * geometry) {
   *geometry = widget->absolute;
 }
 
@@ -86,7 +86,7 @@ void KW_EnableWidgetHint(KW_Widget * widget, KW_WidgetHint hint) {
   widget->hints |= hint;
 }
 
-SDL_bool KW_QueryWidgetHint(KW_Widget * widget, KW_WidgetHint hint) {
+SDL_bool KW_QueryWidgetHint(const KW_Widget * widget, KW_WidgetHint hint) {
   return ((widget->hints & hint) ? SDL_TRUE : SDL_FALSE);
 }
 
@@ -182,7 +182,7 @@ void CalculateComposedGeometry(KW_Widget * widget) {
   /* TODO: callback for changed? */
 }
 
-void KW_GetWidgetComposedGeometry(KW_Widget * widget, SDL_Rect * composed) {
+void KW_GetWidgetComposedGeometry(const KW_Widget * widget, SDL_Rect * composed) {
   *composed = widget->composed;
 }
 
@@ -430,12 +430,12 @@ void KW_SetWidgetGeometry(KW_Widget * widget, const SDL_Rect * geometry) {
   }
 }
 
-void KW_GetWidgetGeometry(KW_Widget * widget, SDL_Rect * geometry) {
+void KW_GetWidgetGeometry(const KW_Widget * widget, SDL_Rect * geometry) {
   *geometry = widget->geometry;
 }
 
 
-KW_GUI * KW_GetWidgetGUI(KW_Widget * widget) {
+KW_GUI * KW_GetWidgetGUI(const KW_Widget * widget) {
   return widget->gui;
 }
 

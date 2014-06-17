@@ -82,7 +82,7 @@ TTF_Font * KW_GetFont(KW_GUI * gui) {
 }
 
 
-KW_GUI * KW_GetGUI(KW_Widget * widget) {
+KW_GUI * KW_GetGUI(const KW_Widget * widget) {
   return KW_GetWidgetGUI(widget);
 }
 

@@ -45,7 +45,7 @@ typedef struct KW_GUI KW_GUI;
 
 /* forward declarations of these */
 extern DECLSPEC SDL_Renderer * KW_GetRenderer(KW_GUI * gui);
-extern DECLSPEC KW_GUI * KW_GetGUI(KW_Widget * widget);
+extern DECLSPEC KW_GUI * KW_GetGUI(const KW_Widget * widget);
 
 
 
@@ -230,7 +230,7 @@ extern DECLSPEC void KW_ReparentWidget(KW_Widget * widget, KW_Widget * parent);
  * \param   widget The KW_Widget instance to retrieve the parent from.
  * \returns The parent widget or NULL if its a top-level widget.
  */
-extern DECLSPEC KW_Widget * KW_GetWidgetParent(KW_Widget * widget);
+extern DECLSPEC KW_Widget * KW_GetWidgetParent(const KW_Widget * widget);
 
 /**
  * \brief      Returns an array of all childrens of this widget.
@@ -242,7 +242,7 @@ extern DECLSPEC KW_Widget * KW_GetWidgetParent(KW_Widget * widget);
  *             children count of the widget.
  * \returns    An array of constant pointers to all childrens of \p widget.
  */
-extern DECLSPEC KW_Widget * const * KW_GetWidgetChildren(KW_Widget * widget, unsigned int * count);
+extern DECLSPEC KW_Widget * const * KW_GetWidgetChildren(const KW_Widget * widget, unsigned int * count);
 
 /**
  * \brief   Retrieves the current data associated with a widget.
@@ -252,7 +252,7 @@ extern DECLSPEC KW_Widget * const * KW_GetWidgetChildren(KW_Widget * widget, uns
  * \param   type The widget type you're expecting @p widget to be
  * \returns The data pointer or NULL if the widget types don't match.
  */
-extern DECLSPEC void * KW_GetWidgetData(KW_Widget * widget, KW_WidgetType type);
+extern DECLSPEC void * KW_GetWidgetData(const KW_Widget * widget, KW_WidgetType type);
 
 
 /**
@@ -289,7 +289,7 @@ extern DECLSPEC void KW_DestroyWidget(KW_Widget * widget, int destroychildren);
  * \param   widget The widget to get the KW_GUI instance from.
  * \return  The KW_GUI instance associated with the widget.
  */
-extern DECLSPEC KW_GUI * KW_GetWidgetGUI(KW_Widget * widget);
+extern DECLSPEC KW_GUI * KW_GetWidgetGUI(const KW_Widget * widget);
 
 /**
  * \brief   Returns the SDL_Renderer associated with a KW_GUI instance that the @p widget is associated with.
@@ -297,7 +297,7 @@ extern DECLSPEC KW_GUI * KW_GetWidgetGUI(KW_Widget * widget);
  * \param   widget The widget to get the SDL_Renderer instance from.
  * \returns The associated SDL_Renderer instance.
  */
-extern DECLSPEC SDL_Renderer * KW_GetWidgetRenderer(KW_Widget * widget);
+extern DECLSPEC SDL_Renderer * KW_GetWidgetRenderer(const KW_Widget * widget);
 
 /**
  * \brief   Sets a new geometry for a widget.
@@ -313,7 +313,7 @@ extern DECLSPEC void KW_SetWidgetGeometry(KW_Widget * widget, const SDL_Rect * g
  * \param   widget The widget to get the geometry from.
  * \param   geometry A SDL_Rect pointer that will receive the @p widget geometry. 
  */
-extern DECLSPEC void KW_GetWidgetGeometry(KW_Widget * widget, SDL_Rect * geometry);
+extern DECLSPEC void KW_GetWidgetGeometry(const KW_Widget * widget, SDL_Rect * geometry);
 
 /**
  * \brief   Gets the absolute widget geometry.
@@ -322,7 +322,7 @@ extern DECLSPEC void KW_GetWidgetGeometry(KW_Widget * widget, SDL_Rect * geometr
  * \param   widget The widget to get the absolute geometry from.
  * \param   geometry A SDL_Rect pointer that will receive the @p widget absolute geometry.
  */
-extern DECLSPEC void KW_GetWidgetAbsoluteGeometry(KW_Widget * widget, SDL_Rect * geometry);
+extern DECLSPEC void KW_GetWidgetAbsoluteGeometry(const KW_Widget * widget, SDL_Rect * geometry);
 
 /**
  * \brief   Gets the composed geometry of a widget.
@@ -331,7 +331,7 @@ extern DECLSPEC void KW_GetWidgetAbsoluteGeometry(KW_Widget * widget, SDL_Rect *
  * \param   widget The widget to get the compsoed geometry from.
  * \param   geometry A SDL_Rect pointer that will receive the @p widget composed geometry.
  */
-extern DECLSPEC void KW_GetWidgetComposedGeometry(KW_Widget * widget, SDL_Rect * composed);
+extern DECLSPEC void KW_GetWidgetComposedGeometry(const KW_Widget * widget, SDL_Rect * composed);
 
 /**
  * \brief   Paint a widget and all of its children unless they are hidden.
@@ -391,7 +391,7 @@ extern DECLSPEC SDL_bool KW_IsWidgetInputEventsBlocked(KW_Widget * widget);
 
 extern DECLSPEC void KW_EnableWidgetHint(KW_Widget * widget, KW_WidgetHint hint);
 extern DECLSPEC void KW_DisableWidgetHint(KW_Widget * widget, KW_WidgetHint hint);
-extern DECLSPEC SDL_bool KW_QueryWidgetHint(KW_Widget * widget, KW_WidgetHint hint);
+extern DECLSPEC SDL_bool KW_QueryWidgetHint(const KW_Widget * widget, KW_WidgetHint hint);
 
 /**
  * \brief   Adds a function that will be called whenever the mouse/cursor gets over the widget.
