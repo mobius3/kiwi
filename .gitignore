@@ -24,3 +24,7 @@
 
 # KDevelop
 *.kdev4*
+
+# Build
+bin/
+build/
