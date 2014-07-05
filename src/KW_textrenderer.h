@@ -47,7 +47,7 @@ extern "C" {
  * \param   styleflags A list of TTF_STYLE_* style flags to pass.
  * \return  The resulting texture.
  */
-SDL_Texture DECLSPEC * KW_RenderTextLine(TTF_Font * font, SDL_Renderer * renderer, const char * text, SDL_Color color, int styleflags);
+extern DECLSPEC SDL_Texture * KW_RenderTextLine(TTF_Font * font, SDL_Renderer * renderer, const char * text, SDL_Color color, int styleflags);
 
 #ifdef __cplusplus
 }

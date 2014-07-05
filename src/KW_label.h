@@ -79,28 +79,28 @@ typedef enum KW_LabelHorizontalAlignment {
  * \param   geometry The relative geometry of this label.
  * \return  The label instance.
  */
-KW_Widget DECLSPEC * KW_CreateLabel(KW_GUI * gui, KW_Widget * parent, const char * text, const SDL_Rect * geometry);
+extern DECLSPEC KW_Widget * KW_CreateLabel(KW_GUI * gui, KW_Widget * parent, const char * text, const SDL_Rect * geometry);
 
 /**
  * \brief   Set the text being rendered in this label.
  * \param   widget The label widget.
  * \param   text The text to render.
  */
-void DECLSPEC KW_SetLabelText(KW_Widget * widget, const char * text);
+extern DECLSPEC void KW_SetLabelText(KW_Widget * widget, const char * text);
 
 /**
  * \brief   Set the text style for this label.
  * \param   widget The label widget.
  * \param   style The style of the text
  */
-void DECLSPEC KW_SetLabelStyle(KW_Widget * widget, int style);
+extern DECLSPEC void KW_SetLabelStyle(KW_Widget * widget, int style);
 
 /**
  * \brief   Sets the color of the label text.
  * \param   widget The label instance.
  * \param   color The color to assign to the label.
  */
-void DECLSPEC KW_SetLabelColor(KW_Widget * widget, SDL_Color color);
+extern DECLSPEC void KW_SetLabelColor(KW_Widget * widget, SDL_Color color);
 
 /**
  * \brief   Changes the font of the label's text.
@@ -108,7 +108,7 @@ void DECLSPEC KW_SetLabelColor(KW_Widget * widget, SDL_Color color);
  * \param   widget The label widget.
  * \param   font The font to assign to the label.
  */
-void DECLSPEC KW_SetLabelFont(KW_Widget * widget, TTF_Font * font);
+extern DECLSPEC void KW_SetLabelFont(KW_Widget * widget, TTF_Font * font);
 
 /**
  * \brief   Sets label alignment inside a geometry.
@@ -118,7 +118,7 @@ void DECLSPEC KW_SetLabelFont(KW_Widget * widget, TTF_Font * font);
  * \param   valign The vertical alignment used.
  * \param   voffset The vertical offset to be added to the label position after its aligned.
  */
-void DECLSPEC KW_SetLabelAlignment(KW_Widget * widget, KW_LabelHorizontalAlignment halign, int hoffset, KW_LabelVerticalAlignment valign, int voffset);
+extern DECLSPEC void KW_SetLabelAlignment(KW_Widget * widget, KW_LabelHorizontalAlignment halign, int hoffset, KW_LabelVerticalAlignment valign, int voffset);
 
 /**
  * \brief   Display an icon in the left side of the text.
@@ -127,14 +127,14 @@ void DECLSPEC KW_SetLabelAlignment(KW_Widget * widget, KW_LabelHorizontalAlignme
  * \param   iconclip The clipping rect in the tileset to clip the icon from. Set
  *          to NULL to remove the icon.
  */
-void DECLSPEC KW_SetLabelIcon(KW_Widget * widget, const SDL_Rect * iconclip);
+extern DECLSPEC void KW_SetLabelIcon(KW_Widget * widget, const SDL_Rect * iconclip);
 
 /**
  * \brief   Gets the associated font with a label.
  * \param   widget The label widget.
  * \returns A TTF_Font pointer to the currently label's associated font.
  */
-TTF_Font DECLSPEC * KW_GetLabelFont(KW_Widget * widget);
+extern DECLSPEC TTF_Font * KW_GetLabelFont(KW_Widget * widget);
 
 #ifdef __cplusplus
 }
