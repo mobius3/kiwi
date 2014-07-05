@@ -121,6 +121,15 @@ void DECLSPEC KW_SetLabelFont(KW_Widget * widget, TTF_Font * font);
 void DECLSPEC KW_SetLabelAlignment(KW_Widget * widget, KW_LabelHorizontalAlignment halign, int hoffset, KW_LabelVerticalAlignment valign, int voffset);
 
 /**
+ * \brief   Display an icon in the left side of the text.
+ * \details The icon is clipped from the tileset.
+ * \param   widget The label widget to control.
+ * \param   iconclip The clipping rect in the tileset to clip the icon from. Set
+ *          to NULL to remove the icon.
+ */
+void DECLSPEC KW_SetLabelIcon(KW_Widget * widget, const SDL_Rect * iconclip);
+
+/**
  * \brief   Gets the associated font with a label.
  * \param   widget The label widget.
  * \returns A TTF_Font pointer to the currently label's associated font.

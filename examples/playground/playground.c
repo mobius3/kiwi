@@ -10,11 +10,13 @@ int main(int argc, char ** argv) {
   SDL_Surface * set;
   KW_GUI * gui;
   TTF_Font * font;
-  KW_Widget * frame;
-  SDL_Rect geometry;
+  KW_Widget * frame, * l;
+  SDL_Rect geometry, c;
+  
   SDL_Init(SDL_INIT_EVERYTHING);
   SDL_CreateWindowAndRenderer(320, 240, 0, &window, &renderer);
   SDL_SetRenderDrawColor(renderer, 100, 100, 100, 1);
+  SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
   
   TTF_Init();
   
@@ -28,11 +30,12 @@ int main(int argc, char ** argv) {
   /* init KiWi */
   gui = KW_Init(renderer, set);
   KW_SetFont(gui, font);
-  
   /* create a frame and a label on top of it. */
   geometry.x = geometry.y = 0; geometry.w = 320; geometry.h = 240;
   frame = KW_CreateFrame(gui, NULL, &geometry);
-  KW_CreateLabel(gui, frame, "Label", &geometry);
+  l = KW_CreateLabel(gui, frame, "Label with an icon :)", &geometry);
+  c.x = 0; c.y = 48; c.w = 24; c.h = 24;
+  KW_SetLabelIcon(l, &c);
   
   while (!SDL_QuitRequested()) {
     SDL_RenderClear(renderer);

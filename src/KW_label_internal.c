@@ -35,8 +35,8 @@ void PaintLabel(KW_Widget * widget) {
   KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
   
   SDL_Rect orig;
-  SDL_Rect dst;
-  SDL_Rect src;
+  SDL_Rect dst, icondst;
+  SDL_Rect src, iconsrc;
   
   SDL_Renderer * renderer = KW_GetWidgetRenderer(widget);
   
@@ -66,9 +66,9 @@ void PaintLabel(KW_Widget * widget) {
         break;
   };
   
-  /* apply horizontal offset */
+  /* apply horizontal offset and icon offset */
   dst.x += label->hoffset;
-  
+    
   /* calculate y according to valign */
   switch (label->valign) {
     case KW_LABEL_ALIGN_BOTTOM:
@@ -100,6 +100,27 @@ void PaintLabel(KW_Widget * widget) {
   dst.h = src.h;
   dst.x += src.x;
   dst.y += src.y;
-  
+
+  /* display icon */
+  if (!SDL_RectEmpty(&label->iconclip)) {
+    iconsrc = label->iconclip;
+
+    icondst.x = dst.x - label->iconclip.w;
+    icondst.y = orig.y + orig.h/2 - iconsrc.h/2;
+    if (icondst.y < orig.y) {
+      iconsrc.y += orig.y - icondst.y;
+      icondst.y += orig.y - icondst.y;
+    }
+    if (icondst.x < orig.x) {
+      iconsrc.x += orig.x - icondst.x;
+      icondst.x += orig.x - icondst.x;
+    }
+    if (iconsrc.h > orig.h) iconsrc.h = orig.h;
+    if (iconsrc.w > orig.w) iconsrc.w = orig.w;
+    icondst.h = iconsrc.h;
+    icondst.w = iconsrc.w;
+    
+    SDL_RenderCopy(renderer, KW_GetWidgetTilesetTexture(widget), &iconsrc, &icondst);
+  }
   SDL_RenderCopy(renderer, label->textrender, &src, &dst);
 }

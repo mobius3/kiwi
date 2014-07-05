@@ -25,6 +25,7 @@ struct KW_Label {
   int textheight;
   int cursorx;
   int cursory;
+  SDL_Rect iconclip;
   
   int x;
 } KW_Label;

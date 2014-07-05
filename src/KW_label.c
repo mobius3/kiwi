@@ -28,7 +28,6 @@ TTF_Font * KW_GetLabelFont(KW_Widget * widget) {
   return label->font == NULL ? KW_GetFont(KW_GetGUI(widget)) : label->font;
 }
 
-
 void KW_SetLabelFont(KW_Widget * widget, TTF_Font * font) {
   KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
   label->font = font;
@@ -57,3 +56,16 @@ void KW_SetLabelColor(KW_Widget * widget, SDL_Color color) {
   label->color = color;
   RenderLabelText(widget);
 }
+
+void KW_SetLabelIcon(KW_Widget * widget, const SDL_Rect * iconclip) {
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
+  if (iconclip == NULL){
+    label->iconclip.x = 0;
+    label->iconclip.y = 0;
+    label->iconclip.w = 0;
+    label->iconclip.h = 0;
+  } else {
+    label->iconclip = *iconclip;
+  }
+}
+
