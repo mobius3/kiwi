@@ -87,34 +87,22 @@ void PaintLabel(KW_Widget * widget) {
   /* apply vertical offset */
   dst.y += label->voffset;
   
-  /* clip texture so that it doesnt overflow desired maximum geometry */
-  if (dst.x < orig.x) src.x = orig.x - dst.x; /* clip left part (centering and right align overflows to the left) */
-  if (dst.y < orig.y) src.y = orig.y - dst.y; /* clip top part (middle, bottom align migh overflow top) */
-  if (dst.x + src.w > orig.x + orig.w) src.w = orig.w + (orig.x - dst.x) - src.x; /* clip right part (centering, left align) */
-  else src.w = src.w - src.x;
-  if (dst.y + src.h > orig.y + orig.h) src.h = orig.h + (orig.y - dst.y) - src.y; /* clip bottom part (middle, top) */
-  else src.h = src.h - src.y;
-  
-  /* don stretch the image */
-  dst.w = src.w;
-  dst.h = src.h;
-  dst.x += src.x;
-  dst.y += src.y;
-
   /* display icon */
   if (!SDL_RectEmpty(&label->iconclip)) {
     iconsrc = label->iconclip;
-
-    icondst.x = dst.x - label->iconclip.w;
-    icondst.y = orig.y + orig.h/2 - iconsrc.h/2;
+    icondst.x = dst.x - (iconsrc.w/2);
+    dst.x += iconsrc.w/2;
+    icondst.y = dst.y - (iconsrc.h/2 - src.h/2); /* vertically center icon */
     if (icondst.y < orig.y) {
       iconsrc.y += orig.y - icondst.y;
       icondst.y += orig.y - icondst.y;
     }
+    
     if (icondst.x < orig.x) {
       iconsrc.x += orig.x - icondst.x;
       icondst.x += orig.x - icondst.x;
     }
+    
     if (iconsrc.h > orig.h) iconsrc.h = orig.h;
     if (iconsrc.w > orig.w) iconsrc.w = orig.w;
     icondst.h = iconsrc.h;
@@ -122,5 +110,18 @@ void PaintLabel(KW_Widget * widget) {
     
     SDL_RenderCopy(renderer, KW_GetWidgetTilesetTexture(widget), &iconsrc, &icondst);
   }
+    /* clip texture so that it doesnt overflow desired maximum geometry */
+  if (dst.x < orig.x) src.x = orig.x - dst.x; /* clip left part (centering and right align overflows to the left) */
+  if (dst.y < orig.y) src.y = orig.y - dst.y; /* clip top part (middle, bottom align migh overflow top) */
+  if (dst.x + src.w > orig.x + orig.w) src.w = orig.w + (orig.x - dst.x) - src.x; /* clip right part (centering, left align) */
+  else src.w = src.w - src.x;
+  if (dst.y + src.h > orig.y + orig.h) src.h = orig.h + (orig.y - dst.y) - src.y; /* clip bottom part (middle, top) */
+  else src.h = src.h - src.y;
+  /* don stretch the image */
+  dst.w = src.w;
+  dst.h = src.h;
+  dst.x += src.x;
+  dst.y += src.y;
+  
   SDL_RenderCopy(renderer, label->textrender, &src, &dst);
 }
