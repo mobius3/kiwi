@@ -25,6 +25,7 @@
 #ifndef KW_BUTTON_H
 #define KW_BUTTON_H
 #include "KW_widget.h"
+#include "SDL_ttf.h"
 
 /**
  * \file KW_button.h
@@ -40,7 +41,6 @@ extern "C" {
 /**
  * \brief   Creates a button widget.
  * \details The button widget is a composite widget. It uses the second 3x3 tile block (next to the frame block) to render its lines.
- *          It instantiates a child label to hold the text.
  * \param   gui The KW_GUI instance that will hold this button.
  * \param   parent The parent widget of this button.
  * \param   text The text to print inside the button.
@@ -48,6 +48,28 @@ extern "C" {
  * \return  The button instance.
  */
 extern DECLSPEC KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, const char * text, const SDL_Rect * geometry);
+
+/**
+ * \brief   Sets the text being displayed in a button.
+ * \param   text The new text to show.
+ */
+extern DECLSPEC void KW_SetButtonText(KW_Widget * button, const char * text);
+
+/**
+ * \brief   Sets the icon being displayed in a button
+ * \param   widget The button widget to show the icon.
+ * \param   iconclip The area in the tileset to clip the icon from. Set to NULL
+ *          to remove the icon.
+ */
+extern DECLSPEC void KW_SetButtonIcon(KW_Widget * widget, const SDL_Rect * iconclip);
+
+/**
+ * \brief   Changes the font of the button's text.
+ * \details Please note that you are responsible for managing the font memory and should free the previous font if its not required anymore.
+ * \param   widget The button widget.
+ * \param   font The font to assign to the button.
+ */
+extern DECLSPEC void KW_SetButtonFont(KW_Widget * button, TTF_Font * font);
 
 #ifdef __cplusplus
 }

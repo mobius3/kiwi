@@ -105,3 +105,20 @@ KW_Button * AllocButton() {
   KW_Button * button = calloc(sizeof(KW_Button), 1);
   return button;
 }
+
+void KW_SetButtonIcon(KW_Widget * widget, const SDL_Rect * iconclip) {
+  KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
+  KW_SetLabelIcon(button->labelwidget, iconclip);
+}
+
+void KW_SetButtonText(KW_Widget * widget, const char * text) {
+  KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
+  KW_SetLabelText(button->labelwidget, text);
+}
+
+
+
+void KW_SetButtonFont(KW_Widget * widget, TTF_Font * font) {
+  KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
+  KW_SetLabelFont(button->labelwidget, font);
+}
