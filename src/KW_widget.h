@@ -138,7 +138,11 @@ typedef enum KW_WidgetHint {
   
   /** Makes KiWi avoid reporting input event to this widget but still passes to
    * its children widgets */
-  KW_WIDGETHINT_IGNOREINPUTEVENTS = 1 << 2
+  KW_WIDGETHINT_IGNOREINPUTEVENTS = 1 << 2,
+  
+  /** Hints widget implementations that, if possible, the user wants a
+   * frameless version of it */
+  KW_WIDGETHINT_FRAMELESS = 1 << 3
 } KW_WidgetHint;
 
 /**

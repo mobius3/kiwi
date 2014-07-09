@@ -60,6 +60,10 @@ void PaintButton(KW_Widget * widget) {
   KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
   SDL_Rect targetgeom;
   SDL_Renderer * renderer = KW_GetWidgetRenderer(widget);
+  /* don't draw frame if requested. */
+  if (KW_QueryWidgetHint(widget, KW_WIDGETHINT_FRAMELESS) == SDL_TRUE)
+    return;
+
   KW_GetWidgetAbsoluteGeometry(widget, &targetgeom);
   if (button->mouseover)
     SDL_RenderCopy(renderer, button->normal, NULL, &targetgeom);
