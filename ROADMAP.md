@@ -8,17 +8,17 @@ Label: **done (bold)**, *in progress (italics)*, to do (no style).
 - *System/general Events*
   - **Mouseover**
   - **Focus Gain/Lose**
-  - *Text editing*
+  - **Text editing**
   - **Press/release**
   - **Drag (Start/Move/Stop)**
 - *Widget events*
-  - Geometry changed
+  - **Geometry changed**
   - Parent changed
-  - Children added
+  - **Children added**
 - *Tile renderer*
   - **Fill an area with a tile**
   - **Render a frame based on a set of tiles**
-  - Stretch tiles instead of multiple tile rendering if user decides so
+  - *Stretch tiles instead of multiple tile rendering if user decides so*
 - *Text renderer*
   - **Render UTF-8 text**
   - Render UTF-8 wrapped text
@@ -31,7 +31,7 @@ Label: **done (bold)**, *in progress (italics)*, to do (no style).
 - *Labels*
   - **Vertical alignment**
   - **Horizontal alignment**
-  - Support for icons in labels
+  - **Support for icons in labels**
   - Label changed event
   - Multi-line (wrapped) labels
 - *Buttons*
@@ -42,7 +42,7 @@ Label: **done (bold)**, *in progress (italics)*, to do (no style).
   - **States for mouse over and clicked (active)**
   - Support for text replacing (insert key), replacing the cursor.
   - Text changed event
-  - *Proper support for UTF-8*
+  - **Proper support for UTF-8**
   - *Support for TEXTEDITING events (i.e, Android swype, IME, etc)*
   - Multi-line editboxes. 
 - Progress bars
@@ -67,9 +67,9 @@ Label: **done (bold)**, *in progress (italics)*, to do (no style).
 - *Scrollboxes*
   - **Clip children widgets to parent area** (done in the renderer)
   - **Clip events for clipped children**
-  - *Implement the scrollbar*
-  - *Implement scroll buttons*
-  - Have scrollbars change width
+  - **Implement the scrollbar**
+  - **Implement scroll buttons**
+  - **Have scrollbars change width**
 
 ### Layouts
 
