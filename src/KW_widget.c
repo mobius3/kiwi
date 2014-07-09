@@ -219,7 +219,7 @@ void KW_SetFocusedWidget(KW_Widget * widget)
 
 void KW_BringToFront(KW_Widget * widget)
 {
-  int i = 0, j = 0;
+  int i = 0, j = -1;
   KW_Widget * wp = NULL;
   if (widget == NULL || widget->parent == NULL || widget->parent->childrencount == 0) {
     return;
