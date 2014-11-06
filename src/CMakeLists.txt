@@ -38,7 +38,7 @@ set(LIB_SOURCES
 )
 
 include_directories(${SDL2_INCLUDE_DIR})
-add_library(KiWi SHARED ${LIB_SOURCES})
+add_library(KiWi SHARED ${LIB_SOURCES} ${API_HEADERS})
 target_link_libraries(KiWi ${SDL2_LIBRARIES} ${SDL2_TTF_LIBRARIES})
 
 # Configure install stuff
