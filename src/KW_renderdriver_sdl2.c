@@ -10,12 +10,12 @@ typedef struct KWSDL {
   SDL_Window * window;
 } KWSDL;
 
-static KW_Font KWSDL_loadFont(KW_RenderDriver * driver, const char * font, unsigned ptSize);
-static KW_Texture KWSDL_loadTexture(KW_RenderDriver * driver, const char * texturefile);
-static KW_Texture KWSDL_renderText(KW_RenderDriver * driver, const KW_Font font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
-static void KWSDL_releaseTexture(KW_RenderDriver * driver, KW_Texture texture);
-static void KWSDL_releaseFont(KW_RenderDriver * driver, KW_Font font);
-static void KWSDL_renderCopy(KW_RenderDriver * driver, KW_Texture texture, const KW_Rect * src, const KW_Rect * dst);
+static KW_Font * KWSDL_loadFont(KW_RenderDriver * driver, const char * font, unsigned ptSize);
+static KW_Texture * KWSDL_loadTexture(KW_RenderDriver * driver, const char * texturefile);
+static KW_Texture * KWSDL_renderText(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
+static void KWSDL_releaseTexture(KW_RenderDriver * driver, KW_Texture * texture);
+static void KWSDL_releaseFont(KW_RenderDriver * driver, KW_Font * font);
+static void KWSDL_renderCopy(KW_RenderDriver * driver, KW_Texture * texture, const KW_Rect * src, const KW_Rect * dst);
 
 struct KW_RenderDriver * KW_CreateSDL2RenderDriver(SDL_Renderer * renderer, SDL_Window * window){
   struct KWSDL * kwsdl = calloc(sizeof(*kwsdl), 1);
@@ -35,7 +35,7 @@ struct KW_RenderDriver * KW_CreateSDL2RenderDriver(SDL_Renderer * renderer, SDL_
   return rd;
 }
 
-static KW_Font KWSDL_loadFont(KW_RenderDriver * driver, const char * font, unsigned ptSize) {
+static KW_Font * KWSDL_loadFont(KW_RenderDriver * driver, const char * font, unsigned ptSize) {
   TTF_Font * f = TTF_OpenFont(font, ptSize);
   (void)driver;
   if (f == NULL) {
@@ -45,7 +45,7 @@ static KW_Font KWSDL_loadFont(KW_RenderDriver * driver, const char * font, unsig
   return f;
 }
 
-static KW_Texture KWSDL_loadTexture(KW_RenderDriver * driver, const char * texturefile) {
+static KW_Texture * KWSDL_loadTexture(KW_RenderDriver * driver, const char * texturefile) {
   KWSDL * kwsdl = (KWSDL *) driver->priv;
   SDL_Texture * t = IMG_LoadTexture(kwsdl->renderer, texturefile);
   if (t == NULL) {
@@ -55,7 +55,7 @@ static KW_Texture KWSDL_loadTexture(KW_RenderDriver * driver, const char * textu
   return t;
 }
 
-static KW_Texture KWSDL_renderText(KW_RenderDriver * driver, const KW_Font font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style) {
+static KW_Texture * KWSDL_renderText(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style) {
   KWSDL * kwsdl = (KWSDL *) driver->priv;
   int previousstyle;
   SDL_Color sdlcolor;
@@ -75,16 +75,16 @@ static KW_Texture KWSDL_renderText(KW_RenderDriver * driver, const KW_Font font,
   return ret;
 }
 
-static void KWSDL_releaseTexture(KW_RenderDriver * driver, KW_Texture texture) {
+static void KWSDL_releaseTexture(KW_RenderDriver * driver, KW_Texture * texture) {
   (void)driver;
   SDL_DestroyTexture(texture);
 }
-static void KWSDL_releaseFont(KW_RenderDriver * driver, KW_Font font) {
+static void KWSDL_releaseFont(KW_RenderDriver * driver, KW_Font * font) {
   (void)driver;
   TTF_CloseFont(font);
 }
 
-static void KWSDL_renderCopy(KW_RenderDriver * driver, KW_Texture texture, const KW_Rect * src, const KW_Rect * dst) {
+static void KWSDL_renderCopy(KW_RenderDriver * driver, KW_Texture * texture, const KW_Rect * src, const KW_Rect * dst) {
   KWSDL * kwsdl = (KWSDL *) driver->priv;
   SDL_Rect srcRect, dstRect;
   srcRect.x = src->x; srcRect.y = src->y; srcRect.w = src->w; srcRect.h = src->h;

@@ -1,8 +1,8 @@
 #ifndef RENDERDRIVER_H
 #define RENDERDRIVER_H
 
-typedef void * KW_Texture;
-typedef void * KW_Font;
+typedef void KW_Texture;
+typedef void KW_Font;
 
 typedef struct KW_Rect {
   unsigned int x;
@@ -29,12 +29,12 @@ typedef enum KW_RenderDriver_TextStyle {
 } KW_RenderDriver_TextStyle;
 
 struct KW_RenderDriver {
-  void (*renderCopy)(KW_RenderDriver * driver, KW_Texture src, const KW_Rect * clip, const KW_Rect * dstRect);
-  KW_Texture (*renderText)(KW_RenderDriver * driver, const KW_Font font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
-  KW_Font (*loadFont)(KW_RenderDriver * driver, const char * fontFile, unsigned ptSize);
-  KW_Texture (*loadTexture)(KW_RenderDriver * driver, const char * textureFile);
-  void (*releaseTexture)(KW_RenderDriver * driver, KW_Texture texture);
-  void (*releaseFont)(KW_RenderDriver * driver, KW_Font font);
+  void (*renderCopy)(KW_RenderDriver * driver, KW_Texture * src, const KW_Rect * clip, const KW_Rect * dstRect);
+  KW_Texture * (*renderText)(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
+  KW_Font * (*loadFont)(KW_RenderDriver * driver, const char * fontFile, unsigned ptSize);
+  KW_Texture * (*loadTexture)(KW_RenderDriver * driver, const char * textureFile);
+  void (*releaseTexture)(KW_RenderDriver * driver, KW_Texture *  texture);
+  void (*releaseFont)(KW_RenderDriver * driver, KW_Font * font);
   void * priv;
 };
 
