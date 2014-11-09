@@ -34,6 +34,7 @@ set(LIB_SOURCES
   KW_tilerenderer.c
   KW_widget.c
   KW_widget_eventhandlers.c
+  KW_renderdriver.c
   KW_renderdriver_sdl2.c
 )
 
