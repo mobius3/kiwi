@@ -30,10 +30,6 @@
 
 #include "KW_macros.h"
 #include "KW_widget.h"
-#include "KW_frame.h"
-#include "KW_label.h"
-#include "KW_editbox.h"
-
 
 /** 
  * \file KW_gui.h

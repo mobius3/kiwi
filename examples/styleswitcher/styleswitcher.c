@@ -1,6 +1,9 @@
 #include "SDL.h"
 #include "KW_gui.h"
 #include "KW_button.h"
+#include "KW_frame.h"
+#include "KW_editbox.h"
+#include "KW_label.h"
 #include "SDL_image.h"
 
 SDL_Surface * setalloy;

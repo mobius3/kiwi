@@ -2,6 +2,7 @@
 #include "KW_gui.h"
 #include "KW_button.h"
 #include "SDL_image.h"
+#include "KW_frame.h"
 
 int dragmode = 0;
 

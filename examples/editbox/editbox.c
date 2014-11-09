@@ -2,6 +2,10 @@
 #include "KW_gui.h"
 #include "KW_button.h"
 #include "SDL_image.h"
+#include "KW_frame.h"
+#include "KW_editbox.h"
+#include "KW_label.h"
+
 
 int main(int argc, char ** argv) {
   SDL_Window * window;

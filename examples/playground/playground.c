@@ -2,6 +2,8 @@
 #include "SDL_ttf.h"
 #include "SDL_image.h"
 #include "KW_gui.h"
+#include "KW_frame.h"
+#include "KW_label.h"
 
 int main(int argc, char ** argv) {
   /* init SDL and SDL_ttf */
