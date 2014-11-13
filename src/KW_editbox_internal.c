@@ -14,7 +14,6 @@ void PaintEditbox(KW_Widget * widget) {
   if (editbox->mouseover || editbox->active) basec = 3;
   if (editbox->clicked) basec = 0;
 
-
   KW_GetWidgetAbsoluteGeometry(widget, &targetgeom);
 
   renderer = KW_GetWidgetRenderer(widget);

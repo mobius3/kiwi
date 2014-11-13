@@ -1,6 +1,12 @@
 #ifndef RENDERDRIVER_H
 #define RENDERDRIVER_H
 
+/**
+ * \file KW_renderdriver.h
+ *
+ * Declares the RenderDriver API to be implemented to create new Render Drivers
+ **/
+
 #include "KW_macros.h"
 
 typedef void KW_Texture;
@@ -17,6 +23,9 @@ typedef struct KW_Rect {
 #define KW_IsRectEmpty(r) \
   (((r.x) > 0) && ((r.y) > 0) && ((r.w) > 0) && ((r.h) > 0))
 
+/**
+ * \brief Holds a color in the RGBA format
+ **/
 typedef struct KW_Color {
   unsigned char r;
   unsigned char g;
@@ -26,6 +35,9 @@ typedef struct KW_Color {
 
 typedef struct KW_RenderDriver KW_RenderDriver;
 
+/**
+ * \brief Defines how text should be rendered
+ **/
 typedef enum KW_RenderDriver_TextStyle {
   KW_TTF_STYLE_NORMAL        = 0x00,
   KW_TTF_STYLE_BOLD          = 0x01,
@@ -35,11 +47,66 @@ typedef enum KW_RenderDriver_TextStyle {
 } KW_RenderDriver_TextStyle;
 
 
+/**
+ * \brief   Declares the prototype for a RenderCopy function
+ * \details A RenderCopy function deals with Textures that are possibly in GPU's RAM.
+ *          It should be able to take a src texture and render it, applying clipping with clipRect
+ *          and scaling with dstRect.
+ * \param   driver the RenderDriver that will render this texture.
+ * \param   src the source texture.
+ * \param   clip the clipping rectangle for the source texture (in pixels)
+ * \param   dstRect the destination rect. If different that clipping rectangle, it should scale to fit.
+ */
 typedef void (*KW_RenderCopyFunction)(KW_RenderDriver * driver, KW_Texture * src, const KW_Rect * clip, const KW_Rect * dstRect);
+
+/**
+ * \brief   Declares the prototype for a RenderText function.
+ * \details A RenderText function should be able to receive a font, a textline and a color and
+ *          it should be able to produce a surface (pixeldata in CPU's memory) to be later transformed
+ *          into a texture.
+ * \param   driver the RenderDriver that will render this texture.
+ * \param   font the font to use when rendering text.
+ * \param   color the color that should be used.
+ * \param   style the KW_RenderDriver_TextStyle style to apply.
+ * \return  a KW_Surface to be later used as a texture.
+ */
 typedef KW_Surface * (*KW_RenderTextFunction)(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
+
+/**
+ * \brief   Declares the prototype for a LoadFont function.
+ * \details LoadFont should be able to load a fontFile with the specified point size.
+ * \param   driver the RenderDriver that will render this texture.
+ * \param   fontFile the file containing the font (usually .ttf)
+ * \return   a KW_Font suitable to use with KW_RenderText
+ */
 typedef KW_Font * (*KW_LoadFontFunction)(KW_RenderDriver * driver, const char * fontFile, unsigned ptSize);
-typedef KW_Texture * (*KW_CreateTextureFunction)(KW_RenderDriver * driver, KW_Surface * Surface);
+
+/**
+ * \brief   Declares the prototype for a CreateTexture function.
+ * \details CreateTexture should be able to create a KW_Texture from a KW_Surface.
+ * \param   driver the RenderDriver that will render this texture.
+ * \param   src the source KW_Surface.
+ * \return  a KW_Texture in suitable to use with KW_RenderCopy
+ */
+typedef KW_Texture * (*KW_CreateTextureFunction)(KW_RenderDriver * driver, KW_Surface * src);
+
+
+/**
+ * \brief   Declares the prototype for a LoadTexture function.
+ * \details LoadTexture should be able to create a KW_Texture from a file.
+ * \param   driver the RenderDriver that will load this texture.
+ * \param   file the file name with the pixeldata.
+ * \return  a KW_Texture suitable to use with KW_RenderCopy
+ */
 typedef KW_Texture * (*KW_LoadTextureFunction)(KW_RenderDriver * driver, const char * file);
+
+/**
+ * \brief   Declares the prototype for a LoadSurface function.
+ * \details LoadSurface should be able to create a KW_Surface from a file.
+ * \param   driver the RenderDriver that will load this surface.
+ * \param   file the file name with the pixeldata.
+ * \return  a KW_Surface.
+ */
 typedef KW_Surface * (*KW_LoadSurfaceFunction)(KW_RenderDriver * driver, const char * file);
 typedef void (*KW_ReleaseTextureFunction)(KW_RenderDriver * driver, KW_Texture * texture);
 typedef void (*KW_ReleaseSurfaceFunction)(KW_RenderDriver * driver, KW_Surface * surface);
