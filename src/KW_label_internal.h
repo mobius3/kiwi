@@ -8,24 +8,24 @@
 typedef
 struct KW_Label {
   char * text;
-  SDL_Texture * textrender;
-  SDL_Color color;
+  KW_Texture * textrender;
+  KW_Color color;
   int style;
-  TTF_Font * font;
+  KW_Font * font;
   KW_LabelHorizontalAlignment halign;
   KW_LabelVerticalAlignment valign;
   int hoffset;
   int voffset;
   unsigned int cursor;
-  SDL_bool showcursor;
-  SDL_bool dirty;
+  KW_bool showcursor;
+  KW_bool dirty;
   
   
-  int textwidth;
-  int textheight;
+  unsigned textwidth;
+  unsigned textheight;
   int cursorx;
   int cursory;
-  SDL_Rect iconclip;
+  KW_Rect iconclip;
   
   int x;
 } KW_Label;
@@ -33,6 +33,6 @@ struct KW_Label {
 void PaintLabel(KW_Widget * widget);
 void RenderLabelText(KW_Widget * widget);
 void DestroyLabel(KW_Widget * widget);
-void LabelFontChanged(KW_GUI * gui, void * data, TTF_Font * font);
+void LabelFontChanged(KW_GUI * gui, void * data, KW_Font * font);
 
 #endif

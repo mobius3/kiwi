@@ -36,14 +36,14 @@
 
 extern DECLSPEC KW_Widget * KW_CreateEditbox(KW_GUI * gui, KW_Widget * parent,
                                              const char * text,
-                                             const SDL_Rect * geometry);
+                                             const KW_Rect * geometry);
 
 extern DECLSPEC void KW_SetEditboxText(KW_Widget * widget, const char * text);
 extern DECLSPEC const char * KW_GetEditboxText(KW_Widget * widget);
 extern DECLSPEC void KW_SetEditboxCursorPosition(KW_Widget * widget,
                                                  unsigned int pos);
 extern DECLSPEC unsigned int KW_GetEditboxCursorPosition(KW_Widget * widget);
-extern DECLSPEC void KW_SetEditboxFont(KW_Widget * widget, TTF_Font * font);
-extern DECLSPEC TTF_Font * KW_GetEditboxFont(KW_Widget * widget);
+extern DECLSPEC void KW_SetEditboxFont(KW_Widget * widget, KW_Font * font);
+extern DECLSPEC KW_Font * KW_GetEditboxFont(KW_Widget * widget);
 
 #endif

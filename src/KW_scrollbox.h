@@ -15,7 +15,7 @@
  * \param   geometry The geometry of this scrollbox. Contents will be clipped to
  *          its internal area (inside borders).
  */
-extern DECLSPEC KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const SDL_Rect * geometry);
+extern DECLSPEC KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const KW_Rect * geometry);
 
 /**
  * \brief   Scrolls vertically by a given amount in pixels.

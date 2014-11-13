@@ -25,11 +25,9 @@
 #ifndef KW_GUI_H
 #define KW_GUI_H
 
-#include "SDL.h"
-#include "SDL_ttf.h"
-
 #include "KW_macros.h"
 #include "KW_widget.h"
+#include "KW_renderdriver.h"
 
 /** 
  * \file KW_gui.h
@@ -51,7 +49,6 @@
  * 
  *  You can also create custom widgets.
  * 
- *  KiWi is based on SDL2 and SDL2_ttf, requiring these to be present.
  */
 
 #ifdef __cplusplus
@@ -63,7 +60,7 @@ extern "C" {
  * \details You need a KW_GUI instance to create widgets.
  */
 
-typedef void (*KW_OnGUIFontChanged)(KW_GUI * gui, void * data, TTF_Font * font);
+typedef void (*KW_OnGUIFontChanged)(KW_GUI * gui, void * data, KW_Font * font);
 
 /**
  * \brief   Initializes a new KW_GUI instance.
@@ -74,11 +71,11 @@ typedef void (*KW_OnGUIFontChanged)(KW_GUI * gui, void * data, TTF_Font * font);
  *          The tileset will be available to widgets both in the surface and
  *          texture forms. This is useful if your widget doesn'nt change a lot
  *          and you want to compose a texture to use always.
- * \param   renderer A pointer to a SDL_Renderer.
+ * \param   renderer A pointer to a KW_RenderDriver.
  * \param   tileset The tile surface to use as a tileset.
  * \returns A initialized KW_GUI instance.
  */
-extern DECLSPEC KW_GUI * KW_Init(SDL_Renderer * renderer, SDL_Surface * tileset);
+extern DECLSPEC KW_GUI * KW_Init(KW_RenderDriver * renderer, KW_Surface * tileset);
 
 /**
  * \brief   Quits this KW_GUI instance and free its resources.
@@ -90,22 +87,22 @@ extern DECLSPEC KW_GUI * KW_Init(SDL_Renderer * renderer, SDL_Surface * tileset)
 extern DECLSPEC void KW_Quit(KW_GUI * gui);
 
 /**
- * \brief   Sets a new SDL_Renderer for this KW_GUI instance.
+ * \brief   Sets a new KW_RenderDriver for this KW_GUI instance.
  * \details If you want to render your GUI in another window, you can pass it's
  *          renderer to this function.
  * \param   gui The KW_GUI instance.
- * \param   render The SDL_Renderer instance.
+ * \param   render The KW_RenderDriver instance.
  */
-extern DECLSPEC void KW_SetRenderer(KW_GUI * gui, SDL_Renderer * renderer);
+extern DECLSPEC void KW_SetRenderer(KW_GUI * gui, KW_RenderDriver * renderer);
 
 /**
  * \brief   Returns the current associated renderer with a KW_GUI instance.
  * \details This is useful if you are implementing a custom widget and needs to
  *          render your textures.
  * \param   gui The KW_GUI instance.
- * \return  The associated SDL_Renderer instance.
+ * \return  The associated KW_RenderDriver instance.
  */
-extern DECLSPEC SDL_Renderer * KW_GetRenderer(KW_GUI * gui);
+extern DECLSPEC KW_RenderDriver * KW_GetRenderer(KW_GUI * gui);
 
 /**
  * \brief   Set a new tileset surface to be used in this KW_GUI instance.
@@ -114,23 +111,23 @@ extern DECLSPEC SDL_Renderer * KW_GetRenderer(KW_GUI * gui);
  * \param   gui The KW_GUI instance to set a new tileset surface.
  * \param   surface The surface to set. You still have to free the old one.
  */
-extern DECLSPEC void KW_SetTilesetSurface(KW_GUI * gui, SDL_Surface * tileset);
+extern DECLSPEC void KW_SetTilesetSurface(KW_GUI * gui, KW_Surface * tileset);
 
 /**
  * \brief   Gets the tileset texture associated with a KW_GUI instance.
- * \returns A pointer to a const SDL_Texture. You shouldn't modify this
+ * \returns A pointer to a const KW_Texture. You shouldn't modify this
  *          texture as it is managed by KiWi.
  * \param   gui The KW_GUI instance to get the tileset from.
  */
-extern DECLSPEC SDL_Texture * KW_GetTilesetTexture(KW_GUI * gui);
+extern DECLSPEC KW_Texture * KW_GetTilesetTexture(KW_GUI * gui);
 
 /**
  * \brief   Gets the tileset surface associated with a KW_GUI instance.
- * \returns A pointer to a SDL_Surface. You might want to use this to free
+ * \returns A pointer to a KW_RenderDriver. You might want to use this to free
  *          the surface.
  * \param   gui The KW_GUI instance to get the tileset from.
  */
-extern DECLSPEC SDL_Surface * KW_GetTilesetSurface(KW_GUI * gui);
+extern DECLSPEC KW_Surface * KW_GetTilesetSurface(KW_GUI * gui);
 
 /**
  * \brief   Sets a uniform font to be used in label-rendering widgets.
@@ -139,7 +136,7 @@ extern DECLSPEC SDL_Surface * KW_GetTilesetSurface(KW_GUI * gui);
  * \param   gui The KW_GUI instance to set the font.
  * \param   font The font to associate with a KW_GUI instance.
  */
-extern DECLSPEC void KW_SetFont(KW_GUI * gui, TTF_Font * font);
+extern DECLSPEC void KW_SetFont(KW_GUI * gui, KW_Font * font);
 
 /**
  * \brief   Add a function to be called when the current GUI font changes.
@@ -167,7 +164,7 @@ extern DECLSPEC void KW_RemoveGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontCh
  * \param   gui The KW_GUI instance to get the font from.
  * \return  The current font associated with the KW_GUI instance.
  */
-extern DECLSPEC TTF_Font * KW_GetFont(KW_GUI * gui);
+extern DECLSPEC KW_Font * KW_GetFont(KW_GUI * gui);
 
 /**
  * \brief   Paint all the widgets associated with this GUI.

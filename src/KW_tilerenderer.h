@@ -32,8 +32,9 @@
  * The macro TILESIZE defines the size of the tile (w/h).
  */
 
-#include "SDL.h"
+#include "KW_renderdriver.h"
 #include "KW_macros.h"
+
 #define TILESIZE 8
 
 #ifdef __cplusplus
@@ -42,31 +43,31 @@ extern "C" {
 
 /**
  * \brief   Render a single tile from a tileset using the specified renderer.
- * \param   renderer The SDL_Renderer that will render this tile.
+ * \param   renderer The KW_RenderDriver that will render this tile.
  * \param   tileset The tileset texture to get this tile from.
  * \param   column The column in the tile set (starts at 0).
  * \param   line The line in the tile set (starts at 0).
  * \param   x The x coordinate in the screen to render the tile.
  * \param   y The y coordinate in the screen to render the tile.
  */
-extern DECLSPEC void KW_RenderTile(SDL_Renderer * renderer, SDL_Texture * tileset, int column, int line, int x, int y);
+extern DECLSPEC void KW_RenderTile(KW_RenderDriver * renderer, KW_Texture * tileset, int column, int line, int x, int y);
 
 /**
  * \brief   Blit a single tile from a tileset to a surface.
- * \param   dst The destination SDL_Surface.
+ * \param   dst The destination KW_Surface.
  * \param   tileset The tileset surface to get this tile from.
  * \param   column The column in the tile set (starts at 0).
  * \param   line The line in the tile set (starts at 0).
  * \param   x The x coordinate in the destination surface to blit the tile.
  * \param   y The y coordinate in the destination surface to blit the tile.
  */
-extern DECLSPEC void KW_BlitTile(SDL_Surface * dst, SDL_Surface * tileset, int column, int line, int x, int y);
+extern DECLSPEC void KW_BlitTile(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * tileset, int column, int line, int x, int y);
 
 /**
  * \brief   Render a tile multiple times filling the whole w/h specified.
  * \details The tile rendering will start at x/y and will fill until x+w/y+h,
  *          clipping when necessary.
- * \param   renderer The SDL_Renderer that will render this tile.
+ * \param   renderer The KW_RenderDriver that will render this tile.
  * \param   tileset The tileset texture to get this tile from.
  * \param   column The column in the tile set (starts at 0).
  * \param   line The line in the tile set (starts at 0).
@@ -75,7 +76,7 @@ extern DECLSPEC void KW_BlitTile(SDL_Surface * dst, SDL_Surface * tileset, int c
  * \param   w The width to fill.
  * \param   h The height to fill.
  */
-extern DECLSPEC void KW_RenderTileFill(SDL_Renderer * renderer, SDL_Texture * tileset, int column, int line, int x, int y, int w, int h);
+extern DECLSPEC void KW_RenderTileFill(KW_RenderDriver * renderer, KW_Texture * tileset, int column, int line, int x, int y, int w, int h);
 
 /**
  * \brief   Blit (copy) a tile multiple times filling the whole w/h specified.
@@ -90,7 +91,7 @@ extern DECLSPEC void KW_RenderTileFill(SDL_Renderer * renderer, SDL_Texture * ti
  * \param   w The width to fill.
  * \param   h The height to fill.
  */
-extern DECLSPEC void KW_BlitTileFill(SDL_Surface * dst,  SDL_Surface * tileset, int column, int line, int x, int y, int w, int h);
+extern DECLSPEC void KW_BlitTileFill(KW_RenderDriver * renderer, KW_Surface * dst,  KW_Surface * tileset, int column, int line, int x, int y, int w, int h);
 
 /**
  * \brief   Render a frame using the set of tiles specified at startcolumn and startline.
@@ -124,7 +125,7 @@ extern DECLSPEC void KW_BlitTileFill(SDL_Surface * dst,  SDL_Surface * tileset, 
  *          `---------`---------`---------´
  * 
  * 
- * \param   renderer The SDL_Renderer that will render this frame.
+ * \param   renderer The KW_RenderDriver that will render this frame.
  * \param   tileset The tileset texture to get this frame set from.
  * \param   startcolumn The column in the tile set (starts at 0).
  * \param   startline The line in the tile set (starts at 0).
@@ -133,12 +134,12 @@ extern DECLSPEC void KW_BlitTileFill(SDL_Surface * dst,  SDL_Surface * tileset, 
  * \param   w The width to fill.
  * \param   h The height to fill.
  */
-extern DECLSPEC void KW_RenderTileFrame(SDL_Renderer * renderer, SDL_Texture * tileset, int startcolumn, int startline, int x, int y, int w, int h);
+extern DECLSPEC void KW_RenderTileFrame(KW_RenderDriver * renderer, KW_Texture * tileset, int startcolumn, int startline, int x, int y, int w, int h);
 
 /**
  * \brief   Blit a frame from tileset into a surface.
  * \details The arguments of this function are equivalent to KW_RenderTileFrame,
- *          except that instead of SDL_Texture, it uses a SDL_Surface for the
+ *          except that instead of KW_Texture, it uses a KW_Surface for the
  *          tileset. Useful for caching and pixel manipulations before
  *          having a texture.
  * \param   dst The destination surface. Must be created preferably using the
@@ -151,11 +152,11 @@ extern DECLSPEC void KW_RenderTileFrame(SDL_Renderer * renderer, SDL_Texture * t
  * \param   w The width to fill.
  * \param   h The height to fill.
  */
-extern DECLSPEC void KW_BlitTileFrame(SDL_Surface * dst, SDL_Surface * tileset, int startcolumn, int startline, int x, int y, int w, int h);
+extern DECLSPEC void KW_BlitTileFrame(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * tileset, int startcolumn, int startline, int x, int y, int w, int h);
 
 /**
- * \brief   Creates a SDL_Texture from a frame to be used as cache.
- * \details Use this function to create a single SDL_Texture made of
+ * \brief   Creates a KW_Texture from a frame to be used as cache.
+ * \details Use this function to create a single KW_Texture made of
  *          tiles from the tileset (as in KW_BlitFrame or KW_RenderTileFrame) to
  *          be rendered later as a whole instead of rendering each tile
  *          separately (which is very slow for big frames).
@@ -163,14 +164,14 @@ extern DECLSPEC void KW_BlitTileFrame(SDL_Surface * dst, SDL_Surface * tileset, 
  *          Keep in mind that calling this function every frame is *much* slower
  *          than render each tile of a frame directly. This function is for
  *          widgets that are very big and/or don't change very often.
- * \param   renderer The SDL_Renderer that will render this frame.
+ * \param   renderer The KW_RenderDriver that will render this frame.
  * \param   tileset The tileset surface to get this frame set from.
  * \param   startcolumn The column in the tile set (starts at 0).
  * \param   startline The line in the tile set (starts at 0).
  * \param   w The width to fill.
  * \param   h The height to fill.
  */
-extern DECLSPEC SDL_Texture * KW_CreateTileFrameTexture(SDL_Renderer * renderer, SDL_Surface * tileset, int startcolumn, int startline, int w, int h);
+extern DECLSPEC KW_Texture * KW_CreateTileFrameTexture(KW_RenderDriver * renderer, KW_Texture * tileset, int startcolumn, int startline, int w, int h);
 
 #ifdef __cplusplus
 }

@@ -10,7 +10,6 @@ set(API_HEADERS
   KW_label.h
   KW_macros.h
   KW_tilerenderer.h
-  KW_textrenderer.h
   KW_widget.h
   KW_scrollbox.h
   KW_renderdriver_sdl2.h
@@ -25,7 +24,6 @@ set(LIB_SOURCES
   KW_editbox.c
   KW_eventwatcher.c
   KW_button.c
-  KW_textrenderer.c
   KW_label.c
   KW_label_internal.c
   KW_gui.c

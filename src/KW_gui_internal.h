@@ -2,7 +2,7 @@
 #define KW_KW_INTERNAL_H
 
 #include "KW_widget.h"
-#include "SDL_ttf.h"
+#include "KW_renderdriver.h"
 
 typedef void (*GUIHandler)(void);
 
@@ -12,11 +12,11 @@ typedef enum KW_GUIEventHandlerType {
 } KW_GUIEventHandlerType;
 
 struct KW_GUI {
-  SDL_Texture * tilesettexture;
-  SDL_Surface * tilesetsurface;
-  SDL_Renderer * renderer;
+  KW_Texture * tilesettexture;
+  KW_Surface * tilesetsurface;
+  KW_RenderDriver * renderer;
   KW_Widget * rootwidget; /* the parent to all parent-less widgets :) */
-  TTF_Font * font;
+  KW_Font * font;
   
   KW_Widget * currentmouseover; /* the current widget that has mouse over */
   KW_Widget * currentfocus; /* which widget was the last focused/clicked */

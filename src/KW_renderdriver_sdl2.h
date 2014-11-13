@@ -1,9 +1,12 @@
 #ifndef KW_RENDERDRIVER_SDL2
 #define KW_RENDERDRIVER_SDL2
 
-#include "SDL.h"
+struct SDL_Renderer;
+struct SDL_Window;
 
-struct KW_RenderDriver * KW_CreateSDL2RenderDriver(SDL_Renderer * renderer, SDL_Window * window);
+#include "KW_macros.h"
+
+extern DECLSPEC struct KW_RenderDriver * KW_CreateSDL2RenderDriver(struct SDL_Renderer * renderer, struct SDL_Window * window);
 
 #endif
 

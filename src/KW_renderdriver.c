@@ -12,6 +12,10 @@ void KW_GetSurfaceExtents(KW_RenderDriver * driver, const KW_Surface * surface, 
     driver->getSurfaceExtents(driver, surface, width, height);
 }
 
+void KW_GetTextureExtents(KW_RenderDriver * driver, KW_Texture * texture, unsigned * width, unsigned * height) {
+    driver->getTextureExtents(driver, texture, width, height);
+}
+
 void KW_RenderCopy(KW_RenderDriver * driver, KW_Texture * src, const KW_Rect * clip, const KW_Rect * dstRect) {
     driver->renderCopy(driver, src, clip, dstRect);
 }
@@ -46,4 +50,12 @@ void KW_ReleaseSurface(KW_RenderDriver * driver, KW_Surface * surface) {
 
 void KW_ReleaseFont(KW_RenderDriver * driver, KW_Font * font) {
     driver->releaseFont(driver, font);
+}
+
+void KW_SetClipRect(KW_RenderDriver * driver, const KW_Rect * clip, int force) {
+  driver->setClipRect(driver, clip, force);
+}
+
+void KW_GetClipRect(KW_RenderDriver * driver, KW_Rect * clip) {
+  driver->getClipRect(driver, clip);
 }
