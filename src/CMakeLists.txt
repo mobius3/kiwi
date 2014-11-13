@@ -1,6 +1,7 @@
 set(SDL2_BUILDING_LIBRARY TRUE)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_ttf REQUIRED)
+find_package(SDL2_image REQUIRED)
 
 set(API_HEADERS
   KW_gui.h
@@ -38,7 +39,7 @@ set(LIB_SOURCES
 
 include_directories(${SDL2_INCLUDE_DIR})
 add_library(KiWi SHARED ${LIB_SOURCES} ${API_HEADERS})
-target_link_libraries(KiWi ${SDL2_LIBRARIES} ${SDL2_TTF_LIBRARIES})
+target_link_libraries(KiWi ${SDL2_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
 
 # Configure install stuff
 install(TARGETS KiWi EXPORT KiWiTargets
