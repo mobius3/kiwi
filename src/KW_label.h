@@ -89,6 +89,12 @@ extern DECLSPEC KW_Widget * KW_CreateLabel(KW_GUI * gui, KW_Widget * parent, con
 extern DECLSPEC void KW_SetLabelText(KW_Widget * widget, const char * text);
 
 /**
+ * \brief   Get the text being rendered in this label.
+ * \param   widget The label widget.
+ */
+extern DECLSPEC const char* KW_GetLabelText(KW_Widget * widget);
+
+/**
  * \brief   Set the text style for this label.
  * \param   widget The label widget.
  * \param   style The style of the text
