@@ -9,6 +9,10 @@
 
 #include "KW_macros.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef void KW_Texture;
 typedef void KW_Font;
 typedef void KW_Surface;
@@ -156,5 +160,9 @@ extern DECLSPEC void KW_ReleaseSurface(KW_RenderDriver * driver, KW_Surface * su
 extern DECLSPEC void KW_ReleaseFont(KW_RenderDriver * driver, KW_Font * font);
 extern DECLSPEC void KW_GetClipRect(KW_RenderDriver * driver, KW_Rect * clip);
 extern DECLSPEC void KW_SetClipRect(KW_RenderDriver * driver, const KW_Rect * clip, int force);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
