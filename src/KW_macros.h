@@ -29,7 +29,7 @@
 
 /* Some compilers use a special export keyword */
 #ifndef DECLSPEC
-# if defined(__WIN32__)
+# if defined(__WIN32__) || defined (_MSC_VER)
 #  ifdef __BORLANDC__
 #   ifdef KiWi_EXPORTS
 #    define DECLSPEC
@@ -52,7 +52,7 @@
 
 /* By default SDL uses the C calling convention */
 #ifndef KIWICALL
-#if defined(__WIN32__) && !defined(__GNUC__)
+#if (defined(__WIN32__) || defined (_MSC_VER)) && !defined(__GNUC__)
 #define KIWICALL __cdecl
 #else
 #define KIWICALL

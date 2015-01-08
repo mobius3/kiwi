@@ -8,7 +8,7 @@ set(TILESETS "tileset.png;tileset-alloy.png;tileset-futterpedia.png;tileset-flat
 set(FONTS "Fontin-Regular.ttf;DejaVuSans.ttf;SourceSansPro-Semibold.ttf")
 
 add_executable(styleswitcher styleswitcher.c ${TILESETS}  ${FONTS})
-target_link_libraries(styleswitcher KiWi ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+target_link_libraries(styleswitcher KiWi ${SDL2_LIBRARIES} ${SDL2MAIN_LIBRARY} ${SDL2_IMAGE_LIBRARIES})
 foreach(TILESET ${TILESETS})
   add_custom_command(OUTPUT ${TILESET}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../tileset/${TILESET} ${CMAKE_CURRENT_BINARY_DIR}/${TILESET}

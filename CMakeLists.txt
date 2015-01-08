@@ -8,7 +8,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake-modules)
 set(KIWI_INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/src)
 
 # Add global definitions
-add_definitions("-Wno-unused-functions -Wall")
+add_definitions("-Wall")
 
 # Add Debug definitions
 set (CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")

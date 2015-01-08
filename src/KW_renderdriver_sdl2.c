@@ -4,6 +4,7 @@
 #include "SDL_ttf.h"
 #include "SDL_image.h"
 
+#include <stdio.h>
 
 typedef struct KWSDL {
   SDL_Renderer * renderer;

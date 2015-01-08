@@ -6,7 +6,7 @@ find_package(SDL2_image REQUIRED)
 
 # build a playground exe
 add_executable(playground playground.c tileset.png Fontin-Regular.ttf)
-target_link_libraries(playground KiWi ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+target_link_libraries(playground KiWi ${SDL2_LIBRARIES} ${SDL2MAIN_LIBRARY} ${SDL2_IMAGE_LIBRARIES})
 
 add_custom_command(OUTPUT tileset.png
   COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../tileset/tileset.png ${CMAKE_CURRENT_BINARY_DIR}/tileset.png

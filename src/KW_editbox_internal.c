@@ -179,7 +179,6 @@ void TextDelete(KW_Editbox * editbox) {
   int i = 0;
   int len = SDL_strlen(editbox->text);
   int seq = u8_seqlen(editbox->text[editbox->cursor]);
-  printf("seqlen is %d\n", seq);
   for (i = editbox->cursor; i < len; i++) {
     editbox->text[i] = editbox->text[i + seq];
   }

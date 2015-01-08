@@ -16,7 +16,7 @@
 #include <string.h>
 #include <stdarg.h>
 #include <stdint.h>
-#ifdef WIN32
+#if defined(__WIN32) || defined(WIN32) || defined(_MSC_VER)
 #include <malloc.h>
 #else
 #include <alloca.h>

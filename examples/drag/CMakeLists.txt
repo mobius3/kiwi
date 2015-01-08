@@ -22,4 +22,4 @@ foreach(FONT ${FONTS})
 endforeach(FONT ${FONTS})
 
 add_executable(drag drag.c ${FONTS} ${TILESETS})
-target_link_libraries(drag KiWi ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+target_link_libraries(drag KiWi ${SDL2_LIBRARIES} ${SDL2MAIN_LIBRARY} ${SDL2_IMAGE_LIBRARIES})
