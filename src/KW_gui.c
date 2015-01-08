@@ -3,10 +3,9 @@
 #include "KW_gui.h"
 #include "KW_gui_internal.h"
 #include "KW_eventwatcher.h"
+#include "KW_renderdriver.h"
 
-#include "SDL_ttf.h"
-
-KW_GUI * KW_Init(SDL_Renderer * renderer, SDL_Surface * tileset) {
+KW_GUI * KW_Init(KW_RenderDriver * renderer, KW_Surface * tileset) {
   struct KW_GUI * gui = calloc(sizeof(*gui), 1);
   gui->renderer = renderer;
   KW_SetTilesetSurface(gui, tileset);
@@ -21,32 +20,31 @@ KW_GUI * KW_Init(SDL_Renderer * renderer, SDL_Surface * tileset) {
 
 
 
-void KW_SetRender(KW_GUI * gui, SDL_Renderer * renderer) {
+void KW_SetRender(KW_GUI * gui, KW_RenderDriver * renderer) {
   gui->renderer = renderer;
 }
 
-void KW_SetTilesetSurface(KW_GUI * gui, SDL_Surface * tileset) {
-  gui->tilesettexture = SDL_CreateTextureFromSurface(gui->renderer, tileset);
-  SDL_SetSurfaceBlendMode(tileset, SDL_BLENDMODE_NONE);
+void KW_SetTilesetSurface(KW_GUI * gui, KW_Surface * tileset) {
+  gui->tilesettexture = KW_CreateTexture(gui->renderer, tileset);
   gui->tilesetsurface = tileset;
 }
 
 
-SDL_Renderer * KW_GetRenderer(KW_GUI * gui) {
+KW_RenderDriver * KW_GetRenderer(KW_GUI * gui) {
   return gui->renderer;
 }
 
 
-void KW_SetRenderer(KW_GUI * gui, SDL_Renderer * renderer) {
+void KW_SetRenderer(KW_GUI * gui, KW_RenderDriver * renderer) {
   gui->renderer = renderer;
 }
 
 
-SDL_Texture * KW_GetTilesetTexture(KW_GUI * gui) {
+KW_Texture * KW_GetTilesetTexture(KW_GUI * gui) {
   return gui->tilesettexture;
 }
 
-SDL_Surface * KW_GetTilesetSurface(KW_GUI * gui) {
+KW_Texture * KW_GetTilesetSurface(KW_GUI * gui) {
   return gui->tilesetsurface;
 }
 
@@ -56,7 +54,7 @@ void KW_Quit(KW_GUI * gui) {
   free(gui);
 }
 
-void KW_SetFont(KW_GUI * gui, TTF_Font * font) {
+void KW_SetFont(KW_GUI * gui, KW_Font * font) {
   int i = 0;
   KW_OnGUIFontChanged handler;
   if (font == NULL) return;
@@ -77,7 +75,7 @@ void KW_RemoveGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, v
   RemoveGUItHandler(gui, KW_GUI_ONFONTCHANGED, (GUIHandler) handler, priv);
 }
 
-TTF_Font * KW_GetFont(KW_GUI * gui) {
+KW_Font * KW_GetFont(KW_GUI * gui) {
   return gui->font;
 }
 

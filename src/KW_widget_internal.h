@@ -32,17 +32,17 @@ struct KW_Widget {
   KW_WidgetType type;
   unsigned int childrencount;
   struct KW_GUI *     gui;
-  SDL_Rect            absolute;
-  SDL_Rect            geometry;
-  SDL_Rect            composed;
-  Uint32              hints;
+  KW_Rect             absolute;
+  KW_Rect             geometry;
+  KW_Rect             composed;
+  unsigned int        hints;
   
   struct KW_Widget ** children;
   struct KW_Widget *  parent;
 
   
-  SDL_Texture *       tilesettexture;
-  SDL_Surface *       tilesetsurface;
+  KW_Texture *       tilesettexture;
+  KW_Texture *       tilesetsurface;
   
   void                (*paint)(KW_Widget *);
   void                (*destroy)(KW_Widget *);
@@ -53,8 +53,8 @@ struct KW_Widget {
   } eventhandlers[KW_EVENTHANDLER_TOTAL];
   
   
-  SDL_Rect            oldcliprect;
-  SDL_bool            clipchildren;
+  KW_Rect            oldcliprect;
+  KW_bool            clipchildren;
   
   void *              userdata;
   void *              privdata;

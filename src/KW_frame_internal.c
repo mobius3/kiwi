@@ -18,8 +18,8 @@ void DestroyFrame(KW_Widget * widget) {
 
 void RenderFrame(KW_Widget * widget) {
   KW_Frame * frame = KW_GetWidgetData(widget, KW_WIDGETTYPE_FRAME);
-  SDL_Rect targetgeom;
-  SDL_Surface * tileset = KW_GetWidgetTilesetSurface(widget);
+  KW_Rect targetgeom;
+  KW_Surface * tileset = KW_GetWidgetTilesetSurface(widget);
   KW_GetWidgetGeometry(widget, &targetgeom);
   if (frame->framerender != NULL) SDL_DestroyTexture(frame->framerender);
   frame->framerender = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 0, 0, targetgeom.w, targetgeom.h);
@@ -27,17 +27,17 @@ void RenderFrame(KW_Widget * widget) {
 
 void PaintFrame(KW_Widget * widget) {
   KW_Frame * frame = KW_GetWidgetData(widget, KW_WIDGETTYPE_FRAME);
-  SDL_Rect targetgeom;
-  SDL_Renderer * renderer;
+  KW_Rect targetgeom;
+  KW_RenderDriver * renderer;
   
   KW_GetWidgetAbsoluteGeometry(widget, &targetgeom);
   renderer = KW_GetWidgetRenderer(widget);
-  
-  SDL_RenderCopy(renderer, frame->framerender, NULL, &targetgeom);
+
+  KW_RenderCopy(renderer, frame->framerender, NULL, &targetgeom);
 }
 
 
-void FrameGeometryChanged(KW_Widget * widget, const SDL_Rect * newgeom, const SDL_Rect * oldgeom) {
+void FrameGeometryChanged(KW_Widget * widget, const KW_Rect * newgeom, const KW_Rect * oldgeom) {
   if (newgeom->w != oldgeom->w || newgeom->h != newgeom->h) {
     RenderFrame(widget);
   }

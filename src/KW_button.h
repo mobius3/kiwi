@@ -47,7 +47,7 @@ extern "C" {
  * \param   geometry The geometry of this button.
  * \return  The button instance.
  */
-extern DECLSPEC KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, const char * text, const SDL_Rect * geometry);
+extern DECLSPEC KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, const char * text, const KW_Rect * geometry);
 
 /**
  * \brief   Sets the text being displayed in a button.
@@ -61,7 +61,7 @@ extern DECLSPEC void KW_SetButtonText(KW_Widget * button, const char * text);
  * \param   iconclip The area in the tileset to clip the icon from. Set to NULL
  *          to remove the icon.
  */
-extern DECLSPEC void KW_SetButtonIcon(KW_Widget * widget, const SDL_Rect * iconclip);
+extern DECLSPEC void KW_SetButtonIcon(KW_Widget * widget, const KW_Rect * iconclip);
 
 /**
  * \brief   Changes the font of the button's text.

@@ -1,31 +1,29 @@
 #include "KW_label.h"
 #include "KW_label_internal.h"
-#include "KW_textrenderer.h"
 
-void LabelFontChanged(KW_GUI * gui, void * data, TTF_Font * font) {
+void LabelFontChanged(KW_GUI * gui, void * data, KW_Font * font) {
   RenderLabelText((KW_Widget*)data);
 }
 
 void RenderLabelText(KW_Widget * widget) {
   KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
   if (label->textrender != NULL) {
-    SDL_DestroyTexture(label->textrender);
+    KW_ReleaseTexture(KW_GetWidgetRenderer(widget), label->textrender);
   }
   /* use our own font */
-  label->textrender = KW_RenderTextLine(KW_GetLabelFont(widget),
-                                         KW_GetWidgetRenderer(widget),
+  label->textrender = KW_RenderText(KW_GetWidgetRenderer(widget), KW_GetLabelFont(widget),
                                          label->text, label->color, label->style);
 
   if (label->textrender != NULL)
-    SDL_QueryTexture(label->textrender, NULL, NULL, &(label->textwidth), &(label->textheight));
+    KW_GetTextureExtents(KW_GetWidgetRenderer(widget), label->textrender, &(label->textwidth), &(label->textheight));
   else
-    TTF_SizeUTF8(KW_GetLabelFont(widget), "", &(label->textwidth), &(label->textheight));
+    label->textwidth = label->textheight = 0;
 }
 
 void DestroyLabel(KW_Widget * widget) {
   KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
   SDL_free(label->text);
-  SDL_DestroyTexture(label->textrender);
+  KW_ReleaseTexture(KW_GetWidgetRenderer(widget), label->textrender);
   free(label);
 }
 
@@ -34,11 +32,11 @@ void DestroyLabel(KW_Widget * widget) {
 void PaintLabel(KW_Widget * widget) {
   KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
   
-  SDL_Rect orig;
-  SDL_Rect dst, icondst;
-  SDL_Rect src, iconsrc;
+  KW_Rect orig;
+  KW_Rect dst, icondst;
+  KW_Rect src, iconsrc;
   
-  SDL_Renderer * renderer = KW_GetWidgetRenderer(widget);
+  KW_RenderDriver * renderer = KW_GetWidgetRenderer(widget);
   
   /* query actual w and h */
   src.x = src.y = 0;
@@ -88,7 +86,7 @@ void PaintLabel(KW_Widget * widget) {
   dst.y += label->voffset;
   
   /* display icon */
-  if (!SDL_RectEmpty(&label->iconclip)) {
+  if (!KW_IsRectEmpty(label->iconclip)) {
     iconsrc = label->iconclip;
     icondst.x = dst.x - (iconsrc.w/2);
     dst.x += iconsrc.w/2;
@@ -108,7 +106,7 @@ void PaintLabel(KW_Widget * widget) {
     icondst.h = iconsrc.h;
     icondst.w = iconsrc.w;
     
-    SDL_RenderCopy(renderer, KW_GetWidgetTilesetTexture(widget), &iconsrc, &icondst);
+    KW_RenderCopy(renderer, KW_GetWidgetTilesetTexture(widget), &iconsrc, &icondst);
   }
     /* clip texture so that it doesnt overflow desired maximum geometry */
   if (dst.x < orig.x) src.x = orig.x - dst.x; /* clip left part (centering and right align overflows to the left) */
@@ -123,5 +121,5 @@ void PaintLabel(KW_Widget * widget) {
   dst.x += src.x;
   dst.y += src.y;
   
-  SDL_RenderCopy(renderer, label->textrender, &src, &dst);
+  KW_RenderCopy(renderer, label->textrender, &src, &dst);
 }

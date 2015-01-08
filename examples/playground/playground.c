@@ -1,36 +1,32 @@
-#include "SDL.h"
-#include "SDL_ttf.h"
-#include "SDL_image.h"
 #include "KW_gui.h"
 #include "KW_frame.h"
 #include "KW_label.h"
+#include "KW_renderdriver_sdl2.h"
 
 int main(int argc, char ** argv) {
   /* init SDL and SDL_ttf */
+  KW_RenderDriver * driver;
   SDL_Renderer * renderer;
   SDL_Window * window;
-  SDL_Surface * set;
+  KW_Surface * set;
   KW_GUI * gui;
-  TTF_Font * font;
+  KW_Font * font;
   KW_Widget * frame, * l;
-  SDL_Rect geometry, c;
+  KW_Rect geometry, c;
   
   SDL_Init(SDL_INIT_EVERYTHING);
   SDL_CreateWindowAndRenderer(320, 240, 0, &window, &renderer);
   SDL_SetRenderDrawColor(renderer, 100, 100, 100, 1);
-  SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-  
-  TTF_Init();
+  driver = KW_CreateSDL2RenderDriver(renderer, window);
   
   /* load tileset surface */
-  
-  set = IMG_Load("tileset.png");
+  set = KW_LoadSurface(driver, "tileset.png");
   
   /* load font */
-  font = TTF_OpenFont("Fontin-Regular.ttf", 12);
+  font = KW_LoadFont(driver, "Fontin-Regular.ttf", 12);
   
   /* init KiWi */
-  gui = KW_Init(renderer, set);
+  gui = KW_Init(driver, set);
   KW_SetFont(gui, font);
   /* create a frame and a label on top of it. */
   geometry.x = geometry.y = 0; geometry.w = 320; geometry.h = 240;
@@ -46,7 +42,7 @@ int main(int argc, char ** argv) {
     SDL_RenderPresent(renderer);
   }
   KW_Quit(gui);
-  SDL_FreeSurface(set);
+  KW_ReleaseSurface(driver, set);
   
   return 0;
 }
