@@ -338,8 +338,7 @@ void KW_DestroyWidget(KW_Widget * widget, int freechildren) {
   /* block updates to gui while we're destroying some widget */
   SDL_LockMutex(gui->evqueuelock);
   
-  /* FIXME: proper notification is needed here */
-  gui->currentmouseover = NULL;
+  KW_SetMouseOverWidget(gui, NULL);
   
   /* Reparent every child of widget to widget->parent */
   if (!freechildren) {

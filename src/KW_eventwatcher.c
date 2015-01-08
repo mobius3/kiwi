@@ -33,10 +33,35 @@ KW_Widget * CalculateMouseOver(KW_Widget * widget, int x, int y) {
   return found; 
 }
 
-void MouseMoved(KW_GUI * gui, int mousex, int mousey, int xrel, int yrel) {
-  int i, count;
+void KW_SetMouseOverWidget(KW_GUI * gui, KW_Widget * widget) {
+  int count, i;
   KW_OnMouseOver * overhandlers;
   KW_OnMouseLeave * leavehandlers;
+  KW_Widget * current = gui->currentmouseover;
+  if (widget == current) return;
+
+  /* gotta notify the previous mouseover */
+  if (current != NULL) {
+    count = current->eventhandlers[KW_ON_MOUSELEAVE].count;
+    leavehandlers = (KW_OnMouseLeave *) current->eventhandlers[KW_ON_MOUSELEAVE].handlers;
+    for (i = 0; i < count; i++) {
+      leavehandlers[i](current);
+    }
+  }
+
+  /* warn the current mouseover */
+  gui->currentmouseover = widget;
+  if (widget != NULL) {
+    count = widget->eventhandlers[KW_ON_MOUSEOVER].count;
+    overhandlers = (KW_OnMouseOver *) widget->eventhandlers[KW_ON_MOUSEOVER].handlers;
+    for (i = 0; i < count; i++) {
+      overhandlers[i](widget);
+    }
+  }
+}
+
+void MouseMoved(KW_GUI * gui, int mousex, int mousey, int xrel, int yrel) {
+  int i, count;
   KW_OnDragStart * dragstarthandlers;
   KW_OnDrag * draghandlers;
   KW_Widget * current = gui->currentmouseover;
@@ -71,28 +96,8 @@ void MouseMoved(KW_GUI * gui, int mousex, int mousey, int xrel, int yrel) {
   }
   
   widget = CalculateMouseOver(gui->rootwidget, mousex, mousey);
-  if (widget == current) return;
-
-  /* gotta notify the previous mouseover */
-  if (current != NULL) {
-    count = current->eventhandlers[KW_ON_MOUSELEAVE].count;
-    leavehandlers = (KW_OnMouseLeave *) current->eventhandlers[KW_ON_MOUSELEAVE].handlers;
-    for (i = 0; i < count; i++) {
-      leavehandlers[i](current);
-    }
-  }
-
-  /* warn the current mouseover */
-  gui->currentmouseover = widget;
-  if (widget != NULL) {
-    count = widget->eventhandlers[KW_ON_MOUSEOVER].count;
-    overhandlers = (KW_OnMouseOver *) widget->eventhandlers[KW_ON_MOUSEOVER].handlers;
-    for (i = 0; i < count; i++) {
-      overhandlers[i](widget);
-    }
-  }
+  KW_SetMouseOverWidget(gui, widget);
 }
-
 
 void MousePressed(KW_GUI * gui, int mousex, int mousey, int button) {
   int i, count;

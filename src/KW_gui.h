@@ -167,6 +167,14 @@ extern DECLSPEC void KW_RemoveGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontCh
 extern DECLSPEC KW_Font * KW_GetFont(KW_GUI * gui);
 
 /**
+ * \brief   Change currently hovered widget
+ * \details This function notifies previously hovered widget with KW_ON_MOUSELEAVE, changes hovered widget and calls its KW_ON_MOUSEOVER
+ * \param   gui The KW_GUI instance to get the font from.
+ * \return  The current font associated with the KW_GUI instance.
+ */
+extern DECLSPEC void KW_SetMouseOverWidget(KW_GUI * gui, KW_Widget * widget);
+
+/**
  * \brief   Paint all the widgets associated with this GUI.
  * \details This will walk the widget tree, painting all of its widgets, from bottom to top.
  * \param   gui The KW_GUI instance holding the widget tree.
