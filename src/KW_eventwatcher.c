@@ -41,7 +41,7 @@ void MouseMoved(KW_GUI * gui, int mousex, int mousey, int xrel, int yrel) {
   KW_OnDrag * draghandlers;
   KW_Widget * current = gui->currentmouseover;
   KW_Widget * widget = NULL;
-  
+
   /* first check if we are in drag mode */
   if (gui->cursordown == SDL_TRUE) {
     /* check if drag is starting */
@@ -112,7 +112,7 @@ void MouseReleased(KW_GUI * gui, int mousex, int mousey, int button) {
   int i, count;
   KW_OnMouseUp * upandlers;
   KW_OnDragStop * dragstophandlers;
-  KW_Widget * widget = gui->currentmouseover;
+  KW_Widget* widget = gui->currentmouseover;
   
   gui->cursordown = SDL_FALSE;
   
@@ -128,7 +128,7 @@ void MouseReleased(KW_GUI * gui, int mousex, int mousey, int button) {
     /* force a mouse move to calculate mouseover again. */
     MouseMoved(gui, mousex, mousey, 0, 0);
   }
-  
+
   if (widget != NULL) {
     count = widget->eventhandlers[KW_ON_MOUSEUP].count;
     upandlers = (KW_OnMouseUp *) widget->eventhandlers[KW_ON_MOUSEUP].handlers;
@@ -137,7 +137,8 @@ void MouseReleased(KW_GUI * gui, int mousex, int mousey, int button) {
     }
   }
 
-  KW_SetFocusedWidget(widget); 
+  /* gui->currentmouseover might have changed in one of the handlers */
+  KW_SetFocusedWidget(gui->currentmouseover);
 }
 
 void TextInputReady(KW_GUI * gui, const char * text) {

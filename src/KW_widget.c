@@ -96,7 +96,13 @@ KW_bool KW_QueryWidgetHint(const KW_Widget * widget, KW_WidgetHint hint) {
 void Reparent(KW_Widget * widget, KW_Widget * newparent);
 
 void FreeWidget(KW_Widget * widget, int freechildren) {
+  KW_GUI* gui = KW_GetWidgetGUI(widget);
   KW_Widget * tofree;
+
+  /* make sure destroyed widget is not referenced as currently focused */
+  if (gui->currentfocus == widget) {
+    KW_SetFocusedWidget(NULL);
+  }
   
   /* recursively delete children */
   if (freechildren) {
@@ -327,13 +333,26 @@ void KW_ReparentWidget(KW_Widget * widget, KW_Widget * newparent) {
 }
 
 void KW_DestroyWidget(KW_Widget * widget, int freechildren) {
+  KW_GUI* gui = KW_GetWidgetGUI(widget);
+
+  /* block updates to gui while we're destroying some widget */
+  SDL_LockMutex(gui->evqueuelock);
+  
+  /* FIXME: proper notification is needed here */
+  gui->currentmouseover = NULL;
+  
   /* Reparent every child of widget to widget->parent */
   if (!freechildren) {
     while (widget->childrencount > 0) {
       KW_ReparentWidget(widget->children[0], widget->parent);
     }
   }
+
+  /* tell parent to forget about this widget */
+  Reparent(widget, NULL);
+
   FreeWidget(widget, freechildren);
+  SDL_UnlockMutex(gui->evqueuelock);
 }
 
 void KW_SetWidgetUserData(KW_Widget * widget, void * userdata) {
