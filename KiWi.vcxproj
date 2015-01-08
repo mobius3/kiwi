@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{32485B92-3CFD-4645-A5AA-E21A2479B9E4}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>KiWi</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\SDL\include;$(SolutionDir)\SDL_image;$(SolutionDir)\SDL_ttf;</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\KW_button.c" />
+    <ClCompile Include="src\KW_editbox.c" />
+    <ClCompile Include="src\KW_editbox_internal.c" />
+    <ClCompile Include="src\KW_eventwatcher.c" />
+    <ClCompile Include="src\KW_frame.c" />
+    <ClCompile Include="src\KW_frame_internal.c" />
+    <ClCompile Include="src\KW_gui.c" />
+    <ClCompile Include="src\KW_label.c" />
+    <ClCompile Include="src\KW_label_internal.c" />
+    <ClCompile Include="src\KW_renderdriver.c" />
+    <ClCompile Include="src\KW_renderdriver_sdl2.c" />
+    <ClCompile Include="src\KW_scrollbox.c" />
+    <ClCompile Include="src\KW_scrollbox_internal.c" />
+    <ClCompile Include="src\KW_tilerenderer.c" />
+    <ClCompile Include="src\KW_widget.c" />
+    <ClCompile Include="src\KW_widget_eventhandlers.c" />
+    <ClCompile Include="src\utf8.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\KW_button.h" />
+    <ClInclude Include="src\KW_button_internal.h" />
+    <ClInclude Include="src\KW_editbox.h" />
+    <ClInclude Include="src\KW_editbox_internal.h" />
+    <ClInclude Include="src\KW_eventwatcher.h" />
+    <ClInclude Include="src\KW_frame.h" />
+    <ClInclude Include="src\KW_frame_internal.h" />
+    <ClInclude Include="src\KW_gui.h" />
+    <ClInclude Include="src\KW_gui_internal.h" />
+    <ClInclude Include="src\KW_label.h" />
+    <ClInclude Include="src\KW_label_internal.h" />
+    <ClInclude Include="src\KW_macros.h" />
+    <ClInclude Include="src\KW_renderdriver.h" />
+    <ClInclude Include="src\KW_renderdriver_sdl2.h" />
+    <ClInclude Include="src\KW_scrollbox.h" />
+    <ClInclude Include="src\KW_scrollbox_internal.h" />
+    <ClInclude Include="src\KW_tilerenderer.h" />
+    <ClInclude Include="src\KW_widget.h" />
+    <ClInclude Include="src\KW_widget_internal.h" />
+    <ClInclude Include="src\utf8.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

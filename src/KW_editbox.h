@@ -34,6 +34,10 @@
 #include "KW_widget.h"
 #include "SDL_ttf.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 extern DECLSPEC KW_Widget * KW_CreateEditbox(KW_GUI * gui, KW_Widget * parent,
                                              const char * text,
                                              const KW_Rect * geometry);
@@ -45,5 +49,9 @@ extern DECLSPEC void KW_SetEditboxCursorPosition(KW_Widget * widget,
 extern DECLSPEC unsigned int KW_GetEditboxCursorPosition(KW_Widget * widget);
 extern DECLSPEC void KW_SetEditboxFont(KW_Widget * widget, KW_Font * font);
 extern DECLSPEC KW_Font * KW_GetEditboxFont(KW_Widget * widget);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

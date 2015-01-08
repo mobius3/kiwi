@@ -5,6 +5,8 @@
 #include "SDL_ttf.h"
 #include "SDL_image.h"
 
+#include <stdio.h>
+#include <string.h>
 
 typedef struct KWSDL {
     SDL_Renderer * renderer;
@@ -28,8 +30,8 @@ static void KWSDL_setClipRect(KW_RenderDriver * driver, const KW_Rect * clip, in
 static void KWSDL_getClipRect(KW_RenderDriver * driver, KW_Rect * clip);
 
 struct KW_RenderDriver * KW_CreateSDL2RenderDriver(SDL_Renderer * renderer, SDL_Window * window) {
-  struct KWSDL * kwsdl = calloc(sizeof(*kwsdl), 1);
-  struct KW_RenderDriver * rd = calloc(sizeof(*rd), 1);
+  struct KWSDL * kwsdl = calloc(1, sizeof(*kwsdl));
+  struct KW_RenderDriver * rd = calloc(1, sizeof(*rd));
 
   TTF_Init();
 
