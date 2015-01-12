@@ -13,6 +13,7 @@ typedef struct KW_Scrollbox {
   int           y;
   KW_Widget   * vscroll;
   KW_Widget   * hscroll;
+  int scrolltype;
 } KW_Scrollbox;
 
 KW_Scrollbox * AllocScrollbox();

@@ -49,6 +49,7 @@ KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const KW_Rect *
   
   KW_AddWidgetGeometryChangeHandler(root, RootScrollboxGeometryChange);
   RenderScrollboxFrame(scrollbox);
+  KW_ScrollboxSetType(scrollbox->root, KW_SCROLLBOX_BOOTH);
   return scrollbox->root;
 }
 
@@ -78,4 +79,33 @@ void KW_ScrollboxHorizontalScroll(KW_Widget * scrollbox, int amount) {
     amount = outer.w - (sb->innercomposite.x + sb->innercomposite.w);
   geom.x += amount;
   KW_SetWidgetGeometry(sb->inner, &geom);
+}
+
+void KW_ScrollboxSetType(KW_Widget * scrollbox, KW_ScrollboxType type) {
+  KW_Scrollbox * sb = KW_GetWidgetData(scrollbox, KW_WIDGETTYPE_SCROLLBOX);
+  sb->scrolltype = type;
+  switch(sb->scrolltype) {
+
+  default:
+  case KW_SCROLLBOX_BOOTH:
+    KW_SetWidgetHidden(sb->vscroll, KW_FALSE);
+    KW_SetWidgetHidden(sb->hscroll, KW_FALSE);
+    KW_DisableWidgetHint(sb->vscroll, KW_WIDGETHINT_IGNOREINPUTEVENTS);
+    KW_DisableWidgetHint(sb->hscroll, KW_WIDGETHINT_IGNOREINPUTEVENTS);
+    break;
+
+  case KW_SCROLLBOX_HORIZONTAL:
+    KW_SetWidgetHidden(sb->vscroll, KW_TRUE);
+    KW_SetWidgetHidden(sb->hscroll, KW_FALSE);
+    KW_EnableWidgetHint(sb->vscroll, KW_WIDGETHINT_IGNOREINPUTEVENTS);
+    KW_DisableWidgetHint(sb->hscroll, KW_WIDGETHINT_IGNOREINPUTEVENTS);
+    break;
+
+  case KW_SCROLLBOX_VERTICAL:
+    KW_SetWidgetHidden(sb->vscroll, KW_FALSE);
+    KW_SetWidgetHidden(sb->hscroll, KW_TRUE);
+    KW_DisableWidgetHint(sb->vscroll, KW_WIDGETHINT_IGNOREINPUTEVENTS);
+    KW_EnableWidgetHint(sb->hscroll, KW_WIDGETHINT_IGNOREINPUTEVENTS);
+    break;
+  };
 }

@@ -8,6 +8,12 @@
 extern "C" {
 #endif
 
+typedef enum KW_ScrollboxType {
+  KW_SCROLLBOX_BOOTH,       /** Allow both verical and horizontal scrolling (default). */
+  KW_SCROLLBOX_VERTICAL,    /** Allow only verticall scrolling */
+  KW_SCROLLBOX_HORIZONTAL   /** Allow only horizontal scrolling. */
+} KW_ScrollboxType;
+
 /**
  * \brief   Creates a frame that can scroll its children widgets.
  * \details Unless specified otherwise, the scrollbox will scroll its children
@@ -34,6 +40,8 @@ extern DECLSPEC void KW_ScrollboxVerticalScroll(KW_Widget * scrollbox, int amoun
  * \param   amount The amount of pixels to vertically scroll.
  */
 extern DECLSPEC void KW_ScrollboxHorizontalScroll(KW_Widget * scrollbox, int amount);
+
+extern DECLSPEC void KW_ScrollboxSetType(KW_Widget * scrollbox, KW_ScrollboxType type);
 
 #ifdef __cplusplus
 }
