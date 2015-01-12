@@ -35,6 +35,7 @@ struct KW_Widget {
   KW_Rect             absolute;
   KW_Rect             geometry;
   KW_Rect             composed;
+  KW_bool             hidden;
   unsigned int        hints;
   
   struct KW_Widget ** children;

@@ -362,7 +362,9 @@ void * KW_GetWidgetUserData(const KW_Widget * widget) {
   return widget->userdata;
 }
 
-
+void KW_SetWidgetHidden(KW_Widget * widget, KW_bool hidden) {
+  widget->hidden = hidden;
+}
 
 void KW_PaintWidget(KW_Widget * root) {
   int i = 0;
@@ -370,7 +372,7 @@ void KW_PaintWidget(KW_Widget * root) {
   KW_RenderDriver * renderer = KW_GetWidgetRenderer(root);
   
   /* paint the root, then paint its childrens */
-  if (root->paint != NULL) {
+  if (root->paint != NULL && !root->hidden) {
     root->paint(root);
   }
   
