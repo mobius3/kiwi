@@ -37,7 +37,7 @@ set(LIB_SOURCES
   KW_renderdriver_sdl2.c
 )
 
-include_directories(${SDL2_INCLUDE_DIR})
+include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIR})
 add_library(KiWi SHARED ${LIB_SOURCES} ${API_HEADERS})
 target_link_libraries(KiWi ${SDL2_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
 
