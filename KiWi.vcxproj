@@ -81,8 +81,6 @@
     <ClCompile Include="src\KW_gui.c" />
     <ClCompile Include="src\KW_label.c" />
     <ClCompile Include="src\KW_label_internal.c" />
-    <ClCompile Include="src\KW_renderdriver.c" />
-    <ClCompile Include="src\KW_renderdriver_sdl2.c" />
     <ClCompile Include="src\KW_scrollbox.c" />
     <ClCompile Include="src\KW_scrollbox_internal.c" />
     <ClCompile Include="src\KW_tilerenderer.c" />
@@ -103,8 +101,6 @@
     <ClInclude Include="src\KW_label.h" />
     <ClInclude Include="src\KW_label_internal.h" />
     <ClInclude Include="src\KW_macros.h" />
-    <ClInclude Include="src\KW_renderdriver.h" />
-    <ClInclude Include="src\KW_renderdriver_sdl2.h" />
     <ClInclude Include="src\KW_scrollbox.h" />
     <ClInclude Include="src\KW_scrollbox_internal.h" />
     <ClInclude Include="src\KW_tilerenderer.h" />

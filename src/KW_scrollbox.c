@@ -88,22 +88,22 @@ void KW_ScrollboxSetType(KW_Widget * scrollbox, KW_ScrollboxType type) {
 
   default:
   case KW_SCROLLBOX_BOOTH:
-    KW_SetWidgetHidden(sb->vscroll, KW_FALSE);
-    KW_SetWidgetHidden(sb->hscroll, KW_FALSE);
+    KW_SetWidgetHidden(sb->vscroll, SDL_FALSE);
+    KW_SetWidgetHidden(sb->hscroll, SDL_FALSE);
     KW_DisableWidgetHint(sb->vscroll, KW_WIDGETHINT_IGNOREINPUTEVENTS);
     KW_DisableWidgetHint(sb->hscroll, KW_WIDGETHINT_IGNOREINPUTEVENTS);
     break;
 
   case KW_SCROLLBOX_HORIZONTAL:
-    KW_SetWidgetHidden(sb->vscroll, KW_TRUE);
-    KW_SetWidgetHidden(sb->hscroll, KW_FALSE);
+    KW_SetWidgetHidden(sb->vscroll, SDL_TRUE);
+    KW_SetWidgetHidden(sb->hscroll, SDL_FALSE);
     KW_EnableWidgetHint(sb->vscroll, KW_WIDGETHINT_IGNOREINPUTEVENTS);
     KW_DisableWidgetHint(sb->hscroll, KW_WIDGETHINT_IGNOREINPUTEVENTS);
     break;
 
   case KW_SCROLLBOX_VERTICAL:
-    KW_SetWidgetHidden(sb->vscroll, KW_FALSE);
-    KW_SetWidgetHidden(sb->hscroll, KW_TRUE);
+    KW_SetWidgetHidden(sb->vscroll, SDL_FALSE);
+    KW_SetWidgetHidden(sb->hscroll, SDL_TRUE);
     KW_DisableWidgetHint(sb->vscroll, KW_WIDGETHINT_IGNOREINPUTEVENTS);
     KW_EnableWidgetHint(sb->hscroll, KW_WIDGETHINT_IGNOREINPUTEVENTS);
     break;

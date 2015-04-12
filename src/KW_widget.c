@@ -1,5 +1,6 @@
 #include "KW_widget_internal.h"
 #include "KW_gui_internal.h"
+#include "KW_gui.h"
 #include "KW_widget.h"
 #include <stdlib.h>
 
@@ -362,7 +363,7 @@ void * KW_GetWidgetUserData(const KW_Widget * widget) {
   return widget->userdata;
 }
 
-void KW_SetWidgetHidden(KW_Widget * widget, KW_bool hidden) {
+void KW_SetWidgetHidden(KW_Widget * widget, SDL_bool hidden) {
   widget->hidden = hidden;
 }
 

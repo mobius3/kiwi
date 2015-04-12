@@ -658,7 +658,7 @@ extern DECLSPEC SDL_Surface * KW_GetWidgetTilesetSurface(KW_Widget * widget);
  */
 extern DECLSPEC void KW_SetClipChildrenWidgets(KW_Widget * widget, SDL_bool shouldclip);
 
-extern DECLSPEC void KW_SetWidgetHidden(KW_Widget * widget, KW_bool hidden);
+extern DECLSPEC void KW_SetWidgetHidden(KW_Widget * widget, SDL_bool hidden);
 
 #ifdef __cplusplus
 }

@@ -55,6 +55,7 @@ struct KW_Widget {
   
   SDL_Rect            oldcliprect;
   SDL_bool            clipchildren;
+  SDL_bool            hidden;
   
   void *              userdata;
   void *              privdata;
