@@ -22,34 +22,35 @@
      distribution.
 */
 
-#ifndef KW_FRAME_H
-#define KW_FRAME_H
-
-/**
- * \file KW_frame.h
- * 
- * Defines functions related to the frame KW_Widget
- */
-
-#include "KW_widget.h"
+#ifndef KW_TEXTRENDERER_H
+#define KW_TEXTREDNERER_H
+#include "SDL_ttf.h"
+#include "KW_macros.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /**
- * \brief   Creates a frame widget.
- * \details The frame is constructed by arranging the the first 3x3 tiles in the tileset.
- * \param   gui The KW_GUI instance that will hold this widget.
- * \param   parent The parent widget of this widget.
- * \param   geometry The relative geometry of this frame.
- * \return  The frame instance.
+ * \file KW_textrenderer.h
+ * 
+ * Helper functions for text rendering with SDL_ttf
  */
-extern DECLSPEC KW_Widget * KW_CreateFrame(KW_GUI * gui, KW_Widget * parent, const SDL_Rect * geometry);
+
+/**
+ * \brief   Renders a single line of text.
+ * \details Renders a new texture from text.
+ * \param   font The TTF_Font to use in text rendering.
+ * \param   renderer The renderer that will render the returned texture.
+ * \param   text The text to render.
+ * \param   color The color to render this text with.
+ * \param   styleflags A list of TTF_STYLE_* style flags to pass.
+ * \return  The resulting texture.
+ */
+extern DECLSPEC SDL_Texture * KW_RenderTextLine(TTF_Font * font, SDL_Renderer * renderer, const char * text, SDL_Color color, int styleflags);
 
 #ifdef __cplusplus
 }
 #endif
-
 
 #endif

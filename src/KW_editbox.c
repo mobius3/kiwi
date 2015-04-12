@@ -4,7 +4,7 @@
 #include "KW_editbox_internal.h"
 
 /* public functions */
-KW_Widget * KW_CreateEditbox(KW_GUI * gui, KW_Widget * parent, const char * text, const KW_Rect * geometry) {
+KW_Widget * KW_CreateEditbox(KW_GUI * gui, KW_Widget * parent, const char * text, const SDL_Rect * geometry) {
   KW_Editbox * editbox = AllocEditbox();
   KW_Widget * widget = KW_CreateWidget(gui, parent, KW_WIDGETTYPE_EDITBOX, geometry, PaintEditbox, DestroyEditbox, editbox);
   SDL_strlcat(editbox->text, text, 1024);
@@ -32,7 +32,7 @@ unsigned int KW_GetEditboxCursorPosition(KW_Widget * widget) {
   return editbox->cursor;
 }
 
-KW_Font * KW_GetEditboxFont(KW_Widget * widget) {
+TTF_Font * KW_GetEditboxFont(KW_Widget * widget) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
   return editbox->font == NULL ? KW_GetFont(KW_GetGUI(widget)) : editbox->font;
 }
@@ -47,7 +47,7 @@ void KW_SetEditboxCursorPosition(KW_Widget * widget, unsigned int pos) {
   editbox->cursor = pos;
 }
 
-void KW_SetEditboxFont(KW_Widget * widget, KW_Font * font) {
+void KW_SetEditboxFont(KW_Widget * widget, TTF_Font * font) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
   editbox->font = font;
   RenderEditboxText(editbox);

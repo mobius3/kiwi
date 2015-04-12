@@ -1,13 +1,14 @@
 #include "KW_editbox.h"
 #include "KW_editbox_internal.h"
 #include "KW_tilerenderer.h"
+#include "KW_textrenderer.h"
 #include "utf8.h"
 
 /* private functions */
 void PaintEditbox(KW_Widget * widget) {
-  KW_Rect targetgeom;
-  KW_RenderDriver * renderer;
-  KW_Texture * tileset;
+  SDL_Rect targetgeom;  
+  SDL_Renderer * renderer;
+  SDL_Texture * tileset;  
   KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
   /* base column for tile rendering */
   int basec = 0;
@@ -31,14 +32,14 @@ void PaintEditbox(KW_Widget * widget) {
 }
 
 /* paints the editbox text */
-void PaintEditboxText(KW_Editbox * editbox, KW_Rect * _dst) {
-  KW_Rect dst = *_dst; /* destination rectangle */
-  KW_Rect orig = dst;  /* intended dst rectangle */
-  KW_Rect src;         /* text clipping */
+void PaintEditboxText(KW_Editbox * editbox, SDL_Rect * _dst) {
+  SDL_Rect dst = *_dst; /* destination rectangle */
+  SDL_Rect orig = dst;  /* intended dst rectangle */
+  SDL_Rect src;         /* text clipping */
   int cursorx;
 
-  KW_RenderDriver * renderer = KW_GetWidgetRenderer(editbox->widget);
-  KW_Texture * tileset = KW_GetWidgetTilesetTexture(editbox->widget);
+  SDL_Renderer * renderer = KW_GetWidgetRenderer(editbox->widget);
+  SDL_Texture * tileset = KW_GetWidgetTilesetTexture(editbox->widget);
 
   /* query actual w and h */
   src.x = src.y = 0; src.w = editbox->textwidth; src.h = editbox->textheight;
@@ -87,23 +88,24 @@ void PaintEditboxText(KW_Editbox * editbox, KW_Rect * _dst) {
                       TILESIZE, dst.h);
     
     /* render text */
-    KW_RenderCopy(renderer, editbox->textrender, &src, &dst);
+    SDL_RenderCopy(renderer, editbox->textrender, &src, &dst);
   } else {
     /* just the basic checks */
     if (src.w > dst.w) src.w = dst.w;
     if (src.w < dst.w) dst.w = src.w;
     if (src.h < dst.h) dst.h = src.h;
-    KW_RenderCopy(renderer, editbox->textrender, &src, &dst);
+    SDL_RenderCopy(renderer, editbox->textrender, &src, &dst);
   }
 }
 
 
 void RenderEditboxText(KW_Editbox * editbox) {
   if (editbox->textrender != NULL) {
-    KW_ReleaseTexture(KW_GetWidgetRenderer(editbox->widget), editbox->textrender);
+    SDL_DestroyTexture(editbox->textrender);
   }
   /* use our own font */
-  editbox->textrender = KW_RenderText(KW_GetWidgetRenderer(editbox->widget), KW_GetEditboxFont(editbox->widget),
+  editbox->textrender = KW_RenderTextLine(KW_GetEditboxFont(editbox->widget),
+                                         KW_GetWidgetRenderer(editbox->widget),
                                          editbox->text, editbox->color,
                                          TTF_STYLE_NORMAL);
 
@@ -273,7 +275,7 @@ void EditboxFocusLose(KW_Widget * widget) {
   SDL_StopTextInput();
 }
 
-void EditboxFontChanged(KW_GUI * gui, void * priv, KW_Font * font) {
+void EditboxFontChanged(KW_GUI * gui, void * priv, TTF_Font * font) {
   KW_Editbox * editbox = KW_GetWidgetData((KW_Widget*)priv, KW_WIDGETTYPE_EDITBOX);
   RenderEditboxText(editbox);
 }

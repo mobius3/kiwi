@@ -7,8 +7,8 @@ typedef struct KW_Scrollbox {
   KW_Widget   * root;
   KW_Widget   * outer;
   KW_Widget   * inner;
-  KW_Rect      innercomposite;
-  KW_Texture * framerender;
+  SDL_Rect      innercomposite;
+  SDL_Texture * framerender;
   int           x;
   int           y;
   KW_Widget   * vscroll;
@@ -23,7 +23,7 @@ void ScrollboxKeyUp(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode code);
 void VerticalBarDrag(KW_Widget * widget, int x, int y, int xrel, int yrel);
 void HorizontalBarDrag(KW_Widget * widget, int x, int y, int xrel, int yrel);
 void ChildrenChange(KW_Widget * widget, KW_WidgetChildrenChangeEvent what, KW_Widget * children);
-void RootScrollboxGeometryChange(KW_Widget * widget, const KW_Rect * newgeom, const KW_Rect * oldgeom);
+void RootScrollboxGeometryChange(KW_Widget * widget, const SDL_Rect * newgeom, const SDL_Rect * oldgeom);
 void RenderScrollboxFrame(KW_Scrollbox * sb);
 
 #endif

@@ -3,7 +3,7 @@
 #include "KW_tilerenderer.h"
 #include "KW_button.h"
 
-KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const KW_Rect * geometry) {
+KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const SDL_Rect * geometry) {
   /* creates root scrollbox widget */
   KW_Scrollbox * scrollbox = AllocScrollbox();
   KW_Widget * outer, * inner;
@@ -11,8 +11,8 @@ KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const KW_Rect *
                                          geometry, PaintScrollboxFrame,
                                          DestroyScrollboxFrame, scrollbox);
   
-  KW_Rect areageom = *geometry;
-  KW_Rect buttongeom;
+  SDL_Rect areageom = *geometry;
+  SDL_Rect buttongeom;
   /* Ignore borders */
   areageom.x = TILESIZE;
   areageom.y = TILESIZE;
@@ -55,7 +55,7 @@ KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const KW_Rect *
 
 void KW_ScrollboxVerticalScroll(KW_Widget * scrollbox, int amount) {
   /* remember we are dealing with the *outer* widget */
-  KW_Rect geom, outer;
+  SDL_Rect geom, outer;
   KW_Scrollbox * sb = KW_GetWidgetData(scrollbox, KW_WIDGETTYPE_SCROLLBOX);
   KW_GetWidgetGeometry(sb->inner, &geom);
   KW_GetWidgetGeometry(sb->outer, &outer);
@@ -70,7 +70,7 @@ void KW_ScrollboxVerticalScroll(KW_Widget * scrollbox, int amount) {
 
 void KW_ScrollboxHorizontalScroll(KW_Widget * scrollbox, int amount) {
   /* remember we are dealing with the *outer* widget */
-  KW_Rect geom, outer;
+  SDL_Rect geom, outer;
   KW_Scrollbox * sb = KW_GetWidgetData(scrollbox, KW_WIDGETTYPE_SCROLLBOX);
   KW_GetWidgetGeometry(sb->inner, &geom);
   KW_GetWidgetGeometry(sb->outer, &outer);

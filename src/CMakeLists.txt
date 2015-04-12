@@ -13,7 +13,6 @@ set(API_HEADERS
   KW_tilerenderer.h
   KW_widget.h
   KW_scrollbox.h
-<<<<<<< HEAD
   KW_renderdriver_sdl2.h
   KW_renderdriver.h
 )

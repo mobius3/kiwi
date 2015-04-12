@@ -79,7 +79,7 @@ typedef enum KW_LabelHorizontalAlignment {
  * \param   geometry The relative geometry of this label.
  * \return  The label instance.
  */
-extern DECLSPEC KW_Widget * KW_CreateLabel(KW_GUI * gui, KW_Widget * parent, const char * text, const KW_Rect * geometry);
+extern DECLSPEC KW_Widget * KW_CreateLabel(KW_GUI * gui, KW_Widget * parent, const char * text, const SDL_Rect * geometry);
 
 /**
  * \brief   Set the text being rendered in this label.
@@ -106,7 +106,7 @@ extern DECLSPEC void KW_SetLabelStyle(KW_Widget * widget, int style);
  * \param   widget The label instance.
  * \param   color The color to assign to the label.
  */
-extern DECLSPEC void KW_SetLabelColor(KW_Widget * widget, KW_Color color);
+extern DECLSPEC void KW_SetLabelColor(KW_Widget * widget, SDL_Color color);
 
 /**
  * \brief   Changes the font of the label's text.
@@ -114,7 +114,7 @@ extern DECLSPEC void KW_SetLabelColor(KW_Widget * widget, KW_Color color);
  * \param   widget The label widget.
  * \param   font The font to assign to the label.
  */
-extern DECLSPEC void KW_SetLabelFont(KW_Widget * widget, KW_Font * font);
+extern DECLSPEC void KW_SetLabelFont(KW_Widget * widget, TTF_Font * font);
 
 /**
  * \brief   Sets label alignment inside a geometry.
@@ -133,14 +133,14 @@ extern DECLSPEC void KW_SetLabelAlignment(KW_Widget * widget, KW_LabelHorizontal
  * \param   iconclip The clipping rect in the tileset to clip the icon from. Set
  *          to NULL to remove the icon.
  */
-extern DECLSPEC void KW_SetLabelIcon(KW_Widget * widget, const KW_Rect * iconclip);
+extern DECLSPEC void KW_SetLabelIcon(KW_Widget * widget, const SDL_Rect * iconclip);
 
 /**
  * \brief   Gets the associated font with a label.
  * \param   widget The label widget.
  * \returns A TTF_Font pointer to the currently label's associated font.
  */
-extern DECLSPEC KW_Font * KW_GetLabelFont(KW_Widget * widget);
+extern DECLSPEC TTF_Font * KW_GetLabelFont(KW_Widget * widget);
 
 #ifdef __cplusplus
 }

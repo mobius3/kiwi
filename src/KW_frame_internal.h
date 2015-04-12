@@ -11,6 +11,6 @@ KW_Frame * AllocFrame();
 void RenderFrame(KW_Widget * widget);
 void PaintFrame(KW_Widget * widget);
 void DestroyFrame(KW_Widget * widget);
-void FrameGeometryChanged(KW_Widget * widget, const KW_Rect * newrect, const KW_Rect * old);
+void FrameGeometryChanged(KW_Widget * widget, const SDL_Rect * newrect, const SDL_Rect * old);
 
 #endif

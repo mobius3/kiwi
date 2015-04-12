@@ -9,7 +9,7 @@ KW_Widget * AllocWidget() {
 }
 
 
-KW_Widget * KW_CreateWidget(KW_GUI * gui, KW_Widget * parent, KW_WidgetType type, const KW_Rect * geometry, KW_WidgetPaintFunction widgetpaint, KW_WidgetDestroyFunction widgetdestroy, void * priv) {
+KW_Widget * KW_CreateWidget(KW_GUI * gui, KW_Widget * parent, KW_WidgetType type, const SDL_Rect * geometry, KW_WidgetPaintFunction widgetpaint, KW_WidgetDestroyFunction widgetdestroy, void * priv) {
   KW_Widget * widget = AllocWidget();
   widget->gui = gui;
   widget->paint = widgetpaint;
@@ -36,16 +36,16 @@ KW_Widget * const * KW_GetWidgetChildren(const KW_Widget * widget, unsigned int 
 }
 
 
-void KW_SetWidgetTilesetSurface(KW_Widget * widget, KW_Surface * tileset) {
+void KW_SetWidgetTilesetSurface(KW_Widget * widget, SDL_Surface * tileset) {
   widget->tilesetsurface = tileset;
-  widget->tilesettexture = KW_CreateTexture(KW_GetWidgetRenderer(widget), tileset);
+  widget->tilesettexture = SDL_CreateTextureFromSurface(KW_GetWidgetRenderer(widget), tileset);
 }
 
-KW_Texture * KW_GetWidgetTilesetTexture(KW_Widget * widget) {
+SDL_Texture * KW_GetWidgetTilesetTexture(KW_Widget * widget) {
   return widget->tilesettexture == NULL ? widget->gui->tilesettexture : widget->tilesettexture;
 }
 
-KW_Surface * KW_GetWidgetTilesetSurface(KW_Widget * widget) {
+SDL_Surface * KW_GetWidgetTilesetSurface(KW_Widget * widget) {
   return widget->tilesetsurface == NULL ? widget->gui->tilesetsurface : widget->tilesetsurface;
 }
 
@@ -54,11 +54,11 @@ void * KW_GetWidgetData(const KW_Widget * widget, KW_WidgetType type) {
   return widget->privdata;
 }
 
-KW_RenderDriver * KW_GetWidgetRenderer(const KW_Widget * widget) {
+SDL_Renderer * KW_GetWidgetRenderer(const KW_Widget * widget) {
   return KW_GetRenderer(KW_GetGUI(widget));
 }
 
-void KW_GetWidgetAbsoluteGeometry(const KW_Widget * widget, KW_Rect * geometry) {
+void KW_GetWidgetAbsoluteGeometry(const KW_Widget * widget, SDL_Rect * geometry) {
   *geometry = widget->absolute;
 }
 
@@ -74,7 +74,7 @@ void KW_UnblockWidgetInputEvents(KW_Widget * widget) {
   KW_DisableWidgetHint(widget, KW_WIDGETHINT_BLOCKINPUTEVENTS);
 }
 
-KW_bool KW_IsWidgetInputEventsBlocked(KW_Widget * widget) {
+SDL_bool KW_IsWidgetInputEventsBlocked(KW_Widget * widget) {
   return KW_QueryWidgetHint(widget, KW_WIDGETHINT_BLOCKINPUTEVENTS);
 }
 
@@ -86,8 +86,8 @@ void KW_EnableWidgetHint(KW_Widget * widget, KW_WidgetHint hint) {
   widget->hints |= hint;
 }
 
-KW_bool KW_QueryWidgetHint(const KW_Widget * widget, KW_WidgetHint hint) {
-  return ((widget->hints & hint) ? KW_TRUE : KW_FALSE);
+SDL_bool KW_QueryWidgetHint(const KW_Widget * widget, KW_WidgetHint hint) {
+  return ((widget->hints & hint) ? SDL_TRUE : SDL_FALSE);
 }
 
 
@@ -120,14 +120,14 @@ void FreeWidget(KW_Widget * widget, int freechildren) {
   free(widget);
 }
 
-void KW_SetClipChildrenWidgets(KW_Widget * widget, KW_bool shouldclip) {
+void KW_SetClipChildrenWidgets(KW_Widget * widget, SDL_bool shouldclip) {
   widget->clipchildren = shouldclip;
 }
 
 /* recursively calculate absolute geometry */
 void CalculateAbsoluteGeometry(KW_Widget * widget) {
   int i = 0;
-  KW_Rect oldabs = widget->absolute, parentabs;
+  SDL_Rect oldabs = widget->absolute, parentabs;
   KW_GetWidgetAbsoluteGeometry(widget->parent, &parentabs); /* get parent absolute */
   widget->absolute.x = widget->geometry.x + parentabs.x;
   widget->absolute.y = widget->geometry.y + parentabs.y;
@@ -149,7 +149,7 @@ void CalculateAbsoluteGeometry(KW_Widget * widget) {
  * widget parent must also be notified of this change if we happend to be outside parent box */
 void CalculateComposedGeometry(KW_Widget * widget) {
   
-  KW_Rect composed, edges;
+  SDL_Rect composed, edges;
   KW_Widget * children = NULL;
   int i = 0;
   if (widget->parent == NULL) return;
@@ -188,7 +188,7 @@ void CalculateComposedGeometry(KW_Widget * widget) {
   /* TODO: callback for changed? */
 }
 
-void KW_GetWidgetComposedGeometry(const KW_Widget * widget, KW_Rect * composed) {
+void KW_GetWidgetComposedGeometry(const KW_Widget * widget, SDL_Rect * composed) {
   *composed = widget->composed;
 }
 
@@ -368,33 +368,69 @@ void KW_SetWidgetHidden(KW_Widget * widget, KW_bool hidden) {
 
 void KW_PaintWidget(KW_Widget * root) {
   int i = 0;
-  KW_Rect cliprect;
-  KW_RenderDriver * renderer = KW_GetWidgetRenderer(root);
+  SDL_Renderer * renderer = KW_GetWidgetRenderer(root);
+  SDL_Rect cliprect, viewport;
+  static SDL_RendererInfo info;
+  static int isopengl = -1;
   
+#if !defined(NDEBUG) && defined(DEBUG_PRINT_GEOMETRY_RECTANGLE)
+  SDL_Rect geom = root->composed;
+  Uint8 r, g, b, a;
+  float maxrgb;
+  if (root->parent) {
+    geom.x += root->parent->absolute.x;
+    geom.y += root->parent->absolute.y;
+  }
+#endif  
+
+  if (isopengl < 0) {
+    SDL_GetRendererInfo(renderer, &info);
+    isopengl = (strcmp(info.name, "opengl") >= 0) ? 1 : 0;
+  }
+
   /* paint the root, then paint its childrens */
   if (root->paint != NULL && !root->hidden) {
     root->paint(root);
   }
   
   if (root->clipchildren) {
-    KW_GetClipRect(renderer, &(root->oldcliprect));
+    SDL_RenderGetClipRect(renderer, &(root->oldcliprect));
     cliprect = root->absolute;
-    KW_SetClipRect(renderer, &cliprect, KW_FALSE);
+    if (isopengl) {
+      /* fix for SDL buggy opengl scissor test. See SDL bug 2269.
+       * Not sure about other renderers. */
+      SDL_RenderGetViewport(renderer, &viewport);
+      cliprect.x += viewport.x;  cliprect.y -= viewport.y;
+    }
+    SDL_RenderSetClipRect(renderer, &cliprect);
   }
 
+#if !defined(NDEBUG) && defined(DEBUG_PRINT_GEOMETRY_RECTANGLE)  
+  SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
+  maxrgb = (KW_GetGUI(root)->currentmouseover == root ? 255.0f : 100.0f);
+  SDL_SetRenderDrawColor(renderer, (geom.x / (viewport.w * 1.0f) + 1) * maxrgb, (geom.y / (viewport.h * 1.0f)) * maxrgb, (geom.w + geom.h * 1.0f) / (viewport.w + viewport.h * 1.0f) * maxrgb, 128);
+  SDL_RenderFillRect(renderer, &geom);
+  SDL_SetRenderDrawColor(renderer, r, g, b, a);
+#endif
   for (i = 0; i < root->childrencount; i++) {
     KW_PaintWidget(root->children[i]);
   }
   
   /* restore cliprect */
   if (root->clipchildren) {
-      KW_SetClipRect(renderer, &(root->oldcliprect), KW_TRUE);
+    /* for us, empty cliprect still means clip disable.
+     * See https://bugzilla.libsdl.org/show_bug.cgi?id=2504 */
+    if (!SDL_RectEmpty(&(root->oldcliprect))) {
+      SDL_RenderSetClipRect(renderer, &(root->oldcliprect));
+    } else {
+      SDL_RenderSetClipRect(renderer, NULL);
+    }
   }
 }
 
-void KW_SetWidgetGeometry(KW_Widget * widget, const KW_Rect * geometry) {
+void KW_SetWidgetGeometry(KW_Widget * widget, const SDL_Rect * geometry) {
   int i;
-  KW_Rect old;
+  SDL_Rect old;
   KW_OnGeometryChange handler;
   if ((widget->geometry.x != geometry->x ||
       widget->geometry.y != geometry->y ||
@@ -414,7 +450,7 @@ void KW_SetWidgetGeometry(KW_Widget * widget, const KW_Rect * geometry) {
   }
 }
 
-void KW_GetWidgetGeometry(const KW_Widget * widget, KW_Rect * geometry) {
+void KW_GetWidgetGeometry(const KW_Widget * widget, SDL_Rect * geometry) {
   *geometry = widget->geometry;
 }
 

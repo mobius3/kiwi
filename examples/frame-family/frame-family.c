@@ -1,32 +1,32 @@
 #include "SDL.h"
 #include "KW_gui.h"
 #include "KW_button.h"
-#include "KW_renderdriver_sdl2.h"
+#include "SDL_image.h"
 
 int main(int argc, char ** argv) {
   
   /* initialize window and renderer */
-  KW_RenderDriver * driver;
   SDL_Window * window;
   SDL_Renderer * renderer;
-  KW_Surface * set;
+  SDL_Surface * set;
   KW_GUI * gui;
-  KW_Font * font;
-  KW_Rect framegeom, labelgeom;
+  TTF_Font * font;
+  SDL_Rect framegeom, labelgeom;
   KW_Widget * frame;
   int i = 0;  
   
-  SDL_Init(SDL_INIT_EVERYTHING);
   SDL_CreateWindowAndRenderer(320, 240, 0, &window, &renderer);
-  SDL_SetRenderDrawColor(renderer, 100, 100, 100, 1);
-  driver = KW_CreateSDL2RenderDriver(renderer, window);
+  SDL_SetRenderDrawColor(renderer, 200, 100, 100, 1);
+  SDL_Init(SDL_INIT_EVERYTHING);
+  TTF_Init();
+  
   /* load tileset */
   
-  set = KW_LoadSurface(driver, "tileset.png");
+  set = IMG_Load("tileset.png");
   
   /* initialize gui */
-  gui = KW_Init(driver, set);
-  font = KW_LoadFont(driver, "Fontin-Regular.ttf", 12);
+  gui = KW_Init(renderer, set);
+  font = TTF_OpenFont("Fontin-Regular.ttf", 12);
   KW_SetFont(gui, font);
 
   
@@ -38,7 +38,6 @@ int main(int argc, char ** argv) {
   for (i = 0; i < 10; i++) {
     frame = KW_CreateButton(gui, frame, "Yay", &framegeom);
   }
-
   while (!SDL_QuitRequested()) {
     SDL_RenderClear(renderer);
     KW_Paint(gui);

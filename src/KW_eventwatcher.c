@@ -5,7 +5,7 @@
 KW_Widget * CalculateMouseOver(KW_Widget * widget, int x, int y) {
   int i;
   KW_Widget * found = NULL;
-  KW_Rect g = widget->composed;
+  SDL_Rect g = widget->composed;
   if (widget->parent) {
     g.x += widget->parent->absolute.x;
     g.y += widget->parent->absolute.y;

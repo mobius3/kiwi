@@ -26,19 +26,11 @@
 #define KW_WIDGET_H
 
 #include "KW_macros.h"
-#include "KW_renderdriver.h"
 #include "SDL.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-
-typedef enum {
-  KW_FALSE = 0,
-  KW_TRUE = 1
-} KW_bool;
-
 
 /**
  * \brief   The KW_Widget type represents a widget on the KW_GUI instance.
@@ -52,7 +44,7 @@ struct KW_GUI;
 typedef struct KW_GUI KW_GUI;
 
 /* forward declarations of these */
-extern DECLSPEC KW_RenderDriver * KW_GetRenderer(KW_GUI * gui);
+extern DECLSPEC SDL_Renderer * KW_GetRenderer(KW_GUI * gui);
 extern DECLSPEC KW_GUI * KW_GetGUI(const KW_Widget * widget);
 
 
@@ -81,7 +73,7 @@ typedef void (*KW_OnKeyDown)(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode c
 typedef void (*KW_OnKeyUp)(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode code);
 
 /* widget internal events */
-typedef void (*KW_OnGeometryChange)(KW_Widget * widget, const KW_Rect * newgeom, const KW_Rect * oldgeom);
+typedef void (*KW_OnGeometryChange)(KW_Widget * widget, const SDL_Rect * newgeom, const SDL_Rect * oldgeom);
 
 /**
  * \brief   The event type when the children array changes.
@@ -212,7 +204,7 @@ typedef enum KW_WidgetHint {
 extern DECLSPEC KW_Widget * KW_CreateWidget(KW_GUI * gui, 
                                               KW_Widget * parent, 
                                               KW_WidgetType type, 
-                                              const KW_Rect * geometry,
+                                              const SDL_Rect * geometry, 
                                               KW_WidgetPaintFunction widgetpaint,
                                               KW_WidgetDestroyFunction widgetdestroy,
                                               void * data);
@@ -304,12 +296,12 @@ extern DECLSPEC void KW_DestroyWidget(KW_Widget * widget, int destroychildren);
 extern DECLSPEC KW_GUI * KW_GetWidgetGUI(const KW_Widget * widget);
 
 /**
- * \brief   Returns the KW_RenderDriver associated with a KW_GUI instance that the @p widget is associated with.
+ * \brief   Returns the SDL_Renderer associated with a KW_GUI instance that the @p widget is associated with.
  * \details This is a helper function and its effects are the same of `KW_GetRenderer(KW_GetWidgetGUI(widget))`
- * \param   widget The widget to get the KW_RenderDriver instance from.
- * \returns The associated KW_RenderDriver instance.
+ * \param   widget The widget to get the SDL_Renderer instance from.
+ * \returns The associated SDL_Renderer instance.
  */
-extern DECLSPEC KW_RenderDriver * KW_GetWidgetRenderer(const KW_Widget * widget);
+extern DECLSPEC SDL_Renderer * KW_GetWidgetRenderer(const KW_Widget * widget);
 
 /**
  * \brief   Sets a new geometry for a widget.
@@ -317,33 +309,33 @@ extern DECLSPEC KW_RenderDriver * KW_GetWidgetRenderer(const KW_Widget * widget)
  * \param   widget The widget that will have its size changed.
  * \param   geometry The new widget geometry.
  */
-extern DECLSPEC void KW_SetWidgetGeometry(KW_Widget * widget, const KW_Rect * geometry);
+extern DECLSPEC void KW_SetWidgetGeometry(KW_Widget * widget, const SDL_Rect * geometry);
 
 /**
  * \brief   Gets the widget geometry.
  * \details Use this function to retrieve the current *relative* geometry of the widget.
  * \param   widget The widget to get the geometry from.
- * \param   geometry A KW_Rect pointer that will receive the @p widget geometry.
+ * \param   geometry A SDL_Rect pointer that will receive the @p widget geometry. 
  */
-extern DECLSPEC void KW_GetWidgetGeometry(const KW_Widget * widget, KW_Rect * geometry);
+extern DECLSPEC void KW_GetWidgetGeometry(const KW_Widget * widget, SDL_Rect * geometry);
 
 /**
  * \brief   Gets the absolute widget geometry.
  * \details Use this if you need to know the absolute widget geometry calculated taking its parents in consideration.
  *          It is useful inside the paint function of a widget.
  * \param   widget The widget to get the absolute geometry from.
- * \param   geometry A KW_Rect pointer that will receive the @p widget absolute geometry.
+ * \param   geometry A SDL_Rect pointer that will receive the @p widget absolute geometry.
  */
-extern DECLSPEC void KW_GetWidgetAbsoluteGeometry(const KW_Widget * widget, KW_Rect * geometry);
+extern DECLSPEC void KW_GetWidgetAbsoluteGeometry(const KW_Widget * widget, SDL_Rect * geometry);
 
 /**
  * \brief   Gets the composed geometry of a widget.
  * \details   Returns the total area occupied by a widget and its children. Note that the position is
  *          still relative to its parent widget.
  * \param   widget The widget to get the compsoed geometry from.
- * \param   geometry A KW_Rect pointer that will receive the @p widget composed geometry.
+ * \param   geometry A SDL_Rect pointer that will receive the @p widget composed geometry.
  */
-extern DECLSPEC void KW_GetWidgetComposedGeometry(const KW_Widget * widget, KW_Rect * composed);
+extern DECLSPEC void KW_GetWidgetComposedGeometry(const KW_Widget * widget, SDL_Rect * composed);
 
 /**
  * \brief   Paint a widget and all of its children unless they are hidden.
@@ -394,16 +386,16 @@ extern DECLSPEC void KW_BlockWidgetInputEvents(KW_Widget * widget);
 extern DECLSPEC void KW_UnblockWidgetInputEvents(KW_Widget * widget);
 
 /**
- * \brief   Returns KW_TRUE if this widget is blocking input events.
+ * \brief   Returns SDL_TRUE if this widget is blocking input events.
  * \param   widget The widget to query.
  * \details This function is a wrapper of KW_QueryWidgetHint(w, KW_WIDGETHINT_BLOCKINPUTEVENTS)
- * \return  KW_TRUE or KW_FALSE in case events are blocked or not.
+ * \return  SDL_TRUE or SDL_FALSE in case events are blocked or not.
  */
-extern DECLSPEC KW_bool KW_IsWidgetInputEventsBlocked(KW_Widget * widget);
+extern DECLSPEC SDL_bool KW_IsWidgetInputEventsBlocked(KW_Widget * widget);
 
 extern DECLSPEC void KW_EnableWidgetHint(KW_Widget * widget, KW_WidgetHint hint);
 extern DECLSPEC void KW_DisableWidgetHint(KW_Widget * widget, KW_WidgetHint hint);
-extern DECLSPEC KW_bool KW_QueryWidgetHint(const KW_Widget * widget, KW_WidgetHint hint);
+extern DECLSPEC SDL_bool KW_QueryWidgetHint(const KW_Widget * widget, KW_WidgetHint hint);
 
 /**
  * \brief   Adds a function that will be called whenever the mouse/cursor gets over the widget.
@@ -639,23 +631,23 @@ extern DECLSPEC void KW_RemoveWidgetDragHandler(KW_Widget * widget, KW_OnDrag ha
  * \param   widget The widget to change the tileset.
  * \param   tileset The new tileset surface.
  */
-extern DECLSPEC void KW_SetWidgetTilesetSurface(KW_Widget * widget, KW_Surface * tileset);
+extern DECLSPEC void KW_SetWidgetTilesetSurface(KW_Widget * widget, SDL_Surface * tileset);
 
 /**
  * \brief   Returns the current tileset being used by the widget.
  * \details Keep in mind that this can be the same of the set in the KW_GUI instance.
  * \param   widget The widget to retrieve the tileset from.
- * \returns A pointer to the KW_Texture being used as a tileset.
+ * \returns A pointer to the SDL_Texture being used as a tileset.
  */
-extern DECLSPEC KW_Texture * KW_GetWidgetTilesetTexture(KW_Widget * widget);
+extern DECLSPEC SDL_Texture * KW_GetWidgetTilesetTexture(KW_Widget * widget);
 
 /**
  * \brief   Returns the current tileset being used by the widget.
  * \details Keep in mind that this can be the same of the set in the KW_GUI instance.
  * \param   widget The widget to retrieve the tileset surface from.
- * \returns A pointer to the KW_Texture being used as a tileset.
+ * \returns A pointer to the SDL_Surface being used as a tileset.
  */
-extern DECLSPEC KW_Texture * KW_GetWidgetTilesetSurface(KW_Widget * widget);
+extern DECLSPEC SDL_Surface * KW_GetWidgetTilesetSurface(KW_Widget * widget);
 
 /**
  * \brief   Sets this widget to clip its children to its geometry.
@@ -664,7 +656,7 @@ extern DECLSPEC KW_Texture * KW_GetWidgetTilesetSurface(KW_Widget * widget);
  * \param   widget The widget that will have its children clipped or not.
  * \param   shouldclip If it should clip or not.
  */
-extern DECLSPEC void KW_SetClipChildrenWidgets(KW_Widget * widget, KW_bool shouldclip);
+extern DECLSPEC void KW_SetClipChildrenWidgets(KW_Widget * widget, SDL_bool shouldclip);
 
 extern DECLSPEC void KW_SetWidgetHidden(KW_Widget * widget, KW_bool hidden);
 

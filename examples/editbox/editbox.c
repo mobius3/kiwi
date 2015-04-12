@@ -1,35 +1,35 @@
 #include "SDL.h"
 #include "KW_gui.h"
 #include "KW_button.h"
+#include "SDL_image.h"
 #include "KW_frame.h"
 #include "KW_editbox.h"
 #include "KW_label.h"
-#include "KW_renderdriver_sdl2.h"
 
 
 int main(int argc, char ** argv) {
   SDL_Window * window;
   SDL_Renderer * renderer;
-  KW_RenderDriver * driver;
-  KW_Surface * set;
+  SDL_Surface * set;
   KW_GUI * gui;
-  KW_Rect framegeom, editgeom, labelgeom, buttongeom;
+  SDL_Rect framegeom, editgeom, labelgeom, buttongeom;  
   KW_Widget * frame, * editbx, * label;
-  KW_Font * fontin, * dejavu;
+  TTF_Font * fontin, * dejavu;
   
-  /* initialize window and renderer, and create a render driver */
+/* initialize window and renderer */
   SDL_Init(SDL_INIT_EVERYTHING);
   SDL_CreateWindowAndRenderer(320, 240, 0, &window, &renderer);
   SDL_SetRenderDrawColor(renderer, 100, 100, 200, 1);
-  driver = KW_CreateSDL2RenderDriver(renderer, window);
-
+  TTF_Init();
+  
   /* load tileset */
-  set = KW_LoadSurface(driver, "tileset.png");
+
+  set = IMG_Load_RW(SDL_RWFromFile("tileset.png", "r"), SDL_TRUE);
   
   /* initialize gui */
-  gui = KW_Init(driver, set);
-  fontin = KW_LoadFont(driver, "Fontin-Regular.ttf", 12);
-  dejavu = KW_LoadFont(driver, "DejaVuSans.ttf", 12);
+  gui = KW_Init(renderer, set);
+  fontin = TTF_OpenFontRW(SDL_RWFromFile("Fontin-Regular.ttf", "r"), SDL_TRUE, 12);
+  dejavu = TTF_OpenFontRW(SDL_RWFromFile("DejaVuSans.ttf", "r"), SDL_TRUE, 11);
   KW_SetFont(gui, fontin);
 
   framegeom.x = 10, framegeom.y = 10, framegeom.w = 300, framegeom.h = 220;
