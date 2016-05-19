@@ -87,7 +87,7 @@ static KW_Font * KWSDL_loadFont(KW_RenderDriver * driver, const char * font, uns
   TTF_Font * f = TTF_OpenFont(font, ptSize);
   (void)driver;
   if (f == NULL) {
-    fprintf(stderr, "KW_RenderDriver_SDL: Could not load font %s: %s\n", font, TTF_GetError());
+    fprintf(stdout, "KW_RenderDriver_SDL: Could not load font %s: %s\n", font, TTF_GetError());
     return NULL;
   }
   return f;
@@ -96,7 +96,7 @@ static KW_Font * KWSDL_loadFont(KW_RenderDriver * driver, const char * font, uns
 static KW_Surface * KWSDL_loadSurface(KW_RenderDriver * driver, const char * texturefile) {
   SDL_Surface * s = IMG_Load(texturefile);
   if (s == NULL) {
-    fprintf(stderr, "KW_RenderDriver_SDL: Could not load texture %s: %s\n", texturefile, IMG_GetError());
+    fprintf(stdout, "KW_RenderDriver_SDL: Could not load texture %s: %s\n", texturefile, IMG_GetError());
     return NULL;
   }
   SDL_SetSurfaceBlendMode(s, SDL_BLENDMODE_NONE);
@@ -127,7 +127,7 @@ static KW_Texture * KWSDL_loadTexture(KW_RenderDriver * driver, const char * tex
   KWSDL * kwsdl = (KWSDL *) driver->priv;
   SDL_Texture * t = IMG_LoadTexture(kwsdl->renderer, texturefile);
   if (t == NULL) {
-    fprintf(stderr, "KW_RenderDriver_SDL: Could not load texture %s: %s\n", texturefile, IMG_GetError());
+    fprintf(stdout, "KW_RenderDriver_SDL: Could not load texture %s: %s\n", texturefile, IMG_GetError());
     return NULL;
   }
   SDL_SetTextureBlendMode(t, SDL_BLENDMODE_BLEND);
