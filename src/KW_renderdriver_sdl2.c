@@ -27,6 +27,7 @@ static void KWSDL_blitSurface(KW_RenderDriver * driver, KW_Surface * src, const 
 static void KWSDL_releaseSurface(KW_RenderDriver * driver, KW_Surface * font);
 static void KWSDL_setClipRect(KW_RenderDriver * driver, const KW_Rect * clip, int force);
 static void KWSDL_getClipRect(KW_RenderDriver * driver, KW_Rect * clip);
+static void KWSDL_release(KW_RenderDriver * driver);
 
 struct KW_RenderDriver * KW_CreateSDL2RenderDriver(SDL_Renderer * renderer, SDL_Window * window) {
   struct KWSDL * kwsdl = calloc(sizeof(*kwsdl), 1);
@@ -52,6 +53,7 @@ struct KW_RenderDriver * KW_CreateSDL2RenderDriver(SDL_Renderer * renderer, SDL_
   rd->releaseTexture = KWSDL_releaseTexture;
   rd->setClipRect = KWSDL_setClipRect;
   rd->getClipRect = KWSDL_getClipRect;
+  rd->release = KWSDL_release;
 
   rd->priv = kwsdl;
   return rd;
@@ -193,4 +195,10 @@ static void KWSDL_getClipRect(KW_RenderDriver * driver, KW_Rect * clip) {
   SDL_Rect c;
   SDL_RenderGetClipRect(((KWSDL *)driver->priv)->renderer, &c);
   clip->x = c.x; clip->y = c.y; clip->w = c.w; clip->h = c.h;
+}
+
+static void KWSDL_release(KW_RenderDriver * driver) {
+  TTF_Quit();
+  free(driver->priv);
+  free(driver);
 }

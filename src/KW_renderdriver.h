@@ -4,7 +4,16 @@
 /**
  * \file KW_renderdriver.h
  *
- * Declares the RenderDriver API to be implemented to create new Render Drivers
+ * Declares the RenderDriver API to be implemented to create new Render Drivers.
+ * A Render Driver wraps and abstract calls to a specific rendering backend. For instance,
+ * if you want to port KiWi to your own renderer, you would implement all of the functions
+ * listed below.
+ *
+ * You are responsible for creating a valid KW_RenderDriver struct, and you should make
+ * available a function for the user to do so: this provide means to create complex
+ * initialization routines, enabling you to decouple KiWi initialization from your game
+ * rendering initialization. For example, the SDL2 RenderDriver exposes a single function,
+ * KW_CreateSDL2RenderDriver(), that receives the renderer and window instance to work with.
  **/
 
 #include "KW_macros.h"
@@ -118,6 +127,14 @@ typedef void (*KW_BlitSurfaceFunction)(KW_RenderDriver * driver, KW_Surface * sr
 typedef void (*KW_SetClipRectFunction)(KW_RenderDriver * driver, const KW_Rect * clip, int force);
 typedef void (*KW_GetClipRectFunction)(KW_RenderDriver * driver, KW_Rect * clip);
 
+/**
+ * \brief   Declares the prototype for a ReleaseDriver function.
+ * \details ReleaseDriver should be able to release a render driver private data
+ *                        and the KW_RenderDriver struct itself.
+ * \param   driver the RenderDriver that will be released.
+ */
+typedef void (*KW_ReleaseDriverFunction)(KW_RenderDriver * driver);
+
 struct KW_RenderDriver {
   KW_RenderCopyFunction        renderCopy;
   KW_RenderTextFunction        renderText;
@@ -138,6 +155,8 @@ struct KW_RenderDriver {
   KW_SetClipRectFunction       setClipRect;
   KW_GetClipRectFunction       getClipRect;
 
+  KW_ReleaseDriverFunction     release;
+
   void * priv;
 };
 
@@ -156,5 +175,6 @@ extern DECLSPEC void KW_ReleaseSurface(KW_RenderDriver * driver, KW_Surface * su
 extern DECLSPEC void KW_ReleaseFont(KW_RenderDriver * driver, KW_Font * font);
 extern DECLSPEC void KW_GetClipRect(KW_RenderDriver * driver, KW_Rect * clip);
 extern DECLSPEC void KW_SetClipRect(KW_RenderDriver * driver, const KW_Rect * clip, int force);
+extern DECLSPEC void KW_ReleaseRenderDriver(KW_RenderDriver * driver);
 
 #endif
