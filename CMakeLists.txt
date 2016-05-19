@@ -23,10 +23,6 @@ if (DEBUG_PRINT_GEOMETRY_RECTANGLE)
   set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG_PRINT_GEOMETRY_RECTANGLE")
 endif()
 
-if(CMAKE_COMPILER_IS_GNUCC)
-  set(CMAKE_C_FLAGS " ${CMAKE_C_FLAGS} -fvisibility=hidden -std=c89 -pedantic-errors")
-endif(CMAKE_COMPILER_IS_GNUCC)
-
 # Add subdirectories
 add_subdirectory(src)
 add_subdirectory(examples)

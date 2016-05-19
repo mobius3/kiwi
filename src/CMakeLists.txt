@@ -37,9 +37,14 @@ set(LIB_SOURCES
   KW_renderdriver_sdl2.c
 )
 
+
+
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIR})
 add_library(KiWi SHARED ${LIB_SOURCES} ${API_HEADERS})
 target_link_libraries(KiWi ${SDL2_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+if(CMAKE_COMPILER_IS_GNUCC)
+    target_compile_options(KiWi PRIVATE -fvisibility=hidden -std=c89 -pedantic-errors)
+endif(CMAKE_COMPILER_IS_GNUCC)
 
 # Configure install stuff
 install(TARGETS KiWi EXPORT KiWiTargets
