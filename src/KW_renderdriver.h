@@ -21,7 +21,7 @@ typedef struct KW_Rect {
 } KW_Rect;
 
 #define KW_IsRectEmpty(r) \
-  (((r.x) > 0) && ((r.y) > 0) && ((r.w) > 0) && ((r.h) > 0))
+  (!(((r.x) > 0) && ((r.y) > 0) && ((r.w) > 0) && ((r.h) > 0)))
 
 /**
  * \brief Holds a color in the RGBA format
