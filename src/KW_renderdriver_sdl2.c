@@ -180,21 +180,8 @@ static void KWSDL_renderCopy(KW_RenderDriver * driver, KW_Texture * texture, con
 
 static void KWSDL_setClipRect(KW_RenderDriver * driver, const KW_Rect * clip, int force) {
   SDL_Renderer * renderer = ((KWSDL *)driver->priv)->renderer;
-  SDL_Rect viewport, cliprect;
-  static SDL_RendererInfo info;
-  static int isopengl = -1;
+  SDL_Rect cliprect;
   cliprect.x = clip->x; cliprect.y = clip->y; cliprect.w = clip->w; cliprect.h = clip->h;
-  if (isopengl < 0) {
-    SDL_GetRendererInfo(renderer, &info);
-    isopengl = (strcmp(info.name, "opengl") >= 0) ? 1 : 0;
-  }
-
-  if (isopengl && !force) {
-    /* fix for SDL buggy opengl scissor test. See SDL bug 2269.
-     * Not sure about other renderers. */
-    SDL_RenderGetViewport(renderer, &viewport);
-    cliprect.x += viewport.x;  cliprect.y -= viewport.y;
-  }
 
   if (KW_IsRectEmpty((*clip)))
     SDL_RenderSetClipRect(renderer, NULL);
