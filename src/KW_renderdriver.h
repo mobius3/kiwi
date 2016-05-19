@@ -14,10 +14,10 @@ typedef void KW_Font;
 typedef void KW_Surface;
 
 typedef struct KW_Rect {
-  unsigned int x;
-  unsigned int y;
-  unsigned int w;
-  unsigned int h;
+  int x;
+  int y;
+  int w;
+  int h;
 } KW_Rect;
 
 #define KW_IsRectEmpty(r) \
