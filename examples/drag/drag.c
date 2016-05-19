@@ -3,11 +3,12 @@
 #include "KW_button.h"
 #include "SDL_image.h"
 #include "KW_frame.h"
+#include "KW_renderdriver_sdl2.h"
 
 int dragmode = 0;
 
 void DragStart(KW_Widget * widget, int x, int y) {
-  SDL_Rect g;
+  KW_Rect g;
   KW_GetWidgetAbsoluteGeometry(widget, &g);
   if (x > g.x + g.w - 20 && y > g.y + g.h -20) dragmode = 1;
   else dragmode = 0;
@@ -19,7 +20,7 @@ void DragStop(KW_Widget * widget, int x, int y) {
 }
 
 void Drag(KW_Widget * widget, int x, int y, int xrel, int yrel) {
-  SDL_Rect g;
+  KW_Rect g;
   KW_GetWidgetGeometry(widget, &g);
   if (dragmode == 1) {
     g.w += xrel;
@@ -37,24 +38,23 @@ int main(int argc, char ** argv) {
   /* initialize window and renderer */
   SDL_Window * window;
   SDL_Renderer * renderer;
-  SDL_Surface * set;
+  KW_RenderDriver * driver;
+  KW_Surface * set;
   KW_GUI * gui;
-  TTF_Font * font;
-  SDL_Rect framegeom;
+  KW_Font * font;
+  KW_Rect framegeom;
   KW_Widget * frame, *a;
-  int i = 0;  
+  unsigned i = 0;
   
   SDL_Init(SDL_INIT_EVERYTHING);
   SDL_CreateWindowAndRenderer(640, 480, 0, &window, &renderer);
   SDL_SetRenderDrawColor(renderer, 200, 100, 100, 1);
-  TTF_Init();
-  
-  /* load tileset */
-  set = IMG_Load("tileset.png");
-  
+  driver = KW_CreateSDL2RenderDriver(renderer, window);
+  set = KW_LoadSurface(driver, "tileset.png");
+
   /* initialize gui */
-  gui = KW_Init(renderer, set);
-  font = TTF_OpenFont("Fontin-Regular.ttf", 12);
+  gui = KW_Init(driver, set);
+  font = KW_LoadFont(driver, "Fontin-Regular.ttf", 12);
   KW_SetFont(gui, font);
   frame = NULL;
   framegeom.x = 10, framegeom.y = 10, framegeom.w = 300, framegeom.h = 220;  

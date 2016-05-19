@@ -20,4 +20,4 @@ add_subdirectory(editbox)
 #add_subdirectory(scrollbox)
 
 # Drag widget example
-#add_subdirectory(drag)
+add_subdirectory(drag)
