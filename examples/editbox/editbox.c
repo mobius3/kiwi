@@ -49,6 +49,7 @@ int main(int argc, char ** argv) {
   editgeom.x = 120, editgeom.y = 50, editgeom.w = 150, editgeom.h = 30;
   labelgeom.x = 10, labelgeom.y = 50, labelgeom.w = 110, labelgeom.h = 30;
   editbx = KW_CreateEditbox(gui, frame, "Editbox #2", &editgeom);
+  KW_SetEditboxFont(editbx, dejavu);
   
   label = KW_CreateLabel(gui, frame, "Again:", &labelgeom);
   KW_SetLabelAlignment(label, KW_LABEL_ALIGN_RIGHT, 0, KW_LABEL_ALIGN_MIDDLE, 0);
@@ -62,10 +63,10 @@ int main(int argc, char ** argv) {
   
   /* free stuff */
   KW_Quit(gui);
-  TTF_CloseFont(fontin);
-  TTF_CloseFont(dejavu);
-  SDL_FreeSurface(set);
-  TTF_Quit();
+  KW_ReleaseFont(driver, fontin);
+  KW_ReleaseFont(driver, dejavu);
+  KW_ReleaseSurface(driver, set);
+  KW_ReleaseRenderDriver(driver);
   SDL_Quit();
   
   return 0;
