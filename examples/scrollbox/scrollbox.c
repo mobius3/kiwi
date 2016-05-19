@@ -2,12 +2,12 @@
 #include "KW_gui.h"
 #include "KW_button.h"
 #include "KW_scrollbox.h"
-#include "SDL_image.h"
+#include "KW_renderdriver_sdl2.h"
 
 int dragmode = 0;
 
 void DragStart(KW_Widget * widget, int x, int y) {
-  SDL_Rect g;
+  KW_Rect g;
   KW_GetWidgetAbsoluteGeometry(widget, &g);
   if (x> g.x + g.w - 40 && y > g.y + g.h -40) dragmode = 1;
   else dragmode = 0;
@@ -17,7 +17,7 @@ void DragStop(KW_Widget * widget, int x, int y) {
 }
 
 void Drag(KW_Widget * widget, int x, int y, int xrel, int yrel) {
-  SDL_Rect g;
+  KW_Rect g;
   KW_GetWidgetGeometry(widget, &g);
   if (dragmode == 1) {
     g.w += xrel;
@@ -32,10 +32,11 @@ void Drag(KW_Widget * widget, int x, int y, int xrel, int yrel) {
 int main(int argc, char ** argv) {
   SDL_Window * window;
   SDL_Renderer * renderer;
+  KW_RenderDriver * driver;
   SDL_Surface * set;
   KW_GUI * gui;
   TTF_Font * font;
-  SDL_Rect geometry = {0, 0, 320, 240};
+  KW_Rect geometry = {0, 0, 320, 240};
   KW_Widget * frame, * button;
   int i;
   SDL_Event ev;
@@ -52,23 +53,22 @@ int main(int argc, char ** argv) {
 #endif
   SDL_CreateWindowAndRenderer(geometry.w, geometry.h, SDL_WINDOW_RESIZABLE, &window, &renderer);
   SDL_SetRenderDrawColor(renderer, 100, 200, 100, 1);
-  TTF_Init();
-  
-  /* load tileset */
-  set = IMG_Load("tileset.png");
+  driver = KW_CreateSDL2RenderDriver(renderer, window);
+  set = KW_LoadSurface(driver, "tileset.png");
   
   /* initialize gui */
-  gui = KW_Init(renderer, set);
-  font = TTF_OpenFont("SourceSansPro-Semibold.ttf", 12);
-  TTF_SetFontHinting(font, TTF_HINTING_NONE);
+  gui = KW_Init(driver, set);
+  font = KW_LoadFont(driver, "SourceSansPro-Semibold.ttf", 12);
   KW_SetFont(gui, font);
 
-  geometry.x = geometry.w * 0.0625; geometry.y = geometry.h * .0625; geometry.w *= .875f; geometry.h *= .875;
+  geometry.x = (unsigned)(geometry.w * 0.0625f);
+  geometry.y = (unsigned)(geometry.h * .0625f);
+  geometry.w *= .875f;
+  geometry.h *= .875;
   frame = KW_CreateScrollbox(gui, NULL, &geometry);
   KW_AddWidgetDragStartHandler(frame, DragStart);
   KW_AddWidgetDragHandler(frame, Drag);
   KW_AddWidgetDragStopHandler(frame, DragStop);
-  SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
   geometry.x = 10; geometry.y = 0; geometry.h = 40; geometry.w = 230;
   
@@ -84,9 +84,12 @@ int main(int argc, char ** argv) {
   while (!SDL_QuitRequested()) {
     while (SDL_PollEvent(&ev)) {
       if (ev.type == SDL_WINDOWEVENT && ev.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
-        geometry.w = ev.window.data1;
-        geometry.h = ev.window.data2;
-        geometry.x = geometry.w * 0.0625; geometry.y = geometry.h * .0625; geometry.w *= .875f; geometry.h *= .875;
+        geometry.w = (unsigned)ev.window.data1;
+        geometry.h = (unsigned)ev.window.data2;
+        geometry.x = (unsigned)(geometry.w * 0.0625);
+        geometry.y = (unsigned)(geometry.h * .0625);
+        geometry.w *= .875f;
+        geometry.h *= .875;
         KW_SetWidgetGeometry(frame, &geometry);
       }
     }
@@ -98,7 +101,7 @@ int main(int argc, char ** argv) {
   TTF_CloseFont(font);
   TTF_Quit();
   KW_Quit(gui);
-  SDL_FreeSurface(set);
+  KW_ReleaseSurface(driver, set);
   SDL_Quit();
   
   return 0;
