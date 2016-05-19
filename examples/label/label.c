@@ -58,6 +58,7 @@ int main(int argc, char ** argv) {
   /* Releases things */
   KW_ReleaseSurface(driver, set);
   KW_ReleaseFont(driver, font);
+  KW_ReleaseRenderDriver(driver);
   SDL_Quit();
 
   return 0;
