@@ -1,9 +1,7 @@
 #include "KW_gui.h"
 #include "KW_frame.h"
 #include "KW_label.h"
-#include "KW_button.h"
 #include "KW_renderdriver_sdl2.h"
-#include "KW_scrollbox.h"
 
 int main(int argc, char ** argv) {
   /* init SDL and SDL_ttf */
@@ -32,14 +30,11 @@ int main(int argc, char ** argv) {
   KW_SetFont(gui, font);
   /* create a frame and a label on top of it. */
   geometry.x = geometry.y = 0; geometry.w = 320; geometry.h = 240;
-  frame = KW_CreateScrollbox(gui, NULL, &geometry);
+  frame = KW_CreateFrame(gui, NULL, &geometry);
   l = KW_CreateLabel(gui, frame, "Label with an icon :)", &geometry);
   c.x = 0; c.y = 48; c.w = 24; c.h = 24;
   KW_SetLabelIcon(l, &c);
 
-  geometry.x = geometry.y = 0; geometry.w = 100; geometry.h = 30;
-  KW_CreateButton(gui, frame, "Button!", &geometry);
-  
   while (!SDL_QuitRequested()) {
     SDL_RenderClear(renderer);
     KW_Paint(gui);
