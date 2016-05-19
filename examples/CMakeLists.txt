@@ -4,7 +4,7 @@ find_package(SDL2 REQUIRED)
 # Include relevat dirs
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIR} ${KIWI_INCLUDE_DIR})
 
-# The playground example
+# The label example
 add_subdirectory(label)
 
 # Frame family example

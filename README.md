@@ -11,7 +11,7 @@ Right now KiWi is under (heavy) development and any help (code patches, money, c
 
 Here are some screenshots, though (click on them to see code):
 
-[![alt text](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/playground/label-screenshot.png "Label screenshot")](https://github.com/mobius3/KiWi/blob/master/examples/label/label.c)
+[![alt text](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/label/label-screenshot.png "Label screenshot")](https://github.com/mobius3/KiWi/blob/master/examples/label/label.c)
 [![alt text](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/frame-family/frame-family-screenshot.png "A Family of Frames")](https://github.com/mobius3/KiWi/blob/master/examples/frame-family/frame-family.c)
 
 [![alt text](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/editbox/editbox-screenshot.png "Two Editboxes and a button")](https://github.com/mobius3/KiWi/blob/master/examples/editbox/editbox.c)
