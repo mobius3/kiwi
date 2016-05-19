@@ -22,7 +22,7 @@ KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const KW_Rect *
   areageom.x = 0; areageom.y = 0; /* areageom.h = 0; areageom.w = 0; */
   inner = KW_CreateWidget(gui, outer, KW_WIDGETTYPE_NONE, &areageom, NULL, NULL, scrollbox);
   KW_SetWidgetGeometry(inner, &areageom);
-  KW_SetClipChildrenWidgets(outer, SDL_TRUE);
+  KW_SetClipChildrenWidgets(outer, KW_TRUE);
   KW_AddWidgetKeyUpHandler(root, ScrollboxKeyUp);
   KW_AddWidgetKeyUpHandler(inner, ScrollboxKeyUp);
   
