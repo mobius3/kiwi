@@ -85,7 +85,6 @@ KW_GUI * KW_GetGUI(const KW_Widget * widget) {
 }
 
 void KW_Paint(KW_GUI * gui) {
-  KW_ProcessEvents(gui);
   KW_PaintWidget(gui->rootwidget);
 }
 
