@@ -85,9 +85,10 @@ int main(int argc, char ** argv) {
   KW_Rect iconrect = { x: 0, y: 48, w : 24, h : 24 };
   KW_SetLabelIcon(label, &iconrect);
 
-  /* Just call KW_Paint(gui) in your game loop. */
+  /* Call KW_ProcessEvents(gui) and KW_Paint(gui) in your game loop. */
   while (!SDL_QuitRequested()) {
     SDL_RenderClear(renderer);
+    KW_ProcessEvents(gui);
     KW_Paint(gui);
     SDL_Delay(1);
     SDL_RenderPresent(renderer);
