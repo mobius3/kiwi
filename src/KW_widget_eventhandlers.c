@@ -5,7 +5,7 @@ void AddWidgetHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype,
   unsigned int * count = &(widget->eventhandlers[handlertype].count);
   
   /* check if handler is there */
-  int i;
+  unsigned i;
   for (i = 0; i < *count; ++i) {
     if (widget->eventhandlers[handlertype].handlers[i] == handler)
       return;
@@ -18,13 +18,13 @@ void AddWidgetHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype,
 }
 
 void RemoveWidgetHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype, WidgetHandler handler) {
-  int i, j;
+  unsigned i; int j = -1;
   unsigned int * count = &(widget->eventhandlers[handlertype].count);
   
   /* iterate to find the position of widget */
   for (i = 0; i < *count; i++) {
     if (widget->eventhandlers[handlertype].handlers[i] == handler) {
-      j = i;
+      j = (int)i;
     }
     
     /* move everything in front of it */

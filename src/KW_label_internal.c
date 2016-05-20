@@ -2,6 +2,7 @@
 #include "KW_label_internal.h"
 
 void LabelFontChanged(KW_GUI * gui, void * data, KW_Font * font) {
+  (void)font; (void) gui;
   RenderLabelText((KW_Widget*)data);
 }
 
@@ -12,7 +13,7 @@ void RenderLabelText(KW_Widget * widget) {
   }
   /* use our own font */
   label->textrender = KW_RenderText(KW_GetWidgetRenderer(widget), KW_GetLabelFont(widget),
-                                         label->text, label->color, label->style);
+                                         label->text, label->color, (KW_RenderDriver_TextStyle)label->style);
 
   if (label->textrender != NULL)
     KW_GetTextureExtents(KW_GetWidgetRenderer(widget), label->textrender, &(label->textwidth), &(label->textheight));

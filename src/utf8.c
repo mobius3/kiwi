@@ -352,13 +352,14 @@ char *u8_strchr(char *s, uint32_t ch, int *charn)
 
 char *u8_memchr(char *s, uint32_t ch, size_t sz, int *charn)
 {
-    int i = 0, lasti=0;
+    uint32_t i = 0, lasti=0;
     uint32_t c;
     int csz;
 
     *charn = 0;
     while (i < sz) {
-        c = csz = 0;
+        c = 0;
+        csz = 0;
         do {
             c <<= 6;
             c += (unsigned char)s[i++];

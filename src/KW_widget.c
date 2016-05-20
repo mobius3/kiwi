@@ -120,7 +120,7 @@ void KW_SetClipChildrenWidgets(KW_Widget * widget, KW_bool shouldclip) {
 
 /* recursively calculate absolute geometry */
 void CalculateAbsoluteGeometry(KW_Widget * widget) {
-  int i = 0;
+  unsigned i = 0;
   KW_Rect oldabs = widget->absolute, parentabs;
   KW_GetWidgetAbsoluteGeometry(widget->parent, &parentabs); /* get parent absolute */
   widget->absolute.x = widget->geometry.x + parentabs.x;
@@ -145,7 +145,7 @@ void CalculateComposedGeometry(KW_Widget * widget) {
   
   KW_Rect composed, edges;
   KW_Widget * children = NULL;
-  int i = 0;
+  unsigned i = 0;
   if (widget->parent == NULL) return;
   if (widget->clipchildren) {
     widget->composed = widget->geometry;
@@ -231,13 +231,13 @@ void KW_BringToFront(KW_Widget * widget)
   }
 
   /* iterate to find the position of widget */
-  for (i = 0; i < wp->childrencount; i++) {
+  for (i = 0; i < (int)wp->childrencount; i++) {
     if (wp->children[i] == widget) {
       j = i;
     }
       
     /* move everything in front of it */
-    if (j >= 0 && i + 1 < wp->childrencount) {
+    if (j >= 0 && i + 1 < (int)wp->childrencount) {
       wp->children[i] = wp->children[i+1];
     }
   }
@@ -258,13 +258,13 @@ void Reparent(KW_Widget * widget, KW_Widget * newparent) {
     KW_Widget * wp = widget->parent;
     
     /* iterate to find the position of widget */
-    for (i = 0; i < wp->childrencount; i++) {
+    for (i = 0; i < (int)wp->childrencount; i++) {
       if (wp->children[i] == widget) {
         j = i;
       }
       
       /* move everything in front of it */
-      if (j >= 0 && i + 1 < wp->childrencount) {
+      if (j >= 0 && i + 1 < (int)wp->childrencount) {
         wp->children[i] = wp->children[i+1];
       }
     }
@@ -279,7 +279,7 @@ void Reparent(KW_Widget * widget, KW_Widget * newparent) {
       wp->children = realloc(wp->children, wp->childrencount * sizeof(KW_Widget *));
 
     /* warn parent widget handlers that children changed */
-    for (i = 0; i < wp->eventhandlers[KW_ON_CHILDRENCHANGE].count; i++) {
+    for (i = 0; i < (int) wp->eventhandlers[KW_ON_CHILDRENCHANGE].count; i++) {
       KW_OnWidgetChildrenChange handler = (KW_OnWidgetChildrenChange) 
           wp->eventhandlers[KW_ON_CHILDRENCHANGE].handlers[i];
       handler(wp, KW_CHILDRENCHANGE_REMOVED, widget);
@@ -297,7 +297,7 @@ void Reparent(KW_Widget * widget, KW_Widget * newparent) {
     widget->parent = newparent;
     
     /* warn new parent widget handlers that children array changed */
-    for (i = 0; i < newparent->eventhandlers[KW_ON_CHILDRENCHANGE].count; i++) {
+    for (i = 0; i < (int)newparent->eventhandlers[KW_ON_CHILDRENCHANGE].count; i++) {
       KW_OnWidgetChildrenChange handler = (KW_OnWidgetChildrenChange)
           newparent->eventhandlers[KW_ON_CHILDRENCHANGE].handlers[i];
       handler(newparent, KW_CHILDRENCHANGE_ADDED, widget);
@@ -347,7 +347,7 @@ void * KW_GetWidgetUserData(const KW_Widget * widget) {
 
 
 void KW_PaintWidget(KW_Widget * root) {
-  int i = 0;
+  unsigned i = 0;
   KW_Rect cliprect;
   KW_RenderDriver * renderer = KW_GetWidgetRenderer(root);
   
@@ -373,7 +373,7 @@ void KW_PaintWidget(KW_Widget * root) {
 }
 
 void KW_SetWidgetGeometry(KW_Widget * widget, const KW_Rect * geometry) {
-  int i;
+  unsigned i;
   KW_Rect old;
   KW_OnGeometryChange handler;
   if ((widget->geometry.x != geometry->x ||

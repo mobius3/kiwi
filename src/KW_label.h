@@ -38,16 +38,7 @@
 extern "C" {
 #endif
 
-/**
- * \name KW_LABEL_STYLE_*
- * 
- * Defines the possible text styles for the label */
-#define KW_LABEL_STYLE_NORMAL        0x00
-#define KW_LABEL_STYLE_BOLD          0x01
-#define KW_LABEL_STYLE_ITALIC        0x02
-#define KW_LABEL_STYLE_UNDERLINE     0x04
-#define KW_LABEL_STYLE_STRIKETHROUGH 0x08
-
+typedef KW_RenderDriver_TextStyle KW_Label_Style;
 
 /**
  * \brief Possible vertial alignments to align a label.
@@ -93,7 +84,7 @@ extern DECLSPEC void KW_SetLabelText(KW_Widget * widget, const char * text);
  * \param   widget The label widget.
  * \param   style The style of the text
  */
-extern DECLSPEC void KW_SetLabelStyle(KW_Widget * widget, int style);
+extern DECLSPEC void KW_SetLabelStyle(KW_Widget * widget, KW_Label_Style style);
 
 /**
  * \brief   Sets the color of the label text.

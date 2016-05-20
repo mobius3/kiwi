@@ -41,10 +41,10 @@ void KW_SetLabelText(KW_Widget * widget, const char * text) {
   }
   label->text = SDL_strdup(text);
   RenderLabelText(widget);
-  label->dirty = SDL_TRUE;
+  label->dirty = KW_TRUE;
 }
 
-void KW_SetLabelStyle(KW_Widget * widget, int style) {
+void KW_SetLabelStyle(KW_Widget * widget, KW_Label_Style style) {
   KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
   label->style = style;
   RenderLabelText(widget);

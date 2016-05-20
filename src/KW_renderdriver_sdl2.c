@@ -80,6 +80,7 @@ static KW_Surface * KWSDL_createRGBA32Surface(KW_RenderDriver * driver, unsigned
   bmask = 0x00ff0000;
   amask = 0xff000000;
 #endif
+  (void) driver;
   s = SDL_CreateRGBSurface(0, width, height, 32, rmask, gmask, bmask, amask);
   SDL_SetSurfaceBlendMode(s, SDL_BLENDMODE_NONE);
   return s;
@@ -97,6 +98,7 @@ static KW_Font * KWSDL_loadFont(KW_RenderDriver * driver, const char * font, uns
 
 static KW_Surface * KWSDL_loadSurface(KW_RenderDriver * driver, const char * texturefile) {
   SDL_Surface * s = IMG_Load(texturefile);
+  (void) driver;
   if (s == NULL) {
     fprintf(stdout, "KW_RenderDriver_SDL: Could not load texture %s: %s\n", texturefile, IMG_GetError());
     return NULL;
@@ -107,19 +109,22 @@ static KW_Surface * KWSDL_loadSurface(KW_RenderDriver * driver, const char * tex
 
 static void KWSDL_getSurfaceExtents(KW_RenderDriver * driver, const KW_Surface * surface, unsigned * width, unsigned * height) {
   (void)driver;
-  if (width) *width = ((SDL_Surface*)surface)->w;
-  if (height) *height = ((SDL_Surface*)surface)->h;
+  if (width) *width = (unsigned)((SDL_Surface*)surface)->w;
+  if (height) *height = (unsigned)((SDL_Surface*)surface)->h;
 }
 
 static void KWSDL_getTextureExtents(KW_RenderDriver * driver, KW_Surface * texture, unsigned * width, unsigned * height) {
   int w, h;
   (void)driver;
   SDL_QueryTexture(texture, NULL, NULL, &w, &h);
-  *width = w; *height = h;
+  if (w < 0) w = 0;
+  if (h < 0) h = 0;
+  *width = (unsigned)w; *height = (unsigned)h;
 }
 
 static void KWSDL_blitSurface(KW_RenderDriver * driver, KW_Surface * src, const KW_Rect * srcRect, KW_Surface * dst, const KW_Rect * dstRect) {
   SDL_Rect s, d;
+  (void)driver;
   s.x = srcRect->x; s.y = srcRect->y; s.w = srcRect->w; s.h = srcRect->h;
   d.x = dstRect->x; d.y = dstRect->y; d.w = dstRect->w; d.h = dstRect->h;
   SDL_BlitSurface((SDL_Surface *) src, &s, (SDL_Surface *) dst, &d);
@@ -184,6 +189,7 @@ static void KWSDL_setClipRect(KW_RenderDriver * driver, const KW_Rect * clip, in
   SDL_Renderer * renderer = ((KWSDL *)driver->priv)->renderer;
   SDL_Rect cliprect;
   cliprect.x = clip->x; cliprect.y = clip->y; cliprect.w = clip->w; cliprect.h = clip->h;
+  (void) force;
 
   if (KW_IsRectEmpty((*clip)))
     SDL_RenderSetClipRect(renderer, NULL);

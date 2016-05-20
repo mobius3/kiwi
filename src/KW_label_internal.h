@@ -10,7 +10,7 @@ struct KW_Label {
   char * text;
   KW_Texture * textrender;
   KW_Color color;
-  int style;
+  KW_Label_Style style;
   KW_Font * font;
   KW_LabelHorizontalAlignment halign;
   KW_LabelVerticalAlignment valign;
@@ -19,7 +19,7 @@ struct KW_Label {
   unsigned int cursor;
   KW_bool showcursor;
   KW_bool dirty;
-  
+
   
   unsigned textwidth;
   unsigned textheight;

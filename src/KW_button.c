@@ -12,23 +12,25 @@ void ButtonGeometryChanged(KW_Widget * widget, const KW_Rect * newgeom, const KW
 
 static void MouseOver(KW_Widget * widget) {
   KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
-  button->mouseover = SDL_TRUE;
+  button->mouseover = KW_TRUE;
 }
 
 
 static void MouseLeave(KW_Widget * widget) {
   KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
-  button->mouseover = SDL_FALSE;
+  button->mouseover = KW_FALSE;
 }
 
 static void MousePress(KW_Widget * widget, int b) {
   KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
-  button->clicked = SDL_TRUE;
+  (void) b;
+  button->clicked = KW_TRUE;
 }
 
 static void MouseRelease(KW_Widget * widget, int b) {
   KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
-  button->clicked = SDL_FALSE;
+  (void) b;
+  button->clicked = KW_FALSE;
 }
 
 

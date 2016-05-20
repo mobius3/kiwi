@@ -23,7 +23,7 @@ KW_Widget * KW_CreateEditbox(KW_GUI * gui, KW_Widget * parent, const char * text
   KW_AddGUIFontChangedHandler(gui, EditboxFontChanged, widget);
 
   RenderEditboxText(editbox);
-  AdjustCursor(editbox, SDL_strlen(text));
+  AdjustCursor(editbox, (int)SDL_strlen(text));
   return widget;
 }
 

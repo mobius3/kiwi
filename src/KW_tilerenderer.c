@@ -206,7 +206,7 @@ void KW_BlitTileFrame(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface *
 KW_Texture * KW_CreateTileFrameTexture(KW_RenderDriver * renderer, KW_Surface * tileset, int startcolumn, int startline, int w, int h) {
   KW_Surface * target;
   KW_Texture * result;
-  target = KW_CreateSurface(renderer, w, h);
+  target = KW_CreateSurface(renderer, (unsigned)w, (unsigned)h);
   KW_BlitTileFrame(renderer, target, tileset, startcolumn, startline, 0, 0, w, h);
   result = KW_CreateTexture(renderer, target);
   /* TODO: proper error handling */

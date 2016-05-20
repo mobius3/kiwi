@@ -55,7 +55,7 @@ void KW_Quit(KW_GUI * gui) {
 }
 
 void KW_SetFont(KW_GUI * gui, KW_Font * font) {
-  int i = 0;
+  unsigned i = 0;
   KW_OnGUIFontChanged handler;
   if (font == NULL) return;
   gui->font = font;
@@ -95,7 +95,7 @@ void AddGUIHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, GUIHandler 
   unsigned int * count = &(gui->eventhandlers[handlertype].count);
   
   /* check if handler is there */
-  int i;
+  unsigned i;
   for (i = 0; i < *count; ++i) {
     if (gui->eventhandlers[handlertype].handlers[i].handler == handler && gui->eventhandlers[handlertype].handlers[i].priv == priv)
       return;
@@ -109,7 +109,7 @@ void AddGUIHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, GUIHandler 
 }
 
 void RemoveGUItHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, GUIHandler handler, void * priv) {
-  int i, j;
+  unsigned i; int j = -1;
   unsigned int * count = &(gui->eventhandlers[handlertype].count);
   
   /* iterate to find the position of gui */

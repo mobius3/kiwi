@@ -98,6 +98,7 @@ void MousePressed(KW_GUI * gui, int mousex, int mousey, int button) {
   int i, count;
   KW_OnMouseDown * handlers;
   KW_Widget * widget = gui->currentmouseover;
+  (void) mousex; (void) mousey;
   if (widget != NULL) {
     count = widget->eventhandlers[KW_ON_MOUSEDOWN].count;
     handlers = (KW_OnMouseDown *) widget->eventhandlers[KW_ON_MOUSEDOWN].handlers;

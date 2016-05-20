@@ -105,7 +105,7 @@ void RenderEditboxText(KW_Editbox * editbox) {
   /* use our own font */
   editbox->textrender = KW_RenderText(KW_GetWidgetRenderer(editbox->widget), KW_GetEditboxFont(editbox->widget),
                                          editbox->text, editbox->color,
-                                         TTF_STYLE_NORMAL);
+                                      KW_TTF_STYLE_NORMAL);
 
   if (editbox->textrender != NULL)
     SDL_QueryTexture(editbox->textrender, NULL, NULL, &(editbox->textwidth),
@@ -125,7 +125,7 @@ void DestroyEditbox(KW_Widget * widget) {
 }
 void AdjustCursor(KW_Editbox * editbox, int cursormove) {
   char save;
-  int len = SDL_strlen(editbox->text);
+  unsigned len = (unsigned) SDL_strlen(editbox->text);
 
   /* adjust cursormove, don't let it over/underflow. */
   if (cursormove > 0) {
@@ -133,7 +133,7 @@ void AdjustCursor(KW_Editbox * editbox, int cursormove) {
       cursormove = len - editbox->cursor;
     }
   } else if (cursormove < 0) {
-    if (-cursormove > editbox->cursor) {
+    if (-cursormove > (int)editbox->cursor) {
       cursormove = -editbox->cursor;
     }
   }
@@ -174,7 +174,7 @@ void TextBackspace(KW_Editbox * editbox) {
 
 void TextDelete(KW_Editbox * editbox) {
   int i = 0;
-  int len = SDL_strlen(editbox->text);
+  int len = (int)SDL_strlen(editbox->text);
   int seq = u8_seqlen(editbox->text[editbox->cursor]);
   for (i = editbox->cursor; i < len; i++) {
     editbox->text[i] = editbox->text[i + seq];
@@ -184,7 +184,8 @@ void TextDelete(KW_Editbox * editbox) {
 
 /* KiWi callbacks */
 void EditboxKeyDown(KW_Widget * widget, SDL_Keycode key, SDL_Scancode scan) {
-  KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);  
+  KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
+  (void) key;
   switch (scan) {
     /* set up cursor states */
     case SDL_SCANCODE_LEFT:
@@ -217,13 +218,13 @@ void EditboxKeyDown(KW_Widget * widget, SDL_Keycode key, SDL_Scancode scan) {
 
 void EditboxTextInput(KW_Widget * widget, const char * text) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
-  int i = 0, insertlen, textlen, cursoradjust;
+  unsigned i = 0, insertlen, textlen, cursoradjust;
 
   /* make room in the middle */
   i = editbox->cursor;
-  insertlen = SDL_strlen(text);
+  insertlen = (int)SDL_strlen(text);
   cursoradjust = insertlen;
-  textlen = SDL_strlen(editbox->text);
+  textlen = (int)SDL_strlen(editbox->text);
 
   for (i = textlen; i >= editbox->cursor && i > 0; i--) {
     editbox->text[textlen + insertlen - (textlen - i)] = editbox->text[i];
@@ -242,37 +243,40 @@ void EditboxTextInput(KW_Widget * widget, const char * text) {
 
 void EditboxMouseOver(KW_Widget * widget) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
-  editbox->mouseover = SDL_TRUE;
+  editbox->mouseover = KW_TRUE;
 }
 
 void EditboxMouseLeave(KW_Widget * widget) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
-  editbox->mouseover = SDL_FALSE;
+  editbox->mouseover = KW_FALSE;
 }
 
 void EditboxMousePress(KW_Widget * widget, int b) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
-  editbox->clicked = SDL_TRUE;
+  (void) b;
+  editbox->clicked = KW_TRUE;
 }
 
 void EditboxMouseRelease(KW_Widget * widget, int b) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
-  editbox->clicked = SDL_FALSE;
+  (void) b;
+  editbox->clicked = KW_FALSE;
 }
 
 void EditboxFocusGain(KW_Widget * widget) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
-  editbox->active = SDL_TRUE;
+  editbox->active = KW_TRUE;
   SDL_StartTextInput();
 }
 
 void EditboxFocusLose(KW_Widget * widget) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
-  editbox->active = SDL_FALSE;
+  editbox->active = KW_FALSE;
   SDL_StopTextInput();
 }
 
 void EditboxFontChanged(KW_GUI * gui, void * priv, KW_Font * font) {
   KW_Editbox * editbox = KW_GetWidgetData((KW_Widget*)priv, KW_WIDGETTYPE_EDITBOX);
+  (void) font; (void) gui;
   RenderEditboxText(editbox);
 }
