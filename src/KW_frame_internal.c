@@ -38,7 +38,7 @@ void PaintFrame(KW_Widget * widget) {
 
 
 void FrameGeometryChanged(KW_Widget * widget, const KW_Rect * newgeom, const KW_Rect * oldgeom) {
-  if (newgeom->w != oldgeom->w || newgeom->h != newgeom->h) {
+  if (newgeom->w != oldgeom->w || newgeom->h != oldgeom->h) {
     RenderFrame(widget);
   }
 }
