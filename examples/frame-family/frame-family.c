@@ -41,6 +41,7 @@ int main(int argc, char ** argv) {
 
   while (!SDL_QuitRequested()) {
     SDL_RenderClear(renderer);
+    KW_ProcessEvents(gui);
     KW_Paint(gui);
     SDL_RenderPresent(renderer);
     SDL_Delay(1);

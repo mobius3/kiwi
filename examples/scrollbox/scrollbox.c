@@ -94,6 +94,7 @@ int main(int argc, char ** argv) {
       }
     }
     SDL_RenderClear(renderer);
+    KW_ProcessEvents(gui);
     KW_Paint(gui);
     SDL_RenderPresent(renderer);
     SDL_Delay(1);

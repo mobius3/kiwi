@@ -47,6 +47,7 @@ int main(int argc, char ** argv) {
   /* Just call KW_Paint(gui) in your game loop. */
   while (!SDL_QuitRequested()) {
     SDL_RenderClear(renderer);
+    KW_ProcessEvents(gui);
     KW_Paint(gui);
     SDL_Delay(1);
     SDL_RenderPresent(renderer);
