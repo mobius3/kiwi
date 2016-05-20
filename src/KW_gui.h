@@ -160,9 +160,11 @@ extern DECLSPEC void KW_RemoveGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontCh
 
 /**
  * \brief   Get the current font associated with a KW_GUI instance.
- * \details You might want to use this function if you need to render text in a custom widget.
+ * \details You might want to use this function if you need to render text in a custom widget. Be sure to call
+ *          KW_ProcessEvents before calling this.
  * \param   gui The KW_GUI instance to get the font from.
  * \return  The current font associated with the KW_GUI instance.
+ * \sa      KW_ProcessEvents
  */
 extern DECLSPEC KW_Font * KW_GetFont(KW_GUI * gui);
 
@@ -172,6 +174,15 @@ extern DECLSPEC KW_Font * KW_GetFont(KW_GUI * gui);
  * \param   gui The KW_GUI instance holding the widget tree.
  */
 extern DECLSPEC void KW_Paint(KW_GUI * gui);
+
+/**
+ * \brief   Process all pending events (mouse movement, keyboard movement, etc)
+ * \details This function should be called before KW_Paint. It will update the state of the
+ *          widgets based on the position of the cursor, clicks/touches and keyboard inputs.
+ *          Most input based callbacks will be called before this function returns.
+ * \param   gui The KW_GUI instance holding the widget tree.
+ */
+extern DECLSPEC void KW_ProcessEvents(KW_GUI * gui);
 
 #ifdef __cplusplus
 }

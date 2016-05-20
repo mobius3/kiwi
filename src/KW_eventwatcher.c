@@ -182,7 +182,7 @@ int KW_EventWatcher(void * data, SDL_Event * event) {
   return 0;
 }
 
-int KW_ProcessEvents(KW_GUI * gui) {
+void KW_ProcessEvents(KW_GUI * gui) {
   int i = 0;
   SDL_LockMutex(gui->evqueuelock);  
   for (i = 0; i < gui->evqueuesize; i++) {
@@ -220,7 +220,5 @@ int KW_ProcessEvents(KW_GUI * gui) {
   }
   gui->evqueuesize = 0;
   SDL_UnlockMutex(gui->evqueuelock);
-  
-  return 0;
 }
 #undef NDEBUG

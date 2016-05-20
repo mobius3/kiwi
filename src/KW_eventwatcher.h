@@ -34,7 +34,6 @@ extern "C" {
 
 
 int KW_EventWatcher(void * gui, SDL_Event * event);
-int KW_ProcessEvents(KW_GUI * gui);
 
 #ifdef __cplusplus
 }
