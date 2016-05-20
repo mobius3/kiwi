@@ -43,7 +43,7 @@ include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR} ${SDL2_TTF_INC
 add_library(KiWi SHARED ${LIB_SOURCES} ${API_HEADERS})
 target_link_libraries(KiWi ${SDL2_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
 if(CMAKE_COMPILER_IS_GNUCC)
-    target_compile_options(KiWi PRIVATE -fvisibility=hidden -std=c89 -pedantic-errors)
+    target_compile_options(KiWi PRIVATE -fvisibility=hidden -std=c89 -pedantic-errors -Wall -Wextra)
 endif(CMAKE_COMPILER_IS_GNUCC)
 
 # Configure install stuff
