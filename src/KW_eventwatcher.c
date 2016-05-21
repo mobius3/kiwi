@@ -201,12 +201,10 @@ void KW_ProcessEvents(KW_GUI * gui) {
         break;
         
       case SDL_TEXTINPUT:
-        SDL_Log("Got a textready: %s\n", event->text.text);
         TextInputReady(gui, event->text.text);
         break;
         
       case SDL_TEXTEDITING:
-        SDL_Log("Got a textediting: %d %d %d %s\n", event->edit.start, event->edit.length, event->edit.type, event->edit.text);
         break;
         
       case SDL_KEYDOWN:
