@@ -13,16 +13,6 @@ add_definitions("-Wall")
 # Add Debug definitions
 set (CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
 
-option(DEBUG_GEOMETRY_CHANGE "Print a lot of messages when calculating composed geometries" OFF)
-if (DEBUG_GEOMETRY_CHANGE)
-  set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG_GEOMETRY_CHANGE")
-endif()
-
-option(DEBUG_PRINT_GEOMETRY_RECTANGLE "Display composed geometry rectangles of widgets" OFF)
-if (DEBUG_PRINT_GEOMETRY_RECTANGLE)
-  set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG_PRINT_GEOMETRY_RECTANGLE")
-endif()
-
 # Add subdirectories
 add_subdirectory(src)
 add_subdirectory(examples)
