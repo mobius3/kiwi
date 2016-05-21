@@ -52,6 +52,7 @@ KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, const char * text,
   KW_AddWidgetMouseDownHandler(widget, MousePress);
   KW_AddWidgetMouseUpHandler(widget, MouseRelease);
   KW_AddWidgetGeometryChangeHandler(widget, ButtonGeometryChanged);
+  KW_AddWidgetTilesetChangeHandler(widget, RenderButton);
   RenderButton(widget);
   return widget;
 }
