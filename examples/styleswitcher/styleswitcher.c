@@ -21,36 +21,28 @@ void kthxbaiClicked(KW_Widget * widget, int b) {
   quit = SDL_TRUE;
 }
 
-void SwitchFlatClicked(KW_Widget * widget, int b) {
+void SwitchTo(KW_Widget * widget, KW_Font * font, KW_Surface * surface, uint8_t r, uint8_t g, uint8_t b) {
   KW_GUI * gui = KW_GetGUI(widget);
-  SDL_Renderer * renderer = KW_GetRenderer(gui);
-  KW_SetFont(gui, sourcepro);
-  SDL_SetRenderDrawColor(renderer, 200, 100, 100, 1);  
-  KW_SetTilesetSurface(gui, setflat);
+  SDL_Renderer * renderer = KW_RenderDriverGetSDL2Renderer(KW_GetRenderer(gui));
+  KW_SetFont(gui, font);
+  SDL_SetRenderDrawColor(renderer, r, g, b, 1);
+  KW_SetTilesetSurface(gui, surface);
+}
+
+void SwitchFlatClicked(KW_Widget * widget, int b) {
+  SwitchTo(widget, sourcepro, setflat, 200, 100, 100);
 }
 
 void SwitchAlloyClicked(KW_Widget * widget, int b) {
-  KW_GUI * gui = KW_GetGUI(widget);
-  SDL_Renderer * renderer = KW_GetRenderer(gui);
-  KW_SetFont(gui, sourcepro);
-  SDL_SetRenderDrawColor(renderer, 64, 67, 70, 1);  
-  KW_SetTilesetSurface(gui, setalloy);
+  SwitchTo(widget, sourcepro, setalloy, 64, 67, 70);
 }
 
 void SwitchNormalClicked(KW_Widget * widget, int b) {
-  KW_GUI * gui = KW_GetGUI(widget);
-  SDL_Renderer * renderer = KW_GetRenderer(gui);
-  KW_SetFont(gui, fontin);
-  SDL_SetRenderDrawColor(renderer, 100, 100, 200, 1);
-  KW_SetTilesetSurface(gui, set);
+  SwitchTo(widget, fontin, set, 100, 100, 200);
 }
 
 void SwitchFutterClicked(KW_Widget * widget, int b) {
-  KW_GUI * gui = KW_GetGUI(widget);
-  SDL_Renderer * renderer = KW_GetRenderer(gui);
-  KW_SetFont(gui, fontin);  
-  SDL_SetRenderDrawColor(renderer, 118, 152, 162, 1);
-  KW_SetTilesetSurface(gui, setfutter);
+  SwitchTo(widget, fontin, setfutter, 118, 152, 162);
 }
 
 int main(int argc, char ** argv) {
