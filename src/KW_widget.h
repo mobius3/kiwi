@@ -82,6 +82,7 @@ typedef void (*KW_OnKeyUp)(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode cod
 
 /* widget internal events */
 typedef void (*KW_OnGeometryChange)(KW_Widget * widget, const KW_Rect * newgeom, const KW_Rect * oldgeom);
+typedef void (*KW_OnWidgetTilesetChange)(KW_Widget * widget);
 
 /**
  * \brief   The event type when the children array changes.
@@ -93,9 +94,7 @@ typedef enum KW_WidgetChildrenChangeEvent {
   KW_CHILDRENCHANGE_REMOVED
 } KW_WidgetChildrenChangeEvent;
 
-
 typedef void (*KW_OnWidgetChildrenChange)(KW_Widget * widget, KW_WidgetChildrenChangeEvent what, KW_Widget * child);
-typedef void (*KW_OnWidgetTilesetChange)(KW_Widget * widget);
 
 /**
  * \brief   The KW_WidgetType enumeration represents available widget types.
