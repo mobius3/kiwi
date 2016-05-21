@@ -4,6 +4,8 @@ cmake_minimum_required(VERSION 2.8)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 
+set(CMAKE_C_STANDARD 99)
+
 add_executable(frame-family frame-family.c tileset.png Fontin-Regular.ttf)
 target_link_libraries(frame-family KiWi ${SDL2_LIBRARIES} ${SDL2MAIN_LIBRARY} ${SDL2_IMAGE_LIBRARIES})
 
