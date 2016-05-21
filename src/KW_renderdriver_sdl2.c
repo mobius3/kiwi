@@ -59,6 +59,16 @@ struct KW_RenderDriver * KW_CreateSDL2RenderDriver(SDL_Renderer * renderer, SDL_
   return rd;
 }
 
+struct SDL_Renderer * KW_RenderDriverGetSDL2Renderer(struct KW_RenderDriver * driver) {
+  KWSDL * kwsdl = (KWSDL *) driver->priv;
+  return kwsdl->renderer;
+}
+
+struct SDL_Window * KW_RenderDriverGetSDL2Window(struct KW_RenderDriver * driver) {
+  KWSDL * kwsdl = (KWSDL *) driver->priv;
+  return kwsdl->window;
+}
+
 static KW_Texture * KWSDL_createTexture(KW_RenderDriver * driver, KW_Surface * surface) {
   KWSDL * kwsdl = (KWSDL *) driver->priv;
   SDL_Texture * t = SDL_CreateTextureFromSurface(kwsdl->renderer, (SDL_Surface *)surface);
