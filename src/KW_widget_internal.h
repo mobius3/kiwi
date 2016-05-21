@@ -20,6 +20,7 @@ typedef enum KW_WidgetEventHandlerType {
   KW_ON_DRAG,
   KW_ON_GEOMETRYCHANGED,
   KW_ON_CHILDRENCHANGE,
+  KW_ON_TILESETCHANGE,
   KW_EVENTHANDLER_TOTAL
 } KW_WidgetEventHandlerType;
 

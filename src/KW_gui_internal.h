@@ -8,6 +8,7 @@ typedef void (*GUIHandler)(void);
 
 typedef enum KW_GUIEventHandlerType {
   KW_GUI_ONFONTCHANGED,
+  KW_GUI_ONTILESETCHANGED,
   KW_GUIEVENTHANDLER_TOTAL
 } KW_GUIEventHandlerType;
 

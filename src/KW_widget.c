@@ -37,8 +37,14 @@ KW_Widget * const * KW_GetWidgetChildren(const KW_Widget * widget, unsigned int 
 
 
 void KW_SetWidgetTilesetSurface(KW_Widget * widget, KW_Surface * tileset) {
+  unsigned i = 0;
+  KW_OnWidgetTilesetChange handler;
   widget->tilesetsurface = tileset;
   widget->tilesettexture = KW_CreateTexture(KW_GetWidgetRenderer(widget), tileset);
+  for (i = 0; i < widget->eventhandlers[KW_ON_TILESETCHANGE].count; i++) {
+    handler = (KW_OnWidgetTilesetChange) widget->eventhandlers[KW_ON_TILESETCHANGE].handlers[i];
+    handler(widget);
+  }
 }
 
 KW_Texture * KW_GetWidgetTilesetTexture(KW_Widget * widget) {
@@ -515,3 +521,16 @@ void KW_AddWidgetChildrenChangeHandler(KW_Widget * widget, KW_OnWidgetChildrenCh
 void KW_RemoveWidgetChildrenChangeHandler(KW_Widget * widget, KW_OnWidgetChildrenChange handler) {
   RemoveWidgetHandler(widget, KW_ON_CHILDRENCHANGE, (WidgetHandler) handler);
 }
+
+void KW_AddWidgetTilesetChangeHandler(KW_Widget * widget, KW_OnWidgetTilesetChange handler) {
+  KW_GUI * gui = KW_GetGUI(widget);
+  AddWidgetHandler(widget, KW_ON_TILESETCHANGE, (WidgetHandler) handler);
+  AddGUIHandler(gui, KW_GUI_ONTILESETCHANGED, (GUIHandler) handler, widget);
+}
+
+void KW_RemoveWidgetTilesetChangeHandler(KW_Widget * widget, KW_OnWidgetTilesetChange handler) {
+  KW_GUI * gui = KW_GetGUI(widget);
+  RemoveWidgetHandler(widget, KW_ON_TILESETCHANGE, (WidgetHandler) handler);
+  RemoveGUItHandler(gui, KW_GUI_ONTILESETCHANGED, (GUIHandler) handler, widget);
+}
+

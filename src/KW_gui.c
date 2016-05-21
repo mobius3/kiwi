@@ -25,8 +25,16 @@ void KW_SetRender(KW_GUI * gui, KW_RenderDriver * renderer) {
 }
 
 void KW_SetTilesetSurface(KW_GUI * gui, KW_Surface * tileset) {
+  unsigned i = 0;
+  KW_OnWidgetTilesetChange handler;
+  KW_Widget * widget;
   gui->tilesettexture = KW_CreateTexture(gui->renderer, tileset);
   gui->tilesetsurface = tileset;
+  for (i = 0; i < gui->eventhandlers[KW_GUI_ONTILESETCHANGED].count; i++) {
+    widget = gui->eventhandlers[KW_GUI_ONTILESETCHANGED].handlers[i].priv;
+    handler = (KW_OnWidgetTilesetChange) gui->eventhandlers[KW_GUI_ONTILESETCHANGED].handlers[i].handler;
+    handler(widget);
+  }
 }
 
 

@@ -95,6 +95,7 @@ typedef enum KW_WidgetChildrenChangeEvent {
 
 
 typedef void (*KW_OnWidgetChildrenChange)(KW_Widget * widget, KW_WidgetChildrenChangeEvent what, KW_Widget * child);
+typedef void (*KW_OnWidgetTilesetChange)(KW_Widget * widget);
 
 /**
  * \brief   The KW_WidgetType enumeration represents available widget types.
@@ -632,6 +633,9 @@ extern DECLSPEC void KW_RemoveWidgetChildrenChangeHandler(KW_Widget * widget, KW
  * \param   handler The KW_OnDrag function pointer.
  */
 extern DECLSPEC void KW_RemoveWidgetDragHandler(KW_Widget * widget, KW_OnDrag handler);
+
+extern DECLSPEC void KW_AddWidgetTilesetChangeHandler(KW_Widget * widget, KW_OnWidgetTilesetChange handler);
+extern DECLSPEC void KW_RemoveWidgetTilesetChangeHandler(KW_Widget * widget, KW_OnWidgetTilesetChange handler);
 
 /**
  * \brief   Change the tileset used to render this widget.
