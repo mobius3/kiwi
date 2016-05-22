@@ -2,6 +2,7 @@
 #define KW_FRAME_INTERNAL_H
 
 #include "SDL.h"
+#include "KW_widget.h"
 
 typedef struct KW_Frame {
   SDL_Texture * framerender;

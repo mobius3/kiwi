@@ -15,6 +15,7 @@ set(API_HEADERS
   KW_scrollbox.h
   KW_renderdriver_sdl2.h
   KW_renderdriver.h
+  KW_rect.h
 )
 
 set(LIB_SOURCES
@@ -35,6 +36,7 @@ set(LIB_SOURCES
   KW_widget_eventhandlers.c
   KW_renderdriver.c
   KW_renderdriver_sdl2.c
+  KW_rect.c
 )
 
 

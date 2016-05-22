@@ -17,20 +17,13 @@
  **/
 
 #include "KW_macros.h"
+#include "KW_rect.h"
 
 typedef void KW_Texture;
 typedef void KW_Font;
 typedef void KW_Surface;
 
-typedef struct KW_Rect {
-  int x;
-  int y;
-  int w;
-  int h;
-} KW_Rect;
 
-#define KW_IsRectEmpty(r) \
-  (!(r).x && !(r).y && !(r).w && !(r).h)
 
 /**
  * \brief Holds a color in the RGBA format
