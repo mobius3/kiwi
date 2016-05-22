@@ -10,7 +10,7 @@ int dragmode = 0;
 void DragStart(KW_Widget * widget, int x, int y) {
   KW_Rect g;
   KW_GetWidgetAbsoluteGeometry(widget, &g);
-  if (x > g.x + g.w - 20 && y > g.y + g.h -20) dragmode = 1;
+  if (x > g.x + g.w - 20 && y > g.y + g.h - 20) dragmode = 1;
   else dragmode = 0;
   printf("Drag has started at %dx%d\n", x, y);
 }
@@ -44,7 +44,6 @@ int main(int argc, char ** argv) {
   KW_Font * font;
   KW_Rect framegeom;
   KW_Widget * frame, *a;
-  unsigned i = 0;
   
   SDL_Init(SDL_INIT_EVERYTHING);
   SDL_CreateWindowAndRenderer(640, 480, 0, &window, &renderer);
@@ -57,12 +56,11 @@ int main(int argc, char ** argv) {
   font = KW_LoadFont(driver, "Fontin-Regular.ttf", 12);
   KW_SetFont(gui, font);
   frame = NULL;
-  framegeom.x = 10, framegeom.y = 10, framegeom.w = 300, framegeom.h = 220;  
   framegeom.x = 50, framegeom.y = 50, framegeom.w = 100, framegeom.h = 100;
   frame = KW_CreateFrame(gui, frame, &framegeom);
   framegeom.x = 10, framegeom.y = 10, framegeom.w = 160, framegeom.h = 120;
   KW_AddWidgetDragHandler(frame, Drag);
-  for (i = 0; i < 2; i++) {
+  for (int i = 0; i < 2; i++) {
     framegeom.x = framegeom.y = i * 10;
     a = KW_CreateButton(gui, frame, "Yay", &framegeom);
     KW_AddWidgetDragStartHandler(a, DragStart);
@@ -81,9 +79,9 @@ int main(int argc, char ** argv) {
   
   /* free stuff */
   KW_Quit(gui);
-  TTF_CloseFont(font);
-  SDL_FreeSurface(set);
-  TTF_Quit();
+  KW_ReleaseFont(driver, font);
+  KW_ReleaseSurface(driver, set);
+  KW_ReleaseRenderDriver(driver);
   SDL_Quit();
   
   return 0;
