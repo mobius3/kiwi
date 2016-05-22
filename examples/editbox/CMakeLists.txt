@@ -3,14 +3,16 @@ cmake_minimum_required(VERSION 2.8)
 
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
-
-add_executable(editbox editbox.c tileset.png Fontin-Regular.ttf DejaVuSans.ttf)
+set(TILESETS "tileset.png;tileset-alloy.png;tileset-futterpedia.png;tileset-flat.png;tileset-guide.png")
+add_executable(editbox editbox.c ${TILESETS} Fontin-Regular.ttf DejaVuSans.ttf)
 target_link_libraries(editbox KiWi ${SDL2_LIBRARIES} ${SDL2MAIN_LIBRARY} ${SDL2_IMAGE_LIBRARIES})
 
-add_custom_command(OUTPUT tileset.png
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../tileset/tileset.png ${CMAKE_CURRENT_BINARY_DIR}/tileset.png
-  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/../tileset/tileset.png
-)
+foreach(TILESET ${TILESETS})
+    add_custom_command(OUTPUT ${TILESET}
+            COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../tileset/${TILESET} ${CMAKE_CURRENT_BINARY_DIR}/${TILESET}
+            DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/../tileset/${TILESET}
+            )
+endforeach(TILESET ${TILESETS})
 
 add_custom_command(OUTPUT Fontin-Regular.ttf
   COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../fonts/Fontin-Regular.ttf ${CMAKE_CURRENT_BINARY_DIR}/Fontin-Regular.ttf
