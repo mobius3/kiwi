@@ -51,7 +51,7 @@ typedef enum KW_RectVerticalAlignment {
  * \brief Possible horizontal alignments to align rectangles
  */
 typedef enum KW_RectHorizontalAlignment {
-  KW_RECT_ALIGN_HORIONTALLY_NONE,  /* Do not align horizontally */
+  KW_RECT_ALIGN_HORIZONTALLY_NONE,  /* Do not align horizontally */
   KW_RECT_ALIGN_LEFT,    /** Left align the rectangles */
   KW_RECT_ALIGN_CENTER,  /** Make the rectangles centralized on a vertical lign */
   KW_RECT_ALIGN_RIGHT    /** Right align the rectangles */
