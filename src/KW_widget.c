@@ -382,6 +382,8 @@ void KW_PaintWidget(KW_Widget * root) {
   unsigned i = 0;
   KW_Rect cliprect;
   KW_RenderDriver * renderer = KW_GetWidgetRenderer(root);
+
+  if (KW_IsWidgetHidden(root)) return;
   
   /* paint the root, then paint its childrens */
   if (root->paint != NULL) {
