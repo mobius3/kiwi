@@ -150,7 +150,10 @@ typedef enum KW_WidgetHint {
   
   /** Hints widget implementations that, if possible, the user wants a
    * frameless version of it */
-  KW_WIDGETHINT_FRAMELESS = 1 << 3
+  KW_WIDGETHINT_FRAMELESS = 1 << 3,
+
+  /** Makes KiWi not paint this widget */
+  KW_WIDGETHINT_HIDDEN = 1 << 4
 } KW_WidgetHint;
 
 /**
@@ -369,6 +372,36 @@ extern DECLSPEC void KW_BringToFront(KW_Widget * widget);
  */
 extern DECLSPEC void KW_SetFocusedWidget(KW_Widget * widget);
 
+/**
+ * \brief   Hides this widget and their children, effectively preventing them from being painted.
+ * \details You can use this function if you want to prevent the paint function of the widget from
+ *          being called. Please note that this also disables event dispatching for this widget and
+ *          their children.
+ *
+ *          *This is just a wrapper for KW_EnableWidgetHint(widget, KW_WIDGETHINT_HIDDEN, KW_TRUE)*
+ *
+ * \param   widget The widget to hide.
+ */
+extern DECLSPEC void KW_HideWidget(KW_Widget * widget);
+
+/**
+ * \brief   Shows a widget that was hidden.
+ * \details See ::KW_HideWidget. This enables the painting of this widget (and childrens) in the next
+ *          ::KW_Paint call.
+ *
+ *          *This is just a wrapper of KW_DisableWidgetHint(w, KW_WIDGETHINT_HIDDEN)*
+ * \param   widget The widget that will now be painted.
+ */
+extern DECLSPEC void KW_ShowWidget(KW_Widget * widget);
+
+/**
+ * \brief   Returns KW_TRUE if this widget is hidden.
+ * \param   widget The widget to query.
+ * \details This function is a wrapper of KW_QueryWidgetHint(w, KW_WIDGETHINT_HIDDEN)
+ * \return  KW_TRUE or KW_FALSE if hidden or not.
+ */
+extern DECLSPEC KW_bool KW_IsWidgetHidden(KW_Widget * widget);
+
 /* Stuff now related to handling of events (focus, mouse, keyboard, etc) */
 
 /**
@@ -380,7 +413,7 @@ extern DECLSPEC void KW_SetFocusedWidget(KW_Widget * widget);
  *          from the widgets below this function might be useful to you.
  * 
  *          All children widgets will also have its input events blocked.
- *          *This is just a wrapper of KW_EnableWidgetHint(w, KW_WIDGETHINT_BLOCKINPUTEVENTS)*
+ *          *This is just a wrapper of KW_EnableWidgetHint(w, KW_WIDGETHINT_BLOCKINPUTEVENTS, KW_FALSE)*
  * \param   widget The widget that will stop receiving input evenets.
  */
 extern DECLSPEC void KW_BlockWidgetInputEvents(KW_Widget * widget);
@@ -388,7 +421,7 @@ extern DECLSPEC void KW_BlockWidgetInputEvents(KW_Widget * widget);
 /**
  * \brief   Unblocks this widget from receiving input events.
  * \details See ::KW_BlockWidgetEvents. All children widgets will have its input events unblocked.
- *          *This is just a wrapper of KW_DisableWidgetHint(w, KW_WIDGETHINT_BLOCKINPUTEVENTS)*
+ *          *This is just a wrapper of KW_DisableWidgetHint(w, KW_WIDGETHINT_BLOCKINPUTEVENTS, KW_FALSE)*
  * \param   widget The widget that will now receive input events.
  */
 extern DECLSPEC void KW_UnblockWidgetInputEvents(KW_Widget * widget);
@@ -401,8 +434,8 @@ extern DECLSPEC void KW_UnblockWidgetInputEvents(KW_Widget * widget);
  */
 extern DECLSPEC KW_bool KW_IsWidgetInputEventsBlocked(KW_Widget * widget);
 
-extern DECLSPEC void KW_EnableWidgetHint(KW_Widget * widget, KW_WidgetHint hint);
-extern DECLSPEC void KW_DisableWidgetHint(KW_Widget * widget, KW_WidgetHint hint);
+extern DECLSPEC void KW_EnableWidgetHint(KW_Widget * widget, KW_WidgetHint hint, KW_bool down);
+extern DECLSPEC void KW_DisableWidgetHint(KW_Widget * widget, KW_WidgetHint hint, KW_bool down);
 extern DECLSPEC KW_bool KW_QueryWidgetHint(const KW_Widget * widget, KW_WidgetHint hint);
 
 /**
