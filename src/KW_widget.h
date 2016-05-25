@@ -142,7 +142,7 @@ typedef enum KW_WidgetHint {
   
   /** Makes KiWi avoid reporting input events to this widget and its children
    *  widget */
-  KW_WIDGETHINT_BLOCKINPUTEVENTS = 1 << 1, 
+  KW_WIDGETHINT_BLOCKINPUTEVENTS = 1 << 1,
   
   /** Makes KiWi avoid reporting input event to this widget but still passes to
    * its children widgets */

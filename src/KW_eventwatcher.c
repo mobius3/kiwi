@@ -11,7 +11,7 @@ KW_Widget * CalculateMouseOver(KW_Widget * widget, int x, int y) {
     g.y += widget->parent->absolute.y;
   }
   /* mouseover is a input event, avoid calculating it */
-  if (KW_IsWidgetInputEventsBlocked(widget)) { 
+  if (KW_IsWidgetInputEventsBlocked(widget) || KW_IsWidgetHidden(widget)) {
     return NULL;
   }
   
@@ -100,6 +100,7 @@ void MousePressed(KW_GUI * gui, int mousex, int mousey, int button) {
   KW_Widget * widget = gui->currentmouseover;
   (void) mousex; (void) mousey;
   if (widget != NULL) {
+    if (KW_IsWidgetInputEventsBlocked(widget) || KW_IsWidgetHidden(widget)) return;
     count = widget->eventhandlers[KW_ON_MOUSEDOWN].count;
     handlers = (KW_OnMouseDown *) widget->eventhandlers[KW_ON_MOUSEDOWN].handlers;
     for (i = 0; i < count; i++) {
@@ -116,6 +117,8 @@ void MouseReleased(KW_GUI * gui, int mousex, int mousey, int button) {
   KW_Widget * widget = gui->currentmouseover;
   
   gui->cursordown = SDL_FALSE;
+
+  if (widget && (KW_IsWidgetInputEventsBlocked(widget) || KW_IsWidgetHidden(widget))) return;
   
   /* check if was under drag */
   if (gui->currentdrag != NULL) {
