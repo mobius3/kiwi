@@ -60,7 +60,18 @@ extern "C" {
  * \details You need a KW_GUI instance to create widgets.
  */
 
+/**
+ * \brief The type of a font changed handler
+ * \sa KW_AddGUIFontChangedHandler
+ */
 typedef void (*KW_OnGUIFontChanged)(KW_GUI * gui, void * data, KW_Font * font);
+
+/**
+ * \brief The type of a font color changed handler
+ * \sa KW_AddGUIFontColorChangedHandler
+ */
+typedef void (*KW_OnGUIFontColorChanged)(KW_GUI * gui, void * data, KW_Color color);
+
 
 /**
  * \brief   Initializes a new KW_GUI instance.
@@ -137,6 +148,15 @@ extern DECLSPEC KW_Surface * KW_GetTilesetSurface(KW_GUI * gui);
  * \param   font The font to associate with a KW_GUI instance.
  */
 extern DECLSPEC void KW_SetFont(KW_GUI * gui, KW_Font * font);
+/**
+ * \brief   Sets a uniform font conlor to be used in label-rendering widgets.
+ * \details All widgets that render text will use by default the font color set with this function unless
+ *          you specify otherwise in their respective SetLabelColor calls.
+ * \param   gui The KW_GUI instance to set the font.
+ * \param   color The font color to associate with a KW_GUI instance.
+ */
+extern DECLSPEC void KW_SetFontColor(KW_GUI * gui, KW_Color color);
+
 
 /**
  * \brief   Add a function to be called when the current GUI font changes.
@@ -159,14 +179,40 @@ extern DECLSPEC void KW_AddGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChang
 extern DECLSPEC void KW_RemoveGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, void * priv);
 
 /**
+ * \brief   Add a function to be called when the current GUI font color changes.
+ * \details If you are rendering text somewhere, you might want to know when
+ *          the font color changes to maintain consistency. A new handler will
+ *          be added if the pair (handler, priv) wasn't inserted yet.
+ * \param   gui The KW_GUI instance that will call your handler.
+ * \param   handler The actual handler.
+ * \param   priv Private data that will be passed to the handler.
+ */
+extern DECLSPEC void KW_AddGUIFontColorChangedHandler(KW_GUI * gui, KW_OnGUIFontColorChanged handler, void * priv);
+
+/**
+ * \brief   Remove a previously added font color changed handler.
+ * \details The pair (handler, priv) will be removed.
+ * \param   gui The KW_GUI instance to remove the handler from.
+ * \param   handler The handler to remove.
+ * \param   priv The private data to match.
+ */
+extern DECLSPEC void KW_RemoveGUIFontColorChangedHandler(KW_GUI * gui, KW_OnGUIFontColorChanged handler, void * priv);
+
+/**
  * \brief   Get the current font associated with a KW_GUI instance.
- * \details You might want to use this function if you need to render text in a custom widget. Be sure to call
- *          KW_ProcessEvents before calling this.
+ * \details You might want to use this function if you need to render text in a custom widget.
  * \param   gui The KW_GUI instance to get the font from.
  * \return  The current font associated with the KW_GUI instance.
- * \sa      KW_ProcessEvents
  */
 extern DECLSPEC KW_Font * KW_GetFont(KW_GUI * gui);
+
+/**
+ * \brief   Get the current font color associated with a KW_GUI instance.
+ * \details You might want to use this function if you need to render text in a custom widget.
+ * \param   gui The KW_GUI instance to get the font color from.
+ * \return  The current font color associated with the KW_GUI instance.
+ */
+extern DECLSPEC KW_Color KW_GetFontColor(KW_GUI * gui);
 
 /**
  * \brief   Paint all the widgets associated with this GUI.
