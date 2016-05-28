@@ -99,10 +99,6 @@ KW_bool KW_IsWidgetHidden(KW_Widget * widget) {
 void KW_DisableWidgetHint(KW_Widget * widget, KW_WidgetHint hint, KW_bool down) {
   unsigned i = 0;
   widget->hints &= ~hint;
-  printf("hints: %d, hint: %d hidden-hint: %d\n", widget->hints, hint, KW_WIDGETHINT_HIDDEN);
-  if (hint == KW_WIDGETHINT_HIDDEN) {
-    printf("UAI\n");
-  }
   if (!down) return;
   for (i = 0; i < widget->childrencount; i++) {
     KW_DisableWidgetHint(widget->children[i], hint, down);

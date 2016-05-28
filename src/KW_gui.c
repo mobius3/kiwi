@@ -12,7 +12,6 @@ KW_GUI * KW_Init(KW_RenderDriver * renderer, KW_Surface * tileset) {
   gui->rootwidget = AllocWidget();
   gui->rootwidget->gui = gui;
   gui->evqueuelock = SDL_CreateMutex();
-
   SDL_AddEventWatch(KW_EventWatcher, (void*)gui);
   
   return gui;
