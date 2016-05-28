@@ -53,7 +53,19 @@ void KW_SetLabelStyle(KW_Widget * widget, KW_Label_Style style) {
 void KW_SetLabelColor(KW_Widget * widget, KW_Color color) {
   KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
   label->color = color;
+  label->colorset = KW_TRUE;
   RenderLabelText(widget);
+}
+
+KW_Color KW_GetLabelColor(KW_Widget * widget) {
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
+  printf("%d\n", label->colorset);
+  return label->colorset ? label->color : KW_GetFontColor(KW_GetGUI(widget));
+}
+
+KW_bool KW_WasLabelColorSet(KW_Widget * widget) {
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
+  return label->colorset;
 }
 
 void KW_SetLabelIcon(KW_Widget * widget, const KW_Rect * iconclip) {

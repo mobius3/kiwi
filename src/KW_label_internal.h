@@ -19,6 +19,7 @@ struct KW_Label {
   unsigned int cursor;
   KW_bool showcursor;
   KW_bool dirty;
+  KW_bool colorset;
 
   
   unsigned textwidth;

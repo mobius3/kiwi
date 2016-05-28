@@ -127,6 +127,25 @@ extern DECLSPEC void KW_SetLabelIcon(KW_Widget * widget, const KW_Rect * iconcli
  */
 extern DECLSPEC KW_Font * KW_GetLabelFont(KW_Widget * widget);
 
+/**
+ * \brief   Gets the associated font color with a label.
+ * \param   widget The label widget.
+ * \returns The KW_Color associated with this label.
+ * \details Note that if no color was set, it will return the KW_GUI color
+ * \sa KW_WasLabelColorSet
+ * \sa KW_SetLabelColor
+ */
+extern DECLSPEC KW_Color KW_GetLabelColor(KW_Widget * widget);
+
+/**
+ * \brief   Check if the label is using its own color or the default one
+ * \param   widget The label widget.
+ * \returns KW_TRUE if the color was set or KW_FALSE otherwise
+ * \sa KW_GetLabelColor
+ * \sa KW_SetLabelColor
+ */
+extern DECLSPEC KW_bool KW_WasLabelColorSet(KW_Widget * widget);
+
 #ifdef __cplusplus
 }
 #endif
