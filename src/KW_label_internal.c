@@ -13,7 +13,7 @@ void RenderLabelText(KW_Widget * widget) {
   }
   /* use our own font */
   label->textrender = KW_RenderText(KW_GetWidgetRenderer(widget), KW_GetLabelFont(widget),
-                                         label->text, KW_GetLabelColor(widget), (KW_RenderDriver_TextStyle)
+                                         label->text, KW_GetLabelTextColor(widget), (KW_RenderDriver_TextStyle)
                                             label->style);
 
   if (label->textrender != NULL)

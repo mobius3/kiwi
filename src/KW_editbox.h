@@ -47,29 +47,29 @@ extern DECLSPEC void KW_SetEditboxFont(KW_Widget * widget, KW_Font * font);
 extern DECLSPEC KW_Font * KW_GetEditboxFont(KW_Widget * widget);
 
 /**
- * \brief   Gets the associated font color with an editbox.
+ * \brief   Gets the associated text color with an editbox.
  * \param   widget The editbox widget.
- * \returns The KW_Color associated with this editbox.
+ * \returns The KW_Color associated with this editbox text.
  * \details Note that if no color was set, it will return the KW_GUI color
- * \sa KW_WasEditboxColorSet
- * \sa KW_SetEditboxColor
+ * \sa KW_WasEditboxTextColorSet
+ * \sa KW_SetEditboxTextColor
  */
-extern DECLSPEC KW_Color KW_GetEditboxColor(KW_Widget * widget);
+extern DECLSPEC KW_Color KW_GetEditboxTextColor(KW_Widget * widget);
 
 /**
  * \brief   Check if the editbox is using its own color or the default one
- * \param   widget The label widget.
+ * \param   widget The editbox widget.
  * \returns KW_TRUE if the color was set or KW_FALSE otherwise
- * \sa KW_GetEditboxColor
- * \sa KW_SetEditboxColor
+ * \sa KW_GetEditboxTextColor
+ * \sa KW_SetEditboxTextColor
  */
-extern DECLSPEC KW_bool KW_WasEditboxColorSet(KW_Widget * widget);
+extern DECLSPEC KW_bool KW_WasEditboxTextColorSet(KW_Widget * widget);
 
 /**
  * \brief   Sets the color of the editbox text.
  * \param   widget The editbox instance.
  * \param   color The color to assign to the editbox.
  */
-extern DECLSPEC void KW_SetEditboxColor(KW_Widget * widget, KW_Color color);
+extern DECLSPEC void KW_SetEditboxTextColor(KW_Widget * widget, KW_Color color);
 
 #endif

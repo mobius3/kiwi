@@ -91,7 +91,7 @@ extern DECLSPEC void KW_SetLabelStyle(KW_Widget * widget, KW_Label_Style style);
  * \param   widget The label instance.
  * \param   color The color to assign to the label.
  */
-extern DECLSPEC void KW_SetLabelColor(KW_Widget * widget, KW_Color color);
+extern DECLSPEC void KW_SetLabelTextColor(KW_Widget * widget, KW_Color color);
 
 /**
  * \brief   Changes the font of the label's text.
@@ -132,19 +132,19 @@ extern DECLSPEC KW_Font * KW_GetLabelFont(KW_Widget * widget);
  * \param   widget The label widget.
  * \returns The KW_Color associated with this label.
  * \details Note that if no color was set, it will return the KW_GUI color
- * \sa KW_WasLabelColorSet
- * \sa KW_SetLabelColor
+ * \sa KW_WasLabelTextColorSet
+ * \sa KW_SetLabelTextColor
  */
-extern DECLSPEC KW_Color KW_GetLabelColor(KW_Widget * widget);
+extern DECLSPEC KW_Color KW_GetLabelTextColor(KW_Widget * widget);
 
 /**
  * \brief   Check if the label is using its own color or the default one
  * \param   widget The label widget.
  * \returns KW_TRUE if the color was set or KW_FALSE otherwise
- * \sa KW_GetLabelColor
- * \sa KW_SetLabelColor
+ * \sa KW_GetLabelTextColor
+ * \sa KW_SetLabelTextColor
  */
-extern DECLSPEC KW_bool KW_WasLabelColorSet(KW_Widget * widget);
+extern DECLSPEC KW_bool KW_WasLabelTextColorSet(KW_Widget * widget);
 
 #ifdef __cplusplus
 }

@@ -104,7 +104,7 @@ void RenderEditboxText(KW_Editbox * editbox) {
   }
   /* use our own font */
   editbox->textrender = KW_RenderText(KW_GetWidgetRenderer(editbox->widget), KW_GetEditboxFont(editbox->widget),
-                                         editbox->text, KW_GetEditboxColor(editbox->widget),
+                                         editbox->text, KW_GetEditboxTextColor(editbox->widget),
                                       KW_TTF_STYLE_NORMAL);
 
   if (editbox->textrender != NULL)
