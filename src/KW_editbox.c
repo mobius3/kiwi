@@ -59,3 +59,22 @@ void KW_SetEditboxText(KW_Widget * widget, const char * text) {
   SDL_strlcat(editbox->text, text, 1024);
   RenderEditboxText(editbox);
 }
+
+
+void KW_SetEditboxColor(KW_Widget * widget, KW_Color color) {
+  KW_Editbox * editbox = (KW_Editbox *) KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
+  editbox->color = color;
+  editbox->colorset = KW_TRUE;
+  RenderEditboxText(editbox);
+}
+
+KW_Color KW_GetEditboxColor(KW_Widget * widget) {
+  KW_Editbox * editbox = (KW_Editbox *) KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
+  printf("%d\n", editbox->colorset);
+  return editbox->colorset ? editbox->color : KW_GetFontColor(KW_GetGUI(widget));
+}
+
+KW_bool KW_WasEditboxColorSet(KW_Widget * widget) {
+  KW_Editbox * editbox = (KW_Editbox *) KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
+  return editbox->colorset;
+}

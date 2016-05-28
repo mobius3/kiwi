@@ -14,12 +14,14 @@ typedef struct KW_Edtibox {
   KW_bool mouseover;         /* is mouse over the editbox */
   KW_bool clicked;           /* was the editbox clicked */
   KW_bool active;            /* is the editbox active */
+  KW_bool colorset;           /* was the color set on this editbox */
                              
   int textwidth;              /* total width of the rendered text */
   int textheight;             /* total height of the rendered text */
   int cursorx;                /* cursor x position inside text texture */
   int cursoradjustx;          /* ajudstment in src.x text texture */
   KW_Color color;            /* color used to render the text */
+
   
 } KW_Editbox;
 
