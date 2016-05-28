@@ -129,3 +129,19 @@ void KW_SetButtonFont(KW_Widget * widget, TTF_Font * font) {
   KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
   KW_SetLabelFont(button->labelwidget, font);
 }
+
+
+void KW_SetButtonTextColor(KW_Widget * widget, KW_Color color) {
+  KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
+  KW_SetLabelTextColor(button->labelwidget, color);
+}
+
+KW_Color KW_GetButtonTextColor(KW_Widget * widget) {
+  KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
+  return KW_GetLabelTextColor(button->labelwidget);
+}
+
+KW_bool KW_WasButtonColorSet(KW_Widget * widget) {
+  KW_Button *button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
+  return KW_WasLabelTextColorSet(button->labelwidget);
+}

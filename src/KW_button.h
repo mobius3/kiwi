@@ -71,6 +71,32 @@ extern DECLSPEC void KW_SetButtonIcon(KW_Widget * widget, const KW_Rect * iconcl
  */
 extern DECLSPEC void KW_SetButtonFont(KW_Widget * button, TTF_Font * font);
 
+/**
+ * \brief   Sets the color of the button text.
+ * \param   widget The button instance.
+ * \param   color The color to assign to the button.
+ */
+extern DECLSPEC void KW_SetButtonTextColor(KW_Widget * widget, KW_Color color);
+
+/**
+ * \brief   Gets the associated font color with a button.
+ * \param   widget The button widget.
+ * \returns The KW_Color associated with this button.
+ * \details Note that if no color was set, it will return the KW_GUI color
+ * \sa KW_WasButtonColorSet
+ * \sa KW_SetButtonColor
+ */
+extern DECLSPEC KW_Color KW_GetButtonTextColor(KW_Widget * widget);
+
+/**
+ * \brief   Check if the button is using its own color or the default one
+ * \param   widget The button widget.
+ * \returns KW_TRUE if the color was set or KW_FALSE otherwise
+ * \sa KW_GetButtonColor
+ * \sa KW_SetButtonColor
+ */
+extern DECLSPEC KW_bool KW_WasButtonTextColorSet(KW_Widget * widget);
+
 #ifdef __cplusplus
 }
 #endif
