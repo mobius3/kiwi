@@ -74,13 +74,13 @@ void KW_SetFont(KW_GUI * gui, KW_Font * font) {
   return;
 }
 
-void KW_SetFontColor(KW_GUI * gui, KW_Color color) {
+void KW_SetTextColor(KW_GUI * gui, KW_Color color) {
   unsigned i = 0;
-  KW_OnGUIFontColorChanged handler;
-  gui->fontcolor = color;
-  for (i = 0; i < gui->eventhandlers[KW_GUI_ONFONTCOLORCHANGED].count; i++) {
-    handler = (KW_OnGUIFontColorChanged) gui->eventhandlers[KW_GUI_ONFONTCOLORCHANGED].handlers[i].handler;
-    handler(gui, gui->eventhandlers[KW_GUI_ONFONTCOLORCHANGED].handlers[i].priv, color);
+  KW_OnGUITextColorChanged handler;
+  gui->textcolor = color;
+  for (i = 0; i < gui->eventhandlers[KW_GUI_ONTEXTCOLORCHANGED].count; i++) {
+    handler = (KW_OnGUITextColorChanged) gui->eventhandlers[KW_GUI_ONTEXTCOLORCHANGED].handlers[i].handler;
+    handler(gui, gui->eventhandlers[KW_GUI_ONTEXTCOLORCHANGED].handlers[i].priv, color);
   }
   return;
 }
@@ -93,20 +93,20 @@ void KW_RemoveGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, v
   RemoveGUItHandler(gui, KW_GUI_ONFONTCHANGED, (GUIHandler) handler, priv);
 }
 
-void KW_AddGUIFontColorChangedHandler(KW_GUI * gui, KW_OnGUIFontColorChanged handler, void * priv) {
-  AddGUIHandler(gui, KW_GUI_ONFONTCOLORCHANGED, (GUIHandler) handler, priv);
+void KW_AddGUIFontColorChangedHandler(KW_GUI * gui, KW_OnGUITextColorChanged handler, void * priv) {
+  AddGUIHandler(gui, KW_GUI_ONTEXTCOLORCHANGED, (GUIHandler) handler, priv);
 }
 
-void KW_RemoveGUIFontColorChangedHandler(KW_GUI * gui, KW_OnGUIFontColorChanged handler, void * priv) {
-  RemoveGUItHandler(gui, KW_GUI_ONFONTCOLORCHANGED, (GUIHandler) handler, priv);
+void KW_RemoveGUIFontColorChangedHandler(KW_GUI * gui, KW_OnGUITextColorChanged handler, void * priv) {
+  RemoveGUItHandler(gui, KW_GUI_ONTEXTCOLORCHANGED, (GUIHandler) handler, priv);
 }
 
 KW_Font * KW_GetFont(KW_GUI * gui) {
   return gui->font;
 }
 
-KW_Color KW_GetFontColor(KW_GUI * gui) {
-  return gui->fontcolor;
+KW_Color KW_GetTextColor(KW_GUI * gui) {
+  return gui->textcolor;
 }
 
 

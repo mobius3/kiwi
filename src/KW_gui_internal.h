@@ -8,7 +8,7 @@ typedef void (*GUIHandler)(void);
 
 typedef enum KW_GUIEventHandlerType {
   KW_GUI_ONFONTCHANGED,
-  KW_GUI_ONFONTCOLORCHANGED,
+  KW_GUI_ONTEXTCOLORCHANGED,
   KW_GUI_ONTILESETCHANGED,
   KW_GUIEVENTHANDLER_TOTAL
 } KW_GUIEventHandlerType;
@@ -19,7 +19,7 @@ struct KW_GUI {
   KW_RenderDriver * renderer;
   KW_Widget * rootwidget; /* the parent to all parent-less widgets :) */
   KW_Font * font;
-  KW_Color fontcolor;
+  KW_Color textcolor;
   
   KW_Widget * currentmouseover; /* the current widget that has mouse over */
   KW_Widget * currentfocus; /* which widget was the last focused/clicked */

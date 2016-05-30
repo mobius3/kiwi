@@ -59,7 +59,7 @@ void KW_SetLabelTextColor(KW_Widget * widget, KW_Color color) {
 
 KW_Color KW_GetLabelTextColor(KW_Widget * widget) {
   KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
-  return label->colorset ? label->color : KW_GetFontColor(KW_GetGUI(widget));
+  return label->colorset ? label->color : KW_GetTextColor(KW_GetGUI(widget));
 }
 
 KW_bool KW_WasLabelTextColorSet(KW_Widget * widget) {
