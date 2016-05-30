@@ -70,7 +70,6 @@ void KW_SetEditboxTextColor(KW_Widget * widget, KW_Color color) {
 
 KW_Color KW_GetEditboxTextColor(KW_Widget * widget) {
   KW_Editbox * editbox = (KW_Editbox *) KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
-  printf("%d\n", editbox->colorset);
   return editbox->colorset ? editbox->color : KW_GetTextColor(KW_GetGUI(widget));
 }
 
