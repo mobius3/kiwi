@@ -51,7 +51,7 @@ KW_Texture * KW_GetTilesetTexture(KW_GUI * gui) {
   return gui->tilesettexture;
 }
 
-KW_Texture * KW_GetTilesetSurface(KW_GUI * gui) {
+KW_Surface * KW_GetTilesetSurface(KW_GUI * gui) {
   return gui->tilesetsurface;
 }
 

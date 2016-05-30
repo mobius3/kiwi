@@ -691,7 +691,7 @@ extern DECLSPEC KW_Texture * KW_GetWidgetTilesetTexture(KW_Widget * widget);
  * \param   widget The widget to retrieve the tileset surface from.
  * \returns A pointer to the KW_Texture being used as a tileset.
  */
-extern DECLSPEC KW_Texture * KW_GetWidgetTilesetSurface(KW_Widget * widget);
+extern DECLSPEC KW_Surface * KW_GetWidgetTilesetSurface(KW_Widget * widget);
 
 /**
  * \brief   Sets this widget to clip its children to its geometry.
