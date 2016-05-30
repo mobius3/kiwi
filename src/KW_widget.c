@@ -134,7 +134,8 @@ void FreeWidget(KW_Widget * widget, int freechildren) {
       FreeWidget(tofree, freechildren);
     }
   }
-  
+
+  Reparent(widget, NULL);
   free(widget->children);
   if (widget->destroy != NULL) {
     widget->destroy(widget);
