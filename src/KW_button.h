@@ -69,7 +69,7 @@ extern DECLSPEC void KW_SetButtonIcon(KW_Widget * widget, const KW_Rect * iconcl
  * \param   widget The button widget.
  * \param   font The font to assign to the button.
  */
-extern DECLSPEC void KW_SetButtonFont(KW_Widget * button, TTF_Font * font);
+extern DECLSPEC void KW_SetButtonFont(KW_Widget * button, KW_Font * font);
 
 /**
  * \brief   Sets the color of the button text.

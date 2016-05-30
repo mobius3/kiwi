@@ -20,7 +20,8 @@ void KW_RenderCopy(KW_RenderDriver * driver, KW_Texture * src, const KW_Rect * c
     driver->renderCopy(driver, src, clip, dstRect);
 }
 
-KW_Surface * KW_RenderText(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style) {
+KW_Texture * KW_RenderText(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color,
+                  KW_RenderDriver_TextStyle style) {
     return driver->renderText(driver, font, text, color, style);
 }
 
@@ -61,5 +62,9 @@ void KW_GetClipRect(KW_RenderDriver * driver, KW_Rect * clip) {
 }
 void KW_ReleaseRenderDriver(KW_RenderDriver * driver) {
     driver->release(driver);
+}
+
+void KW_UTF8TextSize(KW_RenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height) {
+    driver->utf8TextSize(driver, font, text, width, height);
 }
 

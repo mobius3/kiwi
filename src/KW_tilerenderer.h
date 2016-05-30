@@ -171,7 +171,7 @@ extern DECLSPEC void KW_BlitTileFrame(KW_RenderDriver * renderer, KW_Surface * d
  * \param   w The width to fill.
  * \param   h The height to fill.
  */
-extern DECLSPEC KW_Texture * KW_CreateTileFrameTexture(KW_RenderDriver * renderer, KW_Texture * tileset, int startcolumn, int startline, int w, int h);
+extern DECLSPEC KW_Texture * KW_CreateTileFrameTexture(KW_RenderDriver * renderer, KW_Surface * tileset, int startcolumn, int startline, int w, int h);
 
 #ifdef __cplusplus
 }

@@ -5,7 +5,7 @@
 #include "KW_widget.h"
 
 typedef struct KW_Frame {
-  SDL_Texture * framerender;
+  KW_Texture * framerender;
 } KW_Frame;
 
 KW_Frame * AllocFrame();

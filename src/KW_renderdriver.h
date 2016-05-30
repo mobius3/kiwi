@@ -19,11 +19,17 @@
 #include "KW_macros.h"
 #include "KW_rect.h"
 
-typedef void KW_Texture;
-typedef void KW_Font;
-typedef void KW_Surface;
+typedef struct KW_Texture {
+  void * texture;
+} KW_Texture;
 
+typedef struct KW_Font {
+  void * font;
+} KW_Font;
 
+typedef struct KW_Surface {
+  void * surface;
+} KW_Surface;
 
 /**
  * \brief Holds a color in the RGBA format
@@ -62,6 +68,18 @@ typedef enum KW_RenderDriver_TextStyle {
 typedef void (*KW_RenderCopyFunction)(KW_RenderDriver * driver, KW_Texture * src, const KW_Rect * clip, const KW_Rect * dstRect);
 
 /**
+ * \brief   Declares the prototype for a UTF8TextSize function
+ * \details A UTF8TextSize funciton returns wthe width and height of that text if rendered
+ *          using the passed in font.
+ * \param   driver the RenderDriver that will render this texture.
+ * \param   font the font
+ * \param   text the text to calculate the size
+ * \param   width The returned width
+ * \param   height The returned height
+ */
+typedef void (*KW_UTF8TextSizeFunction)(KW_RenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height);
+
+/**
  * \brief   Declares the prototype for a RenderText function.
  * \details A RenderText function should be able to receive a font, a textline and a color and
  *          it should be able to produce a surface (pixeldata in CPU's memory) to be later transformed
@@ -70,9 +88,9 @@ typedef void (*KW_RenderCopyFunction)(KW_RenderDriver * driver, KW_Texture * src
  * \param   font the font to use when rendering text.
  * \param   color the color that should be used.
  * \param   style the KW_RenderDriver_TextStyle style to apply.
- * \return  a KW_Surface to be later used as a texture.
+ * \return  a KW_Texture with the rendered text
  */
-typedef KW_Surface * (*KW_RenderTextFunction)(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
+typedef KW_Texture * (*KW_RenderTextFunction)(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
 
 /**
  * \brief   Declares the prototype for a LoadFont function.
@@ -131,6 +149,7 @@ typedef void (*KW_ReleaseDriverFunction)(KW_RenderDriver * driver);
 struct KW_RenderDriver {
   KW_RenderCopyFunction        renderCopy;
   KW_RenderTextFunction        renderText;
+  KW_UTF8TextSizeFunction      utf8TextSize;
   KW_LoadFontFunction          loadFont;
   KW_CreateTextureFunction     createTexture;
   KW_CreateSurfaceFunction     createSurface;
@@ -158,7 +177,7 @@ extern DECLSPEC KW_Surface * KW_CreateSurface(KW_RenderDriver * driver, unsigned
 extern DECLSPEC void KW_GetSurfaceExtents(KW_RenderDriver * driver, const KW_Surface * surface, unsigned * width, unsigned * height);
 extern DECLSPEC void KW_GetTextureExtents(KW_RenderDriver * driver, KW_Texture * texture, unsigned * width, unsigned * height);
 extern DECLSPEC void KW_RenderCopy(KW_RenderDriver * driver, KW_Texture * src, const KW_Rect * clip, const KW_Rect * dstRect);
-extern DECLSPEC KW_Surface * KW_RenderText(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
+extern DECLSPEC KW_Texture * KW_RenderText(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
 extern DECLSPEC KW_Font * KW_LoadFont(KW_RenderDriver * driver, const char * fontFile, unsigned ptSize);
 extern DECLSPEC KW_Texture * KW_CreateTexture(KW_RenderDriver * driver, KW_Surface * surface);
 extern DECLSPEC KW_Texture * KW_LoadTexture(KW_RenderDriver * driver, const char * file);
@@ -169,5 +188,6 @@ extern DECLSPEC void KW_ReleaseFont(KW_RenderDriver * driver, KW_Font * font);
 extern DECLSPEC void KW_GetClipRect(KW_RenderDriver * driver, KW_Rect * clip);
 extern DECLSPEC void KW_SetClipRect(KW_RenderDriver * driver, const KW_Rect * clip, int force);
 extern DECLSPEC void KW_ReleaseRenderDriver(KW_RenderDriver * driver);
+extern DECLSPEC void KW_UTF8TextSize(KW_RenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height);
 
 #endif

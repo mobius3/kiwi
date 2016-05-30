@@ -33,9 +33,9 @@ int main(int argc, char ** argv) {
   SDL_Window * window;
   SDL_Renderer * renderer;
   KW_RenderDriver * driver;
-  SDL_Surface * set;
+  KW_Surface * set;
   KW_GUI * gui;
-  TTF_Font * font;
+  KW_Font * font;
   KW_Rect geometry = {0, 0, 320, 240};
   KW_Widget * frame, * button;
   int i;
@@ -99,8 +99,7 @@ int main(int argc, char ** argv) {
     SDL_RenderPresent(renderer);
     SDL_Delay(1);
   }
-  TTF_CloseFont(font);
-  TTF_Quit();
+  KW_ReleaseFont(driver, font);
   KW_Quit(gui);
   KW_ReleaseSurface(driver, set);
   SDL_Quit();

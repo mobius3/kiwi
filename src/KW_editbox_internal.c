@@ -74,7 +74,7 @@ void PaintEditboxText(KW_Editbox * editbox, KW_Rect * _dst) {
     
     /* see if clipping rect is bigger than total width, might have
      * to adjust clipping origin */
-    if ((src.x + src.w) > editbox->textwidth) {
+    if ((unsigned)(src.x + src.w) > editbox->textwidth) {
       src.x -= (src.x + src.w) - editbox->textwidth;
     }
     
@@ -108,10 +108,9 @@ void RenderEditboxText(KW_Editbox * editbox) {
                                       KW_TTF_STYLE_NORMAL);
 
   if (editbox->textrender != NULL)
-    SDL_QueryTexture(editbox->textrender, NULL, NULL, &(editbox->textwidth),
-                     &(editbox->textheight));
+    KW_GetTextureExtents(KW_GetWidgetRenderer(editbox->widget), editbox->textrender, &(editbox->textwidth), &(editbox->textheight));
   else
-    TTF_SizeUTF8(KW_GetEditboxFont(editbox->widget), "", &(editbox->textwidth), &(editbox->textheight));
+    KW_UTF8TextSize(KW_GetWidgetRenderer(editbox->widget), KW_GetEditboxFont(editbox->widget), "", &(editbox->textwidth), &(editbox->textheight));
 }
 
 KW_Editbox * AllocEditbox() {
@@ -163,7 +162,7 @@ void AdjustCursor(KW_Editbox * editbox, int cursormove) {
   /* recalculate cursor position */
   save = editbox->text[editbox->cursor];
   editbox->text[editbox->cursor] = '\0';
-  TTF_SizeUTF8(KW_GetEditboxFont(editbox->widget), editbox->text, &editbox->cursorx, NULL);
+  KW_UTF8TextSize(KW_GetWidgetRenderer(editbox->widget), KW_GetEditboxFont(editbox->widget), editbox->text, (unsigned *) &(editbox->cursorx), NULL);
   editbox->text[editbox->cursor] = save;
 }
 

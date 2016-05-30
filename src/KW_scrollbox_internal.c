@@ -18,7 +18,7 @@ void RenderScrollboxFrame(KW_Scrollbox * sb) {
   KW_GetWidgetGeometry(widget, &targetgeom);
   
   /* render bg frame */
-  if (sb->framerender != NULL) SDL_DestroyTexture(sb->framerender);
+  if (sb->framerender != NULL) KW_ReleaseTexture(KW_GetWidgetRenderer(widget), sb->framerender);
   sb->framerender = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 9, 0, targetgeom.w, targetgeom.h);
 }
 

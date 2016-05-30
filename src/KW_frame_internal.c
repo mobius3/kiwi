@@ -11,7 +11,7 @@ KW_Frame * AllocFrame() {
 
 void DestroyFrame(KW_Widget * widget) {
   KW_Frame * frame = KW_GetWidgetData(widget, KW_WIDGETTYPE_FRAME);
-  SDL_DestroyTexture(frame->framerender);
+  KW_ReleaseTexture(KW_GetWidgetRenderer(widget), frame->framerender);
   free(frame);
 }
 
@@ -21,7 +21,7 @@ void RenderFrame(KW_Widget * widget) {
   KW_Rect targetgeom;
   KW_Surface * tileset = KW_GetWidgetTilesetSurface(widget);
   KW_GetWidgetGeometry(widget, &targetgeom);
-  if (frame->framerender != NULL) SDL_DestroyTexture(frame->framerender);
+  if (frame->framerender != NULL) KW_ReleaseTexture(KW_GetWidgetRenderer(widget), frame->framerender);
   frame->framerender = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 0, 0, targetgeom.w, targetgeom.h);
 }
 

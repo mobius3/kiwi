@@ -43,7 +43,7 @@ struct KW_Widget {
 
   
   KW_Texture *       tilesettexture;
-  KW_Texture *       tilesetsurface;
+  KW_Surface *       tilesetsurface;
   
   void                (*paint)(KW_Widget *);
   void                (*destroy)(KW_Widget *);

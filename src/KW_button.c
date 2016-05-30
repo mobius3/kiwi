@@ -78,17 +78,19 @@ void RenderButton(KW_Widget * widget) {
   KW_Rect targetgeom;
   KW_Surface * tileset = KW_GetWidgetTilesetSurface(widget);
   KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
+  KW_RenderDriver * driver = KW_GetWidgetRenderer(widget);
   KW_GetWidgetAbsoluteGeometry(widget, &targetgeom);  
-  if (button->normal != NULL) SDL_DestroyTexture(button->normal);
+  if (button->normal != NULL) KW_ReleaseTexture(driver, button->normal);
   button->normal = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 3, 3, targetgeom.w, targetgeom.h);
-  if (button->over != NULL) SDL_DestroyTexture(button->over);
-  button->over = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 3, 0, targetgeom.w, targetgeom.h);
+  if (button->over != NULL) KW_ReleaseTexture(driver, button->over);
+  button->over = KW_CreateTileFrameTexture(driver, tileset, 3, 0, targetgeom.w, targetgeom.h);
 }
 
 void DestroyButton(KW_Widget * widget) {
   KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
-  SDL_DestroyTexture(button->over);
-  SDL_DestroyTexture(button->normal);
+  KW_RenderDriver * driver = KW_GetWidgetRenderer(widget);
+  KW_ReleaseTexture(driver, button->over);
+  KW_ReleaseTexture(driver, button->normal);
   free(button);
 }
 
@@ -125,7 +127,7 @@ void KW_SetButtonText(KW_Widget * widget, const char * text) {
 
 
 
-void KW_SetButtonFont(KW_Widget * widget, TTF_Font * font) {
+void KW_SetButtonFont(KW_Widget * widget, KW_Font * font) {
   KW_Button * button = KW_GetWidgetData(widget, KW_WIDGETTYPE_BUTTON);
   KW_SetLabelFont(button->labelwidget, font);
 }
