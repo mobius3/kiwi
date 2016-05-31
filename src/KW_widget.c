@@ -405,22 +405,25 @@ void KW_PaintWidget(KW_Widget * root) {
 
 void KW_SetWidgetGeometry(KW_Widget * widget, const KW_Rect * geometry) {
   unsigned i;
-  KW_Rect old;
+  KW_Rect old, g = *geometry;
   KW_OnGeometryChange handler;
-  if ((widget->geometry.x != geometry->x ||
-      widget->geometry.y != geometry->y ||
-      widget->geometry.w != geometry->w ||
-      widget->geometry.h != geometry->h)
+
+  if (g.w <= 0) g.w = 0;
+  if (g.h <= 0) g.h = 0;
+  if ((widget->geometry.x != g.x ||
+      widget->geometry.y != g.y ||
+      widget->geometry.w != g.w ||
+      widget->geometry.h != g.h)
      || 
-     (geometry->x == 0 && geometry->y == 0 && geometry->w == 0 && geometry->h == 0))
+     (g.x == 0 && g.y == 0 && g.w == 0 && g.h == 0))
   {
     old = widget->geometry;
-    widget->geometry = *geometry;
+    widget->geometry = g;
     CalculateComposedGeometry(widget);
     CalculateAbsoluteGeometry(widget);
     for (i = 0; i < widget->eventhandlers[KW_ON_GEOMETRYCHANGED].count; i++) {
       handler = (KW_OnGeometryChange) widget->eventhandlers[KW_ON_GEOMETRYCHANGED].handlers[i];
-      handler(widget, geometry, &old);
+      handler(widget, &g, &old);
     }
   }
 }
