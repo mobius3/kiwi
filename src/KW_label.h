@@ -32,7 +32,6 @@
 #define KW_LABEL_H
 
 #include "KW_widget.h"
-#include "SDL_ttf.h"
 
 #ifdef __cplusplus
 extern "C" {

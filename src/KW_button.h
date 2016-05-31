@@ -25,7 +25,6 @@
 #ifndef KW_BUTTON_H
 #define KW_BUTTON_H
 #include "KW_widget.h"
-#include "SDL_ttf.h"
 
 /**
  * \file KW_button.h
