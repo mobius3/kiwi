@@ -299,7 +299,7 @@ void Reparent(KW_Widget * widget, KW_Widget * newparent) {
     }
     
     /* realloc children array */
-    wp->childrencount--;
+    if (wp->childrencount > 0) wp->childrencount--;
     if (wp->childrencount <= 0) {
       free(wp->children);
       wp->children = NULL;
