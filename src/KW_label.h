@@ -122,7 +122,7 @@ extern DECLSPEC void KW_SetLabelIcon(KW_Widget * widget, const KW_Rect * iconcli
 /**
  * \brief   Gets the associated font with a label.
  * \param   widget The label widget.
- * \returns A TTF_Font pointer to the currently label's associated font.
+ * \returns A KW_Font pointer to the currently label's associated font.
  */
 extern DECLSPEC KW_Font * KW_GetLabelFont(KW_Widget * widget);
 
