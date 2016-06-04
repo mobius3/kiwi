@@ -33,6 +33,10 @@ If you're feeling mighty and want to try KiWi right now, these are (roughly) the
 
 You can test the examples inside the `build/examples/` folder.
 
+## Bindings
+* [Vasilij Schneidermann](https://github.com/wasamasa) [created](http://emacsninja.com/posts/kiwi.html) a [CHICKEN Scheme](https://www.call-cc.org/) [binding](https://github.com/wasamasa/kiwi) for KiWi. There's also a wiki [here](http://wiki.call-cc.org/eggref/4/kiwi).
+
+
 ## Basic usage
 
 Here is a very basic code that draws a label on screen (taken from the 
@@ -115,3 +119,5 @@ Better documentation is yet to come, but every public method is well documented.
 [SDL2_ttf]: https://www.libsdl.org/projects/SDL_ttf/
 [SDL2_image]: https://www.libsdl.org/projects/SDL_image/
 [roadmap]: https://github.com/mobius3/KiWi/blob/master/ROADMAP.md
+
+[CHICKENBINDING]: https://github.com/wasamasa/kiwi
