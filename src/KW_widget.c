@@ -378,6 +378,7 @@ void * KW_GetWidgetUserData(const KW_Widget * widget) {
 void KW_PaintWidget(KW_Widget * root) {
   unsigned i = 0;
   KW_Rect cliprect;
+  KW_bool clipenabled = KW_FALSE;
   KW_RenderDriver * renderer = KW_GetWidgetRenderer(root);
 
   if (KW_IsWidgetHidden(root)) return;
@@ -388,18 +389,25 @@ void KW_PaintWidget(KW_Widget * root) {
   }
   
   if (root->clipchildren) {
-    KW_GetClipRect(renderer, &(root->oldcliprect));
+    clipenabled = KW_GetClipRect(renderer, &(root->oldcliprect));
     cliprect = root->absolute;
     KW_SetClipRect(renderer, &cliprect, KW_FALSE);
   }
-
   for (i = 0; i < root->childrencount; i++) {
     KW_PaintWidget(root->children[i]);
   }
-  
+
+#define PRINTRECT(b) \
+  printf("%dx%d+%dx%d\n", (b).x, (b).y, (b).w, (b).h)
+
   /* restore cliprect */
   if (root->clipchildren) {
+    if (clipenabled) {
       KW_SetClipRect(renderer, &(root->oldcliprect), KW_TRUE);
+    } else {
+      KW_SetClipRect(renderer, NULL, KW_TRUE);
+    }
+
   }
 }
 
