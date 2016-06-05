@@ -88,7 +88,7 @@ void PaintLabel(KW_Widget * widget) {
   dst.y += label->voffset;
   
   /* display icon */
-  if (!KW_IsRectEmpty(label->iconclip)) {
+  if (label->iconclip.w * label->iconclip.h != 0) {
     iconsrc = label->iconclip;
     icondst.x = dst.x - (iconsrc.w/2);
     dst.x += iconsrc.w/2;

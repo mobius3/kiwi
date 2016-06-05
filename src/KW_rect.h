@@ -57,13 +57,6 @@ typedef enum KW_RectHorizontalAlignment {
   KW_RECT_ALIGN_RIGHT    /** Right align the rectangles */
 } KW_RectHorizontalAlignment;
 
-
-/**
- * Macro to test if a rectangle is empty
- */
-#define KW_IsRectEmpty(r) \
-  (!(r).x && !(r).y && !(r).w && !(r).h)
-
 /**
  * \brief Center a rectangle horizontally and vertically inside another.
  * \details This function changes the inner rectangle x and y coordinates so that it is
