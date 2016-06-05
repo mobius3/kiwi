@@ -33,7 +33,7 @@ void KW_BlitTile(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * tile
 }
 
 
-void KW_RenderTileFill(KW_RenderDriver * renderer, KW_Texture * tileset, int column, int line, int x, int y, int w, int h) {
+void KW_RenderTileFill(KW_RenderDriver * renderer, KW_Texture * tileset, int column, int line, int x, int y, int w, int h, KW_bool stretch) {
  
   int i;
   int j;
@@ -49,7 +49,14 @@ void KW_RenderTileFill(KW_RenderDriver * renderer, KW_Texture * tileset, int col
   target.y = y;
   target.w = TILESIZE;
   target.h = TILESIZE;
-  
+
+  if (stretch) {
+    target.w = w;
+    target.h = h;
+    KW_RenderCopy(renderer, tileset, &clip, &target);
+    return;
+  }
+
   /* iterate by column */
   for (i = x; i < x + w;) {
     
@@ -89,7 +96,7 @@ void KW_RenderTileFill(KW_RenderDriver * renderer, KW_Texture * tileset, int col
   }
 }
 
-void KW_BlitTileFill(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * tileset, int column, int line, int x, int y, int w, int h) {
+void KW_BlitTileFill(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * tileset, int column, int line, int x, int y, int w, int h, KW_bool stretch) {
   int i;
   int j;
   
@@ -104,7 +111,14 @@ void KW_BlitTileFill(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * 
   target.y = y;
   target.w = TILESIZE;
   target.h = TILESIZE;
-  
+
+  if (stretch) {
+    target.w = w;
+    target.h = h;
+    KW_BlitSurface(renderer, tileset, &clip, dst, &target);
+    return;
+  }
+
   /* iterate by column */
   for (i = x; i < x + w;) {
     
@@ -145,21 +159,23 @@ void KW_BlitTileFill(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * 
 }
 
 
-void KW_RenderTileFrame(KW_RenderDriver * renderer, KW_Texture * tileset, int startcolumn, int startline, int x, int y, int w, int h) {
+void KW_RenderTileFrame(KW_RenderDriver * renderer, KW_Texture * tileset, int startcolumn, int startline, const KW_Rect * fillrect, KW_bool stretchcenter, KW_bool stretchsides) {
+  int x = fillrect->x, y = fillrect->y, w = fillrect->w, h = fillrect->h;
+
   /* fill with background */
-  KW_RenderTileFill(renderer, tileset, startcolumn + 1, startline + 1, x + TILESIZE, y + TILESIZE, w - TILESIZE * 2, h - TILESIZE * 2);
+  KW_RenderTileFill(renderer, tileset, startcolumn + 1, startline + 1, x + TILESIZE, y + TILESIZE, w - TILESIZE * 2, h - TILESIZE * 2, stretchcenter);
   
   /* fill top */
-  KW_RenderTileFill(renderer, tileset, startcolumn + 1, startline + 0, x + TILESIZE, y, w - TILESIZE * 2, TILESIZE);
+  KW_RenderTileFill(renderer, tileset, startcolumn + 1, startline + 0, x + TILESIZE, y, w - TILESIZE * 2, TILESIZE, stretchsides);
   
   /* fill bottom */
-  KW_RenderTileFill(renderer, tileset, startcolumn + 1, startline + 2, x + TILESIZE, y + h - TILESIZE, w - TILESIZE * 2, TILESIZE);
+  KW_RenderTileFill(renderer, tileset, startcolumn + 1, startline + 2, x + TILESIZE, y + h - TILESIZE, w - TILESIZE * 2, TILESIZE, stretchsides);
   
   /* fill left */
-  KW_RenderTileFill(renderer, tileset, startcolumn + 0, startline + 1, x, y + TILESIZE, TILESIZE, h - TILESIZE * 2);
+  KW_RenderTileFill(renderer, tileset, startcolumn + 0, startline + 1, x, y + TILESIZE, TILESIZE, h - TILESIZE * 2, stretchsides);
   
   /* fill right */
-  KW_RenderTileFill(renderer, tileset, startcolumn + 2, startline + 1, x + (w - TILESIZE), y + TILESIZE, TILESIZE, h - TILESIZE * 2);
+  KW_RenderTileFill(renderer, tileset, startcolumn + 2, startline + 1, x + (w - TILESIZE), y + TILESIZE, TILESIZE, h - TILESIZE * 2, stretchsides);
   
   /* render top left */
   KW_RenderTile(renderer, tileset, startcolumn + 0, startline + 0, x, y);
@@ -174,21 +190,23 @@ void KW_RenderTileFrame(KW_RenderDriver * renderer, KW_Texture * tileset, int st
   KW_RenderTile(renderer, tileset, startcolumn + 2, startline + 2, x + (w - TILESIZE), y + h - TILESIZE);
 }
 
-void KW_BlitTileFrame(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * tileset, int startcolumn, int startline, int x, int y, int w, int h) {
+void KW_BlitTileFrame(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * tileset, int startcolumn, int startline, const KW_Rect * fillrect, KW_bool stretchcenter, KW_bool stretchsides) {
+  int x = fillrect->x, y = fillrect->y, w = fillrect->w, h = fillrect->h;
+
   /* fill with background */
-  KW_BlitTileFill(renderer, dst, tileset, startcolumn + 1, startline + 1, x + TILESIZE, y + TILESIZE, w - TILESIZE * 2, h - TILESIZE * 2);
+  KW_BlitTileFill(renderer, dst, tileset, startcolumn + 1, startline + 1, x + TILESIZE, y + TILESIZE, w - TILESIZE * 2, h - TILESIZE * 2, stretchcenter);
   
   /* fill top */
-  KW_BlitTileFill(renderer, dst, tileset, startcolumn + 1, startline + 0, x + TILESIZE, y, w - TILESIZE * 2, TILESIZE);
+  KW_BlitTileFill(renderer, dst, tileset, startcolumn + 1, startline + 0, x + TILESIZE, y, w - TILESIZE * 2, TILESIZE, stretchsides);
   
   /* fill bottom */
-  KW_BlitTileFill(renderer, dst, tileset, startcolumn + 1, startline + 2, x + TILESIZE, y + h - TILESIZE, w - TILESIZE * 2, TILESIZE);
+  KW_BlitTileFill(renderer, dst, tileset, startcolumn + 1, startline + 2, x + TILESIZE, y + h - TILESIZE, w - TILESIZE * 2, TILESIZE, stretchsides);
   
   /* fill left */
-  KW_BlitTileFill(renderer, dst, tileset, startcolumn + 0, startline + 1, x, y + TILESIZE, TILESIZE, h - TILESIZE * 2);
+  KW_BlitTileFill(renderer, dst, tileset, startcolumn + 0, startline + 1, x, y + TILESIZE, TILESIZE, h - TILESIZE * 2, stretchsides);
   
   /* fill right */
-  KW_BlitTileFill(renderer, dst, tileset, startcolumn + 2, startline + 1, x + (w - TILESIZE), y + TILESIZE, TILESIZE, h - TILESIZE * 2);
+  KW_BlitTileFill(renderer, dst, tileset, startcolumn + 2, startline + 1, x + (w - TILESIZE), y + TILESIZE, TILESIZE, h - TILESIZE * 2, stretchsides);
   
   /* render top left */
   KW_BlitTile(renderer, dst, tileset, startcolumn + 0, startline + 0, x, y);
@@ -203,11 +221,13 @@ void KW_BlitTileFrame(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface *
   KW_BlitTile(renderer, dst, tileset, startcolumn + 2, startline + 2, x + (w - TILESIZE), y + h - TILESIZE);
 }
 
-KW_Texture * KW_CreateTileFrameTexture(KW_RenderDriver * renderer, KW_Surface * tileset, int startcolumn, int startline, int w, int h) {
+KW_Texture * KW_CreateTileFrameTexture(KW_RenderDriver * renderer, KW_Surface * tileset, int startcolumn, int startline, int w, int h, KW_bool stretchcenter, KW_bool stretchsides) {
   KW_Surface * target;
   KW_Texture * result;
+  KW_Rect fillrect;
+  fillrect.x = 0; fillrect.y = 0; fillrect.w = w;  fillrect.h = h;
   target = KW_CreateSurface(renderer, (unsigned)w, (unsigned)h);
-  KW_BlitTileFrame(renderer, target, tileset, startcolumn, startline, 0, 0, w, h);
+  KW_BlitTileFrame(renderer, target, tileset, startcolumn, startline, &fillrect, stretchcenter, stretchsides);
   result = KW_CreateTexture(renderer, target);
   /* TODO: proper error handling */
   KW_ReleaseSurface(renderer, target);

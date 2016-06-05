@@ -75,8 +75,9 @@ extern DECLSPEC void KW_BlitTile(KW_RenderDriver * renderer, KW_Surface * dst, K
  * \param   y The y coordinate in the screen to render the tile.
  * \param   w The width to fill.
  * \param   h The height to fill.
+ * \param   stretch If the tile should stretch instead of being rendered multiple times
  */
-extern DECLSPEC void KW_RenderTileFill(KW_RenderDriver * renderer, KW_Texture * tileset, int column, int line, int x, int y, int w, int h);
+extern DECLSPEC void KW_RenderTileFill(KW_RenderDriver * renderer, KW_Texture * tileset, int column, int line, int x, int y, int w, int h, KW_bool stretch);
 
 /**
  * \brief   Blit (copy) a tile multiple times filling the whole w/h specified.
@@ -90,8 +91,9 @@ extern DECLSPEC void KW_RenderTileFill(KW_RenderDriver * renderer, KW_Texture * 
  * \param   y The y coordinate in the surface to blit the tile.
  * \param   w The width to fill.
  * \param   h The height to fill.
+ * \param   stretch If the tile should stretch instead of being blit multiple times
  */
-extern DECLSPEC void KW_BlitTileFill(KW_RenderDriver * renderer, KW_Surface * dst,  KW_Surface * tileset, int column, int line, int x, int y, int w, int h);
+extern DECLSPEC void KW_BlitTileFill(KW_RenderDriver * renderer, KW_Surface * dst,  KW_Surface * tileset, int column, int line, int x, int y, int w, int h, KW_bool stretch);
 
 /**
  * \brief   Render a frame using the set of tiles specified at startcolumn and startline.
@@ -129,12 +131,13 @@ extern DECLSPEC void KW_BlitTileFill(KW_RenderDriver * renderer, KW_Surface * ds
  * \param   tileset The tileset texture to get this frame set from.
  * \param   startcolumn The column in the tile set (starts at 0).
  * \param   startline The line in the tile set (starts at 0).
- * \param   x The x coordinate in the screen to render the tiles.
- * \param   y The y coordinate in the screen to render the tiles.
- * \param   w The width to fill.
- * \param   h The height to fill.
+ * \param   fillrect The fill rectangle
+ * \param   stretchcenter Allow stretching of filling center tiles.
+ * \param   stretchsides  Allow stretching of filling side tiles
+ * \note    Stretching makes for much faster renderings, and you should set it whenever possible.
+ *          You should not use it if you have a tiling pattern in your tileset.
  */
-extern DECLSPEC void KW_RenderTileFrame(KW_RenderDriver * renderer, KW_Texture * tileset, int startcolumn, int startline, int x, int y, int w, int h);
+extern DECLSPEC void KW_RenderTileFrame(KW_RenderDriver * renderer, KW_Texture * tileset, int startcolumn, int startline, const KW_Rect * fillrect, KW_bool stretchcenter, KW_bool stretchsides);
 
 /**
  * \brief   Blit a frame from tileset into a surface.
@@ -147,12 +150,13 @@ extern DECLSPEC void KW_RenderTileFrame(KW_RenderDriver * renderer, KW_Texture *
  * \param   tileset The source tileset surface.
  * \param   startcolumn The column in the tile set (starts at 0).
  * \param   startline The line in the tile set (starts at 0).
- * \param   x The x coordinate in the screen to render the tiles.
- * \param   y The y coordinate in the screen to render the tiles.
- * \param   w The width to fill.
- * \param   h The height to fill.
+ * \param   fillrect The fill rectangle
+ * \param   stretchcenter Allow stretching of filling center tiles.
+ * \param   stretchsides  Allow stretching of filling side tiles
+ * \note    Stretching for blitting is not really faster, but it does reduces the number of blit calls in the render
+ *          driver, making it a little bit faster.
  */
-extern DECLSPEC void KW_BlitTileFrame(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * tileset, int startcolumn, int startline, int x, int y, int w, int h);
+extern DECLSPEC void KW_BlitTileFrame(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * tileset, int startcolumn, int startline, const KW_Rect * fillrect, KW_bool stretchcenter, KW_bool stretchsides);
 
 /**
  * \brief   Creates a KW_Texture from a frame to be used as cache.
@@ -168,10 +172,12 @@ extern DECLSPEC void KW_BlitTileFrame(KW_RenderDriver * renderer, KW_Surface * d
  * \param   tileset The tileset surface to get this frame set from.
  * \param   startcolumn The column in the tile set (starts at 0).
  * \param   startline The line in the tile set (starts at 0).
+ * \param   stretchcenter Allow stretching of filling center tiles.
+ * \param   stretchsides  Allow stretching of filling side tiles
  * \param   w The width to fill.
  * \param   h The height to fill.
  */
-extern DECLSPEC KW_Texture * KW_CreateTileFrameTexture(KW_RenderDriver * renderer, KW_Surface * tileset, int startcolumn, int startline, int w, int h);
+extern DECLSPEC KW_Texture * KW_CreateTileFrameTexture(KW_RenderDriver * renderer, KW_Surface * tileset, int startcolumn, int startline, int w, int h, KW_bool stretchcenter, KW_bool stretchsides);
 
 #ifdef __cplusplus
 }
