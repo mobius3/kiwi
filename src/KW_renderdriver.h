@@ -103,6 +103,16 @@ typedef KW_Texture * (*KW_RenderTextFunction)(KW_RenderDriver * driver, KW_Font 
 typedef KW_Font * (*KW_LoadFontFunction)(KW_RenderDriver * driver, const char * fontFile, unsigned ptSize);
 
 /**
+ * \brief   Declares the prototype for a LoadFontFromMemory function.
+ * \details LoadFont should be able to load a fontFile with the specified point size.
+ * \param   driver the RenderDriver that will render this texture.
+ * \param   fontMemory the memory buffer containing the font.
+ * \param   memSize the size of the buffer
+ * \return   a KW_Font suitable to use with KW_RenderText
+ */
+typedef KW_Font * (*KW_LoadFontFromMemoryFunction)(KW_RenderDriver * driver, const void * fontMemory, unsigned memSize, unsigned ptSize);
+
+/**
  * \brief   Declares the prototype for a CreateTexture function.
  * \details CreateTexture should be able to create a KW_Texture from a KW_Surface.
  * \param   driver the RenderDriver that will render this texture.
@@ -152,6 +162,7 @@ struct KW_RenderDriver {
   KW_RenderTextFunction        renderText;
   KW_UTF8TextSizeFunction      utf8TextSize;
   KW_LoadFontFunction          loadFont;
+  KW_LoadFontFromMemoryFunction loadFontFromMemory;
   KW_CreateTextureFunction     createTexture;
   KW_CreateSurfaceFunction     createSurface;
   KW_LoadTextureFunction       loadTexture;

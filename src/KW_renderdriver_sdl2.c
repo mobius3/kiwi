@@ -15,6 +15,7 @@ typedef struct KWSDL {
 static void KWSDL_renderCopy(KW_RenderDriver * driver, KW_Texture * texture, const KW_Rect * src, const KW_Rect * dst);
 static KW_Texture * KWSDL_renderText(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
 static KW_Font * KWSDL_loadFont(KW_RenderDriver * driver, const char * font, unsigned ptSize);
+static KW_Font * KWSDL_loadFontFromMemory(KW_RenderDriver * driver, const void * fontMemory, unsigned memSize, unsigned ptSize);
 static KW_Texture * KWSDL_createTexture(KW_RenderDriver * driver, KW_Surface * surface);
 static KW_Surface * KWSDL_createRGBA32Surface(KW_RenderDriver * driver, unsigned width, unsigned height);
 static KW_Texture * KWSDL_loadTexture(KW_RenderDriver * driver, const char * texturefile);
@@ -43,6 +44,7 @@ struct KW_RenderDriver * KW_CreateSDL2RenderDriver(SDL_Renderer * renderer, SDL_
   rd->renderText = KWSDL_renderText;
   rd->utf8TextSize = KWSDL_utf8TextSize;
   rd->loadFont = KWSDL_loadFont;
+  rd->loadFontFromMemory = KWSDL_loadFontFromMemory;
   rd->createTexture = KWSDL_createTexture;
   rd->createSurface = KWSDL_createRGBA32Surface;
   rd->loadTexture = KWSDL_loadTexture;
@@ -126,6 +128,15 @@ static KW_Font * KWSDL_loadFont(KW_RenderDriver * driver, const char * font, uns
   (void)driver;
   if (f == NULL) {
     fprintf(stdout, "KW_RenderDriver_SDL: Could not load font %s: %s\n", font, TTF_GetError());
+    return NULL;
+  }
+  return KWSDL_wrapFont(f);
+}
+
+static KW_Font * KWSDL_loadFontFromMemory(KW_RenderDriver * driver, const void * font, unsigned memsize, unsigned ptSize) {
+  TTF_Font * f = TTF_OpenFontRW(SDL_RWFromConstMem(font, memsize), SDL_FALSE, ptSize);
+  (void)driver;
+  if (f == NULL) {
     return NULL;
   }
   return KWSDL_wrapFont(f);
