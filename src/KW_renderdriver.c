@@ -57,8 +57,8 @@ void KW_SetClipRect(KW_RenderDriver * driver, const KW_Rect * clip, int force) {
   driver->setClipRect(driver, clip, force);
 }
 
-void KW_GetClipRect(KW_RenderDriver * driver, KW_Rect * clip) {
-  driver->getClipRect(driver, clip);
+KW_bool KW_GetClipRect(KW_RenderDriver * driver, KW_Rect * clip) {
+  return driver->getClipRect(driver, clip);
 }
 void KW_ReleaseRenderDriver(KW_RenderDriver * driver) {
     driver->release(driver);

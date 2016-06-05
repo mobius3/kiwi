@@ -26,7 +26,7 @@ static void KWSDL_releaseFont(KW_RenderDriver * driver, KW_Font * font);
 static void KWSDL_blitSurface(KW_RenderDriver * driver, KW_Surface * src, const KW_Rect * srcRect, KW_Surface * dst, const KW_Rect * dstRect);
 static void KWSDL_releaseSurface(KW_RenderDriver * driver, KW_Surface * font);
 static void KWSDL_setClipRect(KW_RenderDriver * driver, const KW_Rect * clip, int force);
-static void KWSDL_getClipRect(KW_RenderDriver * driver, KW_Rect * clip);
+static KW_bool KWSDL_getClipRect(KW_RenderDriver * driver, KW_Rect * clip);
 static void KWSDL_release(KW_RenderDriver * driver);
 static void KWSDL_utf8TextSize(KW_RenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height);
 
@@ -227,19 +227,23 @@ static void KWSDL_renderCopy(KW_RenderDriver * driver, KW_Texture * texture, con
 static void KWSDL_setClipRect(KW_RenderDriver * driver, const KW_Rect * clip, int force) {
   SDL_Renderer * renderer = ((KWSDL *)driver->priv)->renderer;
   SDL_Rect cliprect;
-  cliprect.x = clip->x; cliprect.y = clip->y; cliprect.w = clip->w; cliprect.h = clip->h;
+
   (void) force;
 
-  if (KW_IsRectEmpty((*clip)))
+  if (!clip) {
     SDL_RenderSetClipRect(renderer, NULL);
-  else
+  } else {
+    cliprect.x = clip->x; cliprect.y = clip->y; cliprect.w = clip->w; cliprect.h = clip->h;
     SDL_RenderSetClipRect(renderer, &cliprect);
+  }
 }
 
-static void KWSDL_getClipRect(KW_RenderDriver * driver, KW_Rect * clip) {
+static KW_bool KWSDL_getClipRect(KW_RenderDriver * driver, KW_Rect * clip) {
   SDL_Rect c;
-  SDL_RenderGetClipRect(((KWSDL *)driver->priv)->renderer, &c);
+  SDL_Renderer * renderer = ((KWSDL *)driver->priv)->renderer;
+  SDL_RenderGetClipRect(renderer, &c);
   clip->x = c.x; clip->y = c.y; clip->w = c.w; clip->h = c.h;
+  return (KW_bool) SDL_RenderIsClipEnabled(renderer);
 }
 
 static void KWSDL_release(KW_RenderDriver * driver) {

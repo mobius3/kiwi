@@ -137,7 +137,7 @@ typedef void (*KW_GetSurfaceExtentsFunction)(KW_RenderDriver * driver, const KW_
 typedef void (*KW_GetTextureExtentsFunction)(KW_RenderDriver * driver, KW_Texture * texture, unsigned * width, unsigned * height);
 typedef void (*KW_BlitSurfaceFunction)(KW_RenderDriver * driver, KW_Surface * src, const KW_Rect * srcRect, KW_Surface * dst, const KW_Rect * dstRect);
 typedef void (*KW_SetClipRectFunction)(KW_RenderDriver * driver, const KW_Rect * clip, int force);
-typedef void (*KW_GetClipRectFunction)(KW_RenderDriver * driver, KW_Rect * clip);
+typedef KW_bool (*KW_GetClipRectFunction)(KW_RenderDriver * driver, KW_Rect * clip);
 
 /**
  * \brief   Declares the prototype for a ReleaseDriver function.
@@ -186,7 +186,7 @@ extern DECLSPEC KW_Surface * KW_LoadSurface(KW_RenderDriver * driver, const char
 extern DECLSPEC void KW_ReleaseTexture(KW_RenderDriver * driver, KW_Texture * texture);
 extern DECLSPEC void KW_ReleaseSurface(KW_RenderDriver * driver, KW_Surface * surface);
 extern DECLSPEC void KW_ReleaseFont(KW_RenderDriver * driver, KW_Font * font);
-extern DECLSPEC void KW_GetClipRect(KW_RenderDriver * driver, KW_Rect * clip);
+extern DECLSPEC KW_bool KW_GetClipRect(KW_RenderDriver * driver, KW_Rect * clip);
 extern DECLSPEC void KW_SetClipRect(KW_RenderDriver * driver, const KW_Rect * clip, int force);
 extern DECLSPEC void KW_ReleaseRenderDriver(KW_RenderDriver * driver);
 extern DECLSPEC void KW_UTF8TextSize(KW_RenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height);
