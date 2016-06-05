@@ -81,9 +81,9 @@ void RenderButton(KW_Widget * widget) {
   KW_RenderDriver * driver = KW_GetWidgetRenderer(widget);
   KW_GetWidgetAbsoluteGeometry(widget, &targetgeom);  
   if (button->normal != NULL) KW_ReleaseTexture(driver, button->normal);
-  button->normal = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 3, 3, targetgeom.w, targetgeom.h);
+  button->normal = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 3, 3, targetgeom.w, targetgeom.h, KW_FALSE, KW_FALSE);
   if (button->over != NULL) KW_ReleaseTexture(driver, button->over);
-  button->over = KW_CreateTileFrameTexture(driver, tileset, 3, 0, targetgeom.w, targetgeom.h);
+  button->over = KW_CreateTileFrameTexture(driver, tileset, 3, 0, targetgeom.w, targetgeom.h, KW_FALSE, KW_FALSE);
 }
 
 void DestroyButton(KW_Widget * widget) {

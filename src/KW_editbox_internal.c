@@ -19,7 +19,7 @@ void PaintEditbox(KW_Widget * widget) {
   renderer = KW_GetWidgetRenderer(widget);
   tileset = KW_GetWidgetTilesetTexture(widget);
 
-  KW_RenderTileFrame(renderer, tileset, 6, basec, targetgeom.x, targetgeom.y, targetgeom.w, targetgeom.h);
+  KW_RenderTileFrame(renderer, tileset, 6, basec, &targetgeom, KW_FALSE, KW_FALSE);
 
   /* adjust target geom */
   targetgeom.x += TILESIZE;
@@ -84,7 +84,7 @@ void PaintEditboxText(KW_Editbox * editbox, KW_Rect * _dst) {
 
     /* render cursor *below* text */
     KW_RenderTileFill(renderer, tileset, 7, 7, dst.x + cursorx - src.x, dst.y,
-                      TILESIZE, dst.h);
+                      TILESIZE, dst.h, KW_FALSE);
     
     /* render text */
     KW_RenderCopy(renderer, editbox->textrender, &src, &dst);

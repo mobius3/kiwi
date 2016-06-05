@@ -22,7 +22,7 @@ void RenderFrame(KW_Widget * widget) {
   KW_Surface * tileset = KW_GetWidgetTilesetSurface(widget);
   KW_GetWidgetGeometry(widget, &targetgeom);
   if (frame->framerender != NULL) KW_ReleaseTexture(KW_GetWidgetRenderer(widget), frame->framerender);
-  frame->framerender = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 0, 0, targetgeom.w, targetgeom.h);
+  frame->framerender = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 0, 0, targetgeom.w, targetgeom.h, KW_FALSE, KW_FALSE);
 }
 
 void PaintFrame(KW_Widget * widget) {

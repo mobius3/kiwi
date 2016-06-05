@@ -25,20 +25,19 @@ void RenderScrollboxFrame(KW_Scrollbox * sb) {
   tileset = KW_GetWidgetTilesetSurface(widget);
   KW_GetWidgetGeometry(widget, &targetgeom);
   
-  /* render bg frame */
   if (sb->framerender != NULL) KW_ReleaseTexture(KW_GetWidgetRenderer(widget), sb->framerender);
-  sb->framerender = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 9, 0, targetgeom.w, targetgeom.h);
+  sb->framerender = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 9, 0, targetgeom.w, targetgeom.h, KW_FALSE, KW_FALSE);
 }
 
 void PaintScrollboxFrame(KW_Widget * widget) {
   KW_Rect targetgeom, innergeom, outergeom, boxgeom;
-  KW_Rect scrollgeom;
+  KW_Rect scrollgeom, rootgeom;
   float innerh, innerw;
   KW_Scrollbox * sb = KW_GetWidgetData(widget, KW_WIDGETTYPE_SCROLLBOX);
-  
   KW_GetWidgetAbsoluteGeometry(widget, &targetgeom);
   KW_GetWidgetGeometry(widget, &boxgeom);
   KW_GetWidgetGeometry(sb->outer, &outergeom);
+  KW_GetWidgetGeometry(sb->root, &rootgeom);
   
   /* check if inner rectancle changed size */
   KW_GetWidgetComposedGeometry(sb->inner, &innergeom);
@@ -71,8 +70,13 @@ void PaintScrollboxFrame(KW_Widget * widget) {
   
   KW_ScrollboxVerticalScroll(sb->root, 0);
   KW_ScrollboxHorizontalScroll(sb->root, 0);
-  
-  KW_RenderCopy(KW_GetWidgetRenderer(widget), sb->framerender, NULL, &targetgeom);
+
+  if (KW_QueryWidgetHint(widget, KW_WIDGETHINT_ALLOWTILESTRETCH)) {
+    KW_RenderTileFrame(KW_GetWidgetRenderer(widget), KW_GetWidgetTilesetTexture(widget), 9, 0, &rootgeom, KW_TRUE, KW_TRUE);
+  } else {
+    if (!sb->framerender) RenderScrollboxFrame(sb);
+    KW_RenderCopy(KW_GetWidgetRenderer(widget), sb->framerender, NULL, &targetgeom);
+  }
 }
 
 void VerticalBarDrag(KW_Widget * widget, int x, int y, int xrel, int yrel) {
@@ -112,8 +116,8 @@ void RootScrollboxGeometryChange(KW_Widget * widget, const KW_Rect * geometry, c
   sb->innercomposite.x = sb->innercomposite.y = sb->innercomposite.w = sb->innercomposite.h = 0;
 
   if (geometry->w != oldgeom->w || geometry->h != oldgeom->h) {
-    /* re-renders scrollbox frame */  
-    RenderScrollboxFrame(sb);
+    if (!KW_QueryWidgetHint(widget, KW_WIDGETHINT_ALLOWTILESTRETCH))
+      RenderScrollboxFrame(sb);
   }
 }
 
