@@ -397,9 +397,6 @@ void KW_PaintWidget(KW_Widget * root) {
     KW_PaintWidget(root->children[i]);
   }
 
-#define PRINTRECT(b) \
-  printf("%dx%d+%dx%d\n", (b).x, (b).y, (b).w, (b).h)
-
   /* restore cliprect */
   if (root->clipchildren) {
     if (clipenabled) {
