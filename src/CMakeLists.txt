@@ -16,7 +16,7 @@ set(API_HEADERS
   KW_renderdriver_sdl2.h
   KW_renderdriver.h
   KW_rect.h
-)
+        KW_bool.h)
 
 set(LIB_SOURCES
   KW_scrollbox_internal.c

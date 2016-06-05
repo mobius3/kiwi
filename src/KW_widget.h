@@ -27,17 +27,12 @@
 
 #include "KW_macros.h"
 #include "KW_renderdriver.h"
+#include "KW_bool.h"
 #include "SDL.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-
-typedef enum {
-  KW_FALSE = 0,
-  KW_TRUE = 1
-} KW_bool;
 
 
 /**

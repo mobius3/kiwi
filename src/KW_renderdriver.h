@@ -18,6 +18,7 @@
 
 #include "KW_macros.h"
 #include "KW_rect.h"
+#include "KW_bool.h"
 
 typedef struct KW_Texture {
   void * texture;
