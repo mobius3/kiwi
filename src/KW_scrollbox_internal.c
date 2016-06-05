@@ -72,7 +72,7 @@ void PaintScrollboxFrame(KW_Widget * widget) {
   KW_ScrollboxHorizontalScroll(sb->root, 0);
 
   if (KW_QueryWidgetHint(sb->root, KW_WIDGETHINT_ALLOWTILESTRETCH)) {
-    KW_RenderTileFrame(KW_GetWidgetRenderer(widget), KW_GetWidgetTilesetTexture(widget), 9, 0, &targetgeom, KW_TRUE, KW_TRUE);
+    KW_RenderTileFrame(KW_GetWidgetRenderer(sb->root), KW_GetWidgetTilesetTexture(sb->root), 9, 0, &targetgeom, KW_TRUE, KW_TRUE);
   } else {
     if (!sb->framerender) RenderScrollboxFrame(sb);
     KW_RenderCopy(KW_GetWidgetRenderer(widget), sb->framerender, NULL, &targetgeom);
