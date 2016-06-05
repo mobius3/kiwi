@@ -162,7 +162,11 @@ static void KWSDL_blitSurface(KW_RenderDriver * driver, KW_Surface * src, const 
   (void)driver;
   s.x = srcRect->x; s.y = srcRect->y; s.w = srcRect->w; s.h = srcRect->h;
   d.x = dstRect->x; d.y = dstRect->y; d.w = dstRect->w; d.h = dstRect->h;
-  SDL_BlitSurface(src->surface, &s, dst->surface, &d);
+  if (d.w != s.w || d.h != s.h) {
+    SDL_BlitScaled(src->surface, &s, dst->surface, &d);
+  } else {
+    SDL_BlitSurface(src->surface, &s, dst->surface, &d);
+  }
 }
 
 static KW_Texture * KWSDL_loadTexture(KW_RenderDriver * driver, const char * texturefile) {
