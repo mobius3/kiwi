@@ -10,6 +10,14 @@ KW_Scrollbox * AllocScrollbox() {
   return scrollbox;
 }
 
+static int imin(int i, int j) {
+  return (i < j) ? i : j;
+}
+
+static int imax(int i, int j) {
+  return (i < j) ? j : i;
+}
+
 void RenderScrollboxFrame(KW_Scrollbox * sb) {
   KW_Surface * tileset;
   KW_Rect targetgeom;
@@ -42,8 +50,8 @@ void PaintScrollboxFrame(KW_Widget * widget) {
     /* vertical scroll stuff */
     innerh = innergeom.h;
     KW_GetWidgetGeometry(sb->vscroll, &scrollgeom);
-    scrollgeom.x = boxgeom.w - TILESIZE * 3;
-    scrollgeom.w = TILESIZE *2;
+    scrollgeom.x = imax(boxgeom.w - TILESIZE * 3, TILESIZE);
+    scrollgeom.w = imin(TILESIZE *2, boxgeom.w - TILESIZE);
     scrollgeom.h = (unsigned)((outergeom.h / innerh) * outergeom.h);
     scrollgeom.y = (unsigned)((-innergeom.y / innerh) * outergeom.h + TILESIZE);
     innergeom.h = (unsigned)innerh;
@@ -52,9 +60,9 @@ void PaintScrollboxFrame(KW_Widget * widget) {
     /* horizontal scroll stuff */
     innerw = innergeom.w;
     KW_GetWidgetGeometry(sb->hscroll, &scrollgeom);
-    scrollgeom.y = boxgeom.h - TILESIZE * 3;
+    scrollgeom.y = imax(boxgeom.h - TILESIZE * 3, TILESIZE);
     scrollgeom.w = (unsigned)((outergeom.w / innerw) * outergeom.w);
-    scrollgeom.h = TILESIZE * 2;
+    scrollgeom.h = imin(TILESIZE * 2, boxgeom.h - TILESIZE);
     scrollgeom.x = (unsigned)((-innergeom.x / innerw) * outergeom.w + TILESIZE);
     innergeom.w = (unsigned)innerw;
     KW_SetWidgetGeometry(sb->hscroll, &scrollgeom);
