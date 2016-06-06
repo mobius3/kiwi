@@ -3,6 +3,8 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 find_package(SDL2_image REQUIRED)
 
+include(${CMAKE_SOURCE_DIR}/resources/kiwires.cmake)
+
 set(API_HEADERS
   KW_gui.h
   KW_button.h
@@ -39,10 +41,9 @@ set(LIB_SOURCES
   KW_rect.c
 )
 
-
-
-include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIR})
-add_library(KiWi SHARED ${LIB_SOURCES} ${API_HEADERS})
+kiwires(HEADER resources.h BODY resources.c RESOURCES resources/sourcesans-pro-semibold.ttf)
+include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+add_library(KiWi SHARED ${LIB_SOURCES} ${API_HEADERS} resources.c)
 target_link_libraries(KiWi ${SDL2_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
 if(CMAKE_COMPILER_IS_GNUCC)
     target_compile_options(KiWi PRIVATE -fvisibility=hidden -std=c89 -pedantic-errors -Wall -Wextra)

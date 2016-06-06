@@ -19,6 +19,7 @@ struct KW_GUI {
   KW_RenderDriver * renderer;
   KW_Widget * rootwidget; /* the parent to all parent-less widgets :) */
   KW_Font * font;
+  KW_Font * defaultfont;
   KW_Color textcolor;
   
   KW_Widget * currentmouseover; /* the current widget that has mouse over */
