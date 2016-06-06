@@ -39,7 +39,7 @@ int main(int argc, char ** argv) {
   /* Create the title, label and edibox widgets */
   KW_Rect titlerect = { x: 0, y: 10, w: 300, h: 30 };
   KW_Rect labelrect = { y: 100, w: 60, h: 30 };
-  KW_Rect editboxrect = { y: 100, w: 100, h: 30 };
+  KW_Rect editboxrect = { y: 100, w: 100, h: 40 };
   KW_Rect * rects[] = { &labelrect, &editboxrect };
   unsigned weights[] = { 1, 4 };
   KW_RectFillParentHorizontally(&framerect, rects, weights, 2, 10, KW_RECT_ALIGN_MIDDLE);
