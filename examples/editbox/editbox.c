@@ -28,8 +28,6 @@ int main(int argc, char ** argv) {
   KW_RenderDriver * driver = KW_CreateSDL2RenderDriver(renderer, window);
   KW_Surface * set = KW_LoadSurface(driver, "tileset.png");
   KW_GUI * gui = KW_Init(driver, set);
-  KW_Font * dejavu = KW_LoadFont(driver, "DejaVuSans.ttf", 12);
-  KW_SetFont(gui, dejavu);
 
   /* Create the top-level framve */
   KW_Rect framerect = { x: 10, y: 10, w: 300, h: 220 };
@@ -61,7 +59,6 @@ int main(int argc, char ** argv) {
   
   /* free stuff */
   KW_Quit(gui);
-  KW_ReleaseFont(driver, dejavu);
   KW_ReleaseSurface(driver, set);
   KW_ReleaseRenderDriver(driver);
   SDL_Quit();
