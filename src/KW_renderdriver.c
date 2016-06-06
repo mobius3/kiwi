@@ -29,7 +29,7 @@ KW_Font * KW_LoadFont(KW_RenderDriver * driver, const char * fontFile, unsigned 
     return driver->loadFont(driver, fontFile, ptSize);
 }
 
-KW_Font * KW_LoadFontFromMemory(KW_RenderDriver * driver, const void * fontMemory, unsigned memSize, unsigned ptSize) {
+KW_Font * KW_LoadFontFromMemory(KW_RenderDriver * driver, const void * fontMemory, unsigned long memSize, unsigned ptSize) {
     return driver->loadFontFromMemory(driver, fontMemory, memSize, ptSize);
 }
 

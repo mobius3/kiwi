@@ -110,7 +110,7 @@ typedef KW_Font * (*KW_LoadFontFunction)(KW_RenderDriver * driver, const char * 
  * \param   memSize the size of the buffer
  * \return   a KW_Font suitable to use with KW_RenderText
  */
-typedef KW_Font * (*KW_LoadFontFromMemoryFunction)(KW_RenderDriver * driver, const void * fontMemory, unsigned memSize, unsigned ptSize);
+typedef KW_Font * (*KW_LoadFontFromMemoryFunction)(KW_RenderDriver * driver, const void * fontMemory, unsigned long memSize, unsigned ptSize);
 
 /**
  * \brief   Declares the prototype for a CreateTexture function.
@@ -191,6 +191,7 @@ extern DECLSPEC void KW_GetTextureExtents(KW_RenderDriver * driver, KW_Texture *
 extern DECLSPEC void KW_RenderCopy(KW_RenderDriver * driver, KW_Texture * src, const KW_Rect * clip, const KW_Rect * dstRect);
 extern DECLSPEC KW_Texture * KW_RenderText(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
 extern DECLSPEC KW_Font * KW_LoadFont(KW_RenderDriver * driver, const char * fontFile, unsigned ptSize);
+extern DECLSPEC KW_Font * KW_LoadFontFromMemory(KW_RenderDriver * driver, const void * fontMemory, unsigned long memSize, unsigned ptSize);
 extern DECLSPEC KW_Texture * KW_CreateTexture(KW_RenderDriver * driver, KW_Surface * surface);
 extern DECLSPEC KW_Texture * KW_LoadTexture(KW_RenderDriver * driver, const char * file);
 extern DECLSPEC KW_Surface * KW_LoadSurface(KW_RenderDriver * driver, const char * file);
