@@ -248,6 +248,7 @@ void EditboxMouseOver(KW_Widget * widget) {
 void EditboxMouseLeave(KW_Widget * widget) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_EDITBOX);
   editbox->mouseover = KW_FALSE;
+  editbox->clicked = KW_FALSE;
 }
 
 void EditboxMousePress(KW_Widget * widget, int b) {

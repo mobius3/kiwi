@@ -30,7 +30,7 @@ KW_Widget * CalculateMouseOver(KW_Widget * widget, int x, int y) {
     if (x > g.x && x < g.x + g.w && y > g.y && y < g.y + g.h)
       found = widget;
   }
-  return found; 
+  return found;
 }
 
 void MouseMoved(KW_GUI * gui, int mousex, int mousey, int xrel, int yrel) {
@@ -41,7 +41,6 @@ void MouseMoved(KW_GUI * gui, int mousex, int mousey, int xrel, int yrel) {
   KW_OnDrag * draghandlers;
   KW_Widget * current = gui->currentmouseover;
   KW_Widget * widget = NULL;
-  
   /* first check if we are in drag mode */
   if (gui->cursordown == SDL_TRUE) {
     /* check if drag is starting */
@@ -65,11 +64,9 @@ void MouseMoved(KW_GUI * gui, int mousex, int mousey, int xrel, int yrel) {
           draghandlers[i](current, mousex, mousey, xrel, yrel);
         }
     }
-    
     /* no mouse movement events are calculated while dragging */
     return;
   }
-  
   widget = CalculateMouseOver(gui->rootwidget, mousex, mousey);
   if (widget == current) return;
 
@@ -114,34 +111,31 @@ void MouseReleased(KW_GUI * gui, int mousex, int mousey, int button) {
   int i, count;
   KW_OnMouseUp * upandlers;
   KW_OnDragStop * dragstophandlers;
-  KW_Widget * widget = gui->currentmouseover;
-  
+  KW_Widget * widget = gui->currentmouseover, * actualmouseover;
+
   gui->cursordown = SDL_FALSE;
 
   if (widget && (KW_IsWidgetInputEventsBlocked(widget) || KW_IsWidgetHidden(widget))) return;
-  
+
   /* check if was under drag */
   if (gui->currentdrag != NULL) {
-    count = widget->eventhandlers[KW_ON_DRAGSTOP].count;
-    dragstophandlers = (KW_OnDragStop *) widget->eventhandlers[KW_ON_DRAGSTOP].handlers;
+    count = gui->currentdrag->eventhandlers[KW_ON_DRAGSTOP].count;
+    dragstophandlers = (KW_OnDragStop *) gui->currentdrag->eventhandlers[KW_ON_DRAGSTOP].handlers;
     for (i = 0; i < count; i++) {
       dragstophandlers[i](widget, mousex, mousey);
     }
     gui->currentdrag = NULL;
-
-    /* force a mouse move to calculate mouseover again. */
-    MouseMoved(gui, mousex, mousey, 0, 0);
   }
-  
-  if (widget != NULL) {
+
+  actualmouseover = CalculateMouseOver(widget->parent, mousex, mousey);
+  if (widget != NULL && widget == actualmouseover) {
     count = widget->eventhandlers[KW_ON_MOUSEUP].count;
     upandlers = (KW_OnMouseUp *) widget->eventhandlers[KW_ON_MOUSEUP].handlers;
     for (i = 0; i < count; i++) {
       upandlers[i](widget, button);
     }
+    KW_SetFocusedWidget(widget);
   }
-
-  KW_SetFocusedWidget(widget); 
 }
 
 void TextInputReady(KW_GUI * gui, const char * text) {
