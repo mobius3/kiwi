@@ -492,7 +492,7 @@ void KW_RemoveWidgetMouseDownHandler(KW_Widget * widget, KW_OnMouseDown handler)
   RemoveWidgetHandler(widget, KW_ON_MOUSEDOWN, (WidgetHandler) handler);
 }
 
-void KW_AddWidgetMouseUpHandler(KW_Widget * widget, KW_OnMouseDown handler) {
+void KW_AddWidgetMouseUpHandler(KW_Widget * widget, KW_OnMouseUp handler) {
   AddWidgetHandler(widget, KW_ON_MOUSEUP, (WidgetHandler) handler);
 }
 
