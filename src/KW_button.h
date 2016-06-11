@@ -42,59 +42,40 @@ extern "C" {
  * \details The button widget is a composite widget. It uses the second 3x3 tile block (next to the frame block) to render its lines.
  * \param   gui The KW_GUI instance that will hold this button.
  * \param   parent The parent widget of this button.
+ * \param   label The label widget to print inside the button.
+ * \param   geometry The geometry of this button.
+ * \return  The button instance.
+ */
+extern DECLSPEC KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, KW_Widget * label, const KW_Rect * geometry);
+
+/**
+ * \brief   Creates a button widget and a label with the text.
+ * \details The button widget is a composite widget. It uses the second 3x3 tile block (next to the frame block) to render its lines.
+ *          A label will be automatically created with the passed in text.
+ * \param   gui The KW_GUI instance that will hold this button.
+ * \param   parent The parent widget of this button.
  * \param   text The text to print inside the button.
  * \param   geometry The geometry of this button.
  * \return  The button instance.
  */
-extern DECLSPEC KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, const char * text, const KW_Rect * geometry);
+extern DECLSPEC KW_Widget * KW_CreateButtonAndLabel(KW_GUI * gui, KW_Widget * parent, const char * text, const KW_Rect * geometry);
 
 /**
- * \brief   Sets the text being displayed in a button.
- * \param   text The new text to show.
+ * \brief Sets a new widget as a label
+ * \param widget The button widget
+ * \param label The new label
+ * \returns The old label, reparented to the root widget.
+ * \details You might want to destroy the returning widget if you have no use to it.
  */
-extern DECLSPEC void KW_SetButtonText(KW_Widget * button, const char * text);
+extern DECLSPEC KW_Widget * KW_SetButtonLabel(KW_Widget * button, KW_Widget * label);
 
 /**
- * \brief   Sets the icon being displayed in a button
- * \param   widget The button widget to show the icon.
- * \param   iconclip The area in the tileset to clip the icon from. Set to NULL
- *          to remove the icon.
+ * \brief Returns the label associated with this widget.
+ * \param widget The button widget
+ * \returns The widget set as label
  */
-extern DECLSPEC void KW_SetButtonIcon(KW_Widget * widget, const KW_Rect * iconclip);
+extern DECLSPEC KW_Widget * KW_GetButtonLabel(KW_Widget * button);
 
-/**
- * \brief   Changes the font of the button's text.
- * \details Please note that you are responsible for managing the font memory and should free the previous font if its not required anymore.
- * \param   widget The button widget.
- * \param   font The font to assign to the button.
- */
-extern DECLSPEC void KW_SetButtonFont(KW_Widget * button, KW_Font * font);
-
-/**
- * \brief   Sets the color of the button text.
- * \param   widget The button instance.
- * \param   color The color to assign to the button.
- */
-extern DECLSPEC void KW_SetButtonTextColor(KW_Widget * widget, KW_Color color);
-
-/**
- * \brief   Gets the associated font color with a button.
- * \param   widget The button widget.
- * \returns The KW_Color associated with this button.
- * \details Note that if no color was set, it will return the KW_GUI color
- * \sa KW_WasButtonColorSet
- * \sa KW_SetButtonColor
- */
-extern DECLSPEC KW_Color KW_GetButtonTextColor(KW_Widget * widget);
-
-/**
- * \brief   Check if the button is using its own color or the default one
- * \param   widget The button widget.
- * \returns KW_TRUE if the color was set or KW_FALSE otherwise
- * \sa KW_GetButtonColor
- * \sa KW_SetButtonColor
- */
-extern DECLSPEC KW_bool KW_WasButtonTextColorSet(KW_Widget * widget);
 
 #ifdef __cplusplus
 }

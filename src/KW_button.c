@@ -10,18 +10,25 @@ void RenderButton(KW_Widget * widget);
 void DestroyButton(KW_Widget * widget);
 void ButtonGeometryChanged(KW_Widget * widget, const KW_Rect * newgeom, const KW_Rect * oldgeom);
 
-KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, const char * text, const KW_Rect * geometry) {
+KW_Widget * KW_CreateButtonAndLabel(KW_GUI * gui, KW_Widget * parent, const char * text, const KW_Rect * geometry) {
+  return KW_CreateButton(gui, parent, KW_CreateLabel(gui, NULL, text, geometry), geometry);
+}
+
+KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, KW_Widget * label, const KW_Rect * geometry) {
   KW_Rect labelgeom;
   KW_Widget * widget = NULL;
   KW_Button * button = NULL;
-  labelgeom.x = TILESIZE;
-  labelgeom.y = TILESIZE;
-  labelgeom.w = geometry->w - TILESIZE * 2;
-  labelgeom.h = geometry->h - TILESIZE * 2;
-  
+  KW_MarginRect(geometry, &labelgeom, TILESIZE);
+
   button = AllocButton();
   widget = KW_CreateWidget(gui, parent, geometry, PaintButton, DestroyButton, button);
-  button->labelwidget = KW_CreateLabel(gui, widget, text, &labelgeom);
+  if (label) {
+    KW_ReparentWidget(label, widget);
+    KW_SetWidgetGeometry(label, &labelgeom);
+  } else {
+    label = KW_CreateLabel(gui, widget, "", &labelgeom);
+  }
+  button->labelwidget = label;
   KW_BlockWidgetInputEvents(button->labelwidget);
   KW_AddWidgetGeometryChangeHandler(widget, ButtonGeometryChanged);
   KW_AddWidgetTilesetChangeHandler(widget, RenderButton);

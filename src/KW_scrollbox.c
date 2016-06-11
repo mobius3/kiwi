@@ -32,13 +32,13 @@ KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const KW_Rect *
   buttongeom.y = geometry->y + TILESIZE;
   buttongeom.w = TILESIZE*2;
   buttongeom.h = TILESIZE*2;
-  scrollbox->vscroll = KW_CreateButton(gui, root, "", &buttongeom);
+  scrollbox->vscroll = KW_CreateButton(gui, root, NULL, &buttongeom);
   
   buttongeom.x = TILESIZE;
   buttongeom.y = geometry->h - TILESIZE * 3;
   buttongeom.w = TILESIZE*2;
   buttongeom.h = TILESIZE*2;
-  scrollbox->hscroll = KW_CreateButton(gui, root, "", &buttongeom);
+  scrollbox->hscroll = KW_CreateButton(gui, root, NULL, &buttongeom);
   
   KW_AddWidgetChildrenChangeHandler(root, ChildrenChange);
 

@@ -582,7 +582,7 @@ KW_bool KW_IsCursorReleasedOnWidget(KW_Widget * widget) {
   return (gui->cursordown && gui->currentmouseover == widget)  ? KW_TRUE : KW_FALSE;
 }
 
-const KW_Rect * const KW_ReturnWidgetGeometry(const KW_Widget * widget) {
+const KW_Rect * KW_ReturnWidgetGeometry(const KW_Widget * widget) {
   return &(widget->geometry);
 }
 

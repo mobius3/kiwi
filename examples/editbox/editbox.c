@@ -45,7 +45,7 @@ int main(int argc, char ** argv) {
   KW_CreateLabel(gui, frame, "Label", &labelrect);
   KW_CreateEditbox(gui, frame, "Edit me!", &editboxrect);
   KW_Rect buttonrect = { x: 250, y: 170, w: 40, h: 40 };
-  KW_Widget * okbutton = KW_CreateButton(gui, frame, "OK", &buttonrect);
+  KW_Widget * okbutton = KW_CreateButtonAndLabel(gui, frame, "OK", &buttonrect);
   KW_AddWidgetMouseDownHandler(okbutton, OKClicked);
 
   /* Main loop */

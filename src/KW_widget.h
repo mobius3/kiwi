@@ -296,7 +296,7 @@ extern DECLSPEC void KW_GetWidgetGeometry(const KW_Widget * widget, KW_Rect * ge
  * \param   widget The widget to get the geometry from.
  * \returns A KW_Rect pointer that will point to the the @p widget geometry.
  */
-extern DECLSPEC const KW_Rect * const KW_ReturnWidgetGeometry(const KW_Widget * widget);
+extern DECLSPEC const KW_Rect * KW_ReturnWidgetGeometry(const KW_Widget * widget);
 
 /**
  * \brief   Gets the absolute widget geometry.
