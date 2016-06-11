@@ -3,7 +3,6 @@
 
 typedef struct KW_Toggle {
   KW_bool pushed;
-  KW_bool over;
 } KW_Toggle;
 
 void PaintToggle(KW_Widget * widget, const KW_Rect * absolute, void * data);
@@ -19,8 +18,6 @@ KW_Widget * KW_CreateToggle(KW_GUI * gui, KW_Widget * parent, const KW_Rect * ge
   KW_Toggle * tg = AllocToggle();
   KW_Widget * widget = KW_CreateWidget(gui, parent, geometry, PaintToggle, DestroyToggle, tg);
   tg->pushed = KW_FALSE;
-  KW_AddWidgetMouseOverHandler(widget, MouseOver);
-  KW_AddWidgetMouseLeaveHandler(widget, MouseLeave);
   KW_AddWidgetMouseUpHandler(widget, MouseRelease);
   return widget;
 }
@@ -45,20 +42,12 @@ void PaintToggle(KW_Widget * widget, const KW_Rect * absolute, void * data) {
   int column = 0;
   KW_RenderDriver * renderer = KW_GetWidgetRenderer(widget);
   if (tg->pushed) column = 3;
-  if (tg->over) column += 6;
+  if (KW_IsCursorOverWidget(widget)) column += 6;
   KW_RenderTileFrame(renderer, KW_GetWidgetTilesetTexture(widget), 12, column, &targetgeom, KW_FALSE, KW_FALSE);
 }
 void DestroyToggle(KW_Widget * widget) {
   KW_Toggle * tg = KW_GetWidgetData(widget, PaintToggle);
   free(tg);
-}
-void MouseOver(KW_Widget * widget) {
-  KW_Toggle * tg = KW_GetWidgetData(widget, PaintToggle);
-  tg->over = (KW_bool) !tg->over;
-}
-void MouseLeave(KW_Widget * widget) {
-  KW_Toggle * tg = KW_GetWidgetData(widget, PaintToggle);
-  tg->over = (KW_bool) !tg->over;
 }
 
 void MouseRelease(KW_Widget * widget, int b) {
