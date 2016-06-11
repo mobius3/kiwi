@@ -148,5 +148,9 @@ void KW_ZeroRect(KW_Rect * rect) {
   rect->x = rect->y = rect->w = rect->h = 0;
 }
 
+void KW_MarginRect(const KW_Rect * outer, KW_Rect * inner, int margin) {
+  KW_SetRect(inner, margin, margin, outer->w - margin*2, outer->h - margin*2);
+}
+
 
 

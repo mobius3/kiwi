@@ -159,6 +159,14 @@ extern DECLSPEC void KW_CopyRect(const KW_Rect * src, KW_Rect * dst);
  */
 extern DECLSPEC void KW_ZeroRect(KW_Rect * rect);
 
+/**
+ * \brief Uses @p margin to resize @p inner so that its poisition and size margins the @p outer rect.
+ * \param outer The outer rect
+ * \param inner The inner rect that will be resized
+ * \param margin The margin to set.
+ */
+extern DECLSPEC void KW_MarginRect(const KW_Rect * outer, KW_Rect * inner, int margin);
+
 #define KW_PRINTRECT(command, rect) { \
   command("%dx%d+%dx%d\n", (rect).x, (rect).y, (rect).w, (rect).h); \
 }
