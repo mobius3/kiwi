@@ -11,6 +11,7 @@ static void PaintCheckbox(KW_Widget * widget, const KW_Rect * absolute, void * d
 static void DestroyCheckbox(KW_Widget * widget);
 static void GeometryChanged(KW_Widget * widget, const KW_Rect * newgeom, const KW_Rect * oldgeom);
 static void MouseUp(KW_Widget * widget, int b);
+static void Reposition(KW_Checkbox * cb, const KW_Rect * newgeom);
 
 KW_Widget * KW_CreateCheckbox(KW_GUI * gui, KW_Widget * parent, KW_Widget * label, const KW_Rect * geometry) {
   KW_Checkbox * cb = calloc(1, sizeof(KW_Checkbox));
@@ -18,18 +19,16 @@ KW_Widget * KW_CreateCheckbox(KW_GUI * gui, KW_Widget * parent, KW_Widget * labe
   cb->label = label;
   cb->toggle = KW_CreateToggle(gui, root, geometry);
   KW_ReparentWidget(label, root);
-  GeometryChanged(root, geometry, NULL);
+  Reposition(cb, geometry);
   KW_AddWidgetGeometryChangeHandler(root, GeometryChanged);
   KW_AddWidgetMouseUpHandler(cb->label, MouseUp);
   return root;
 }
 
-void GeometryChanged(KW_Widget * widget, const KW_Rect * newgeom, const KW_Rect * oldgeom) {
-  KW_Checkbox * cb = KW_GetWidgetData(widget, PaintCheckbox);
+void Reposition(KW_Checkbox * cb, const KW_Rect * newgeom) {
   KW_Rect labelgeom, togglegeom;
   KW_Rect * geoms[] = { NULL, NULL };
   unsigned weights[] = { 0, 0 };
-  (void) oldgeom;
   geoms[0] = &togglegeom; geoms[1] = &labelgeom;
   weights[0] = (unsigned) ((30.0f/newgeom->w)*100.0f);
   weights[1] = (unsigned) (((newgeom->w - 30.0f)/newgeom->w)*100.0f);
@@ -40,6 +39,12 @@ void GeometryChanged(KW_Widget * widget, const KW_Rect * newgeom, const KW_Rect 
   KW_RectFillParentHorizontally(newgeom, geoms, weights, 2, 0, KW_RECT_ALIGN_MIDDLE);
   KW_SetWidgetGeometry(cb->label, &labelgeom);
   KW_SetWidgetGeometry(cb->toggle, &togglegeom);
+}
+
+void GeometryChanged(KW_Widget * widget, const KW_Rect * newgeom, const KW_Rect * oldgeom) {
+  KW_Checkbox * cb = KW_GetWidgetData(widget, PaintCheckbox);
+  (void)oldgeom;
+  Reposition(cb, newgeom);
 }
 
 void PaintCheckbox(KW_Widget * widget, const KW_Rect * absolute, void * data) {
