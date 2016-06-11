@@ -19,7 +19,8 @@ set(API_HEADERS
   KW_renderdriver.h
   KW_rect.h
   KW_bool.h
-        KW_toggle.h
+  KW_toggle.h
+  KW_checkbox.h
 )
 
 set(LIB_SOURCES
@@ -41,7 +42,8 @@ set(LIB_SOURCES
   KW_renderdriver.c
   KW_renderdriver_sdl2.c
   KW_rect.c
-        KW_toggle.c
+  KW_toggle.c
+  KW_checkbox.c
 )
 
 kiwires(HEADER resources.h BODY resources.c RESOURCES resources/sourcesans-pro-semibold.ttf)
