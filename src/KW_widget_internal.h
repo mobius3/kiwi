@@ -30,7 +30,6 @@ void AddWidgetHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype,
 void RemoveWidgetHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype, WidgetHandler handler);
 
 struct KW_Widget {
-  KW_WidgetType type;
   unsigned int childrencount;
   struct KW_GUI *     gui;
   KW_Rect             absolute;
@@ -45,8 +44,8 @@ struct KW_Widget {
   KW_Texture *       tilesettexture;
   KW_Surface *       tilesetsurface;
   
-  void                (*paint)(KW_Widget *);
-  void                (*destroy)(KW_Widget *);
+  KW_WidgetPaintFunction paint;
+  KW_WidgetDestroyFunction destroy;
   
   struct {
     WidgetHandler *   handlers;

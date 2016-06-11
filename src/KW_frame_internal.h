@@ -10,7 +10,7 @@ typedef struct KW_Frame {
 
 KW_Frame * AllocFrame();
 void RenderFrame(KW_Widget * widget);
-void PaintFrame(KW_Widget * widget);
+void PaintFrame(KW_Widget * widget, const KW_Rect * absolute, void * data);
 void DestroyFrame(KW_Widget * widget);
 void FrameGeometryChanged(KW_Widget * widget, const KW_Rect * newrect, const KW_Rect * old);
 

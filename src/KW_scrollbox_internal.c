@@ -29,12 +29,11 @@ void RenderScrollboxFrame(KW_Scrollbox * sb) {
   sb->framerender = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 9, 0, targetgeom.w, targetgeom.h, KW_FALSE, KW_FALSE);
 }
 
-void PaintScrollboxFrame(KW_Widget * widget) {
-  KW_Rect targetgeom, innergeom, outergeom, boxgeom;
+void PaintScrollboxFrame(KW_Widget * widget, const KW_Rect * absolute, void * data) {
+  KW_Rect targetgeom = *absolute, innergeom, outergeom, boxgeom;
   KW_Rect scrollgeom, rootgeom;
   float innerh, innerw;
-  KW_Scrollbox * sb = KW_GetWidgetData(widget, KW_WIDGETTYPE_SCROLLBOX);
-  KW_GetWidgetAbsoluteGeometry(widget, &targetgeom);
+  KW_Scrollbox * sb = (KW_Scrollbox *) data;
   KW_GetWidgetGeometry(widget, &boxgeom);
   KW_GetWidgetGeometry(sb->outer, &outergeom);
   KW_GetWidgetGeometry(sb->root, &rootgeom);
@@ -81,7 +80,7 @@ void PaintScrollboxFrame(KW_Widget * widget) {
 
 void VerticalBarDrag(KW_Widget * widget, int x, int y, int xrel, int yrel) {
   KW_Widget * root = KW_GetWidgetParent(widget);
-  KW_Scrollbox * sb = KW_GetWidgetData(root, KW_WIDGETTYPE_SCROLLBOX);
+  KW_Scrollbox * sb = KW_GetWidgetData(root, PaintScrollboxFrame);
   KW_Rect outergeom;
   (void)x; (void) y; (void) xrel;
   KW_GetWidgetGeometry(sb->outer, &outergeom);
@@ -91,14 +90,14 @@ void VerticalBarDrag(KW_Widget * widget, int x, int y, int xrel, int yrel) {
 void ChildrenChange(KW_Widget * widget, KW_WidgetChildrenChangeEvent what, KW_Widget * children) {
   /* nothing else should be on the root */
   if (what == KW_CHILDRENCHANGE_ADDED) {
-    KW_Scrollbox * sb = KW_GetWidgetData(widget, KW_WIDGETTYPE_SCROLLBOX);
+    KW_Scrollbox * sb = KW_GetWidgetData(widget, PaintScrollboxFrame);
     KW_ReparentWidget(children, sb->inner);
   }
 }
 
 
 void RootScrollboxGeometryChange(KW_Widget * widget, const KW_Rect * geometry, const KW_Rect * oldgeom) {
-  KW_Scrollbox * sb = KW_GetWidgetData(widget, KW_WIDGETTYPE_SCROLLBOX);
+  KW_Scrollbox * sb = KW_GetWidgetData(widget, PaintScrollboxFrame);
   KW_Rect rootgeom, areageom;
   rootgeom = *geometry;
   
@@ -124,7 +123,7 @@ void RootScrollboxGeometryChange(KW_Widget * widget, const KW_Rect * geometry, c
 
 void HorizontalBarDrag(KW_Widget * widget, int x, int y, int xrel, int yrel) {
   KW_Widget * root = KW_GetWidgetParent(widget);
-  KW_Scrollbox * sb = KW_GetWidgetData(root, KW_WIDGETTYPE_SCROLLBOX);
+  KW_Scrollbox * sb = KW_GetWidgetData(root, PaintScrollboxFrame);
   KW_Rect outergeom;
   (void) yrel; (void) xrel; (void) x; (void) y;
   KW_GetWidgetGeometry(sb->outer, &outergeom);
@@ -133,10 +132,10 @@ void HorizontalBarDrag(KW_Widget * widget, int x, int y, int xrel, int yrel) {
 
 
 void ScrollboxKeyUp(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode code) {
-  KW_Scrollbox * scrollbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_SCROLLBOX);
+  KW_Scrollbox * scrollbox = KW_GetWidgetData(widget, PaintScrollboxFrame);
   (void) sym;
   if (scrollbox == NULL)
-    scrollbox = KW_GetWidgetData(widget, KW_WIDGETTYPE_NONE);
+    scrollbox = KW_GetWidgetData(widget, PaintScrollboxFrame);
   switch (code) {
     case SDL_SCANCODE_UP:
       KW_ScrollboxVerticalScroll(scrollbox->root, -5);
@@ -147,4 +146,9 @@ void ScrollboxKeyUp(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode code) {
     default:
       break;
   }
+}
+
+void DestroyScrollboxFrame(KW_Widget * widget) {
+  KW_Scrollbox * sb = KW_GetWidgetData(widget, PaintScrollboxFrame);
+  free(sb);
 }

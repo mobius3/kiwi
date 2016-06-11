@@ -7,7 +7,7 @@ void LabelFontChanged(KW_GUI * gui, void * data, KW_Font * font) {
 }
 
 void RenderLabelText(KW_Widget * widget) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, PaintLabel);
   if (label->textrender != NULL) {
     KW_ReleaseTexture(KW_GetWidgetRenderer(widget), label->textrender);
   }
@@ -23,7 +23,7 @@ void RenderLabelText(KW_Widget * widget) {
 }
 
 void DestroyLabel(KW_Widget * widget) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
+  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, PaintLabel);
   SDL_free(label->text);
   KW_ReleaseTexture(KW_GetWidgetRenderer(widget), label->textrender);
   free(label);
@@ -31,11 +31,11 @@ void DestroyLabel(KW_Widget * widget) {
 
 
 
-void PaintLabel(KW_Widget * widget) {
-  KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, KW_WIDGETTYPE_LABEL);
+void PaintLabel(KW_Widget * widget, const KW_Rect * absolute, void * data) {
+  KW_Label * label = (KW_Label *)data;
   
-  KW_Rect orig;
-  KW_Rect dst, icondst;
+  KW_Rect orig = *absolute;
+  KW_Rect dst = *absolute, icondst;
   KW_Rect src, iconsrc;
   
   KW_RenderDriver * renderer = KW_GetWidgetRenderer(widget);
@@ -45,10 +45,6 @@ void PaintLabel(KW_Widget * widget) {
   src.w = label->textwidth;
   src.h = label->textheight;
   
-  /* calculate target x/y */  
-  KW_GetWidgetAbsoluteGeometry(widget, &dst);
-  orig = dst;
-
   /* calculate x according to halign */
   switch (label->halign) {
     

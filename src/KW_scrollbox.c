@@ -7,9 +7,7 @@ KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const KW_Rect *
   /* creates root scrollbox widget */
   KW_Scrollbox * scrollbox = AllocScrollbox();
   KW_Widget * outer, * inner;
-  KW_Widget * root = KW_CreateWidget(gui, parent, KW_WIDGETTYPE_SCROLLBOX,
-                                         geometry, PaintScrollboxFrame,
-                                         NULL, scrollbox);
+  KW_Widget * root = KW_CreateWidget(gui, parent, geometry, PaintScrollboxFrame, DestroyScrollboxFrame, scrollbox);
   
   KW_Rect areageom = *geometry;
   KW_Rect buttongeom;
@@ -18,9 +16,9 @@ KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const KW_Rect *
   areageom.y = TILESIZE;
   areageom.w = geometry->w - TILESIZE * 4;
   areageom.h = geometry->h - TILESIZE * 4;
-  outer = KW_CreateWidget(gui, root, KW_WIDGETTYPE_NONE, &areageom, NULL, NULL, scrollbox);
+  outer = KW_CreateWidget(gui, root, &areageom, NULL, NULL, scrollbox);
   areageom.x = 0; areageom.y = 0; /* areageom.h = 0; areageom.w = 0; */
-  inner = KW_CreateWidget(gui, outer, KW_WIDGETTYPE_NONE, &areageom, NULL, NULL, scrollbox);
+  inner = KW_CreateWidget(gui, outer, &areageom, NULL, NULL, scrollbox);
   KW_SetWidgetGeometry(inner, &areageom);
   KW_SetClipChildrenWidgets(outer, KW_TRUE);
   KW_AddWidgetKeyUpHandler(root, ScrollboxKeyUp);
@@ -56,7 +54,7 @@ KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const KW_Rect *
 void KW_ScrollboxVerticalScroll(KW_Widget * scrollbox, int amount) {
   /* remember we are dealing with the *outer* widget */
   KW_Rect geom, outer;
-  KW_Scrollbox * sb = KW_GetWidgetData(scrollbox, KW_WIDGETTYPE_SCROLLBOX);
+  KW_Scrollbox * sb = KW_GetWidgetData(scrollbox, PaintScrollboxFrame);
   KW_GetWidgetGeometry(sb->inner, &geom);
   KW_GetWidgetGeometry(sb->outer, &outer);
   
@@ -71,7 +69,7 @@ void KW_ScrollboxVerticalScroll(KW_Widget * scrollbox, int amount) {
 void KW_ScrollboxHorizontalScroll(KW_Widget * scrollbox, int amount) {
   /* remember we are dealing with the *outer* widget */
   KW_Rect geom, outer;
-  KW_Scrollbox * sb = KW_GetWidgetData(scrollbox, KW_WIDGETTYPE_SCROLLBOX);
+  KW_Scrollbox * sb = KW_GetWidgetData(scrollbox, PaintScrollboxFrame);
   KW_GetWidgetGeometry(sb->inner, &geom);
   KW_GetWidgetGeometry(sb->outer, &outer);
   if (sb->innercomposite.x + amount > 0) amount = -sb->innercomposite.x;

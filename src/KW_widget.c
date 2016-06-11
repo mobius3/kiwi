@@ -9,12 +9,11 @@ KW_Widget * AllocWidget() {
 }
 
 
-KW_Widget * KW_CreateWidget(KW_GUI * gui, KW_Widget * parent, KW_WidgetType type, const KW_Rect * geometry, KW_WidgetPaintFunction widgetpaint, KW_WidgetDestroyFunction widgetdestroy, void * priv) {
+KW_Widget * KW_CreateWidget(KW_GUI * gui, KW_Widget * parent, const KW_Rect * geometry, KW_WidgetPaintFunction widgetpaint, KW_WidgetDestroyFunction widgetdestroy, void * priv) {
   KW_Widget * widget = AllocWidget();
   widget->gui = gui;
   widget->paint = widgetpaint;
   widget->destroy = widgetdestroy;
-  widget->type = type;
   /* set initial area as geometry */
   widget->composed = *geometry;
   KW_ReparentWidget(widget, parent);
@@ -55,8 +54,8 @@ KW_Surface * KW_GetWidgetTilesetSurface(KW_Widget * widget) {
   return widget->tilesetsurface == NULL ? widget->gui->tilesetsurface : widget->tilesetsurface;
 }
 
-void * KW_GetWidgetData(const KW_Widget * widget, KW_WidgetType type) {
-  if (widget->type != type) return NULL;
+void * KW_GetWidgetData(const KW_Widget * widget, KW_WidgetPaintFunction paint) {
+  if (widget->paint != paint) return NULL;
   return widget->privdata;
 }
 
@@ -385,7 +384,7 @@ void KW_PaintWidget(KW_Widget * root) {
   
   /* paint the root, then paint its childrens */
   if (root->paint != NULL) {
-    root->paint(root);
+    root->paint(root, &(root->absolute), root->privdata);
   }
   
   if (root->clipchildren) {

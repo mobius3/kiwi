@@ -36,7 +36,7 @@ void TextDelete(KW_Editbox * editbox);
 
 /* main callbacks */
 void DestroyEditbox(KW_Widget * widget);
-void PaintEditbox(KW_Widget * widget);
+void PaintEditbox(KW_Widget * widget, const KW_Rect * absolute, void * data);
 
 /* event callbacks */
 void EditboxMouseOver(KW_Widget * widget);

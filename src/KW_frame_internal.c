@@ -10,14 +10,14 @@ KW_Frame * AllocFrame() {
 }
 
 void DestroyFrame(KW_Widget * widget) {
-  KW_Frame * frame = KW_GetWidgetData(widget, KW_WIDGETTYPE_FRAME);
+  KW_Frame * frame = KW_GetWidgetData(widget, PaintFrame);
   KW_ReleaseTexture(KW_GetWidgetRenderer(widget), frame->framerender);
   free(frame);
 }
 
 
 void RenderFrame(KW_Widget * widget) {
-  KW_Frame * frame = KW_GetWidgetData(widget, KW_WIDGETTYPE_FRAME);
+  KW_Frame * frame = KW_GetWidgetData(widget, PaintFrame);
   KW_Rect targetgeom;
   KW_Surface * tileset = KW_GetWidgetTilesetSurface(widget);
   KW_GetWidgetGeometry(widget, &targetgeom);
@@ -25,13 +25,10 @@ void RenderFrame(KW_Widget * widget) {
   frame->framerender = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 0, 0, targetgeom.w, targetgeom.h, KW_FALSE, KW_FALSE);
 }
 
-void PaintFrame(KW_Widget * widget) {
-  KW_Frame * frame = KW_GetWidgetData(widget, KW_WIDGETTYPE_FRAME);
-  KW_Rect targetgeom;
-  KW_RenderDriver * renderer;
-  
-  KW_GetWidgetAbsoluteGeometry(widget, &targetgeom);
-  renderer = KW_GetWidgetRenderer(widget);
+void PaintFrame(KW_Widget * widget, const KW_Rect * absolute, void * data) {
+  KW_Frame * frame = (KW_Frame *) data;
+  KW_Rect targetgeom = *absolute;
+  KW_RenderDriver * renderer = KW_GetWidgetRenderer(widget);
 
   if (KW_QueryWidgetHint(widget, KW_WIDGETHINT_ALLOWTILESTRETCH)) {
     KW_RenderCopy(renderer, frame->framerender, NULL, &targetgeom);

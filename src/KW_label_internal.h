@@ -31,7 +31,7 @@ struct KW_Label {
   int x;
 } KW_Label;
 
-void PaintLabel(KW_Widget * widget);
+void PaintLabel(KW_Widget * widget, const KW_Rect * absolute, void * data);
 void RenderLabelText(KW_Widget * widget);
 void DestroyLabel(KW_Widget * widget);
 void LabelFontChanged(KW_GUI * gui, void * data, KW_Font * font);

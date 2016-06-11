@@ -52,7 +52,7 @@ extern DECLSPEC KW_GUI * KW_GetGUI(const KW_Widget * widget);
 
 
 
-typedef void (*KW_WidgetPaintFunction)(KW_Widget * widget);
+typedef void (*KW_WidgetPaintFunction)(KW_Widget * widget, const KW_Rect * absolute, void * data);
 typedef void (*KW_WidgetDestroyFunction)(KW_Widget * widget);
 
 /* mouse callbacks */
@@ -92,41 +92,6 @@ typedef enum KW_WidgetChildrenChangeEvent {
 typedef void (*KW_OnWidgetChildrenChange)(KW_Widget * widget, KW_WidgetChildrenChangeEvent what, KW_Widget * child);
 
 /**
- * \brief   The KW_WidgetType enumeration represents available widget types.
- * \details Every widget created must set a widget type even if its a custom widget.
- */
-typedef enum KW_WidgetType {
-  KW_WIDGETTYPE_NONE,
-  KW_WIDGETTYPE_FRAME,
-  KW_WIDGETTYPE_LABEL,
-  KW_WIDGETTYPE_BUTTON,
-  KW_WIDGETTYPE_EDITBOX,
-  KW_WIDGETTYPE_SCROLLBOX,
-  KW_WIDGETTYPE_TOGGLE,
-  KW_WIDGETTYPE_CUSTOM0 = 0x100000,
-  KW_WIDGETTYPE_CUSTOM1,
-  KW_WIDGETTYPE_CUSTOM2,
-  KW_WIDGETTYPE_CUSTOM3,
-  KW_WIDGETTYPE_CUSTOM4,
-  KW_WIDGETTYPE_CUSTOM5,
-  KW_WIDGETTYPE_CUSTOM6,
-  KW_WIDGETTYPE_CUSTOM7,
-  KW_WIDGETTYPE_CUSTOM8,
-  KW_WIDGETTYPE_CUSTOM9,
-  KW_WIDGETTYPE_CUSTOM10,
-  KW_WIDGETTYPE_CUSTOM11,
-  KW_WIDGETTYPE_CUSTOM12,
-  KW_WIDGETTYPE_CUSTOM13,
-  KW_WIDGETTYPE_CUSTOM14,
-  KW_WIDGETTYPE_CUSTOM15,
-  KW_WIDGETTYPE_CUSTOM16,
-  KW_WIDGETTYPE_CUSTOM17,
-  KW_WIDGETTYPE_CUSTOM18,
-  KW_WIDGETTYPE_CUSTOM19,
-  KW_WIDGETTYPE_CUSTOM20
-} KW_WidgetType;
-
-/**
  * \brief   Set of hints to control how this widget operates.
  * \details These hints can be queried by the widget implementation to change
  *          its behaviour. They are also used to change KiWi's behaviour when
@@ -155,11 +120,12 @@ typedef enum KW_WidgetHint {
 /**
  * \brief   Creates a new custom widget instance.
  * \details If you want to provide a new custom widget this is the function that you should call.
- *          All KW_Widget instances are built using this class, if you should need additional widget 
+ *          All KW_Widget instances are built using this function, if you should need additional widget
  *          information you can use the data parameter.
  *          
  *          The widgetpaint function is called to paint the widget after the parent widget has been painted, never
- *          before, so you are garanteed to be rendering on top of it.
+ *          before, so you are garanteed to be rendering on top of it. It also uniquely identifies the kind of created
+ *          widget (meaning that the paint function address is taken as the widget type).
  *         
  *          Widget geometry is relative to its parent. Consider the following figure:
  * 
@@ -201,7 +167,6 @@ typedef enum KW_WidgetHint {
  * 
  * \param   gui The KW_GUI instace that will hold this widget in its widget tree.
  * \param   parent The parent widget.
- * \param   type The type of this widget.
  * \param   geometry The geometry of this widget *relative* to its parent.
  * \param   widgetpaing The paint function of this widget.
  * \param   widgetdestroy The destroy function of this widget.
@@ -210,7 +175,6 @@ typedef enum KW_WidgetHint {
  */
 extern DECLSPEC KW_Widget * KW_CreateWidget(KW_GUI * gui, 
                                               KW_Widget * parent, 
-                                              KW_WidgetType type, 
                                               const KW_Rect * geometry,
                                               KW_WidgetPaintFunction widgetpaint,
                                               KW_WidgetDestroyFunction widgetdestroy,
@@ -260,10 +224,10 @@ extern DECLSPEC KW_Widget * const * KW_GetWidgetChildren(const KW_Widget * widge
  * \details If you are implementing a custom widget, you must call this function to access the data you
  *          set up previously when the widget was created.
  * \param   widget The widget to retrieve the data from.
- * \param   type The widget type you're expecting @p widget to be
+ * \param   type The address of the widget paint function (to confirm that you actually know this widget)
  * \returns The data pointer or NULL if the widget types don't match.
  */
-extern DECLSPEC void * KW_GetWidgetData(const KW_Widget * widget, KW_WidgetType type);
+extern DECLSPEC void * KW_GetWidgetData(const KW_Widget * widget, KW_WidgetPaintFunction paint);
 
 
 /**
