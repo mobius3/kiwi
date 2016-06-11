@@ -15,7 +15,7 @@ KW_Widget * KW_CreateWidget(KW_GUI * gui, KW_Widget * parent, const KW_Rect * ge
   widget->paint = widgetpaint;
   widget->destroy = widgetdestroy;
   /* set initial area as geometry */
-  widget->composed = *geometry;
+  if (geometry) widget->composed = *geometry;
   KW_ReparentWidget(widget, parent);
   KW_SetWidgetGeometry(widget, geometry);
   KW_UnblockWidgetInputEvents(widget);
@@ -409,9 +409,11 @@ void KW_PaintWidget(KW_Widget * root) {
 
 void KW_SetWidgetGeometry(KW_Widget * widget, const KW_Rect * geometry) {
   unsigned i;
-  KW_Rect old, g = *geometry;
+  KW_Rect old, g;
   KW_OnGeometryChange handler;
 
+  KW_ZeroRect(&old); KW_ZeroRect(&g);
+  if (geometry) KW_CopyRect(geometry, &g);
   if (g.w <= 0) g.w = 0;
   if (g.h <= 0) g.h = 0;
   if ((widget->geometry.x != g.x ||
