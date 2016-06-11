@@ -64,7 +64,7 @@ typedef enum KW_RectHorizontalAlignment {
  * \param outer The outer rectangle
  * \param inner The inner rectangle to center inside outer.
  */
-extern DECLSPEC void KW_RectCenterInParent(KW_Rect * outer, KW_Rect * inner);
+extern DECLSPEC void KW_RectCenterInParent(const KW_Rect * outer, KW_Rect * inner);
 
 /**
  * \brief Vertically center a rectangle inside another
@@ -73,7 +73,7 @@ extern DECLSPEC void KW_RectCenterInParent(KW_Rect * outer, KW_Rect * inner);
  * \param outer The outer rectangle
  * \param inner The inner rectangle to center inside outer.
  */
-extern DECLSPEC void KW_RectVerticallyCenterInParent(KW_Rect * outer, KW_Rect * inner);
+extern DECLSPEC void KW_RectVerticallyCenterInParent(const KW_Rect * outer, KW_Rect * inner);
 
 /**
  * \brief Horizontally center a rectangle inside another
@@ -82,7 +82,7 @@ extern DECLSPEC void KW_RectVerticallyCenterInParent(KW_Rect * outer, KW_Rect * 
  * \param outer The outer rectangle
  * \param inner The inner rectangle to center inside outer.
  */
-extern DECLSPEC void KW_RectHorizontallyCenterInParent(KW_Rect * outer, KW_Rect * inner);
+extern DECLSPEC void KW_RectHorizontallyCenterInParent(const KW_Rect * outer, KW_Rect * inner);
 
 /**
  * \brief Layout rectangles vertically (like a list), aligning them horizontally.
@@ -111,7 +111,7 @@ extern DECLSPEC void KW_RectLayoutHorizontally(KW_Rect * rects[], unsigned count
  * \param count The amount of rectangles in the array
  * \param padding The amount of padding between the rectangles
  */
-extern DECLSPEC void KW_RectFillParentVertically(KW_Rect * outer, KW_Rect * rects[], unsigned weights[], unsigned count, int padding);
+extern DECLSPEC void KW_RectFillParentVertically(const KW_Rect * outer, KW_Rect * rects[], unsigned weights[], unsigned count, int padding);
 
 /**
  * \brief Layout and resize rectangles horizontally, adjusting their width so they all fit inside the outer
@@ -123,7 +123,7 @@ extern DECLSPEC void KW_RectFillParentVertically(KW_Rect * outer, KW_Rect * rect
  * \param count The amount of rectangles in the array
  * \param padding The amount of padding between the rectangles
  */
-extern DECLSPEC void KW_RectFillParentHorizontally(KW_Rect * outer, KW_Rect * rects[], unsigned weights[], unsigned count,
+extern DECLSPEC void KW_RectFillParentHorizontally(const KW_Rect * outer, KW_Rect * rects[], unsigned weights[], unsigned count,
                                              int padding, KW_RectVerticalAlignment align);
 
 

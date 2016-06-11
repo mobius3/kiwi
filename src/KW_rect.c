@@ -1,19 +1,19 @@
 #include "KW_rect.h"
 
-void KW_RectCenterInParent(KW_Rect * parent, KW_Rect * inner) {
+void KW_RectCenterInParent(const KW_Rect * parent, KW_Rect * inner) {
   KW_RectHorizontallyCenterInParent(parent, inner);
   KW_RectVerticallyCenterInParent(parent, inner);
 }
 
-void KW_RectVerticallyCenterInParent(KW_Rect * parent, KW_Rect * inner) {
+void KW_RectVerticallyCenterInParent(const KW_Rect * parent, KW_Rect * inner) {
   inner->y = (parent->h/2) - (inner->h/2);
 }
 
-void KW_RectHorizontallyCenterInParent(KW_Rect * parent, KW_Rect * inner) {
+void KW_RectHorizontallyCenterInParent(const KW_Rect * parent, KW_Rect * inner) {
   inner->x = (parent->w/2) - (inner->w/2);
 }
 
-void KW_RectCalculateEnclosingRect(KW_Rect * rects[], unsigned count, KW_Rect * outer) {
+void KW_RectCalculateEnclosingRect(KW_Rect * const rects[], unsigned count, KW_Rect * outer) {
   unsigned i;
   outer->x = rects[0]->x;
   outer->y = rects[0]->y;
@@ -86,7 +86,7 @@ void KW_RectLayoutHorizontally(KW_Rect * rects[], unsigned count, int padding, K
   }
 }
 
-void KW_RectFillParentVertically(KW_Rect * parent, KW_Rect * rects[], unsigned weights[], unsigned count, int padding) {
+void KW_RectFillParentVertically(const KW_Rect * parent, KW_Rect * rects[], unsigned weights[], unsigned count, int padding) {
   KW_Rect * inner;
   unsigned i, weight, total = 0, base = 0;
   int current = 0;
@@ -102,7 +102,7 @@ void KW_RectFillParentVertically(KW_Rect * parent, KW_Rect * rects[], unsigned w
   }
 }
 
-void KW_RectFillParentHorizontally(KW_Rect * parent, KW_Rect * rects[], unsigned weights[], unsigned count, int padding,
+void KW_RectFillParentHorizontally(const KW_Rect * parent, KW_Rect * rects[], unsigned weights[], unsigned count, int padding,
                              KW_RectVerticalAlignment align) {
   KW_Rect * inner;
   unsigned i, weight, total = 0, base = 0;
