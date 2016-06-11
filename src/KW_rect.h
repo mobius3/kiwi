@@ -134,5 +134,33 @@ extern DECLSPEC void KW_RectFillParentHorizontally(const KW_Rect * outer, KW_Rec
  * \param count The amount of rectangles in the array
  * \param outer The outer rectangle to be filled
  */
-extern DECLSPEC void KW_RectCalculateEnclosingRect(KW_Rect * rects[], unsigned count, KW_Rect * outer);
+extern DECLSPEC void KW_RectCalculateEnclosingRect(KW_Rect * const rects[], unsigned count, KW_Rect * outer);
+
+/**
+ * \brief Sets the x, y, w, and h of an rect
+ * \param rect The target rect
+ * \param x Value for x
+ * \param y Value for y
+ * \param w Value for w
+ * \param h Value for h
+ */
+extern DECLSPEC void KW_SetRect(KW_Rect * rect, int x, int y, int w, int h);
+
+/**
+ * \brief Copies an rect into another
+ * \param src The rect that will be copied from
+ * \param dst The rect that will be copied to
+ */
+extern DECLSPEC void KW_CopyRect(const KW_Rect * src, KW_Rect * dst);
+
+/**
+ * \brief Zeroes an rectangle, making all its values zero.
+ * \param rect The rect to zero.
+ */
+extern DECLSPEC void KW_ZeroRect(KW_Rect * rect);
+
+#define KW_PRINTRECT(command, rect) { \
+  command("%dx%d+%dx%d\n", (rect).x, (rect).y, (rect).w, (rect).h); \
+}
+
 #endif

@@ -133,4 +133,20 @@ void KW_RectFillParentHorizontally(const KW_Rect * parent, KW_Rect * rects[], un
 }
 
 
+void KW_SetRect(KW_Rect * rect, int x, int y, int w, int h) {
+  rect->x = x;
+  rect->y = y;
+  rect->w = w;
+  rect->h = h;
+}
+
+void KW_CopyRect(const KW_Rect * src, KW_Rect * dst) {
+  *dst = *src;
+}
+
+void KW_ZeroRect(KW_Rect * rect) {
+  rect->x = rect->y = rect->w = rect->h = 0;
+}
+
+
 
