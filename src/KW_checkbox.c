@@ -62,3 +62,17 @@ static void MouseUp(KW_Widget * widget, int b) {
   (void) b;
   KW_SetToggleChecked(cb->toggle, (KW_bool) !KW_IsToggleChecked(cb->toggle));
 }
+
+KW_Widget * KW_GetCheckboxLabel(KW_Widget * widget) {
+  return ((KW_Checkbox *)KW_GetWidgetData(widget, PaintCheckbox))->label;
+};
+
+KW_Widget * KW_SetCheckboxLabel(KW_Widget * widget, KW_Widget * label) {
+  KW_Checkbox * cb = KW_GetWidgetData(widget, PaintCheckbox);
+  KW_Widget * old = cb->label;
+  KW_ReparentWidget(old, NULL);
+  KW_ReparentWidget(label, widget);
+  cb->label = label;
+  Reposition(cb, KW_ReturnWidgetGeometry(widget));
+  return old;
+}
