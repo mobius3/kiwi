@@ -76,22 +76,22 @@ int main(int argc, char ** argv) {
 
   KW_Rect buttongeom = { x: 10, y: 8, w: 32, h: 32 };
   KW_Widget * button;
-  button = KW_CreateButton(gui, buttonsframe, "", &buttongeom);
+  button = KW_CreateButton(gui, buttonsframe, NULL, &buttongeom);
   KW_SetWidgetTilesetSurface(button, set);
   KW_AddWidgetMouseDownHandler(button, SwitchNormalClicked);
   
   buttongeom.x += 290/4;
-  button = KW_CreateButton(gui, buttonsframe, "", &buttongeom);
+  button = KW_CreateButton(gui, buttonsframe, NULL, &buttongeom);
   KW_SetWidgetTilesetSurface(button, setalloy);
   KW_AddWidgetMouseDownHandler(button, SwitchAlloyClicked);
   
   buttongeom.x += 290/4;
-  button = KW_CreateButton(gui, buttonsframe, "", &buttongeom);
+  button = KW_CreateButton(gui, buttonsframe, NULL, &buttongeom);
   KW_SetWidgetTilesetSurface(button, setfutter);
   KW_AddWidgetMouseDownHandler(button, SwitchFutterClicked);
   
   buttongeom.x += 290/4;
-  button = KW_CreateButton(gui, buttonsframe, "", &buttongeom);
+  button = KW_CreateButton(gui, buttonsframe, NULL, &buttongeom);
   KW_SetWidgetTilesetSurface(button, setflat);
   KW_AddWidgetMouseDownHandler(button, SwitchFlatClicked);
   
@@ -110,7 +110,7 @@ int main(int argc, char ** argv) {
   
   buttongeom = editgeom;
   buttongeom.y = 60; buttongeom.h -= 10;
-  KW_Widget * kthxbai = KW_CreateButton(gui, frame, "kthxbai", &buttongeom);
+  KW_Widget * kthxbai = KW_CreateButtonAndLabel(gui, frame, "kthxbai", &buttongeom);
   KW_AddWidgetMouseDownHandler(kthxbai, kthxbaiClicked);
   
   while (!SDL_QuitRequested() && !quit) {

@@ -73,7 +73,7 @@ int main(int argc, char ** argv) {
   geometry.x = 10; geometry.y = 0; geometry.h = 40; geometry.w = 230;
   
   for (i = 0; i < 5; i++) {
-    button = KW_CreateButton(gui, frame, "Drag me, resize me.", &geometry);
+    button = KW_CreateButtonAndLabel(gui, frame, "Drag me, resize me.", &geometry);
     KW_AddWidgetDragStartHandler(button, DragStart);
     KW_AddWidgetDragHandler(button, Drag);
     KW_AddWidgetDragStopHandler(button, DragStop);
