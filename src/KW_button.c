@@ -91,35 +91,18 @@ KW_Button * AllocButton() {
   return button;
 }
 
-void KW_SetButtonIcon(KW_Widget * widget, const KW_Rect * iconclip) {
-  KW_Button * button = KW_GetWidgetData(widget, PaintButton);
-  KW_SetLabelIcon(button->labelwidget, iconclip);
+KW_Widget * KW_GetButtonLabel(KW_Widget * widget) {
+  return ((KW_Button *)KW_GetWidgetData(widget, PaintButton))->labelwidget;
 }
 
-void KW_SetButtonText(KW_Widget * widget, const char * text) {
+KW_Widget * KW_SetButtonLabel(KW_Widget * widget, KW_Widget * label) {
   KW_Button * button = KW_GetWidgetData(widget, PaintButton);
-  KW_SetLabelText(button->labelwidget, text);
-}
-
-
-
-void KW_SetButtonFont(KW_Widget * widget, KW_Font * font) {
-  KW_Button * button = KW_GetWidgetData(widget, PaintButton);
-  KW_SetLabelFont(button->labelwidget, font);
-}
-
-
-void KW_SetButtonTextColor(KW_Widget * widget, KW_Color color) {
-  KW_Button * button = KW_GetWidgetData(widget, PaintButton);
-  KW_SetLabelTextColor(button->labelwidget, color);
-}
-
-KW_Color KW_GetButtonTextColor(KW_Widget * widget) {
-  KW_Button * button = KW_GetWidgetData(widget, PaintButton);
-  return KW_GetLabelTextColor(button->labelwidget);
-}
-
-KW_bool KW_WasButtonColorSet(KW_Widget * widget) {
-  KW_Button *button = KW_GetWidgetData(widget, PaintButton);
-  return KW_WasLabelTextColorSet(button->labelwidget);
+  KW_Widget * old = button->labelwidget;
+  KW_Rect labelgeom;
+  KW_ReparentWidget(old, NULL);
+  KW_ReparentWidget(label, widget);
+  KW_MarginRect(KW_ReturnWidgetGeometry(widget), &labelgeom, TILESIZE);
+  KW_SetWidgetGeometry(label, &labelgeom);
+  button->labelwidget = label;
+  return old;
 }
