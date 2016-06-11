@@ -126,9 +126,10 @@ void MouseReleased(KW_GUI * gui, int mousex, int mousey, int button) {
     }
     gui->currentdrag = NULL;
   }
+  if (!widget) return;
 
   actualmouseover = CalculateMouseOver(widget->parent, mousex, mousey);
-  if (widget != NULL && widget == actualmouseover) {
+  if (widget == actualmouseover) {
     count = widget->eventhandlers[KW_ON_MOUSEUP].count;
     upandlers = (KW_OnMouseUp *) widget->eventhandlers[KW_ON_MOUSEUP].handlers;
     for (i = 0; i < count; i++) {
