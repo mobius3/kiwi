@@ -90,6 +90,7 @@ void MouseReleased(KW_GUI * gui, int mousex, int mousey, int button) {
   KW_Widget * widget = gui->currentmouseover, * actualmouseover;
 
   gui->cursordown = SDL_FALSE;
+  gui->cursorwasdown = SDL_TRUE;
 
   if (widget && (KW_IsWidgetInputEventsBlocked(widget) || KW_IsWidgetHidden(widget))) return;
 
@@ -133,7 +134,8 @@ int KW_EventWatcher(void * data, SDL_Event * event) {
 
 void KW_ProcessEvents(KW_GUI * gui) {
   int i = 0;
-  SDL_LockMutex(gui->evqueuelock);  
+  SDL_LockMutex(gui->evqueuelock);
+  gui->cursorwasdown = SDL_FALSE;
   for (i = 0; i < gui->evqueuesize; i++) {
     SDL_Event * event = gui->evqueue + i;
     switch (event->type) {

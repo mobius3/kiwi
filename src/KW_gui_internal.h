@@ -26,6 +26,7 @@ struct KW_GUI {
   KW_Widget * currentfocus; /* which widget was the last focused/clicked */
   KW_Widget * currentdrag; /* the widget where the drag started */
   SDL_bool cursordown; /* indicates whether the cursor is clicked or not */
+  SDL_bool cursorwasdown;
   
   SDL_Event evqueue[1024];
   int evqueuesize;

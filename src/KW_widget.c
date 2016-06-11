@@ -566,3 +566,17 @@ void KW_RemoveWidgetTilesetChangeHandler(KW_Widget * widget, KW_OnWidgetTilesetC
   RemoveGUItHandler(gui, KW_GUI_ONTILESETCHANGED, (GUIHandler) handler, widget);
 }
 
+KW_bool KW_IsCursorOverWidget(KW_Widget * widget) {
+  return (KW_GetGUI(widget)->currentmouseover == widget) ? KW_TRUE : KW_FALSE;
+}
+
+KW_bool KW_IsCursorPressedOnWidget(KW_Widget * widget) {
+  KW_GUI * gui = KW_GetGUI(widget);
+  return (gui->cursordown && gui->currentmouseover == widget)  ? KW_TRUE : KW_FALSE;
+}
+
+KW_bool KW_IsCursorReleasedOnWidget(KW_Widget * widget) {
+  KW_GUI * gui = KW_GetGUI(widget);
+  return (gui->cursordown && gui->currentmouseover == widget)  ? KW_TRUE : KW_FALSE;
+}
+

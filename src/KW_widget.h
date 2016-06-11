@@ -662,6 +662,31 @@ extern DECLSPEC KW_Surface * KW_GetWidgetTilesetSurface(KW_Widget * widget);
  */
 extern DECLSPEC void KW_SetClipChildrenWidgets(KW_Widget * widget, KW_bool shouldclip);
 
+/**
+ * \brief Checks if there's a cursor over the widget.
+ * \details This does not takes in consideration parent widgets (e.g, if cursor is over a widget,
+ *          calling this function on its parent would return KW_FALSE)
+ * \param widget The widget to check if the cursor is over
+ * \returns KW_TRUE if the cursor is over, KW_FALSE otherwise
+ */
+extern DECLSPEC KW_bool KW_IsCursorOverWidget(KW_Widget * widget);
+
+/**
+ * \brief Checks if there's a cursor pressing on the widget
+ * \param widget The widget to check if the cursor is pressing on
+ * \returns KW_TRUE if the cursor is pressing, KW_FALSE otherwise
+ */
+extern DECLSPEC KW_bool KW_IsCursorPressedOnWidget(KW_Widget * widget);
+
+/**
+ * \brief Checks if the cursor was pressing and was just released.
+ * \details This is only true on the same paint/update cycle that the cursor was
+ *          released.
+ * \param widget The widget to check if the cursor is released
+ * \returns KW_TRUE if the cursor is released, KW_FALSE otherwise
+ */
+extern DECLSPEC KW_bool KW_IsCursorReleasedOnWidget(KW_Widget * widget);
+
 #ifdef __cplusplus
 }
 #endif
