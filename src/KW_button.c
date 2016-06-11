@@ -10,30 +10,6 @@ void RenderButton(KW_Widget * widget);
 void DestroyButton(KW_Widget * widget);
 void ButtonGeometryChanged(KW_Widget * widget, const KW_Rect * newgeom, const KW_Rect * oldgeom);
 
-static void MouseOver(KW_Widget * widget) {
-  KW_Button * button = KW_GetWidgetData(widget, PaintButton);
-  button->mouseover = KW_TRUE;
-}
-
-
-static void MouseLeave(KW_Widget * widget) {
-  KW_Button * button = KW_GetWidgetData(widget, PaintButton);
-  button->mouseover = KW_FALSE;
-}
-
-static void MousePress(KW_Widget * widget, int b) {
-  KW_Button * button = KW_GetWidgetData(widget, PaintButton);
-  (void) b;
-  button->clicked = KW_TRUE;
-}
-
-static void MouseRelease(KW_Widget * widget, int b) {
-  KW_Button * button = KW_GetWidgetData(widget, PaintButton);
-  (void) b;
-  button->clicked = KW_FALSE;
-}
-
-
 KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, const char * text, const KW_Rect * geometry) {
   KW_Rect labelgeom;
   KW_Widget * widget = NULL;
@@ -47,10 +23,6 @@ KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, const char * text,
   widget = KW_CreateWidget(gui, parent, geometry, PaintButton, DestroyButton, button);
   button->labelwidget = KW_CreateLabel(gui, widget, text, &labelgeom);
   KW_BlockWidgetInputEvents(button->labelwidget);
-  KW_AddWidgetMouseOverHandler(widget, MouseOver);
-  KW_AddWidgetMouseLeaveHandler(widget, MouseLeave);
-  KW_AddWidgetMouseDownHandler(widget, MousePress);
-  KW_AddWidgetMouseUpHandler(widget, MouseRelease);
   KW_AddWidgetGeometryChangeHandler(widget, ButtonGeometryChanged);
   KW_AddWidgetTilesetChangeHandler(widget, RenderButton);
   RenderButton(widget);
@@ -65,7 +37,7 @@ void PaintButton(KW_Widget * widget, const KW_Rect * absolute, void * data) {
   if (KW_QueryWidgetHint(widget, KW_WIDGETHINT_FRAMELESS) == KW_TRUE)
     return;
 
-  if (button->mouseover)
+  if (KW_IsCursorOverWidget(widget))
     KW_RenderCopy(renderer, button->normal, NULL, absolute);
   else
     KW_RenderCopy(renderer, button->over, NULL, absolute);
