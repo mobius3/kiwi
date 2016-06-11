@@ -2,6 +2,13 @@
 #include "KW_gui_internal.h"
 #include "KW_widget_internal.h"
 
+#define KW_FireWidgetEvent(widget, callbacktype, event, args) { \
+  unsigned __i; \
+  for (__i = 0; __i < widget->eventhandlers[event].count; __i++) { \
+    ((callbacktype) ((callbacktype *) widget->eventhandlers[event].handlers)[__i]) args; \
+  } \
+}
+
 KW_Widget * CalculateMouseOver(KW_Widget * widget, int x, int y) {
   int i;
   KW_Widget * found = NULL;
@@ -34,11 +41,6 @@ KW_Widget * CalculateMouseOver(KW_Widget * widget, int x, int y) {
 }
 
 void MouseMoved(KW_GUI * gui, int mousex, int mousey, int xrel, int yrel) {
-  int i, count;
-  KW_OnMouseOver * overhandlers;
-  KW_OnMouseLeave * leavehandlers;
-  KW_OnDragStart * dragstarthandlers;
-  KW_OnDrag * draghandlers;
   KW_Widget * current = gui->currentmouseover;
   KW_Widget * widget = NULL;
   /* first check if we are in drag mode */
@@ -47,22 +49,12 @@ void MouseMoved(KW_GUI * gui, int mousex, int mousey, int xrel, int yrel) {
     if (gui->currentdrag == NULL) {
       /* drag is starting on the current mouse over */
       if (current != NULL) {
-        /* report dragstart */
-        count = current->eventhandlers[KW_ON_DRAGSTART].count;
-        dragstarthandlers = (KW_OnDragStart *) current->eventhandlers[KW_ON_DRAGSTART].handlers;
-        for (i = 0; i < count; i++) {
-          dragstarthandlers[i](current, mousex, mousey);
-        }
-        /* sets the currend drag widget */
+        KW_FireWidgetEvent(current, KW_OnDragStart, KW_ON_DRAGSTART, (current, mousex, mousey));
         gui->currentdrag = current;
       }
     } else {
       /* drag HAS started already. Update widh drag positions */
-        count = current->eventhandlers[KW_ON_DRAG].count;
-        draghandlers = (KW_OnDrag *) current->eventhandlers[KW_ON_DRAG].handlers;
-        for (i = 0; i < count; i++) {
-          draghandlers[i](current, mousex, mousey, xrel, yrel);
-        }
+      KW_FireWidgetEvent(current, KW_OnDrag, KW_ON_DRAG, (current, mousex, mousey, xrel, yrel));
     }
     /* no mouse movement events are calculated while dragging */
     return;
@@ -72,45 +64,29 @@ void MouseMoved(KW_GUI * gui, int mousex, int mousey, int xrel, int yrel) {
 
   /* gotta notify the previous mouseover */
   if (current != NULL) {
-    count = current->eventhandlers[KW_ON_MOUSELEAVE].count;
-    leavehandlers = (KW_OnMouseLeave *) current->eventhandlers[KW_ON_MOUSELEAVE].handlers;
-    for (i = 0; i < count; i++) {
-      leavehandlers[i](current);
-    }
+    KW_FireWidgetEvent(current, KW_OnMouseLeave, KW_ON_MOUSELEAVE, (current));
   }
 
   /* warn the current mouseover */
   gui->currentmouseover = widget;
   if (widget != NULL) {
-    count = widget->eventhandlers[KW_ON_MOUSEOVER].count;
-    overhandlers = (KW_OnMouseOver *) widget->eventhandlers[KW_ON_MOUSEOVER].handlers;
-    for (i = 0; i < count; i++) {
-      overhandlers[i](widget);
-    }
+    KW_FireWidgetEvent(widget, KW_OnMouseLeave, KW_ON_MOUSEOVER, (widget));
   }
 }
 
 
 void MousePressed(KW_GUI * gui, int mousex, int mousey, int button) {
-  int i, count;
-  KW_OnMouseDown * handlers;
-  KW_Widget * widget = gui->currentmouseover;
-  (void) mousex; (void) mousey;
+  KW_Widget *widget = gui->currentmouseover;
+  (void) mousex;
+  (void) mousey;
   if (widget != NULL) {
     if (KW_IsWidgetInputEventsBlocked(widget) || KW_IsWidgetHidden(widget)) return;
-    count = widget->eventhandlers[KW_ON_MOUSEDOWN].count;
-    handlers = (KW_OnMouseDown *) widget->eventhandlers[KW_ON_MOUSEDOWN].handlers;
-    for (i = 0; i < count; i++) {
-      handlers[i](widget, button);
-    }
+    KW_FireWidgetEvent(widget, KW_OnMouseDown, KW_ON_MOUSEDOWN, (widget, button));
+    gui->cursordown = SDL_TRUE;
   }
-  gui->cursordown = SDL_TRUE;
 }
 
 void MouseReleased(KW_GUI * gui, int mousex, int mousey, int button) {
-  int i, count;
-  KW_OnMouseUp * upandlers;
-  KW_OnDragStop * dragstophandlers;
   KW_Widget * widget = gui->currentmouseover, * actualmouseover;
 
   gui->cursordown = SDL_FALSE;
@@ -119,57 +95,31 @@ void MouseReleased(KW_GUI * gui, int mousex, int mousey, int button) {
 
   /* check if was under drag */
   if (gui->currentdrag != NULL) {
-    count = gui->currentdrag->eventhandlers[KW_ON_DRAGSTOP].count;
-    dragstophandlers = (KW_OnDragStop *) gui->currentdrag->eventhandlers[KW_ON_DRAGSTOP].handlers;
-    for (i = 0; i < count; i++) {
-      dragstophandlers[i](widget, mousex, mousey);
-    }
+    KW_FireWidgetEvent(gui->currentdrag, KW_OnDragStop, KW_ON_DRAGSTOP, (gui->currentdrag, mousex, mousey));
     gui->currentdrag = NULL;
   }
   if (!widget) return;
 
   actualmouseover = CalculateMouseOver(widget->parent, mousex, mousey);
   if (widget == actualmouseover) {
-    count = widget->eventhandlers[KW_ON_MOUSEUP].count;
-    upandlers = (KW_OnMouseUp *) widget->eventhandlers[KW_ON_MOUSEUP].handlers;
-    for (i = 0; i < count; i++) {
-      upandlers[i](widget, button);
-    }
+    KW_FireWidgetEvent(widget, KW_OnMouseUp, KW_ON_MOUSEUP, (widget, button));
     KW_SetFocusedWidget(widget);
   }
 }
 
 void TextInputReady(KW_GUI * gui, const char * text) {
-  int count, i;
-  KW_OnTextInput * handlers;
   if (gui->currentfocus == NULL) return;
-  count = gui->currentfocus->eventhandlers[KW_ON_TEXTINPUT].count;
-  handlers = (KW_OnTextInput*) gui->currentfocus->eventhandlers[KW_ON_TEXTINPUT].handlers;
-  for (i = 0; i < count; i++) {
-    handlers[i](gui->currentfocus, text);
-  }
+  KW_FireWidgetEvent(gui->currentfocus, KW_OnTextInput, KW_ON_TEXTINPUT, (gui->currentfocus, text));
 }
 
 void KeyUp(KW_GUI * gui, SDL_Keycode key, SDL_Scancode scan) {
-  int count, i;
-  KW_OnKeyUp * handlers;
   if (gui->currentfocus == NULL) return;
-  count = gui->currentfocus->eventhandlers[KW_ON_KEYUP].count;
-  handlers = (KW_OnKeyUp*) gui->currentfocus->eventhandlers[KW_ON_KEYUP].handlers;
-  for (i = 0; i < count; i++) {
-    handlers[i](gui->currentfocus, key, scan);
-  }
+  KW_FireWidgetEvent(gui->currentfocus, KW_OnKeyUp, KW_ON_KEYUP, (gui->currentfocus, key, scan));
 }
 
 void KeyDown(KW_GUI * gui, SDL_Keycode key, SDL_Scancode scan) {
-  int count, i;
-  KW_OnKeyDown * handlers;
   if (gui->currentfocus == NULL) return;
-  count = gui->currentfocus->eventhandlers[KW_ON_KEYDOWN].count;
-  handlers = (KW_OnKeyDown*) gui->currentfocus->eventhandlers[KW_ON_KEYDOWN].handlers;
-  for (i = 0; i < count; i++) {
-    handlers[i](gui->currentfocus, key, scan);
-  }
+  KW_FireWidgetEvent(gui->currentfocus, KW_OnKeyDown, KW_ON_KEYDOWN, (gui->currentfocus, key, scan));
 }
 
 /* to capture mouse movements, clicks, types, etc */
@@ -218,4 +168,3 @@ void KW_ProcessEvents(KW_GUI * gui) {
   gui->evqueuesize = 0;
   SDL_UnlockMutex(gui->evqueuelock);
 }
-#undef NDEBUG
