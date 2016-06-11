@@ -168,3 +168,5 @@ void KW_ProcessEvents(KW_GUI * gui) {
   gui->evqueuesize = 0;
   SDL_UnlockMutex(gui->evqueuelock);
 }
+
+#undef KW_FireWidgetEvent
