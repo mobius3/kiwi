@@ -291,6 +291,14 @@ extern DECLSPEC void KW_SetWidgetGeometry(KW_Widget * widget, const KW_Rect * ge
 extern DECLSPEC void KW_GetWidgetGeometry(const KW_Widget * widget, KW_Rect * geometry);
 
 /**
+ * \brief   Returns the widget geometry.
+ * \details Use this function to retrieve the current *relative* geometry of the widget.
+ * \param   widget The widget to get the geometry from.
+ * \returns A KW_Rect pointer that will point to the the @p widget geometry.
+ */
+extern DECLSPEC const KW_Rect * const KW_ReturnWidgetGeometry(const KW_Widget * widget);
+
+/**
  * \brief   Gets the absolute widget geometry.
  * \details Use this if you need to know the absolute widget geometry calculated taking its parents in consideration.
  *          It is useful inside the paint function of a widget.
