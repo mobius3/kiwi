@@ -61,6 +61,7 @@ KW_Surface * KW_GetTilesetSurface(KW_GUI * gui) {
 void KW_Quit(KW_GUI * gui) {
   KW_DestroyWidget(gui->rootwidget, 1);
   KW_ReleaseFont(gui->renderer, gui->defaultfont);
+  KW_ReleaseTexture(gui->renderer, gui->tilesettexture);
   free(gui);
 }
 
