@@ -30,7 +30,7 @@ void PaintFrame(KW_Widget * widget, const KW_Rect * absolute, void * data) {
   KW_Rect targetgeom = *absolute;
   KW_RenderDriver * renderer = KW_GetWidgetRenderer(widget);
 
-  if (KW_QueryWidgetHint(widget, KW_WIDGETHINT_ALLOWTILESTRETCH)) {
+  if (!KW_QueryWidgetHint(widget, KW_WIDGETHINT_ALLOWTILESTRETCH)) {
     KW_RenderCopy(renderer, frame->framerender, NULL, &targetgeom);
   } else {
     KW_RenderTileFrame(KW_GetWidgetRenderer(widget), KW_GetWidgetTilesetTexture(widget), 0, 0, &targetgeom, KW_TRUE, KW_TRUE);

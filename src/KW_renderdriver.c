@@ -60,7 +60,6 @@ void KW_ReleaseFont(KW_RenderDriver * driver, KW_Font * font) {
 void KW_SetClipRect(KW_RenderDriver * driver, const KW_Rect * clip, int force) {
   driver->setClipRect(driver, clip, force);
 }
-
 KW_bool KW_GetClipRect(KW_RenderDriver * driver, KW_Rect * clip) {
   return driver->getClipRect(driver, clip);
 }
