@@ -192,21 +192,27 @@ void KW_RenderTileFrame(KW_RenderDriver * renderer, KW_Texture * tileset, int st
 
 void KW_BlitTileFrame(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * tileset, int startcolumn, int startline, const KW_Rect * fillrect, KW_bool stretchcenter, KW_bool stretchsides) {
   int x = fillrect->x, y = fillrect->y, w = fillrect->w, h = fillrect->h;
+  KW_bool stretchleft, stretchright, stretchtop, stretchbottom;
 
   /* fill with background */
+  stretchcenter = stretchcenter && KW_IsTileStretchable(renderer, tileset, startcolumn + 1, startline + 1);
   KW_BlitTileFill(renderer, dst, tileset, startcolumn + 1, startline + 1, x + TILESIZE, y + TILESIZE, w - TILESIZE * 2, h - TILESIZE * 2, stretchcenter);
   
   /* fill top */
-  KW_BlitTileFill(renderer, dst, tileset, startcolumn + 1, startline + 0, x + TILESIZE, y, w - TILESIZE * 2, TILESIZE, stretchsides);
+  stretchtop = stretchsides && KW_IsTileStretchable(renderer, tileset, startcolumn + 1, startline + 0);
+  KW_BlitTileFill(renderer, dst, tileset, startcolumn + 1, startline + 0, x + TILESIZE, y, w - TILESIZE * 2, TILESIZE, stretchtop);
   
   /* fill bottom */
-  KW_BlitTileFill(renderer, dst, tileset, startcolumn + 1, startline + 2, x + TILESIZE, y + h - TILESIZE, w - TILESIZE * 2, TILESIZE, stretchsides);
+  stretchbottom = stretchsides && KW_IsTileStretchable(renderer, tileset, startcolumn + 1, startline + 2);
+  KW_BlitTileFill(renderer, dst, tileset, startcolumn + 1, startline + 2, x + TILESIZE, y + h - TILESIZE, w - TILESIZE * 2, TILESIZE, stretchbottom);
   
   /* fill left */
-  KW_BlitTileFill(renderer, dst, tileset, startcolumn + 0, startline + 1, x, y + TILESIZE, TILESIZE, h - TILESIZE * 2, stretchsides);
+  stretchleft = stretchsides && KW_IsTileStretchable(renderer, tileset, startcolumn + 0, startline + 1);
+  KW_BlitTileFill(renderer, dst, tileset, startcolumn + 0, startline + 1, x, y + TILESIZE, TILESIZE, h - TILESIZE * 2, stretchleft);
   
   /* fill right */
-  KW_BlitTileFill(renderer, dst, tileset, startcolumn + 2, startline + 1, x + (w - TILESIZE), y + TILESIZE, TILESIZE, h - TILESIZE * 2, stretchsides);
+  stretchright = stretchsides && KW_IsTileStretchable(renderer, tileset, startcolumn + 2, startline + 1);
+  KW_BlitTileFill(renderer, dst, tileset, startcolumn + 2, startline + 1, x + (w - TILESIZE), y + TILESIZE, TILESIZE, h - TILESIZE * 2, stretchright);
   
   /* render top left */
   KW_BlitTile(renderer, dst, tileset, startcolumn + 0, startline + 0, x, y);
@@ -232,5 +238,22 @@ KW_Texture * KW_CreateTileFrameTexture(KW_RenderDriver * renderer, KW_Surface * 
   /* TODO: proper error handling */
   KW_ReleaseSurface(renderer, target);
   return result;
+}
+KW_bool KW_IsTileStretchable(KW_RenderDriver * renderer, KW_Surface * tileset, int line, int column) {
+  unsigned i = 0, j = 0;
+  unsigned int lastpixel = KW_GetPixel(renderer, tileset, line * TILESIZE, column * TILESIZE);
+  unsigned int pixel;
+  KW_bool stretchable = KW_TRUE;
+  for (i = 0; i < TILESIZE; ++i) {
+    for (j = 0; j < TILESIZE; ++j) {
+      pixel = KW_GetPixel(renderer, tileset, (line * TILESIZE) + i, column * TILESIZE + j);
+      if (pixel != lastpixel) {
+        stretchable = KW_FALSE;
+        break;
+      }
+      lastpixel = pixel;
+    }
+  }
+  return stretchable;
 }
 

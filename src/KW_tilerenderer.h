@@ -34,6 +34,7 @@
 
 #include "KW_renderdriver.h"
 #include "KW_macros.h"
+#include "KW_bool.h"
 
 #define TILESIZE 8
 
@@ -178,6 +179,17 @@ extern DECLSPEC void KW_BlitTileFrame(KW_RenderDriver * renderer, KW_Surface * d
  * \param   h The height to fill.
  */
 extern DECLSPEC KW_Texture * KW_CreateTileFrameTexture(KW_RenderDriver * renderer, KW_Surface * tileset, int startcolumn, int startline, int w, int h, KW_bool stretchcenter, KW_bool stretchsides);
+
+/**
+ * Decides if a tile can be stretched
+ * @param renderer The renderer instance
+ * @param tileset The tileset to check
+ * @param line The tile line
+ * @param column The tile column
+ * @return KW_TRUE if all pixels are equal, KW_FALSE if not.
+ */
+extern DECLSPEC KW_bool KW_IsTileStretchable(KW_RenderDriver * renderer, KW_Surface * tileset, int line, int column);
+
 
 #ifdef __cplusplus
 }
