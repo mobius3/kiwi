@@ -30,6 +30,7 @@ static void KWSDL_setClipRect(KW_RenderDriver * driver, const KW_Rect * clip, in
 static KW_bool KWSDL_getClipRect(KW_RenderDriver * driver, KW_Rect * clip);
 static void KWSDL_release(KW_RenderDriver * driver);
 static void KWSDL_utf8TextSize(KW_RenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height);
+static unsigned KWSDL_getPixel(KW_RenderDriver * driver, KW_Surface * surface, unsigned px, unsigned py);
 
 struct KW_RenderDriver * KW_CreateSDL2RenderDriver(SDL_Renderer * renderer, SDL_Window * window) {
   struct KWSDL * kwsdl = calloc(sizeof(*kwsdl), 1);
@@ -57,6 +58,7 @@ struct KW_RenderDriver * KW_CreateSDL2RenderDriver(SDL_Renderer * renderer, SDL_
   rd->releaseTexture = KWSDL_releaseTexture;
   rd->setClipRect = KWSDL_setClipRect;
   rd->getClipRect = KWSDL_getClipRect;
+  rd->getPixel = KWSDL_getPixel;
   rd->release = KWSDL_release;
 
   rd->priv = kwsdl;
@@ -259,6 +261,15 @@ static KW_bool KWSDL_getClipRect(KW_RenderDriver * driver, KW_Rect * clip) {
   SDL_RenderGetClipRect(renderer, &c);
   clip->x = c.x; clip->y = c.y; clip->w = c.w; clip->h = c.h;
   return (KW_bool) SDL_RenderIsClipEnabled(renderer);
+}
+
+static unsigned int KWSDL_getPixel(KW_RenderDriver * driver, KW_Surface * surface, unsigned x, unsigned y) {
+  SDL_Surface * s = surface->surface;
+  Uint32 * pixels = NULL, * pixel = NULL;
+  if (SDL_MUSTLOCK(s)) SDL_LockSurface(s);
+  pixels = s->pixels;
+  return *((Uint32 *) ((Uint8 *) pixels) + y * s->pitch + x * s->format->BytesPerPixel);
+
 }
 
 static void KWSDL_release(KW_RenderDriver * driver) {

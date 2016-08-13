@@ -148,6 +148,7 @@ typedef void (*KW_GetTextureExtentsFunction)(KW_RenderDriver * driver, KW_Textur
 typedef void (*KW_BlitSurfaceFunction)(KW_RenderDriver * driver, KW_Surface * src, const KW_Rect * srcRect, KW_Surface * dst, const KW_Rect * dstRect);
 typedef void (*KW_SetClipRectFunction)(KW_RenderDriver * driver, const KW_Rect * clip, int force);
 typedef KW_bool (*KW_GetClipRectFunction)(KW_RenderDriver * driver, KW_Rect * clip);
+typedef unsigned int (*KW_GetPixelFunction)(KW_RenderDriver * driver, KW_Surface * surface, unsigned px, unsigned py);
 
 /**
  * \brief   Declares the prototype for a ReleaseDriver function.
@@ -179,6 +180,8 @@ struct KW_RenderDriver {
   KW_SetClipRectFunction       setClipRect;
   KW_GetClipRectFunction       getClipRect;
 
+  KW_GetPixelFunction          getPixel;
+
   KW_ReleaseDriverFunction     release;
 
   void * priv;
@@ -202,5 +205,6 @@ extern DECLSPEC KW_bool KW_GetClipRect(KW_RenderDriver * driver, KW_Rect * clip)
 extern DECLSPEC void KW_SetClipRect(KW_RenderDriver * driver, const KW_Rect * clip, int force);
 extern DECLSPEC void KW_ReleaseRenderDriver(KW_RenderDriver * driver);
 extern DECLSPEC void KW_UTF8TextSize(KW_RenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height);
+extern DECLSPEC unsigned int KW_GetPixel(KW_RenderDriver * driver, KW_Surface * surface, unsigned x, unsigned y);
 
 #endif

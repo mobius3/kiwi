@@ -72,3 +72,7 @@ void KW_UTF8TextSize(KW_RenderDriver * driver, KW_Font * font, const char * text
     driver->utf8TextSize(driver, font, text, width, height);
 }
 
+unsigned KW_GetPixel(KW_RenderDriver * driver, KW_Surface * surface, unsigned px, unsigned py) {
+   return driver->getPixel(driver, surface, px, py);
+}
+
