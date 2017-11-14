@@ -58,6 +58,7 @@ struct KW_Widget {
   
   void *              userdata;
   void *              privdata;
+  KW_Color            debug;
 };
 
 KW_Widget * AllocWidget();

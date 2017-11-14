@@ -95,6 +95,19 @@ KW_bool KW_IsWidgetHidden(KW_Widget * widget) {
   return KW_QueryWidgetHint(widget, KW_WIDGETHINT_HIDDEN);
 }
 
+
+void KW_EnableWidgetDebug(KW_Widget * widget, KW_bool enableInChildren) {
+  KW_EnableWidgetHint(widget, KW_WIDGETHINT_DEBUG, enableInChildren);
+}
+
+void KW_DisableWidgetDebug(KW_Widget * widget, KW_bool disableInChildren) {
+  KW_DisableWidgetHint(widget, KW_WIDGETHINT_DEBUG, disableInChildren);
+}
+
+KW_bool KW_IsDebugWidgetEnabled(KW_Widget * widget) {
+  return KW_QueryWidgetHint(widget, KW_WIDGETHINT_DEBUG);
+}
+
 void KW_DisableWidgetHint(KW_Widget * widget, KW_WidgetHint hint, KW_bool down) {
   unsigned i = 0;
   widget->hints &= ~hint;
@@ -323,6 +336,9 @@ void Reparent(KW_Widget * widget, KW_Widget * newparent) {
     newparent->children = realloc(newparent->children, newparent->childrencount * sizeof(KW_Widget *));
     newparent->children[newparent->childrencount-1] = widget;
     widget->parent = newparent;
+
+    widget->debug = newparent->debug;
+    widget->debug.a = 128;
     
     /* warn new parent widget handlers that children array changed */
     for (i = 0; i < (int)newparent->eventhandlers[KW_ON_CHILDRENCHANGE].count; i++) {
@@ -378,6 +394,7 @@ void KW_PaintWidget(KW_Widget * root) {
   unsigned i = 0;
   KW_Rect cliprect;
   KW_bool clipenabled = KW_FALSE;
+  KW_Color color  = root->debug;
   KW_RenderDriver * renderer = KW_GetWidgetRenderer(root);
 
   if (KW_IsWidgetHidden(root)) return;
@@ -386,6 +403,7 @@ void KW_PaintWidget(KW_Widget * root) {
   if (root->paint != NULL) {
     root->paint(root, &(root->absolute), root->privdata);
   }
+  if (KW_IsDebugWidgetEnabled(root)) KW_RenderRect(renderer, &root->absolute, root->debug);
   
   if (root->clipchildren) {
     clipenabled = KW_GetClipRect(renderer, &(root->oldcliprect));
@@ -403,7 +421,6 @@ void KW_PaintWidget(KW_Widget * root) {
     } else {
       KW_SetClipRect(renderer, NULL, KW_TRUE);
     }
-
   }
 }
 

@@ -114,7 +114,10 @@ typedef enum KW_WidgetHint {
   KW_WIDGETHINT_FRAMELESS = 1 << 3,
 
   /** Makes KiWi not paint this widget */
-  KW_WIDGETHINT_HIDDEN = 1 << 4
+  KW_WIDGETHINT_HIDDEN = 1 << 4,
+
+  /** Makes KiWi draw debug information over this widget */
+  KW_WIDGETHINT_DEBUG = 1 << 5
 } KW_WidgetHint;
 
 /**
@@ -369,6 +372,36 @@ extern DECLSPEC void KW_ShowWidget(KW_Widget * widget);
  * \return  KW_TRUE or KW_FALSE if hidden or not.
  */
 extern DECLSPEC KW_bool KW_IsWidgetHidden(KW_Widget * widget);
+
+/**
+ * \brief   Enable debug painting for this widget (and optionally its children);
+ * \details Use this funcion if you want to debug rhe resulting geometry of your widget.
+ *
+ *          *This is just a wrapper for KW_EnableWidgetHint(widget, KW_WIDGETHINT_DEBUG)*
+ *
+ * \param   widget The widget to hide.
+ * \param   enableInChildren If debug should be enabled in children widgets
+ */
+extern DECLSPEC void KW_EnableWidgetDebug(KW_Widget * widget, KW_bool enableInChildren);
+
+/**
+ * \brief   Disables painting debug information for this widget
+ * \details See ::KW_EnableWidgetDebug.
+ *
+ *          *This is just a wrapper of KW_DisableWidgetHint(w, KW_WIDGETHINT_DEBUG)*
+ *
+ * \param   widget The widget will no longer paint debug info.
+ * \param   disableInChildren If debug should be disabled in children widgets
+ */
+extern DECLSPEC void KW_DisableWidgetDebug(KW_Widget * widget, KW_bool disableInChildren);
+
+/**
+ * \brief   Returns KW_TRUE if this widget should paint debug info.
+ * \param   widget The widget to query.
+ * \details This function is a wrapper of KW_QueryWidgetHint(w, KW_WIDGETHINT_DEBUG)
+ * \return  KW_TRUE or KW_FALSE if debugging or not.
+ */
+extern DECLSPEC KW_bool KW_IsDebugWidgetEnabled(KW_Widget * widget);
 
 /* Stuff now related to handling of events (focus, mouse, keyboard, etc) */
 
