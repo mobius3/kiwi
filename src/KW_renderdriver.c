@@ -25,6 +25,10 @@ KW_Texture * KW_RenderText(KW_RenderDriver * driver, KW_Font * font, const char 
     return driver->renderText(driver, font, text, color, style);
 }
 
+void KW_RenderRect(KW_RenderDriver * driver, KW_Rect * rect, KW_Color color) {
+    driver->renderRect(driver, rect, color);
+}
+
 KW_Font * KW_LoadFont(KW_RenderDriver * driver, const char * fontFile, unsigned ptSize) {
     return driver->loadFont(driver, fontFile, ptSize);
 }

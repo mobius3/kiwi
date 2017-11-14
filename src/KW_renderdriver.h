@@ -149,6 +149,7 @@ typedef void (*KW_BlitSurfaceFunction)(KW_RenderDriver * driver, KW_Surface * sr
 typedef void (*KW_SetClipRectFunction)(KW_RenderDriver * driver, const KW_Rect * clip, int force);
 typedef KW_bool (*KW_GetClipRectFunction)(KW_RenderDriver * driver, KW_Rect * clip);
 typedef unsigned int (*KW_GetPixelFunction)(KW_RenderDriver * driver, KW_Surface * surface, unsigned px, unsigned py);
+typedef void (*KW_RenderRectFunction)(KW_RenderDriver * driver, KW_Rect * rect, KW_Color color);
 
 /**
  * \brief   Declares the prototype for a ReleaseDriver function.
@@ -161,6 +162,7 @@ typedef void (*KW_ReleaseDriverFunction)(KW_RenderDriver * driver);
 struct KW_RenderDriver {
   KW_RenderCopyFunction        renderCopy;
   KW_RenderTextFunction        renderText;
+  KW_RenderRectFunction        renderRect;
   KW_UTF8TextSizeFunction      utf8TextSize;
   KW_LoadFontFunction          loadFont;
   KW_LoadFontFromMemoryFunction loadFontFromMemory;
@@ -187,6 +189,7 @@ struct KW_RenderDriver {
   void * priv;
 };
 
+extern DECLSPEC void KW_RenderRect(KW_RenderDriver * driver, KW_Rect * rect, KW_Color color);
 extern DECLSPEC void KW_BlitSurface(KW_RenderDriver * driver, KW_Surface * src, const KW_Rect * srcRect, KW_Surface * dst, const KW_Rect * dstRect);
 extern DECLSPEC KW_Surface * KW_CreateSurface(KW_RenderDriver * driver, unsigned width, unsigned height);
 extern DECLSPEC void KW_GetSurfaceExtents(KW_RenderDriver * driver, const KW_Surface * surface, unsigned * width, unsigned * height);

@@ -31,6 +31,7 @@ static KW_bool KWSDL_getClipRect(KW_RenderDriver * driver, KW_Rect * clip);
 static void KWSDL_release(KW_RenderDriver * driver);
 static void KWSDL_utf8TextSize(KW_RenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height);
 static unsigned KWSDL_getPixel(KW_RenderDriver * driver, KW_Surface * surface, unsigned px, unsigned py);
+static void KWSDL_renderRect(KW_RenderDriver * driver, KW_Rect * rect, KW_Color color);
 
 struct KW_RenderDriver * KW_CreateSDL2RenderDriver(SDL_Renderer * renderer, SDL_Window * window) {
   struct KWSDL * kwsdl = calloc(sizeof(*kwsdl), 1);
@@ -60,6 +61,7 @@ struct KW_RenderDriver * KW_CreateSDL2RenderDriver(SDL_Renderer * renderer, SDL_
   rd->getClipRect = KWSDL_getClipRect;
   rd->getPixel = KWSDL_getPixel;
   rd->release = KWSDL_release;
+  rd->renderRect = KWSDL_renderRect;
 
   rd->priv = kwsdl;
   return rd;
@@ -68,6 +70,22 @@ struct KW_RenderDriver * KW_CreateSDL2RenderDriver(SDL_Renderer * renderer, SDL_
 void KWSDL_utf8TextSize(KW_RenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height) {
   (void) driver;
   TTF_SizeUTF8(font->font, text, (int*)width, (int*)height);
+}
+
+void KWSDL_renderRect(KW_RenderDriver * driver, KW_Rect * rect, KW_Color color) {
+  KWSDL * kwsdl = (KWSDL *) driver->priv;
+  KW_Color old;
+  SDL_Rect s;
+  SDL_BlendMode blendMode;
+  SDL_GetRenderDrawColor(kwsdl->renderer, &old.r, &old.g, &old.b, &old.a);
+  SDL_GetRenderDrawBlendMode(kwsdl->renderer, &blendMode);
+
+  SDL_SetRenderDrawBlendMode(kwsdl->renderer, SDL_BLENDMODE_BLEND);
+  SDL_SetRenderDrawColor(kwsdl->renderer, color.r, color.g, color.b, color.a);
+  s.x = rect->x; s.y = rect->y; s.w = rect->w; s.h = rect->h;
+  SDL_RenderFillRect(kwsdl->renderer, &s);
+  SDL_SetRenderDrawBlendMode(kwsdl->renderer, blendMode);
+  SDL_SetRenderDrawColor(kwsdl->renderer, old.r, old.g, old.b, old.a);
 }
 
 struct SDL_Renderer * KW_RenderDriverGetSDL2Renderer(struct KW_RenderDriver * driver) {
