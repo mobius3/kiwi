@@ -24,3 +24,6 @@ add_subdirectory(scrollbox)
 
 # Drag widget example
 add_subdirectory(drag)
+
+# Debug gizmos example
+add_subdirectory(debug-gizmos)
