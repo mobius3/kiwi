@@ -42,6 +42,14 @@ typedef struct KW_Color {
   unsigned char a;
 } KW_Color;
 
+/**
+ * \brief Multiply a color by a percent amount;
+ * @param color The color to multiply
+ * @param amount The amount to multiply
+ * @return multiplied color
+ */
+extern DECLSPEC KW_Color KW_MultiplyColor(KW_Color color, float amount);
+
 typedef struct KW_RenderDriver KW_RenderDriver;
 
 /**
@@ -150,6 +158,7 @@ typedef void (*KW_SetClipRectFunction)(KW_RenderDriver * driver, const KW_Rect *
 typedef KW_bool (*KW_GetClipRectFunction)(KW_RenderDriver * driver, KW_Rect * clip);
 typedef unsigned int (*KW_GetPixelFunction)(KW_RenderDriver * driver, KW_Surface * surface, unsigned px, unsigned py);
 typedef void (*KW_RenderRectFunction)(KW_RenderDriver * driver, KW_Rect * rect, KW_Color color);
+typedef void (*KW_GetViewportSizeFunction)(KW_RenderDriver * driver, KW_Rect * rect);
 
 /**
  * \brief   Declares the prototype for a ReleaseDriver function.
@@ -174,6 +183,8 @@ struct KW_RenderDriver {
   KW_GetSurfaceExtentsFunction getSurfaceExtents;
   KW_GetTextureExtentsFunction getTextureExtents;
   KW_BlitSurfaceFunction       blitSurface;
+
+  KW_GetViewportSizeFunction           getViewportSize;
 
   KW_ReleaseTextureFunction    releaseTexture;
   KW_ReleaseSurfaceFunction    releaseSurface;
@@ -205,6 +216,7 @@ extern DECLSPEC void KW_ReleaseTexture(KW_RenderDriver * driver, KW_Texture * te
 extern DECLSPEC void KW_ReleaseSurface(KW_RenderDriver * driver, KW_Surface * surface);
 extern DECLSPEC void KW_ReleaseFont(KW_RenderDriver * driver, KW_Font * font);
 extern DECLSPEC KW_bool KW_GetClipRect(KW_RenderDriver * driver, KW_Rect * clip);
+extern DECLSPEC void KW_GetViewportSize(KW_RenderDriver * driver, KW_Rect * rect);
 extern DECLSPEC void KW_SetClipRect(KW_RenderDriver * driver, const KW_Rect * clip, int force);
 extern DECLSPEC void KW_ReleaseRenderDriver(KW_RenderDriver * driver);
 extern DECLSPEC void KW_UTF8TextSize(KW_RenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height);

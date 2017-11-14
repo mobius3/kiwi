@@ -1,6 +1,7 @@
 #include "KW_widget_internal.h"
 #include "KW_gui_internal.h"
 #include "KW_widget.h"
+#include "KW_gui.h"
 #include <stdlib.h>
 
 KW_Widget * AllocWidget() {
@@ -22,6 +23,10 @@ KW_Widget * KW_CreateWidget(KW_GUI * gui, KW_Widget * parent, const KW_Rect * ge
   widget->privdata = priv;
   widget->tilesettexture = NULL;
   widget->tilesetsurface = NULL;
+  widget->debug.r = (unsigned char) (rand() % 255);
+  widget->debug.g = (unsigned char) (rand() % 255);
+  widget->debug.b = (unsigned char) (rand() % 255);
+  widget->debug.a = 50;
   return widget;
 }
 
@@ -388,13 +393,12 @@ void * KW_GetWidgetUserData(const KW_Widget * widget) {
   return widget->userdata;
 }
 
-
+static void DrawDebugGizmos(KW_Widget * widget, KW_Color * color);
 
 void KW_PaintWidget(KW_Widget * root) {
   unsigned i = 0;
   KW_Rect cliprect;
   KW_bool clipenabled = KW_FALSE;
-  KW_Color color  = root->debug;
   KW_RenderDriver * renderer = KW_GetWidgetRenderer(root);
 
   if (KW_IsWidgetHidden(root)) return;
@@ -403,8 +407,7 @@ void KW_PaintWidget(KW_Widget * root) {
   if (root->paint != NULL) {
     root->paint(root, &(root->absolute), root->privdata);
   }
-  if (KW_IsDebugWidgetEnabled(root)) KW_RenderRect(renderer, &root->absolute, root->debug);
-  
+
   if (root->clipchildren) {
     clipenabled = KW_GetClipRect(renderer, &(root->oldcliprect));
     cliprect = root->absolute;
@@ -418,6 +421,68 @@ void KW_PaintWidget(KW_Widget * root) {
   if (root->clipchildren) {
     if (clipenabled) {
       KW_SetClipRect(renderer, &(root->oldcliprect), KW_TRUE);
+    } else {
+      KW_SetClipRect(renderer, NULL, KW_TRUE);
+    }
+  }
+
+  if (KW_IsDebugWidgetEnabled(root)) DrawDebugGizmos(root, NULL);
+}
+
+static void DrawDebugGizmos(KW_Widget * widget, KW_Color * color) {
+  KW_Rect dbgrect;
+  KW_Rect viewport;
+  KW_RenderDriver * renderer;
+  static KW_Texture * text = NULL;
+  static KW_Widget * old = NULL;
+  KW_Color newcolor;
+  KW_bool clipenabled = KW_FALSE;
+  char buf[512];
+
+  if (!widget) return;
+  dbgrect = widget->absolute;
+  renderer = KW_GetRenderer(KW_GetGUI(widget));
+
+  sprintf(buf, "abs: %dx%d+%dx%d, com: %dx%d+%dx%d",
+          widget->absolute.x,
+          widget->absolute.y,
+          widget->absolute.w,
+          widget->absolute.h,
+          widget->composed.x,
+          widget->composed.y,
+          widget->composed.w,
+          widget->composed.h
+  );
+
+  if (widget->clipchildren) {
+    clipenabled = KW_GetClipRect(renderer, &(widget->oldcliprect));
+    KW_SetClipRect(renderer, NULL, KW_FALSE);
+  }
+
+  KW_GetViewportSize(renderer, &viewport);
+  if (color) {
+    newcolor = KW_MultiplyColor(*color, .01f);
+    KW_RenderRect(renderer, &widget->absolute, newcolor);
+    DrawDebugGizmos(widget->parent, &newcolor);
+  }
+  else color = &widget->debug;
+  if (KW_IsCursorOverWidget(widget)) {
+    KW_RenderRect(renderer, &widget->absolute, *color);
+    DrawDebugGizmos(widget->parent, color);
+    if (old != widget) {
+      if (text) KW_ReleaseTexture(renderer, text);
+      text = KW_RenderText(renderer, KW_GetFont(KW_GetGUI(widget)), buf, KW_MultiplyColor(widget->debug, 0.5f), KW_TTF_STYLE_NORMAL);
+      old = widget;
+    }
+    KW_GetTextureExtents(renderer, text, (unsigned *) &dbgrect.w, (unsigned *) &dbgrect.h);
+    if (dbgrect.x + dbgrect.w > viewport.w) dbgrect.x = viewport.w - dbgrect.w;
+    if (dbgrect.y + dbgrect.h > viewport.h) dbgrect.y = viewport.h - dbgrect.h;
+    KW_RenderCopy(renderer, text, NULL, &dbgrect);
+  }
+
+  if (widget->clipchildren) {
+    if (clipenabled) {
+      KW_SetClipRect(renderer, &(widget->oldcliprect), KW_TRUE);
     } else {
       KW_SetClipRect(renderer, NULL, KW_TRUE);
     }

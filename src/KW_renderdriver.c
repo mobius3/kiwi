@@ -79,3 +79,24 @@ unsigned KW_GetPixel(KW_RenderDriver * driver, KW_Surface * surface, unsigned px
    return driver->getPixel(driver, surface, px, py);
 }
 
+
+static int imax(int i, int j) {
+  return (i < j) ? j : i;
+}
+
+static int imin(int i, int j) {
+  return (i < j) ? i : j;
+}
+
+KW_Color KW_MultiplyColor(KW_Color color, float amount) {
+  KW_Color r;
+  r.r = (unsigned char) imin(imax((int)(color.r * amount), 255), 0);
+  r.g = (unsigned char) imin(imax((int)(color.g * amount), 255), 0);
+  r.b = (unsigned char) imin(imax((int)(color.b * amount), 255), 0);
+  r.a = color.a;
+  return r;
+}
+
+void KW_GetViewportSize(KW_RenderDriver * driver, KW_Rect * rect) {
+    driver->getViewportSize(driver, rect);
+}

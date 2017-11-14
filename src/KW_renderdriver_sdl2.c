@@ -32,6 +32,7 @@ static void KWSDL_release(KW_RenderDriver * driver);
 static void KWSDL_utf8TextSize(KW_RenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height);
 static unsigned KWSDL_getPixel(KW_RenderDriver * driver, KW_Surface * surface, unsigned px, unsigned py);
 static void KWSDL_renderRect(KW_RenderDriver * driver, KW_Rect * rect, KW_Color color);
+static void KWSDL_getViewportSize(KW_RenderDriver * driver, KW_Rect * rect);
 
 struct KW_RenderDriver * KW_CreateSDL2RenderDriver(SDL_Renderer * renderer, SDL_Window * window) {
   struct KWSDL * kwsdl = calloc(sizeof(*kwsdl), 1);
@@ -62,9 +63,20 @@ struct KW_RenderDriver * KW_CreateSDL2RenderDriver(SDL_Renderer * renderer, SDL_
   rd->getPixel = KWSDL_getPixel;
   rd->release = KWSDL_release;
   rd->renderRect = KWSDL_renderRect;
+  rd->getViewportSize = KWSDL_getViewportSize;
 
   rd->priv = kwsdl;
   return rd;
+}
+
+void KWSDL_getViewportSize(KW_RenderDriver * driver, KW_Rect * rect) {
+  KWSDL * kwsdl = (KWSDL *) driver->priv;
+  SDL_Rect r;
+  SDL_RenderGetViewport(kwsdl->renderer, &r);
+  rect->x = r.x;
+  rect->y = r.y;
+  rect->w = r.w;
+  rect->h = r.h;
 }
 
 void KWSDL_utf8TextSize(KW_RenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height) {
@@ -284,6 +296,7 @@ static KW_bool KWSDL_getClipRect(KW_RenderDriver * driver, KW_Rect * clip) {
 static unsigned int KWSDL_getPixel(KW_RenderDriver * driver, KW_Surface * surface, unsigned x, unsigned y) {
   SDL_Surface * s = surface->surface;
   Uint32 * pixels = NULL, * pixel = NULL;
+  (void) driver;
   if (SDL_MUSTLOCK(s)) SDL_LockSurface(s);
   pixels = s->pixels;
   return *((Uint32 *) ((Uint8 *) pixels) + y * s->pitch + x * s->format->BytesPerPixel);

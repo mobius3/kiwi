@@ -91,7 +91,10 @@ void ChildrenChange(KW_Widget * widget, KW_WidgetChildrenChangeEvent what, KW_Wi
   /* nothing else should be on the root */
   if (what == KW_CHILDRENCHANGE_ADDED) {
     KW_Scrollbox * sb = KW_GetWidgetData(widget, PaintScrollboxFrame);
+    KW_Rect geom;
     KW_ReparentWidget(children, sb->inner);
+    KW_GetWidgetComposedGeometry(sb->inner, &geom);
+    KW_SetWidgetGeometry(sb->inner, &geom);
   }
 }
 
