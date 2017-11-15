@@ -443,11 +443,11 @@ static void DrawDebugGizmos(KW_Widget * widget, KW_Color * color) {
   dbgrect = widget->absolute;
   renderer = KW_GetRenderer(KW_GetGUI(widget));
 
-  sprintf(buf, "abs: %dx%d+%dx%d, com: %dx%d+%dx%d",
-          widget->absolute.x,
-          widget->absolute.y,
-          widget->absolute.w,
-          widget->absolute.h,
+  sprintf(buf, "rel: %dx%d+%dx%d, com: %dx%d+%dx%d",
+          widget->geometry.x,
+          widget->geometry.y,
+          widget->geometry.w,
+          widget->geometry.h,
           widget->composed.x,
           widget->composed.y,
           widget->composed.w,
@@ -477,6 +477,7 @@ static void DrawDebugGizmos(KW_Widget * widget, KW_Color * color) {
     KW_GetTextureExtents(renderer, text, (unsigned *) &dbgrect.w, (unsigned *) &dbgrect.h);
     if (dbgrect.x + dbgrect.w > viewport.w) dbgrect.x = viewport.w - dbgrect.w;
     if (dbgrect.y + dbgrect.h > viewport.h) dbgrect.y = viewport.h - dbgrect.h;
+    KW_RenderRect(renderer, &dbgrect, KW_MultiplyColor(*color, 0.2f));
     KW_RenderCopy(renderer, text, NULL, &dbgrect);
   }
 
