@@ -3,6 +3,10 @@
 
 #include "KW_widget.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct KW_GUI;
 
 typedef enum KW_WidgetEventHandlerType {
@@ -64,5 +68,9 @@ struct KW_Widget {
 KW_Widget * AllocWidget();
 
 void FreeWidget(KW_Widget * widget, int freechildren);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

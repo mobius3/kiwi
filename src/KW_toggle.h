@@ -33,6 +33,10 @@
 #include "KW_gui.h"
 #include "KW_widget.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * \brief Creates a toggle button that can be checked or not checked.
  * \details The toggle occupies by default the column 12, lines 0 through 12 in the tileset.
@@ -56,5 +60,9 @@ extern DECLSPEC KW_bool KW_IsToggleChecked(KW_Widget * widget);
  * \param checked Pass KW_TRUE to make it checked or KW_FALSE otherwise
  */
 extern DECLSPEC void KW_SetToggleChecked(KW_Widget * widget, KW_bool checked);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

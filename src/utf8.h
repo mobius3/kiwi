@@ -1,5 +1,9 @@
 #include <stdarg.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* is c the start of a utf8 sequence? */
 #define isutf(c) (((c)&0xC0)!=0x80)
 
@@ -55,3 +59,6 @@ int u8_strlen(const char *s);
 
 int u8_is_locale_utf8(char *locale);
 
+#ifdef __cplusplus
+}
+#endif

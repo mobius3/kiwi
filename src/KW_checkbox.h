@@ -9,6 +9,10 @@
 
 #include "KW_widget.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * \brief Creates a new checkbox.
  * \details Checkboxes listen to the mouseup event, when they happen either in the label
@@ -36,5 +40,9 @@ extern DECLSPEC KW_Widget * KW_GetCheckboxLabel(KW_Widget * widget);
  * \details You might want to destroy this widget if you have no use to it.
  */
 extern DECLSPEC KW_Widget * KW_SetCheckboxLabel(KW_Widget * widget, KW_Widget * label);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
