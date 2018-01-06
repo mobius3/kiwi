@@ -27,6 +27,10 @@
 
 #include "KW_macros.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * The KW_Rect struct represents a rectangle.
  */
@@ -170,5 +174,9 @@ extern DECLSPEC void KW_MarginRect(const KW_Rect * outer, KW_Rect * inner, int m
 #define KW_PRINTRECT(command, rect) { \
   command("%dx%d+%dx%d\n", (rect).x, (rect).y, (rect).w, (rect).h); \
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

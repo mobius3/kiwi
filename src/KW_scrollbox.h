@@ -4,6 +4,11 @@
 #include "KW_gui.h"
 #include "KW_widget.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /**
  * \brief   Creates a frame that can scroll its children widgets.
  * \details Unless specified otherwise, the scrollbox will scroll its children
@@ -33,5 +38,9 @@ extern DECLSPEC void KW_ScrollboxVerticalScroll(KW_Widget * scrollbox, int amoun
  * \param   amount The amount of pixels to vertically scroll.
  */
 extern DECLSPEC void KW_ScrollboxHorizontalScroll(KW_Widget * scrollbox, int amount);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

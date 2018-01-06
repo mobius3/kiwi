@@ -4,6 +4,10 @@
 #include "KW_widget.h"
 #include "KW_renderdriver.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef void (*GUIHandler)(void);
 
 typedef enum KW_GUIEventHandlerType {
@@ -44,8 +48,8 @@ struct KW_GUI {
 void AddGUIHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, GUIHandler handler, void * priv);
 void RemoveGUItHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, GUIHandler handler, void * priv);
 
-
-
-
+#ifdef __cplusplus
+}
+#endif
 
 #endif

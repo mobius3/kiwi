@@ -4,6 +4,10 @@
 #include "SDL.h"
 #include "KW_widget.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct KW_Edtibox {
   KW_Widget * widget;         /* the widget we pertain to */
   
@@ -49,5 +53,8 @@ void EditboxTextInput(KW_Widget * widget, const char * text);
 void EditboxKeyDown(KW_Widget * widget, SDL_Keycode key, SDL_Scancode sym);
 void EditboxFontChanged(KW_GUI * gui, void * priv, KW_Font * font);
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif

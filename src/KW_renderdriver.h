@@ -20,6 +20,10 @@
 #include "KW_rect.h"
 #include "KW_bool.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct KW_Texture {
   void * texture;
 } KW_Texture;
@@ -221,5 +225,9 @@ extern DECLSPEC void KW_SetClipRect(KW_RenderDriver * driver, const KW_Rect * cl
 extern DECLSPEC void KW_ReleaseRenderDriver(KW_RenderDriver * driver);
 extern DECLSPEC void KW_UTF8TextSize(KW_RenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height);
 extern DECLSPEC unsigned int KW_GetPixel(KW_RenderDriver * driver, KW_Surface * surface, unsigned x, unsigned y);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

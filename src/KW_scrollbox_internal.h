@@ -3,6 +3,11 @@
 
 #include "KW_widget.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 typedef struct KW_Scrollbox {
   KW_Widget   * root;
   KW_Widget   * outer;
@@ -24,5 +29,8 @@ void HorizontalBarDrag(KW_Widget * widget, int x, int y, int xrel, int yrel);
 void ChildrenChange(KW_Widget * widget, KW_WidgetChildrenChangeEvent what, KW_Widget * children);
 void RootScrollboxGeometryChange(KW_Widget * widget, const KW_Rect * newgeom, const KW_Rect * oldgeom);
 void RenderScrollboxFrame(KW_Scrollbox * sb);
+#ifdef __cplusplus
+}
+#endif
 
 #endif

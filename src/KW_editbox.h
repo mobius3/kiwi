@@ -34,6 +34,10 @@
 #include "KW_widget.h"
 #include "SDL_ttf.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 extern DECLSPEC KW_Widget * KW_CreateEditbox(KW_GUI * gui, KW_Widget * parent,
                                              const char * text,
                                              const KW_Rect * geometry);
@@ -71,5 +75,9 @@ extern DECLSPEC KW_bool KW_WasEditboxTextColorSet(KW_Widget * widget);
  * \param   color The color to assign to the editbox.
  */
 extern DECLSPEC void KW_SetEditboxTextColor(KW_Widget * widget, KW_Color color);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

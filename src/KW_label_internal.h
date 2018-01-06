@@ -5,6 +5,10 @@
 #include "SDL_ttf.h"
 #include "KW_label.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef
 struct KW_Label {
   char * text;
@@ -35,5 +39,9 @@ void PaintLabel(KW_Widget * widget, const KW_Rect * absolute, void * data);
 void RenderLabelText(KW_Widget * widget);
 void DestroyLabel(KW_Widget * widget);
 void LabelFontChanged(KW_GUI * gui, void * data, KW_Font * font);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
