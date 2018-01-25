@@ -126,6 +126,7 @@ void KeyDown(KW_GUI * gui, SDL_Keycode key, SDL_Scancode scan) {
 /* to capture mouse movements, clicks, types, etc */
 int KW_EventWatcher(void * data, SDL_Event * event) {
   KW_GUI * gui = (KW_GUI *) data;
+  SDL_assert(gui->evqueuesize < 1024);
   SDL_LockMutex(gui->evqueuelock);    
   gui->evqueue[(gui->evqueuesize)++] = *event;
   SDL_UnlockMutex(gui->evqueuelock);  
