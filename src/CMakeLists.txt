@@ -48,7 +48,7 @@ set(LIB_SOURCES
 
 kiwires(HEADER resources.h BODY resources.c RESOURCES resources/sourcesans-pro-semibold.ttf)
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
-add_library(KiWi SHARED ${LIB_SOURCES} ${API_HEADERS} resources.c)
+add_library(KiWi SHARED ${LIB_SOURCES} ${API_HEADERS} ${CMAKE_CURRENT_BINARY_DIR}/resources.c)
 target_link_libraries(KiWi ${SDL2_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
 if(CMAKE_COMPILER_IS_GNUCC)
     target_compile_options(KiWi PRIVATE -fvisibility=hidden -std=c89 -pedantic-errors -Wall -Wextra)
