@@ -26,11 +26,12 @@ int main(int argc, char * argv[]) {
 
 void dump(const char filename[], FILE * hfile, FILE * cfile) {
   FILE * infile = fopen(filename, "rb");
-  char * identifier = calloc(strlen(filename) +1, sizeof(char));
+  size_t size = strlen(filename) +1;
+  char * identifier = calloc(size, sizeof(char));
   unsigned char c = 0;
   size_t n = 0, column = 0, total = 0;
   if (!infile || !hfile || !cfile) { return; }
-  make_identifier(filename, identifier, sizeof(identifier));
+  make_identifier(filename, identifier, size);
   fprintf(hfile, "extern const unsigned char %s[];\n", identifier);
   fprintf(hfile, "extern unsigned long %s_size;\n", identifier);
   fprintf(cfile, "const unsigned char %s[] = {\n", identifier);
