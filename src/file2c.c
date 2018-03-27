@@ -26,7 +26,7 @@ int main(int argc, char * argv[]) {
 
 void dump(const char filename[], FILE * hfile, FILE * cfile) {
   FILE * infile = fopen(filename, "rb");
-  char identifier[strlen(filename) +1];
+  char * identifier = calloc(strlen(filename) +1, sizeof(char));
   unsigned char c = 0;
   size_t n = 0, column = 0, total = 0;
   if (!infile || !hfile || !cfile) { return; }
@@ -47,6 +47,7 @@ void dump(const char filename[], FILE * hfile, FILE * cfile) {
   }
   fprintf(cfile, "\n};\n");
   fprintf(cfile, "unsigned long %s_size = %lu;\n\n", identifier, total);
+  free(identifier);
 }
 
 int make_identifier(const char input[], char output[], size_t outputsize) {
