@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "SDL.h"
 #include "KW_gui.h"
 #include "KW_button.h"

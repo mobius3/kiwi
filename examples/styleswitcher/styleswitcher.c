@@ -74,7 +74,7 @@ int main(int argc, char ** argv) {
   framegeom.x = 10, framegeom.y = 160, framegeom.w = 280, framegeom.h = 48;
   KW_Widget * buttonsframe = KW_CreateFrame(gui, frame, &framegeom);
 
-  KW_Rect buttongeom = { x: 10, y: 8, w: 32, h: 32 };
+  KW_Rect buttongeom = { .x = 10, .y = 8, .w = 32, .h = 32 };
   KW_Widget * button;
   button = KW_CreateButton(gui, buttonsframe, NULL, &buttongeom);
   KW_SetWidgetTilesetSurface(button, set);
@@ -100,8 +100,8 @@ int main(int argc, char ** argv) {
   framegeom.w -= 20; framegeom.h = 100;
   
   /* create the editbox frames */
-  KW_Rect editgeom = { x: 120, y: 20, w: 150, h: 35 };
-  KW_Rect labelgeom = { x: 10, y: 20, w: 110, h: 35 };
+  KW_Rect editgeom = { .x = 120, .y = 20, .w = 150, .h = 35 };
+  KW_Rect labelgeom = { .x = 10, .y = 20, .w = 110, .h = 35 };
   frame = KW_CreateFrame(gui, frame, &framegeom);
   KW_Widget * editbx = KW_CreateEditbox(gui, frame, "βέβαιος (sure)", &editgeom);
   KW_SetEditboxFont(editbx, dejavu);

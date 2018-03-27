@@ -10,7 +10,7 @@ static KW_Rect buttongeom = {0, 0, 230, 40};
 void AddButtonClicked(KW_Widget * button, int mbutton) {
   (void)mbutton;
   char buf[256];
-  sprintf(buf, "geometry: %dx%d+%dx%d", buttongeom.x, buttongeom.y, buttongeom.w, buttongeom.h);
+  SDL_snprintf(buf, 255, "geometry: %dx%d+%dx%d", buttongeom.x, buttongeom.y, buttongeom.w, buttongeom.h);
   KW_Widget * w = KW_CreateButtonAndLabel(KW_GetGUI(button), frame, buf, &buttongeom);
   KW_EnableWidgetDebug(w, KW_TRUE);
   buttongeom.y -= buttongeom.h;

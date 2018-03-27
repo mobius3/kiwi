@@ -18,7 +18,7 @@
 #include <stdint.h>
 #if defined(__WIN32) || defined(WIN32) || defined(_MSC_VER)
 #include <malloc.h>
-#elsif !defined(__OpenBSD__)
+#elif !defined(__OpenBSD__)
 #include <alloca.h>
 #endif
 

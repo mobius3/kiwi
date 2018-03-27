@@ -33,7 +33,7 @@ int main(int argc, char ** argv) {
   KW_SetFont(gui, font);
 
   /* Define a geometry and create a frame */
-  KW_Rect geometry = { x: 0, y: 0, w: 320, h: 240 };
+  KW_Rect geometry = { .x = 0,.y = 0,.w = 320, .h = 240 };
   KW_Widget * frame = KW_CreateFrame(gui, NULL, &geometry);
 
   /* Now create a label that has the frame as the parent, reutilizing
@@ -41,7 +41,7 @@ int main(int argc, char ** argv) {
   KW_Widget * label = KW_CreateLabel(gui, frame, "Label with an icon :)", &geometry);
 
   /* Sets the rect in the tileset to extract the icon from, and sets it in the label */
-  KW_Rect iconrect = { x: 0, y: 48, w : 24, h : 24 };
+  KW_Rect iconrect = { .x = 0, .y = 48, .w = 24, .h = 24 };
   KW_SetLabelIcon(label, &iconrect);
 
   /* Just call KW_Paint(gui) in your game loop. */

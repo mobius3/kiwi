@@ -30,21 +30,21 @@ int main(int argc, char ** argv) {
   KW_GUI * gui = KW_Init(driver, set);
 
   /* Create the top-level framve */
-  KW_Rect framerect = { x: 10, y: 10, w: 300, h: 220 };
+  KW_Rect framerect = { .x = 10, .y = 10, .w = 300, .h = 220 };
   KW_RectCenterInParent(&windowrect, &framerect);
   KW_Widget * frame = KW_CreateFrame(gui, NULL, &framerect);
 
   /* Create the title, label and edibox widgets */
-  KW_Rect titlerect = { x: 0, y: 10, w: 300, h: 30 };
-  KW_Rect labelrect = { y: 100, w: 60, h: 30 };
-  KW_Rect editboxrect = { y: 100, w: 100, h: 40 };
+  KW_Rect titlerect = { .x = 0, .y = 10, .w = 300, .h = 30 };
+  KW_Rect labelrect = { .y = 100, .w = 60, .h = 30 };
+  KW_Rect editboxrect = { .y = 100, .w = 100, .h = 40 };
   KW_Rect * rects[] = { &labelrect, &editboxrect };
   unsigned weights[] = { 1, 4 };
   KW_RectFillParentHorizontally(&framerect, rects, weights, 2, 10, KW_RECT_ALIGN_MIDDLE);
   KW_CreateLabel(gui, frame, "Editbox example", &titlerect);
   KW_CreateLabel(gui, frame, "Label", &labelrect);
   KW_CreateEditbox(gui, frame, "Edit me!", &editboxrect);
-  KW_Rect buttonrect = { x: 250, y: 170, w: 40, h: 40 };
+  KW_Rect buttonrect = { .x = 250, .y = 170, .w = 40, .h = 40 };
   KW_Widget * okbutton = KW_CreateButtonAndLabel(gui, frame, "OK", &buttonrect);
   KW_AddWidgetMouseDownHandler(okbutton, OKClicked);
 

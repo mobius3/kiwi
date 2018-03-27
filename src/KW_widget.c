@@ -3,6 +3,7 @@
 #include "KW_widget.h"
 #include "KW_gui.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 KW_Widget * AllocWidget() {
   KW_Widget * widget = calloc(1, sizeof(KW_Widget));
