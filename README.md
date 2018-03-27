@@ -29,9 +29,16 @@ If you're feeling mighty and want to try KiWi right now, these are (roughly) the
 4. Download this repository;
 5. Create a `build` folder inside it;
 6. Run `cmake` (or `cmake-gui`), set the binary dir to the newly created build folder and the source dir to the repository folder;
-7. Build it!
+7. Build it with your IDE of choice.
 
 You can test the examples inside the `build/examples/` folder.
+
+### Note for Windows users:
+- KiWi builds alright with SDL2-devel-2.0.8-VC.zip (and its sister ttf library) under VS2017 and MinGW.
+- To execute the examples, you might need to copy `KiWi.dll`, `SDL2.dll`, `SDL2-ttf.dll` to each example
+  folder in the build directory.
+- The default generator for CMake under Windows is Visual Studio solutions, you need to use the `-G` flag if you 
+  intend to use another.
 
 ## Bindings
 * [Vasilij Schneidermann](https://github.com/wasamasa) [created](http://emacsninja.com/posts/kiwi.html) a [CHICKEN Scheme](https://www.call-cc.org/) [binding](https://github.com/wasamasa/kiwi) for KiWi. There's also a wiki [here](http://wiki.call-cc.org/eggref/4/kiwi).
@@ -110,8 +117,6 @@ int main(int argc, char ** argv) {
   return 0;
 }
 ```
-
-Better documentation is yet to come, but every public method is well documented.
 
 [label]:https://github.com/mobius3/KiWi/blob/master/examples/label/label.c
 [KW_CreateWidget]: https://github.com/mobius3/KiWi/blob/master/src/KW_widget.h#L106
