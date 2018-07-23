@@ -1,11 +1,9 @@
 project(editbox)
 cmake_minimum_required(VERSION 2.8)
 
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
 set(TILESETS "tileset.png;tileset-alloy.png;tileset-futterpedia.png;tileset-flat.png;tileset-guide.png")
 add_executable(editbox editbox.c ${TILESETS} Fontin-Regular.ttf DejaVuSans.ttf)
-target_link_libraries(editbox KiWi ${SDL2_LIBRARIES} ${SDL2MAIN_LIBRARY} ${SDL2_IMAGE_LIBRARIES})
+target_link_libraries(editbox KiWi ${SDL2_COMPOUND_LIBRARIES})
 
 foreach(TILESET ${TILESETS})
     add_custom_command(OUTPUT ${TILESET}

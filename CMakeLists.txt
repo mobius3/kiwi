@@ -13,6 +13,10 @@ add_definitions("-Wall")
 # Add Debug definitions
 set (CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
 
+if(WIN32)
+	set(SDL2_ROOT "/sdl2" CACHE STRING "Root of the SDL2 installation")
+endif(WIN32)
+
 # Add subdirectories
 add_subdirectory(src)
 add_subdirectory(examples)

@@ -1,9 +1,6 @@
 project(drag)
 cmake_minimum_required(VERSION 2.8)
 
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
-
 set(TILESETS "tileset.png;tileset-alloy.png;tileset-futterpedia.png;tileset-flat.png")
 set(FONTS "Fontin-Regular.ttf;DejaVuSans.ttf;SourceSansPro-Semibold.ttf")
 
@@ -22,4 +19,4 @@ foreach(FONT ${FONTS})
 endforeach(FONT ${FONTS})
 
 add_executable(drag drag.c ${FONTS} ${TILESETS})
-target_link_libraries(drag KiWi ${SDL2MAIN_LIBRARY} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+target_link_libraries(drag KiWi ${SDL2_COMPOUND_LIBRARIES})
