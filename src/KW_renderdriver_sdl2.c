@@ -295,7 +295,7 @@ static KW_bool KWSDL_getClipRect(KW_RenderDriver * driver, KW_Rect * clip) {
 
 static unsigned int KWSDL_getPixel(KW_RenderDriver * driver, KW_Surface * surface, unsigned x, unsigned y) {
   SDL_Surface * s = surface->surface;
-  Uint32 * pixels = NULL, * pixel = NULL;
+  Uint32 * pixels = NULL;
   (void) driver;
   if (SDL_MUSTLOCK(s)) SDL_LockSurface(s);
   pixels = s->pixels;
