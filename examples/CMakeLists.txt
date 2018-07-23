@@ -14,6 +14,9 @@ include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR} ${SDL2_TTF_INC
 # Ask for C99
 set(CMAKE_C_STANDARD 99)
 
+# Custom render function example
+add_subdirectory(custom-render)
+
 # The label example
 add_subdirectory(label)
 
