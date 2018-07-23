@@ -50,6 +50,7 @@ struct KW_Widget {
   
   KW_WidgetPaintFunction paint;
   KW_WidgetDestroyFunction destroy;
+	KW_CustomRenderFunction render;
   
   struct {
     WidgetHandler *   handlers;

@@ -16,6 +16,7 @@ KW_Widget * KW_CreateWidget(KW_GUI * gui, KW_Widget * parent, const KW_Rect * ge
   widget->gui = gui;
   widget->paint = widgetpaint;
   widget->destroy = widgetdestroy;
+	widget->render = NULL;
   /* set initial area as geometry */
   if (geometry) widget->composed = *geometry;
   KW_ReparentWidget(widget, parent);
@@ -393,6 +394,15 @@ void KW_SetWidgetUserData(KW_Widget * widget, void * userdata) {
 void * KW_GetWidgetUserData(const KW_Widget * widget) {
   return widget->userdata;
 }
+
+KW_CustomRenderFunction KW_GetWidgetCustomRenderFunction(const KW_Widget * widget) {
+	return widget->render;
+}
+
+void KW_SetWidgetCustomRenderFunction(KW_Widget * widget, KW_CustomRenderFunction renderfunction) {
+	widget->render = renderfunction;
+}
+
 
 static void DrawDebugGizmos(KW_Widget * widget, KW_Color * color);
 
