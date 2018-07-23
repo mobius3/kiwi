@@ -55,6 +55,8 @@ extern DECLSPEC KW_GUI * KW_GetGUI(const KW_Widget * widget);
 typedef void (*KW_WidgetPaintFunction)(KW_Widget * widget, const KW_Rect * absolute, void * data);
 typedef void (*KW_WidgetDestroyFunction)(KW_Widget * widget);
 
+typedef KW_Texture* (*KW_CustomRenderFunction)(KW_RenderDriver * renderer, KW_Widget * widget, KW_Surface * tileset, int w, int h);
+
 /* mouse callbacks */
 typedef void (*KW_OnMouseOver)(KW_Widget * widget);
 typedef void (*KW_OnMouseLeave)(KW_Widget * widget);
@@ -276,6 +278,24 @@ extern DECLSPEC KW_GUI * KW_GetWidgetGUI(const KW_Widget * widget);
  * \returns The associated KW_RenderDriver instance.
  */
 extern DECLSPEC KW_RenderDriver * KW_GetWidgetRenderer(const KW_Widget * widget);
+
+/**
+ * \brief		Get custom draw-widget function
+ * \details Call this function from within a KW_OnGeometryChange handler to update image of the widget.
+ *          if no such function specified forf the widget, default widget renderer will be called instead.
+ * \param   widget The widget to get function from
+ * \returns Address of the rendering function for the widget or NULL if no such function specified.
+ */
+extern DECLSPEC KW_CustomRenderFunction KW_GetWidgetCustomRenderFunction(const KW_Widget * widget);
+
+/**
+ * \brief   Set custom function for widget rendering
+ * \details If this function is not specified default rendering function for the widget will be called
+ *          to update widget's image after resizing 
+ * \param   widget The widget whose renderer function you need to change
+ * \param   renderfunction The function to be called to obtain widget's face on resizing
+ */
+extern DECLSPEC void KW_SetWidgetCustomRenderFunction(KW_Widget * widget, KW_CustomRenderFunction renderfunction);
 
 /**
  * \brief   Sets a new geometry for a widget.
