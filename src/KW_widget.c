@@ -400,7 +400,13 @@ KW_CustomRenderFunction KW_GetWidgetCustomRenderFunction(const KW_Widget * widge
 }
 
 void KW_SetWidgetCustomRenderFunction(KW_Widget * widget, KW_CustomRenderFunction renderfunction) {
+	KW_OnWidgetTilesetChange handler;
+	unsigned i = 0;
 	widget->render = renderfunction;
+	for (i = 0; i < widget->eventhandlers[KW_ON_TILESETCHANGE].count; i++) {
+		handler = (KW_OnWidgetTilesetChange) widget->eventhandlers[KW_ON_TILESETCHANGE].handlers[i];
+		handler(widget);
+	}
 }
 
 
