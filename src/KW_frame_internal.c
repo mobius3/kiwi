@@ -20,9 +20,14 @@ void RenderFrame(KW_Widget * widget) {
   KW_Frame * frame = KW_GetWidgetData(widget, PaintFrame);
   KW_Rect targetgeom;
   KW_Surface * tileset = KW_GetWidgetTilesetSurface(widget);
+	KW_CustomRenderFunction renderfunc = KW_GetWidgetCustomRenderFunction(widget);
   KW_GetWidgetGeometry(widget, &targetgeom);
   if (frame->framerender != NULL) KW_ReleaseTexture(KW_GetWidgetRenderer(widget), frame->framerender);
-  frame->framerender = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 0, 0, targetgeom.w, targetgeom.h, KW_FALSE, KW_FALSE);
+	
+	if (renderfunc != NULL)
+		frame->framerender = renderfunc(KW_GetWidgetRenderer(widget), widget, tileset, targetgeom.w, targetgeom.h);
+	else
+		frame->framerender = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 0, 0, targetgeom.w, targetgeom.h, KW_FALSE, KW_FALSE);
 }
 
 void PaintFrame(KW_Widget * widget, const KW_Rect * absolute, void * data) {
