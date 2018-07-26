@@ -16,7 +16,7 @@ KW_Widget * KW_CreateWidget(KW_GUI * gui, KW_Widget * parent, const KW_Rect * ge
   widget->gui = gui;
   widget->paint = widgetpaint;
   widget->destroy = widgetdestroy;
-	widget->render = NULL;
+  widget->render = NULL;
   /* set initial area as geometry */
   if (geometry) widget->composed = *geometry;
   KW_ReparentWidget(widget, parent);
@@ -396,17 +396,17 @@ void * KW_GetWidgetUserData(const KW_Widget * widget) {
 }
 
 KW_CustomRenderFunction KW_GetWidgetCustomRenderFunction(const KW_Widget * widget) {
-	return widget->render;
+  return widget->render;
 }
 
 void KW_SetWidgetCustomRenderFunction(KW_Widget * widget, KW_CustomRenderFunction renderfunction) {
-	KW_OnWidgetTilesetChange handler;
-	unsigned i = 0;
-	widget->render = renderfunction;
-	for (i = 0; i < widget->eventhandlers[KW_ON_TILESETCHANGE].count; i++) {
-		handler = (KW_OnWidgetTilesetChange) widget->eventhandlers[KW_ON_TILESETCHANGE].handlers[i];
-		handler(widget);
-	}
+  KW_OnWidgetTilesetChange handler;
+  unsigned i = 0;
+  widget->render = renderfunction;
+  for (i = 0; i < widget->eventhandlers[KW_ON_TILESETCHANGE].count; i++) {
+    handler = (KW_OnWidgetTilesetChange) widget->eventhandlers[KW_ON_TILESETCHANGE].handlers[i];
+    handler(widget);
+  }
 }
 
 
