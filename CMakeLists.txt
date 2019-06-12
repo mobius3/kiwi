@@ -2,7 +2,8 @@ project(KiWi)
 cmake_minimum_required(VERSION 2.8)
 
 # Point to our own cmake modules
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake-modules)
+set(KIWI_ROOT ${CMAKE_CURRENT_SOURCE_DIR} CACHE PATH "")
+list(APPEND CMAKE_MODULE_PATH ${KIWI_ROOT}/cmake-modules)
 
 # Define this as top-level
 set(KIWI_INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/src)
