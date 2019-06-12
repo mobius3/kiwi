@@ -3,7 +3,7 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 find_package(SDL2_image REQUIRED)
 
-include(${CMAKE_SOURCE_DIR}/resources/kiwires.cmake)
+include(${KIWI_ROOT}/resources/kiwires.cmake)
 
 set(API_HEADERS
   KW_gui.h
