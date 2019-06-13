@@ -3,6 +3,8 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 find_package(SDL2_image REQUIRED)
 
+option(KIWI_BUILD_SHARED "Build Kiwi as a static library" ON)
+
 include(${KIWI_ROOT}/resources/kiwires.cmake)
 
 set(API_HEADERS
@@ -48,7 +50,11 @@ set(LIB_SOURCES
 
 kiwires(HEADER resources.h BODY resources.c RESOURCES resources/sourcesans-pro-semibold.ttf)
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+if(KIWI_BUILD_SHARED)
 add_library(KiWi SHARED ${LIB_SOURCES} ${API_HEADERS} ${CMAKE_CURRENT_BINARY_DIR}/resources.c)
+else()
+add_library(KiWi STATIC ${LIB_SOURCES} ${API_HEADERS} ${CMAKE_CURRENT_BINARY_DIR}/resources.c)
+endif()
 target_link_libraries(KiWi ${SDL2_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
 if(CMAKE_COMPILER_IS_GNUCC)
     target_compile_options(KiWi PRIVATE -fvisibility=hidden -std=c89 -pedantic-errors -Wall -Wextra)

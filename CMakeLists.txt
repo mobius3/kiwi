@@ -11,6 +11,9 @@ set(KIWI_INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/src)
 # Add global definitions
 add_definitions("-Wall")
 
+# add option to build examples
+option(KIWI_BUILD_EXAMPLES "Build examples in examples/ directory" ON)
+
 # Add Debug definitions
 set (CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
 
@@ -20,7 +23,9 @@ endif(WIN32)
 
 # Add subdirectories
 add_subdirectory(src)
+if(KIWI_BUILD_EXAMPLES)
 add_subdirectory(examples)
+endif()
 
 # Install KiWiConfig stuff
 set(INCLUDE_INSTALL_DIR include/KiWi)
