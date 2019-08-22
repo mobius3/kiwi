@@ -42,7 +42,7 @@ You can test the examples inside the `build/examples/` folder.
 
 ## Bindings
 * [Vasilij Schneidermann](https://github.com/wasamasa) [created](http://emacsninja.com/posts/kiwi.html) a [CHICKEN Scheme](https://www.call-cc.org/) [binding](https://github.com/wasamasa/kiwi) for KiWi. There's also a wiki [here](http://wiki.call-cc.org/eggref/4/kiwi).
-
+* [dKiWi](https://github.com/aferust/dkiwi) - D binding.
 
 ## Basic usage
 
