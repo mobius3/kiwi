@@ -9,9 +9,13 @@
 #include "KW_button.h"
 #include "KW_renderdriver_sdl2.h"
 
+KW_Widget * editBox;
+
 /* Callback for when the OK button is clicked */
 KW_bool quit = KW_FALSE;
 void OKClicked(KW_Widget * widget, int b) {
+  const char* text = KW_GetEditboxText(editBox);
+  printf("%s \n", text);
   quit = KW_TRUE;
 }
 
@@ -43,7 +47,7 @@ int main(int argc, char ** argv) {
   KW_RectFillParentHorizontally(&framerect, rects, weights, 2, 10, KW_RECT_ALIGN_MIDDLE);
   KW_CreateLabel(gui, frame, "Editbox example", &titlerect);
   KW_CreateLabel(gui, frame, "Label", &labelrect);
-  KW_CreateEditbox(gui, frame, "Edit me!", &editboxrect);
+  editBox = KW_CreateEditbox(gui, frame, "Edit me!", &editboxrect);
   KW_Rect buttonrect = { .x = 250, .y = 170, .w = 40, .h = 40 };
   KW_Widget * okbutton = KW_CreateButtonAndLabel(gui, frame, "OK", &buttonrect);
   KW_AddWidgetMouseDownHandler(okbutton, OKClicked);
