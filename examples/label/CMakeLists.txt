@@ -1,5 +1,5 @@
 project(label)
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.15)
 
 # build a label exe
 add_executable(label label.c tileset.png Fontin-Regular.ttf)

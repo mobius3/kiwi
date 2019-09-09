@@ -1,5 +1,5 @@
 project(editbox)
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.15)
 
 set(TILESETS "tileset.png;tileset-alloy.png;tileset-futterpedia.png;tileset-flat.png;tileset-guide.png")
 add_executable(editbox editbox.c ${TILESETS} Fontin-Regular.ttf DejaVuSans.ttf)

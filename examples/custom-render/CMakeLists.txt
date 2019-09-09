@@ -1,5 +1,5 @@
 project(custom-render)
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.15)
 
 set(CMAKE_C_STANDARD 99)
 set(TILESETS "tileset.png;skin.png")
