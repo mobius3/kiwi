@@ -100,11 +100,11 @@ void KW_RemoveGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, v
   RemoveGUItHandler(gui, KW_GUI_ONFONTCHANGED, (GUIHandler) handler, priv);
 }
 
-void KW_AddGUIFontColorChangedHandler(KW_GUI * gui, KW_OnGUITextColorChanged handler, void * priv) {
+void KW_AddGUITextColorChangedHandler(KW_GUI * gui, KW_OnGUITextColorChanged handler, void * priv) {
   AddGUIHandler(gui, KW_GUI_ONTEXTCOLORCHANGED, (GUIHandler) handler, priv);
 }
 
-void KW_RemoveGUIFontColorChangedHandler(KW_GUI * gui, KW_OnGUITextColorChanged handler, void * priv) {
+void KW_RemoveGUITextColorChangedHandler(KW_GUI * gui, KW_OnGUITextColorChanged handler, void * priv) {
   RemoveGUItHandler(gui, KW_GUI_ONTEXTCOLORCHANGED, (GUIHandler) handler, priv);
 }
 
