@@ -15,12 +15,10 @@ Here are some screenshots (click on them to see code):
 
 [![A scrollbox full of dragable buttons](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/scrollbox/scrollbox-screenshot.gif "A scrollbox full of dragable buttons")](https://github.com/mobius3/KiWi/blob/master/examples/scrollbox/scrollbox.c)
 
-### Note for Windows users:
-- KiWi builds alright with SDL2-devel-2.0.8-VC.zip (and its sister ttf library) under VS2017 and MinGW.
-- To execute the examples, you might need to copy `KiWi.dll`, `SDL2.dll`, `SDL2-ttf.dll` to each example
-  folder in the build directory.
-- The default generator for CMake under Windows is Visual Studio solutions, you need to use the `-G` flag if you 
-  intend to use another.
+**Road to 1.0.0**
+
+KiWi is not finished yet, it's API still needs to be stabilized and might change
+in the future. We're heading towards a 1.0.0 release. Checkout the [roadmap].
 
 ## Bindings
 * [Vasilij Schneidermann](https://github.com/wasamasa) [created](http://emacsninja.com/posts/kiwi.html) a [CHICKEN Scheme](https://www.call-cc.org/) [binding](https://github.com/wasamasa/kiwi) for KiWi. There's also a wiki [here](http://wiki.call-cc.org/eggref/4/kiwi).
