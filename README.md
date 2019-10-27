@@ -1,37 +1,19 @@
 KiWi - The Killer Widgets library
 =================================
 
-*Killer Widgets* (KiWi) is a widget-based GUI library for game developers to use in their 2D games. Its widgets are constructed by using a tileset, allowing you to easly customize the looks of your GUI by simply changing its tiles (even in runtime, yay!).
+*Killer Widgets* (KiWi) is a widget-based GUI library for game developers to use in their 2D games, written in C99. Its widgets are constructed by using a tileset, allowing you to easly customize the looks of your GUI by simply changing its tiles.
 
-It supports custom (and composed) widgets so that you can implement that beautiful ring chart showing how much network traffic your MMORPG is using, allowing you to impress your boss.
+KiWi works around SDL2 libraries but has space for custom rendering backends.
 
-KiWi is built around SDL2 and designed to accompany it (means that if you want to use KiWi, you'll have to use SDL. But hey, SDL is awesome already, no big deal, right? :)
+Here are some screenshots (click on them to see code):
 
-Right now KiWi is under (heavy) development and any help (code patches, money, chat, hug, etc) is hugely appreciated.
+[![Label screenshot](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/label/label-screenshot.png "Label screenshot")](https://github.com/mobius3/KiWi/blob/master/examples/label/label.c)
+[![A Family of Frames](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/frame-family/frame-family-screenshot.png "A Family of Frames")](https://github.com/mobius3/KiWi/blob/master/examples/frame-family/frame-family.c)
 
-Here are some screenshots, though (click on them to see code):
+[![Two Editboxes and a button](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/editbox/editbox-screenshot.png "Two Editboxes and a button")](https://github.com/mobius3/KiWi/blob/master/examples/editbox/editbox.c)
+[![Styleswitcher](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/styleswitcher/styleswitcher-screenshot.gif "Styleswitcher")](https://github.com/mobius3/KiWi/blob/master/examples/styleswitcher/styleswitcher.c)
 
-[![alt text](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/label/label-screenshot.png "Label screenshot")](https://github.com/mobius3/KiWi/blob/master/examples/label/label.c)
-[![alt text](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/frame-family/frame-family-screenshot.png "A Family of Frames")](https://github.com/mobius3/KiWi/blob/master/examples/frame-family/frame-family.c)
-
-[![alt text](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/editbox/editbox-screenshot.png "Two Editboxes and a button")](https://github.com/mobius3/KiWi/blob/master/examples/editbox/editbox.c)
-[![alt text](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/styleswitcher/styleswitcher-screenshot.gif "Two Editboxes and a button")](https://github.com/mobius3/KiWi/blob/master/examples/styleswitcher/styleswitcher.c)
-
-[![alt text](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/scrollbox/scrollbox-screenshot.gif "A scrollbox full of dragable buttons")](https://github.com/mobius3/KiWi/blob/master/examples/scrollbox/scrollbox.c)
-
-## Build and test KiWi:
-
-If you're feeling mighty and want to try KiWi right now, these are (roughly) the steps to do it:
-
-1. Have a compiler environment ready (GCC, LLVM, MSVC, MinGW, etc);
-2. Have [SDL2], [SDL2_ttf] and [SDL2_image] available and properly detectable by your compiler;
-3. Have [CMake](http://cmake.org) installed;
-4. Download this repository;
-5. Create a `build` folder inside it;
-6. Run `cmake` (or `cmake-gui`), set the binary dir to the newly created build folder and the source dir to the repository folder;
-7. Build it with your IDE of choice.
-
-You can test the examples inside the `build/examples/` folder.
+[!A scrollbox full of dragable buttons](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/scrollbox/scrollbox-screenshot.gif "A scrollbox full of dragable buttons")](https://github.com/mobius3/KiWi/blob/master/examples/scrollbox/scrollbox.c)
 
 ### Note for Windows users:
 - KiWi builds alright with SDL2-devel-2.0.8-VC.zip (and its sister ttf library) under VS2017 and MinGW.
