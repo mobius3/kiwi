@@ -13,7 +13,7 @@ Here are some screenshots (click on them to see code):
 [![Two Editboxes and a button](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/editbox/editbox-screenshot.png "Two Editboxes and a button")](https://github.com/mobius3/KiWi/blob/master/examples/editbox/editbox.c)
 [![Styleswitcher](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/styleswitcher/styleswitcher-screenshot.gif "Styleswitcher")](https://github.com/mobius3/KiWi/blob/master/examples/styleswitcher/styleswitcher.c)
 
-[!A scrollbox full of dragable buttons](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/scrollbox/scrollbox-screenshot.gif "A scrollbox full of dragable buttons")](https://github.com/mobius3/KiWi/blob/master/examples/scrollbox/scrollbox.c)
+[![A scrollbox full of dragable buttons](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/scrollbox/scrollbox-screenshot.gif "A scrollbox full of dragable buttons")](https://github.com/mobius3/KiWi/blob/master/examples/scrollbox/scrollbox.c)
 
 ### Note for Windows users:
 - KiWi builds alright with SDL2-devel-2.0.8-VC.zip (and its sister ttf library) under VS2017 and MinGW.
