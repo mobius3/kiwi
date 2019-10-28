@@ -8,8 +8,8 @@ This list is ordered by most-needed and sometimes by easier to do. All of them
 are needed to reach version 1.0.0. Things might get added periodically.
 
 - [ ] Core (by priority)
-  - [ ] Headers should'nt be prefixed by `KW_` or anything else (specially
-        widgets)
+  - [x] Headers should'nt be prefixed by `KW_` or anything else (specially
+    widgets)
   - [ ] `include` and `src` folders must be separated
   - [ ] Support for allocators at `KW_GUI` construction
   - [ ] Function names and placement (which header file) should be consistent
