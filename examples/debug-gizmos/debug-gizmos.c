@@ -1,7 +1,7 @@
 #include "SDL.h"
 #include "gui.h"
 #include "button.h"
-#include "scrollbox.h"
+#include "widgets/scrollbox.h"
 #include "renderdriver_sdl2.h"
 
 KW_Widget * frame;
