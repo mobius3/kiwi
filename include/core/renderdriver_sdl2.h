@@ -1,7 +1,7 @@
 #ifndef KW_RENDERDRIVER_SDL2
 #define KW_RENDERDRIVER_SDL2
 
-#include "macros.h"
+#include "core/macros.h"
 
 #ifdef __cplusplus
 extern "C" {

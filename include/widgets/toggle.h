@@ -30,8 +30,8 @@
 #ifndef KW_PUSHBUTTON_H
 #define KW_PUSHBUTTON_H
 
-#include "gui.h"
-#include "widget.h"
+#include "../core/gui.h"
+#include "../core/widget.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,8 +1,8 @@
 #ifndef KW_KW_INTERNAL_H
 #define KW_KW_INTERNAL_H
 
-#include "widget.h"
-#include "renderdriver.h"
+#include "core/widget.h"
+#include "core/renderdriver.h"
 
 #ifdef __cplusplus
 extern "C" {

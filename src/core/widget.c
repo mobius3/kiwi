@@ -1,7 +1,8 @@
+
+#include "core/widget.h"
+#include "core/gui.h"
 #include "widget_internal.h"
 #include "gui_internal.h"
-#include "widget.h"
-#include "gui.h"
 #include <stdlib.h>
 #include <stdio.h>
 

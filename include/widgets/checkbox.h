@@ -7,7 +7,7 @@
  * Checkboxes can use any widget as a label (it might be another complex widget tree, if you need).
  */
 
-#include "widget.h"
+#include "../core/widget.h"
 
 #ifdef __cplusplus
 extern "C" {

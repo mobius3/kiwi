@@ -31,7 +31,7 @@
  * Defines functions related to creating and managing edit boxes
  */
 
-#include "widget.h"
+#include "../core/widget.h"
 #include "SDL_ttf.h"
 
 #ifdef __cplusplus

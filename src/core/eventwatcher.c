@@ -1,6 +1,7 @@
-#include "eventwatcher.h"
 #include "gui_internal.h"
 #include "widget_internal.h"
+
+#include <stdlib.h>
 
 #define KW_FireWidgetEvent(widget, callbacktype, event, args) { \
   unsigned __i; \

@@ -22,30 +22,17 @@
      distribution.
 */
 
-#ifndef KW_FRAME_H
-#define KW_FRAME_H
+#ifndef KW_EVENTWATCHER_H
+#define KW_EVENTWATCHER_H
 
-/**
- * \file KW_frame.h
- * 
- * Defines functions related to the frame KW_Widget
- */
-
-#include "widget.h"
+#include "gui.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/**
- * \brief   Creates a frame widget.
- * \details The frame is constructed by arranging the the first 3x3 tiles in the tileset.
- * \param   gui The KW_GUI instance that will hold this widget.
- * \param   parent The parent widget of this widget.
- * \param   geometry The relative geometry of this frame.
- * \return  The frame instance.
- */
-extern DECLSPEC KW_Widget * KW_CreateFrame(KW_GUI * gui, KW_Widget * parent, const KW_Rect * geometry);
+
+int KW_EventWatcher(void * gui, SDL_Event * event);
 
 #ifdef __cplusplus
 }

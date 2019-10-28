@@ -1,4 +1,4 @@
-#include "renderdriver.h"
+#include "core/renderdriver.h"
 
 void KW_BlitSurface(KW_RenderDriver * driver, KW_Surface * src, const KW_Rect * srcRect, KW_Surface * dst, const KW_Rect * dstRect) {
     driver->blitSurface(driver, src, srcRect, dst, dstRect);

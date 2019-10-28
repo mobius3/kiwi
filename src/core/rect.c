@@ -1,4 +1,4 @@
-#include "rect.h"
+#include "core/rect.h"
 
 void KW_RectCenterInParent(const KW_Rect * parent, KW_Rect * inner) {
   KW_RectHorizontallyCenterInParent(parent, inner);

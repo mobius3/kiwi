@@ -33,17 +33,17 @@
 #  License text for the above reference.)
 
 SET(SDL2_SEARCH_PATHS
-	~/Library/Frameworks
-	/Library/Frameworks
-	/usr/local
-	/usr
-	/sw # Fink
-	/opt/local # DarwinPorts
-	/opt/csw # Blastwave
-	/opt
-	${SDL2_IMAGE_ROOT}
-	${SDL2_ROOT}
-)
+  ~/Library/Frameworks
+  /Library/Frameworks
+  /usr/local
+  /usr
+  /sw # Fink
+  /opt/local # DarwinPorts
+  /opt/csw # Blastwave
+  /opt
+  ${SDL2_IMAGE_ROOT}
+  ${SDL2_ROOT}
+  )
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
   set(SDL2_ARCH_64 TRUE)
@@ -59,11 +59,11 @@ entry initialized from old variable name")
 endif()
 find_path(SDL2_IMAGE_INCLUDE_DIR SDL_image.h
   HINTS
-    ENV SDL2IMAGEDIR
-    ENV SDL2DIR
+  ENV SDL2IMAGEDIR
+  ENV SDL2DIR
   PATH_SUFFIXES include include/SDL2
   PATHS ${SDL2_SEARCH_PATHS}
-)
+  )
 
 if(NOT SDL2_IMAGE_LIBRARY AND SDL2IMAGE_LIBRARY)
   set(SDL2_IMAGE_LIBRARY ${SDL2IMAGE_LIBRARY} CACHE FILEPATH "file cache entry
@@ -72,11 +72,11 @@ endif()
 find_library(SDL2_IMAGE_LIBRARY
   NAMES SDL2_image
   HINTS
-    ENV SDL2IMAGEDIR
-    ENV SDL2DIR
+  ENV SDL2IMAGEDIR
+  ENV SDL2DIR
   PATH_SUFFIXES lib64 lib lib/${SDL2_PROCESSOR_ARCH}
   PATHS ${SDL2_SEARCH_PATHS}
-)
+  )
 
 if(SDL2_IMAGE_INCLUDE_DIR AND EXISTS "${SDL2_IMAGE_INCLUDE_DIR}/SDL_image.h")
   file(STRINGS "${SDL2_IMAGE_INCLUDE_DIR}/SDL_image.h" SDL2_IMAGE_VERSION_MAJOR_LINE REGEX "^#define[ \t]+SDL_IMAGE_MAJOR_VERSION[ \t]+[0-9]+$")
@@ -100,8 +100,29 @@ set(SDL2_IMAGE_INCLUDE_DIRS ${SDL2_IMAGE_INCLUDE_DIR})
 include(FindPackageHandleStandardArgs)
 
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(SDL2_image
-                                  REQUIRED_VARS SDL2_IMAGE_LIBRARIES SDL2_IMAGE_INCLUDE_DIRS
-                                  VERSION_VAR SDL2_IMAGE_VERSION_STRING)
+  REQUIRED_VARS SDL2_IMAGE_LIBRARIES SDL2_IMAGE_INCLUDE_DIRS
+  VERSION_VAR SDL2_IMAGE_VERSION_STRING)
+
+add_library(SDL2_image SHARED IMPORTED)
+
+if (WIN32)
+  find_file(SDL2_IMAGE_DLL
+    SDL2_image.dll
+    HINTS
+    $ENV{SDL2DIR}
+    $ENV{SDL2IMAGEDIR}
+    PATH_SUFFIXES ${PATH_SUFFIXES}
+    PATHS ${SDL2_SEARCH_PATHS}
+  )
+  set_target_properties(SDL2_image PROPERTIES
+    IMPORTED_LOCATION ${SDL2_IMAGE_DLL}
+    IMPORTED_IMPLIB ${SDL2_IMAGE_LIBRARY}
+    INTERFACE_INCLUDE_DIRECTORIES ${SDL2_IMAGE_INCLUDE_DIR})
+else()
+  set_target_properties(SDL2_image PROPERTIES
+    IMPORTED_LOCATION ${SDL2_IMAGE_LIBRARY}
+    INTERFACE_INCLUDE_DIRECTORIES ${SDL2_IMAGE_INCLUDE_DIR})
+endif(WIN32)
 
 # for backward compatiblity
 set(SDL2IMAGE_LIBRARY ${SDL2_IMAGE_LIBRARIES})

@@ -31,7 +31,7 @@
 #ifndef KW_LABEL_H
 #define KW_LABEL_H
 
-#include "widget.h"
+#include "../core/widget.h"
 
 #ifdef __cplusplus
 extern "C" {

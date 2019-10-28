@@ -24,7 +24,7 @@
 
 #ifndef KW_BUTTON_H
 #define KW_BUTTON_H
-#include "widget.h"
+#include "../core/widget.h"
 
 /**
  * \file KW_button.h

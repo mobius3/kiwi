@@ -22,7 +22,7 @@
 #include <alloca.h>
 #endif
 
-#include "utf8.h"
+#include "core/utf8.h"
 
 static const uint32_t offsetsFromUTF8[6] = {
     0x00000000UL, 0x00003080UL, 0x000E2080UL,
@@ -75,10 +75,13 @@ int u8_toucs(uint32_t *dest, int sz, char *src, int srcsz)
         }
         ch = 0;
         switch (nb) {
-            /* these fall through deliberately */
+        // fall through
         case 3: ch += (unsigned char)*src++; ch <<= 6;
+        // fall through
         case 2: ch += (unsigned char)*src++; ch <<= 6;
+        // fall through
         case 1: ch += (unsigned char)*src++; ch <<= 6;
+        // fall through
         case 0: ch += (unsigned char)*src++;
         }
         ch -= offsetsFromUTF8[nb];

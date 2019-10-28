@@ -1,4 +1,4 @@
-#include "tilerenderer.h"
+#include "core/tilerenderer.h"
 
 void KW_RenderTile(KW_RenderDriver * renderer, KW_Texture * tileset, int column, int line, int x, int y) {
   KW_Rect clip;

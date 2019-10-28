@@ -1,6 +1,5 @@
-#include "renderdriver_sdl2.h"
-#include "renderdriver.h"
-#include "widget.h"
+#include "core/renderdriver_sdl2.h"
+#include "core/renderdriver.h"
 #include "SDL.h"
 #include "SDL_ttf.h"
 #include "SDL_image.h"

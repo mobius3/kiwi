@@ -1,11 +1,11 @@
 #include <time.h>
+#include "core/widget.h"
+#include "core/gui.h"
+#include "core/eventwatcher.h"
+#include "core/renderdriver.h"
+
 #include "widget_internal.h"
-#include "widget.h"
-#include "gui.h"
 #include "gui_internal.h"
-#include "eventwatcher.h"
-#include "renderdriver.h"
-#include "resources.h"
 
 KW_GUI * KW_Init(KW_RenderDriver * renderer, KW_Surface * tileset) {
   struct KW_GUI * gui = calloc(sizeof(*gui), 1);
@@ -14,7 +14,6 @@ KW_GUI * KW_Init(KW_RenderDriver * renderer, KW_Surface * tileset) {
   gui->rootwidget = AllocWidget();
   gui->rootwidget->gui = gui;
   gui->evqueuelock = SDL_CreateMutex();
-  gui->defaultfont = KW_LoadFontFromMemory(renderer, resources_sourcesans_pro_semibold_ttf, resources_sourcesans_pro_semibold_ttf_size, 12);
   SDL_AddEventWatch(KW_EventWatcher, (void*)gui);
   srand((unsigned) time(NULL));
   
