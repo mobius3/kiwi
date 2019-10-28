@@ -1,8 +1,8 @@
 #include "SDL.h"
-#include "KW_gui.h"
-#include "KW_button.h"
-#include "KW_scrollbox.h"
-#include "KW_renderdriver_sdl2.h"
+#include "gui.h"
+#include "button.h"
+#include "scrollbox.h"
+#include "renderdriver_sdl2.h"
 
 int dragmode = 0;
 

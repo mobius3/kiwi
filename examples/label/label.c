@@ -2,10 +2,10 @@
  * This is the `label` example. It displays a label with an icon inside a frame.
  * The icon is merely a region inside the GUI tileset.
  */
-#include "KW_gui.h"
-#include "KW_frame.h"
-#include "KW_label.h"
-#include "KW_renderdriver_sdl2.h"
+#include "gui.h"
+#include "frame.h"
+#include "label.h"
+#include "renderdriver_sdl2.h"
 
 int main(int argc, char ** argv) {
   /* We are going to use the SDL2 Render Driver.

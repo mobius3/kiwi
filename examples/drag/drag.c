@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include "SDL.h"
-#include "KW_gui.h"
-#include "KW_button.h"
+#include "gui.h"
+#include "button.h"
 #include "SDL_image.h"
-#include "KW_frame.h"
-#include "KW_renderdriver_sdl2.h"
+#include "frame.h"
+#include "renderdriver_sdl2.h"
 
 int dragmode = 0;
 

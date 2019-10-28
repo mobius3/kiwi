@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include "SDL.h"
 #include "SDL_image.h"
-#include "KW_gui.h"
-#include "KW_frame.h"
-#include "KW_label.h"
-#include "KW_renderdriver_sdl2.h"
+#include "gui.h"
+#include "frame.h"
+#include "label.h"
+#include "renderdriver_sdl2.h"
 
 #define rightOf(a) (a).x + (a).w
 #define bottomOf(a) (a).y + (a).h

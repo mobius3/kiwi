@@ -1,11 +1,11 @@
 #include "SDL.h"
-#include "KW_gui.h"
-#include "KW_button.h"
-#include "KW_frame.h"
-#include "KW_editbox.h"
-#include "KW_label.h"
+#include "gui.h"
+#include "button.h"
+#include "frame.h"
+#include "editbox.h"
+#include "label.h"
 #include "SDL_image.h"
-#include "KW_renderdriver_sdl2.h"
+#include "renderdriver_sdl2.h"
 
 KW_Surface * setalloy;
 KW_Surface * setfutter;

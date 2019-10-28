@@ -99,7 +99,7 @@ int main(int argc, char ** argv) {
 ```
 
 [label]:https://github.com/mobius3/KiWi/blob/master/examples/label/label.c
-[KW_CreateWidget]: https://github.com/mobius3/KiWi/blob/master/src/KW_widget.h#L106
+[KW_CreateWidget]: https://github.com/mobius3/KiWi/blob/master/src/widget.h
 [SDL2]: http://libsdl.org
 [SDL2_ttf]: https://www.libsdl.org/projects/SDL_ttf/
 [SDL2_image]: https://www.libsdl.org/projects/SDL_image/

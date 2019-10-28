@@ -2,12 +2,12 @@
  * This is the `editbox` example. It displays an editbox, labels and buttons.
  */
 
-#include "KW_gui.h"
-#include "KW_frame.h"
-#include "KW_editbox.h"
-#include "KW_label.h"
-#include "KW_button.h"
-#include "KW_renderdriver_sdl2.h"
+#include "gui.h"
+#include "frame.h"
+#include "editbox.h"
+#include "label.h"
+#include "button.h"
+#include "renderdriver_sdl2.h"
 
 KW_Widget * editBox;
 

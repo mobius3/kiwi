@@ -1,8 +1,8 @@
 #include "SDL.h"
-#include "KW_gui.h"
-#include "KW_frame.h"
-#include "KW_label.h"
-#include "KW_renderdriver_sdl2.h"
+#include "gui.h"
+#include "frame.h"
+#include "label.h"
+#include "renderdriver_sdl2.h"
 
 int main(int argc, char ** argv) {
   
