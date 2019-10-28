@@ -10,7 +10,7 @@ are needed to reach version 1.0.0. Things might get added periodically.
 - [ ] Core (by priority)
   - [x] Headers should'nt be prefixed by `KW_` or anything else (specially
     widgets)
-  - [ ] `include` and `src` folders must be separated
+  - [x] `include` and `src` folders must be separated
   - [ ] Support for allocators at `KW_GUI` construction
   - [ ] Function names and placement (which header file) should be consistent
   - [ ] Get/Set functions should only get and set values
@@ -27,7 +27,16 @@ are needed to reach version 1.0.0. Things might get added periodically.
   - [ ] KiWi must not allocate memory frequently
   - [ ] All include files should be lowercase
   - [ ] Add `c-rez` instead of older resource generator
-- [ ] Widgets (by value and how easy to write)
+  - [ ] Remove explicit dependency on SDL from core and widgets and move it
+        elsewhere
+    - Push things to render driver?
+    - Separate renderdriver into multiple "kiwi backends"?
+      - text backend
+      - rendering backend
+      - inputs backend
+    - Check what actually needs to be moved
+    - Consider stopping the refactor impulse and embrace SDL2 for once
+- [ ] New Widgets (by value and how easy to write)
   - [ ] Checkbox
   - [ ] Radio (with radio group/automatic check control)
   - [ ] Progress bar
@@ -37,6 +46,9 @@ are needed to reach version 1.0.0. Things might get added periodically.
   - [ ] Multi-selection dropdown (reuse checkbox?)
   - [ ] Table
   - [ ] (what else?)
+- [ ] Widget fixes
+  - [ ] Refactor and remove explicit use of SDL2 (editbox is the biggest
+        culprit)
 - [ ] Documentation (by most needed)
   - [ ] All documentation should be consistent
   - [ ] All public functions and types should have documentation
@@ -60,7 +72,7 @@ are needed to reach version 1.0.0. Things might get added periodically.
   - [ ] The library needs a website or homepage
      - [ ] Needs logo
 - [ ] Pacakging
-  - [ ] Generated library should be called `kiwi.so/dll` and not `KiWi.so/dll`
+  - [x] Generated library should be called `kiwi.so/dll` and not `KiWi.so/dll`
   - [ ] Core and Widgets should be separated in two libraries (and include
         files)
       - [ ] `#include "kiwi/core.h"`
@@ -70,12 +82,12 @@ are needed to reach version 1.0.0. Things might get added periodically.
          - Everything widget related
       -    Must have the "widgets" subfolder (eg, `#include
            "kiwi/widgets/frame.h"`)
-     - [ ] Aliases `kiwi::core` and `kiwi::widgets`
+    -  [x] Aliases `kiwi::core` and `kiwi::widgets`
   - [ ] `kiwi-config.cmake` needs to work and be up to date with modern CMake
         practices
   - [ ] `kiwi-config.cmake` needs to have its dependencies properly expressed
   - [ ] Examples should go in their own repository
-  - [ ] Generated library should have versioning in its name, except for Windows
+  - [x] Generated library should have versioning in its name, except for Windows
   - [ ] Every release needs source and binary packages publicly available
      - `kiwi-source-${version}` packages for Linux, MacOS and Windows
     -  `kiwi-${version}-${platform-target}-${compiler-target}` with prebuilt
