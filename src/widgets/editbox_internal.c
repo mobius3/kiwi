@@ -1,7 +1,7 @@
-#include "editbox.h"
+#include "widgets/editbox.h"
 #include "editbox_internal.h"
-#include "tilerenderer.h"
-#include "utf8.h"
+#include "core/tilerenderer.h"
+#include "core/utf8.h"
 
 /* private functions */
 void PaintEditbox(KW_Widget * widget, const KW_Rect * absolute, void * data) {

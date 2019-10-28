@@ -2,7 +2,7 @@
 #define KW_FRAME_INTERNAL_H
 
 #include "SDL.h"
-#include "widget.h"
+#include "core/widget.h"
 
 #ifdef __cplusplus
 extern "C" {

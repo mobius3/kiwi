@@ -1,6 +1,6 @@
-#include "checkbox.h"
-#include "label.h"
-#include "toggle.h"
+#include "widgets/checkbox.h"
+#include "widgets/label.h"
+#include "widgets/toggle.h"
 
 typedef struct KW_Checkbox {
   KW_Widget * label;

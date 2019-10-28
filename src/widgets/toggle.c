@@ -1,5 +1,5 @@
-#include "toggle.h"
-#include "tilerenderer.h"
+#include "widgets/toggle.h"
+#include "core/tilerenderer.h"
 
 typedef struct KW_Toggle {
   KW_bool pushed;

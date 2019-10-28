@@ -1,7 +1,7 @@
 #ifndef KW_BUTTON_INTERNAL_H
 #define KW_BUTTON_INTERNAL_H
 
-#include "widget.h"
+#include "core/widget.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,8 +1,7 @@
 #include "scrollbox_internal.h"
-#include "widget.h"
-#include "scrollbox.h"
-#include "gui.h"
-#include "tilerenderer.h"
+#include "core/widget.h"
+#include "widgets/scrollbox.h"
+#include "core/tilerenderer.h"
 
 
 KW_Scrollbox * AllocScrollbox() {

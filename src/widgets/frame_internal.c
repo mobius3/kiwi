@@ -1,7 +1,6 @@
-#include "widget.h"
-#include "tilerenderer.h"
+#include "core/widget.h"
+#include "core/tilerenderer.h"
 #include "frame_internal.h"
-#include "gui.h"
 #include "SDL.h"
 
 KW_Frame * AllocFrame() {

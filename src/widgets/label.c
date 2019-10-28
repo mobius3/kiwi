@@ -1,8 +1,8 @@
 #include "SDL.h"
-#include "label.h"
+#include "widgets/label.h"
 #include "label_internal.h"
-#include "tilerenderer.h"
-#include "gui.h"
+#include "core/tilerenderer.h"
+#include "core/gui.h"
 
 KW_Widget * KW_CreateLabel(KW_GUI * gui, KW_Widget * parent, const char * text, const KW_Rect * geometry) {
   KW_Label * label = calloc(sizeof(KW_Label), 1);

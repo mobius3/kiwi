@@ -1,7 +1,5 @@
-#include "gui.h"
-#include "frame.h"
-#include "SDL.h"
-#include "tilerenderer.h"
+#include "core/gui.h"
+#include "core/tilerenderer.h"
 #include "frame_internal.h"
 
 void PaintFrame(KW_Widget * widget, const KW_Rect * absolute, void * data);

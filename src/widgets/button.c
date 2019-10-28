@@ -1,8 +1,8 @@
-#include "button.h"
+#include "widgets/button.h"
 #include "button_internal.h"
-#include "label.h"
-#include "tilerenderer.h"
-#include "gui.h"
+#include "widgets/label.h"
+#include "core/tilerenderer.h"
+#include "core/gui.h"
 
 KW_Button * AllocButton();
 void PaintButton(KW_Widget * widget, const KW_Rect * absolute, void * data);

@@ -1,6 +1,6 @@
-#include "editbox.h"
-#include "widget.h"
-#include "gui.h"
+#include "widgets/editbox.h"
+#include "core/widget.h"
+#include "core/gui.h"
 #include "editbox_internal.h"
 
 /* public functions */

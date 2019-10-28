@@ -1,8 +1,8 @@
 #ifndef KW_SCROLLBOX_H
 #define KW_SCROLLBOX_H
 
-#include "gui.h"
-#include "widget.h"
+#include "core/gui.h"
+#include "core/widget.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,7 +1,7 @@
-#include "scrollbox.h"
+#include "widgets/scrollbox.h"
+#include "widgets/button.h"
+#include "core/tilerenderer.h"
 #include "scrollbox_internal.h"
-#include "tilerenderer.h"
-#include "button.h"
 
 KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const KW_Rect * geometry) {
   /* creates root scrollbox widget */

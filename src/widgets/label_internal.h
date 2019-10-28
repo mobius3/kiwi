@@ -3,7 +3,7 @@
 
 #include "SDL.h"
 #include "SDL_ttf.h"
-#include "label.h"
+#include "widgets/label.h"
 
 #ifdef __cplusplus
 extern "C" {
