@@ -68,7 +68,7 @@ void * KW_GetWidgetData(const KW_Widget * widget, KW_WidgetPaintFunction paint) 
 }
 
 KW_RenderDriver * KW_GetWidgetRenderer(const KW_Widget * widget) {
-  return KW_GetRenderer(KW_GetGUI(widget));
+  return KW_GetGUIRenderer(KW_GetGUI(widget));
 }
 
 void KW_GetWidgetAbsoluteGeometry(const KW_Widget * widget, KW_Rect * geometry) {
@@ -459,7 +459,7 @@ static void DrawDebugGizmos(KW_Widget * widget, KW_Color * color) {
 
   if (!widget) return;
   dbgrect = widget->absolute;
-  renderer = KW_GetRenderer(KW_GetGUI(widget));
+  renderer = KW_GetGUIRenderer(KW_GetGUI(widget));
 
   sprintf(buf, "rel: %dx%d+%dx%d, com: %dx%d+%dx%d",
           widget->geometry.x,
@@ -489,7 +489,8 @@ static void DrawDebugGizmos(KW_Widget * widget, KW_Color * color) {
     DrawDebugGizmos(widget->parent, color);
     if (old != widget) {
       if (text) KW_ReleaseTexture(renderer, text);
-      text = KW_RenderText(renderer, KW_GetFont(KW_GetGUI(widget)), buf, KW_MultiplyColor(widget->debug, 0.5f), KW_TTF_STYLE_NORMAL);
+      text = KW_RenderText(renderer,
+                           KW_GetGUIFont(KW_GetGUI(widget)), buf, KW_MultiplyColor(widget->debug, 0.5f), KW_TTF_STYLE_NORMAL);
       old = widget;
     }
     KW_GetTextureExtents(renderer, text, (unsigned *) &dbgrect.w, (unsigned *) &dbgrect.h);

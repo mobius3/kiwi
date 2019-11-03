@@ -34,7 +34,7 @@ unsigned int KW_GetEditboxCursorPosition(KW_Widget * widget) {
 
 KW_Font * KW_GetEditboxFont(KW_Widget * widget) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, PaintEditbox);
-  return editbox->font == NULL ? KW_GetFont(KW_GetGUI(widget)) : editbox->font;
+  return editbox->font == NULL ? KW_GetGUIFont(KW_GetGUI(widget)) : editbox->font;
 }
 
 const char * KW_GetEditboxText(KW_Widget * widget) {
@@ -70,7 +70,10 @@ void KW_SetEditboxTextColor(KW_Widget * widget, KW_Color color) {
 
 KW_Color KW_GetEditboxTextColor(KW_Widget * widget) {
   KW_Editbox * editbox = (KW_Editbox *) KW_GetWidgetData(widget, PaintEditbox);
-  return editbox->colorset ? editbox->color : KW_GetTextColor(KW_GetGUI(widget));
+  return editbox->colorset ? editbox->color : KW_GetGUITextColor(
+    KW_GetGUI(
+      widget
+    ));
 }
 
 KW_bool KW_WasEditboxTextColorSet(KW_Widget * widget) {

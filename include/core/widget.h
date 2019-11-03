@@ -47,7 +47,7 @@ struct KW_GUI;
 typedef struct KW_GUI KW_GUI;
 
 /* forward declarations of these */
-extern DECLSPEC KW_RenderDriver * KW_GetRenderer(KW_GUI * gui);
+extern DECLSPEC KW_RenderDriver * KW_GetGUIRenderer(KW_GUI * gui);
 extern DECLSPEC KW_GUI * KW_GetGUI(const KW_Widget * widget);
 
 

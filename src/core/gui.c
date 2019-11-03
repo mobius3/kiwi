@@ -7,10 +7,10 @@
 #include "widget_internal.h"
 #include "gui_internal.h"
 
-KW_GUI * KW_Init(KW_RenderDriver * renderer, KW_Surface * tileset) {
+KW_GUI * KW_CreateGUI(KW_RenderDriver * renderer, KW_Surface * tileset) {
   struct KW_GUI * gui = calloc(sizeof(*gui), 1);
   gui->renderer = renderer;
-  KW_SetTilesetSurface(gui, tileset);
+  KW_SetGUITilesetSurface(gui, tileset);
   gui->rootwidget = AllocWidget();
   gui->rootwidget->gui = gui;
   gui->evqueuelock = SDL_CreateMutex();
@@ -22,11 +22,11 @@ KW_GUI * KW_Init(KW_RenderDriver * renderer, KW_Surface * tileset) {
 
 
 
-void KW_SetRender(KW_GUI * gui, KW_RenderDriver * renderer) {
+void KW_SetGUIRenderer(KW_GUI * gui, KW_RenderDriver * renderer) {
   gui->renderer = renderer;
 }
 
-void KW_SetTilesetSurface(KW_GUI * gui, KW_Surface * tileset) {
+void KW_SetGUITilesetSurface(KW_GUI * gui, KW_Surface * tileset) {
   unsigned i = 0;
   KW_OnWidgetTilesetChange handler;
   KW_Widget * widget;
@@ -40,26 +40,20 @@ void KW_SetTilesetSurface(KW_GUI * gui, KW_Surface * tileset) {
 }
 
 
-KW_RenderDriver * KW_GetRenderer(KW_GUI * gui) {
+KW_RenderDriver * KW_GetGUIRenderer(KW_GUI * gui) {
   return gui->renderer;
 }
 
-
-void KW_SetRenderer(KW_GUI * gui, KW_RenderDriver * renderer) {
-  gui->renderer = renderer;
-}
-
-
-KW_Texture * KW_GetTilesetTexture(KW_GUI * gui) {
+KW_Texture * KW_GetGUITilesetTexture(KW_GUI * gui) {
   return gui->tilesettexture;
 }
 
-KW_Surface * KW_GetTilesetSurface(KW_GUI * gui) {
+KW_Surface * KW_GetGUITilesetSurface(KW_GUI * gui) {
   return gui->tilesetsurface;
 }
 
 
-void KW_Quit(KW_GUI * gui) {
+void KW_DestroyGUI(KW_GUI * gui) {
   SDL_DelEventWatch(KW_EventWatcher, (void*)gui);
   KW_DestroyWidget(gui->rootwidget, 1);
   KW_ReleaseFont(gui->renderer, gui->defaultfont);
@@ -67,7 +61,7 @@ void KW_Quit(KW_GUI * gui) {
   free(gui);
 }
 
-void KW_SetFont(KW_GUI * gui, KW_Font * font) {
+void KW_SetGUIFont(KW_GUI * gui, KW_Font * font) {
   unsigned i = 0;
   KW_OnGUIFontChanged handler;
   if (font == NULL) return;
@@ -80,7 +74,7 @@ void KW_SetFont(KW_GUI * gui, KW_Font * font) {
   return;
 }
 
-void KW_SetTextColor(KW_GUI * gui, KW_Color color) {
+void KW_SetGUITextColor(KW_GUI * gui, KW_Color color) {
   unsigned i = 0;
   KW_OnGUITextColorChanged handler;
   gui->textcolor = color;
@@ -107,11 +101,11 @@ void KW_RemoveGUITextColorChangedHandler(KW_GUI * gui, KW_OnGUITextColorChanged 
   RemoveGUItHandler(gui, KW_GUI_ONTEXTCOLORCHANGED, (GUIHandler) handler, priv);
 }
 
-KW_Font * KW_GetFont(KW_GUI * gui) {
+KW_Font * KW_GetGUIFont(KW_GUI * gui) {
   return gui->font ? gui->font : gui->defaultfont;
 }
 
-KW_Color KW_GetTextColor(KW_GUI * gui) {
+KW_Color KW_GetGUITextColor(KW_GUI * gui) {
   return gui->textcolor;
 }
 
@@ -120,7 +114,7 @@ KW_GUI * KW_GetGUI(const KW_Widget * widget) {
   return KW_GetWidgetGUI(widget);
 }
 
-void KW_Paint(KW_GUI * gui) {
+void KW_PaintGUI(KW_GUI * gui) {
   KW_PaintWidget(gui->rootwidget);
 }
 

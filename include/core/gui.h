@@ -86,7 +86,7 @@ typedef void (*KW_OnGUITextColorChanged)(KW_GUI * gui, void * data, KW_Color col
  * \param   tileset The tile surface to use as a tileset.
  * \returns A initialized KW_GUI instance.
  */
-extern DECLSPEC KW_GUI * KW_Init(KW_RenderDriver * renderer, KW_Surface * tileset);
+extern DECLSPEC KW_GUI * KW_CreateGUI(KW_RenderDriver * renderer, KW_Surface * tileset);
 
 /**
  * \brief   Quits this KW_GUI instance and free its resources.
@@ -95,7 +95,7 @@ extern DECLSPEC KW_GUI * KW_Init(KW_RenderDriver * renderer, KW_Surface * tilese
  *          You still have to free them yourself.
  * \param   gui The KW_GUI instance that is being quitted.
  */
-extern DECLSPEC void KW_Quit(KW_GUI * gui);
+extern DECLSPEC void KW_DestroyGUI(KW_GUI * gui);
 
 /**
  * \brief   Sets a new KW_RenderDriver for this KW_GUI instance.
@@ -113,7 +113,7 @@ extern DECLSPEC void KW_SetRenderer(KW_GUI * gui, KW_RenderDriver * renderer);
  * \param   gui The KW_GUI instance.
  * \return  The associated KW_RenderDriver instance.
  */
-extern DECLSPEC KW_RenderDriver * KW_GetRenderer(KW_GUI * gui);
+extern DECLSPEC KW_RenderDriver * KW_GetGUIRenderer(KW_GUI * gui);
 
 /**
  * \brief   Set a new tileset surface to be used in this KW_GUI instance.
@@ -122,7 +122,7 @@ extern DECLSPEC KW_RenderDriver * KW_GetRenderer(KW_GUI * gui);
  * \param   gui The KW_GUI instance to set a new tileset surface.
  * \param   surface The surface to set. You still have to free the old one.
  */
-extern DECLSPEC void KW_SetTilesetSurface(KW_GUI * gui, KW_Surface * tileset);
+extern DECLSPEC void KW_SetGUITilesetSurface(KW_GUI * gui, KW_Surface * tileset);
 
 /**
  * \brief   Gets the tileset texture associated with a KW_GUI instance.
@@ -130,7 +130,7 @@ extern DECLSPEC void KW_SetTilesetSurface(KW_GUI * gui, KW_Surface * tileset);
  *          texture as it is managed by KiWi.
  * \param   gui The KW_GUI instance to get the tileset from.
  */
-extern DECLSPEC KW_Texture * KW_GetTilesetTexture(KW_GUI * gui);
+extern DECLSPEC KW_Texture * KW_GetGUITilesetTexture(KW_GUI * gui);
 
 /**
  * \brief   Gets the tileset surface associated with a KW_GUI instance.
@@ -138,7 +138,7 @@ extern DECLSPEC KW_Texture * KW_GetTilesetTexture(KW_GUI * gui);
  *          the surface.
  * \param   gui The KW_GUI instance to get the tileset from.
  */
-extern DECLSPEC KW_Surface * KW_GetTilesetSurface(KW_GUI * gui);
+extern DECLSPEC KW_Surface * KW_GetGUITilesetSurface(KW_GUI * gui);
 
 /**
  * \brief   Sets a uniform font to be used in label-rendering widgets.
@@ -147,7 +147,7 @@ extern DECLSPEC KW_Surface * KW_GetTilesetSurface(KW_GUI * gui);
  * \param   gui The KW_GUI instance to set the font.
  * \param   font The font to associate with a KW_GUI instance.
  */
-extern DECLSPEC void KW_SetFont(KW_GUI * gui, KW_Font * font);
+extern DECLSPEC void KW_SetGUIFont(KW_GUI * gui, KW_Font * font);
 /**
  * \brief   Sets a uniform font conlor to be used in label-rendering widgets.
  * \details All widgets that render text will use by default the font color set with this function unless
@@ -155,7 +155,7 @@ extern DECLSPEC void KW_SetFont(KW_GUI * gui, KW_Font * font);
  * \param   gui The KW_GUI instance to set the font.
  * \param   color The font color to associate with a KW_GUI instance.
  */
-extern DECLSPEC void KW_SetTextColor(KW_GUI * gui, KW_Color color);
+extern DECLSPEC void KW_SetGUITextColor(KW_GUI * gui, KW_Color color);
 
 
 /**
@@ -204,7 +204,7 @@ extern DECLSPEC void KW_RemoveGUITextColorChangedHandler(KW_GUI * gui, KW_OnGUIT
  * \param   gui The KW_GUI instance to get the font from.
  * \return  The current font associated with the KW_GUI instance.
  */
-extern DECLSPEC KW_Font * KW_GetFont(KW_GUI * gui);
+extern DECLSPEC KW_Font * KW_GetGUIFont(KW_GUI * gui);
 
 /**
  * \brief   Get the current font color associated with a KW_GUI instance.
@@ -212,14 +212,14 @@ extern DECLSPEC KW_Font * KW_GetFont(KW_GUI * gui);
  * \param   gui The KW_GUI instance to get the font color from.
  * \return  The current font color associated with the KW_GUI instance.
  */
-extern DECLSPEC KW_Color KW_GetTextColor(KW_GUI * gui);
+extern DECLSPEC KW_Color KW_GetGUITextColor(KW_GUI * gui);
 
 /**
  * \brief   Paint all the widgets associated with this GUI.
  * \details This will walk the widget tree, painting all of its widgets, from bottom to top.
  * \param   gui The KW_GUI instance holding the widget tree.
  */
-extern DECLSPEC void KW_Paint(KW_GUI * gui);
+extern DECLSPEC void KW_PaintGUI(KW_GUI * gui);
 
 /**
  * \brief   Process all pending events (mouse movement, keyboard movement, etc)

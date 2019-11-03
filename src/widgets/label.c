@@ -24,7 +24,7 @@ void KW_SetLabelAlignment(KW_Widget * widget, KW_LabelHorizontalAlignment halign
 
 KW_Font * KW_GetLabelFont(KW_Widget * widget) {
   KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, PaintLabel);
-  return label->font == NULL ? KW_GetFont(KW_GetGUI(widget)) : label->font;
+  return label->font == NULL ? KW_GetGUIFont(KW_GetGUI(widget)) : label->font;
 }
 
 void KW_SetLabelFont(KW_Widget * widget, KW_Font * font) {
@@ -59,7 +59,7 @@ void KW_SetLabelTextColor(KW_Widget * widget, KW_Color color) {
 
 KW_Color KW_GetLabelTextColor(KW_Widget * widget) {
   KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, PaintLabel);
-  return label->colorset ? label->color : KW_GetTextColor(KW_GetGUI(widget));
+  return label->colorset ? label->color : KW_GetGUITextColor(KW_GetGUI(widget));
 }
 
 KW_bool KW_WasLabelTextColorSet(KW_Widget * widget) {
