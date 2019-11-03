@@ -32,6 +32,7 @@ set(KIWI_WIDGETS_PUBLIC_INCLUDE_FILES
   ../../include/widgets/label.h
   ../../include/widgets/scrollbox.h
   ../../include/widgets/toggle.h
+  ../../include/widgets.h
 )
 
 add_library(widgets

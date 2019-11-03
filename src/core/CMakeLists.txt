@@ -32,6 +32,7 @@ set(KIWI_CORE_PUBLIC_INCLUDE_FILES
   ../../include/core/tilerenderer.h
   ../../include/core/utf8.h
   ../../include/core/widget.h
+  ../../include/core.h
 )
 
 add_library(core
