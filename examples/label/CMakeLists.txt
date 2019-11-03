@@ -6,8 +6,8 @@ add_executable(label label.c tileset.png Fontin-Regular.ttf)
 target_link_libraries(label KiWi ${SDL2_COMPOUND_LIBRARIES})
 
 add_custom_command(OUTPUT tileset.png
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../tileset/tileset.png ${CMAKE_CURRENT_BINARY_DIR}/tileset.png
-  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/../tileset/tileset.png
+  COMMAND ${CMAKE_COMMAND} -E copy ../../assets/tilesets/kiwi.png ${CMAKE_CURRENT_BINARY_DIR}/tileset.png
+  DEPENDS ../../assets/tilesets/kiwi.png
 )
 
 add_custom_command(OUTPUT Fontin-Regular.ttf

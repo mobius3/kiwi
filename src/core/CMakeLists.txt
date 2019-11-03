@@ -2,6 +2,8 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 
+include(GNUInstallDirs)
+
 set(KIWI_CORE_SOURCE_FILES
   eventwatcher.c
   gui.c
@@ -38,7 +40,7 @@ add_library(core
   ${KIWI_CORE_PRIVATE_INCLUDE_FILES}
 )
 
-target_link_libraries(core PUBLIC SDL2 SDL2_image SDL2_ttf)
+target_link_libraries(core PUBLIC SDL2 SDL2_image SDL2_ttf PRIVATE c-rez::fonts)
 
 add_library(kiwi::core ALIAS core)
 

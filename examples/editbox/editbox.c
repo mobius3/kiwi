@@ -30,7 +30,7 @@ int main(int argc, char ** argv) {
 
   /* Initialize KiWi */
   KW_RenderDriver * driver = KW_CreateSDL2RenderDriver(renderer, window);
-  KW_Surface * set = KW_LoadSurface(driver, "tileset.png");
+  KW_Surface * set = KW_LoadSurface(driver, "kiwi.png");
   KW_GUI * gui = KW_Init(driver, set);
 
   /* Create the top-level framve */

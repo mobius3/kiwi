@@ -50,7 +50,7 @@ int main(int argc, char ** argv) {
   SDL_CreateWindowAndRenderer(640, 480, 0, &window, &renderer);
   SDL_SetRenderDrawColor(renderer, 200, 100, 100, 1);
   driver = KW_CreateSDL2RenderDriver(renderer, window);
-  set = KW_LoadSurface(driver, "tileset.png");
+  set = KW_LoadSurface(driver, "kiwi.png");
 
   /* initialize gui */
   gui = KW_Init(driver, set);

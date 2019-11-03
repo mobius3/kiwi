@@ -5,10 +5,18 @@ project(kiwi LANGUAGES C VERSION 1.0.0)
 set(KIWI_ROOT ${CMAKE_CURRENT_SOURCE_DIR} CACHE PATH "")
 list(APPEND CMAKE_MODULE_PATH ${KIWI_ROOT}/cmake-modules)
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_C_EXTENSIONS OFF)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+set(BUILD_SHARED_LIBS ON)
+
 if(WIN32)
 	set(SDL2_ROOT "/sdl2" CACHE STRING "Root of the SDL2 installation")
 endif(WIN32)
 
+add_subdirectory(third-party EXCLUDE_FROM_ALL)
+add_subdirectory(assets)
 add_subdirectory(src)
 
 include(cmake/setup-exports.cmake)

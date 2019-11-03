@@ -257,7 +257,7 @@ int main(int argc, char ** argv) {
   driver = KW_CreateSDL2RenderDriver(renderer, window);
 
   /* load tileset */
-  set = KW_LoadSurface(driver, "tileset.png");
+  set = KW_LoadSurface(driver, "kiwi.png");
 	skin = IMG_LoadTexture(renderer, "skin.png");
 	loadFrameSkin(&widgetFace);
   

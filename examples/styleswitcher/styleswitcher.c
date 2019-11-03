@@ -53,10 +53,10 @@ int main(int argc, char ** argv) {
   SDL_SetRenderDrawColor(renderer, 118, 152, 162, 1);
 
   KW_RenderDriver * driver = KW_CreateSDL2RenderDriver(renderer, window);
-  setalloy = KW_LoadSurface(driver, "tileset-alloy.png");
+  setalloy = KW_LoadSurface(driver, "alloy.png");
   setfutter = KW_LoadSurface(driver, "tileset-futterpedia.png");
-  setflat = KW_LoadSurface(driver, "tileset-flat.png");
-  set = KW_LoadSurface(driver, "tileset.png");
+  setflat = KW_LoadSurface(driver, "flat.png");
+  set = KW_LoadSurface(driver, "kiwi.png");
 
   KW_GUI * gui = KW_Init(driver, setfutter);
   fontin = KW_LoadFont(driver, "Fontin-Regular.ttf", 12);
