@@ -25,8 +25,8 @@ are needed to reach version 1.0.0. Things might get added periodically.
         implement
   - [ ] KiWi must not allocate large chunks of data (specially render data)
   - [ ] KiWi must not allocate memory frequently
-  - [ ] All include files should be lowercase
-  - [ ] Add `c-rez` instead of older resource generator
+  - [x] All include files should be lowercase
+  - [x] Add `c-rez` instead of older resource generator
   - [ ] Remove explicit dependency on SDL from core and widgets and move it
         elsewhere
     - Push things to render driver?
@@ -73,12 +73,12 @@ are needed to reach version 1.0.0. Things might get added periodically.
      - [ ] Needs logo
 - [ ] Pacakging
   - [x] Generated library should be called `kiwi.so/dll` and not `KiWi.so/dll`
-  - [ ] Core and Widgets should be separated in two libraries (and include
+  - [x] Core and Widgets should be separated in two libraries (and include
         files)
-      - [ ] `#include "kiwi/core.h"`
+      - [x] `#include "kiwi/core.h"`
          - Everything non-widget related
          - Must have the "core" subfolder (eg, `#include "kiwi/core/gui.h"`)
-      - [ ] `#include "kiwi/widgets.h"`
+      - [x] `#include "kiwi/widgets.h"`
          - Everything widget related
       -    Must have the "widgets" subfolder (eg, `#include
            "kiwi/widgets/frame.h"`)
