@@ -35,13 +35,13 @@ set(KIWI_CORE_PUBLIC_INCLUDE_FILES
  ${I}/core/tilerenderer.h
  ${I}/core/utf8.h
  ${I}/core/widget.h
- ${I}/core.h
 )
 
 add_library(core
   ${KIWI_CORE_SOURCE_FILES}
   ${KIWI_CORE_PUBLIC_INCLUDE_FILES}
   ${KIWI_CORE_PRIVATE_INCLUDE_FILES}
+  ${I}/core.h
 )
 
 target_link_libraries(core PUBLIC SDL2 SDL2_image SDL2_ttf PRIVATE c-rez::fonts)
@@ -70,6 +70,8 @@ install(TARGETS core
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/kiwi/core
 )
+
+install(FILES ${I}/core.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/kiwi)
 
 if (NOT MSVC)
   target_link_libraries(core PUBLIC "-lm")

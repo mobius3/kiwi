@@ -36,13 +36,13 @@ set(KIWI_WIDGETS_PUBLIC_INCLUDE_FILES
   ${I}/widgets/label.h
   ${I}/widgets/scrollbox.h
   ${I}/widgets/toggle.h
-  ${I}/widgets.h
 )
 
 add_library(widgets
   ${KIWI_WIDGETS_SOURCE_FILES}
   ${KIWI_WIDGETS_PUBLIC_INCLUDE_FILES}
   ${KIWI_WIDGETS_PRIVATE_INCLUDE_FILES}
+  ${I}/widgets.h
 )
 
 target_link_libraries(widgets PUBLIC kiwi::core SDL2 SDL2_image SDL2_ttf)
@@ -71,6 +71,8 @@ install(TARGETS widgets
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/kiwi/widgets
 )
+
+install(FILES ${I}/widgets.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/kiwi)
 
 if (NOT MSVC)
   target_link_libraries(widgets PUBLIC "-lm")
