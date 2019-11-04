@@ -3,6 +3,7 @@ find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 
 include(GNUInstallDirs)
+include(GenerateExportHeader)
 
 set(KIWI_CORE_SOURCE_FILES
   eventwatcher.c
@@ -25,16 +26,17 @@ set(KIWI_CORE_PRIVATE_INCLUDE_FILES
 set(I ../../../include/kiwi)
 
 set(KIWI_CORE_PUBLIC_INCLUDE_FILES
- ${I}/core/bool.h
- ${I}/core/eventwatcher.h
- ${I}/core/gui.h
- ${I}/core/macros.h
- ${I}/core/rect.h
- ${I}/core/renderdriver.h
- ${I}/core/renderdriver_sdl2.h
- ${I}/core/tilerenderer.h
- ${I}/core/utf8.h
- ${I}/core/widget.h
+  ${I}/core/bool.h
+  ${I}/core/eventwatcher.h
+  ${I}/core/gui.h
+  ${I}/core/macros.h
+  ${I}/core/rect.h
+  ${I}/core/renderdriver.h
+  ${I}/core/renderdriver_sdl2.h
+  ${I}/core/tilerenderer.h
+  ${I}/core/utf8.h
+  ${I}/core/widget.h
+  ${CMAKE_CURRENT_BINARY_DIR}/core-export.h
 )
 
 add_library(core
@@ -42,6 +44,13 @@ add_library(core
   ${KIWI_CORE_PUBLIC_INCLUDE_FILES}
   ${KIWI_CORE_PRIVATE_INCLUDE_FILES}
   ${I}/core.h
+  ${CMAKE_CURRENT_BINARY_DIR}/core-export.h
+)
+
+generate_export_header(
+  core
+  BASE_NAME KIWI_CORE
+  EXPORT_FILE_NAME core-export.h
 )
 
 target_link_libraries(core PUBLIC SDL2 SDL2_image SDL2_ttf PRIVATE c-rez::fonts)

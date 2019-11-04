@@ -3,6 +3,7 @@ find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 
 include(GNUInstallDirs)
+include(GenerateExportHeader)
 
 set(KIWI_WIDGETS_SOURCE_FILES
   button.c
@@ -36,6 +37,7 @@ set(KIWI_WIDGETS_PUBLIC_INCLUDE_FILES
   ${I}/widgets/label.h
   ${I}/widgets/scrollbox.h
   ${I}/widgets/toggle.h
+  ${CMAKE_CURRENT_BINARY_DIR}/widgets-export.h
 )
 
 add_library(widgets
@@ -43,6 +45,13 @@ add_library(widgets
   ${KIWI_WIDGETS_PUBLIC_INCLUDE_FILES}
   ${KIWI_WIDGETS_PRIVATE_INCLUDE_FILES}
   ${I}/widgets.h
+  ${CMAKE_CURRENT_BINARY_DIR}/widgets-export.h
+)
+
+generate_export_header(
+  core
+  BASE_NAME KIWI_WIDGETS
+  EXPORT_FILE_NAME widgets-export.h
 )
 
 target_link_libraries(widgets PUBLIC kiwi::core SDL2 SDL2_image SDL2_ttf)
