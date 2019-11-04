@@ -27,15 +27,16 @@ are needed to reach version 1.0.0. Things might get added periodically.
   - [ ] KiWi must not allocate memory frequently
   - [x] All include files should be lowercase
   - [x] Add `c-rez` instead of older resource generator
-  - [ ] Remove explicit dependency on SDL from core and widgets and move it
-        elsewhere
-    - Push things to render driver?
-    - Separate renderdriver into multiple "kiwi backends"?
-      - text backend
-      - rendering backend
-      - inputs backend
-    - Check what actually needs to be moved
-    - Consider stopping the refactor impulse and embrace SDL2 for once
+  - [ ] SDL should not be called explicitly on core and widgets
+    - [ ] Create and support an event backend
+      - Expose all "interesting" events as functions the render driver can call
+        to warn KiWi it happened.
+    - [ ] Create/refactor a new, easy render backend
+      - core and widgets will use only RenderCopy
+    - [ ] Create and support an font backend
+      - core and widgets will request text sizing information
+      - font backend must be able to raster fonts. needs to figure out a way to
+        raster, upload texture and set on the widget.
 - [ ] New Widgets (by value and how easy to write)
   - [ ] Checkbox
   - [ ] Radio (with radio group/automatic check control)
@@ -46,9 +47,6 @@ are needed to reach version 1.0.0. Things might get added periodically.
   - [ ] Multi-selection dropdown (reuse checkbox?)
   - [ ] Table
   - [ ] (what else?)
-- [ ] Widget fixes
-  - [ ] Refactor and remove explicit use of SDL2 (editbox is the biggest
-        culprit)
 - [ ] Documentation (by most needed)
   - [ ] All documentation should be consistent
   - [ ] All public functions and types should have documentation
