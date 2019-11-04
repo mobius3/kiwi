@@ -1,4 +1,6 @@
 #include <time.h>
+#include <stdlib.h>
+
 #include "kiwi/core/widget.h"
 #include "kiwi/core/gui.h"
 #include "kiwi/core/eventwatcher.h"

@@ -48,6 +48,11 @@ add_library(widgets
   ${CMAKE_CURRENT_BINARY_DIR}/widgets-export.h
 )
 
+# Tell MSVC we know sprintf is unsafe
+if (WIN32)
+  target_compile_definitions(widgets PRIVATE _CRT_SECURE_NO_WARNINGS)
+endif()
+
 generate_export_header(
   core
   BASE_NAME KIWI_WIDGETS

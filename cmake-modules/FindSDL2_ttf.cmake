@@ -32,6 +32,9 @@
 # (To distribute this file outside of CMake, substitute the full
 #  License text for the above reference.)
 
+cmake_policy(PUSH)
+cmake_policy(SET CMP0074 NEW)
+
 SET(SDL2_SEARCH_PATHS
 	~/Library/Frameworks
 	/Library/Frameworks
@@ -131,3 +134,4 @@ set(SDL2TTF_INCLUDE_DIR ${SDL2_TTF_INCLUDE_DIRS})
 set(SDL2TTF_FOUND ${SDL2_TTF_FOUND})
 
 mark_as_advanced(SDL2_TTF_LIBRARY SDL2_TTF_INCLUDE_DIR)
+cmake_policy(POP)

@@ -73,6 +73,11 @@ target_compile_options(core PRIVATE
   $<$<OR:$<C_COMPILER_ID:Clang>,$<C_COMPILER_ID:GNU>>:-Wall -Wextra -pedantic -fvisibility=hidden -Werror>
   $<$<C_COMPILER_ID:MSVC>:/W3 /WX /wd4820 /wd4668 /wd4204>)
 
+# Tell MSVC we know sprintf is unsafe
+if (WIN32)
+  target_compile_definitions(core PRIVATE _CRT_SECURE_NO_WARNINGS)
+endif()
+
 install(TARGETS core
   EXPORT kiwi-targets
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}

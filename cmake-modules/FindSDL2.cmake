@@ -73,6 +73,9 @@
 # (To distribute this file outside of CMake, substitute the full
 #  License text for the above reference.)
 
+cmake_policy(PUSH)
+cmake_policy(SET CMP0074 NEW)
+
 set(SDL2_SEARCH_PATHS
   ~/Library/Frameworks
   /Library/Frameworks
@@ -213,3 +216,4 @@ endif ()
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(SDL2 REQUIRED_VARS SDL2_LIBRARY SDL2_INCLUDE_DIR)
+cmake_policy(POP)

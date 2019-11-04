@@ -132,7 +132,7 @@ void AdjustCursor(KW_Editbox * editbox, int cursormove) {
     }
   } else if (cursormove < 0) {
     if (-cursormove > (int)editbox->cursor) {
-      cursormove = -editbox->cursor;
+      cursormove = -(int)editbox->cursor;
     }
   }
 

@@ -45,7 +45,7 @@ void PaintScrollboxFrame(KW_Widget * widget, const KW_Rect * absolute, void * da
       sb->innercomposite.h != innergeom.h) 
   {
     /* vertical scroll stuff */
-    innerh = innergeom.h;
+    innerh = (float)innergeom.h;
     KW_GetWidgetGeometry(sb->vscroll, &scrollgeom);
     scrollgeom.x = imax(boxgeom.w - TILESIZE * 3, TILESIZE);
     scrollgeom.w = imin(TILESIZE *2, boxgeom.w - TILESIZE);
@@ -55,7 +55,7 @@ void PaintScrollboxFrame(KW_Widget * widget, const KW_Rect * absolute, void * da
     KW_SetWidgetGeometry(sb->vscroll, &scrollgeom);
     
     /* horizontal scroll stuff */
-    innerw = innergeom.w;
+    innerw = (float)innergeom.w;
     KW_GetWidgetGeometry(sb->hscroll, &scrollgeom);
     scrollgeom.y = imax(boxgeom.h - TILESIZE * 3, TILESIZE);
     scrollgeom.w = (unsigned)((outergeom.w / innerw) * outergeom.w);
