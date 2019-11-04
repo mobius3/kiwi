@@ -2,6 +2,8 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 
+include(GNUInstallDirs)
+
 set(KIWI_WIDGETS_SOURCE_FILES
   button.c
   checkbox.c
@@ -56,7 +58,7 @@ set_target_properties(widgets PROPERTIES
 
 target_include_directories(widgets PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../../include>
-  $<INSTALL_INTERFACE:include/kiwi>
+  $<INSTALL_INTERFACE:include>
 )
 
 target_compile_options(widgets PRIVATE
