@@ -29,3 +29,4 @@ add_subdirectory(assets)
 add_subdirectory(src)
 
 include(cmake/setup-exports.cmake)
+include(cmake/kiwi-cpack.cmake)
