@@ -22,9 +22,11 @@
 *.x86_64
 *.hex
 
-# KDevelop
+# IDEs
 *.kdev4*
+.idea
 
 # Build
 bin/
 build/
+cmake-build-*/
