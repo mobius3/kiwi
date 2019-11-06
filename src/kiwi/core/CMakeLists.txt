@@ -76,19 +76,29 @@ target_compile_options(core PRIVATE
 # Tell MSVC we know sprintf is unsafe
 if (WIN32)
   target_compile_definitions(core PRIVATE _CRT_SECURE_NO_WARNINGS)
-endif()
+endif ()
 
 install(TARGETS core
   EXPORT kiwi-targets
-  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    COMPONENT "KiWi Runtime"
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    COMPONENT "KiWi Runtime"
+    NAMELINK_COMPONENT "KiWi Development"
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    COMPONENT "KiWi Development"
   PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/kiwi/core
+    COMPONENT "KiWi Development"
 )
 
-install(FILES ${I}/core.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/kiwi)
+install(FILES
+  ${I}/core.h
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/kiwi
+    COMPONENT "KiWi Development"
+)
 
 if (NOT MSVC)
   target_link_libraries(core PUBLIC "-lm")
-endif()
+endif ()
 
 

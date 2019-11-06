@@ -81,12 +81,22 @@ target_compile_options(widgets PRIVATE
 
 install(TARGETS widgets
   EXPORT kiwi-targets
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    COMPONENT "KiWi Runtime"
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    COMPONENT "KiWi Runtime"
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    COMPONENT "KiWi Runtime"
+    NAMELINK_COMPONENT "KiWi Development"
   PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/kiwi/widgets
+    COMPONENT "KiWi Development"
 )
 
-install(FILES ${I}/widgets.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/kiwi)
+install(FILES
+  ${I}/widgets.h
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/kiwi
+    COMPONENT "KiWi Development"
+)
 
 if (NOT MSVC)
   target_link_libraries(widgets PUBLIC "-lm")

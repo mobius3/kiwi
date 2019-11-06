@@ -44,4 +44,5 @@ install(
     "${CMAKE_CURRENT_BINARY_DIR}/kiwi-config-version.cmake"
   DESTINATION
    ${CMAKE_INSTALL_LIBDIR}/cmake/kiwi
+  COMPONENT "KiWi Development"
 )
