@@ -60,6 +60,7 @@ add_library(kiwi::core ALIAS core)
 set_target_properties(core PROPERTIES
   C_STANDARD 99
   VERSION ${kiwi_VERSION}
+  SOVERSION ${kiwi_VERSION_MAJOR}
   PUBLIC_HEADER "${KIWI_CORE_PUBLIC_INCLUDE_FILES}"
   OUTPUT_NAME "kiwi-core"
 )

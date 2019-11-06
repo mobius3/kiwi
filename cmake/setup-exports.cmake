@@ -34,7 +34,7 @@ install(EXPORT kiwi-targets
 write_basic_package_version_file(
   "${CMAKE_CURRENT_BINARY_DIR}/kiwi-config-version.cmake"
   VERSION ${kiwi_VERSION}
-  COMPATIBILITY AnyNewerVersion
+  COMPATIBILITY SameMajorVersion
 )
 
 # Setup install of version config

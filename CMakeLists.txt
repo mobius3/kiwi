@@ -20,6 +20,10 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN YES)
 
 set(BUILD_SHARED_LIBS ON)
 
+if (NOT APPLE)
+	set(CMAKE_INSTALL_RPATH $ORIGIN)
+endif()
+
 if(WIN32)
 	set(SDL2_ROOT "/sdl2" CACHE STRING "Root of the SDL2 installation")
 endif(WIN32)
