@@ -1,5 +1,5 @@
-#ifndef KW_CHECKBOX_H
-#define KW_CHECKBOX_H
+#ifndef KIWI_WIDGETS_CHECKBOX_H
+#define KIWI_WIDGETS_CHECKBOX_H
 
 /**
  * \file KW_checkbox.h
@@ -8,6 +8,7 @@
  */
 
 #include "kiwi/core/widget.h"
+#include "kiwi/widgets/widgets-export.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -23,14 +24,14 @@ extern "C" {
  * \param geometry The geometry of this widget
  * \returns The instance of the checkbox
  */
-extern DECLSPEC KW_Widget * KW_CreateCheckbox(KW_GUI * gui, KW_Widget * parent, KW_Widget * label, const KW_Rect * geometry);
+extern KIWI_WIDGETS_EXPORT KW_Widget * KW_CreateCheckbox(KW_GUI * gui, KW_Widget * parent, KW_Widget * label, const KW_Rect * geometry);
 
 /**
  * \brief Returns the label associated with this widget.
  * \param widget The checkbox widget
  * \returns The widget set as label
  */
-extern DECLSPEC KW_Widget * KW_GetCheckboxLabel(KW_Widget * widget);
+extern KIWI_WIDGETS_EXPORT KW_Widget * KW_GetCheckboxLabel(KW_Widget * widget);
 
 /**
  * \brief Sets a new widget as a label
@@ -39,7 +40,7 @@ extern DECLSPEC KW_Widget * KW_GetCheckboxLabel(KW_Widget * widget);
  * \returns The old label, reparented to the root widget.
  * \details You might want to destroy this widget if you have no use to it.
  */
-extern DECLSPEC KW_Widget * KW_SetCheckboxLabel(KW_Widget * widget, KW_Widget * label);
+extern KIWI_WIDGETS_EXPORT KW_Widget * KW_SetCheckboxLabel(KW_Widget * widget, KW_Widget * label);
 
 #ifdef __cplusplus
 }

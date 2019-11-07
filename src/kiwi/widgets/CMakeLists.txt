@@ -37,7 +37,7 @@ set(KIWI_WIDGETS_PUBLIC_INCLUDE_FILES
   ${I}/widgets/label.h
   ${I}/widgets/scrollbox.h
   ${I}/widgets/toggle.h
-  ${CMAKE_CURRENT_BINARY_DIR}/widgets-export.h
+  ${CMAKE_CURRENT_BINARY_DIR}/kiwi/widgets/widgets-export.h
 )
 
 add_library(widgets
@@ -45,7 +45,7 @@ add_library(widgets
   ${KIWI_WIDGETS_PUBLIC_INCLUDE_FILES}
   ${KIWI_WIDGETS_PRIVATE_INCLUDE_FILES}
   ${I}/widgets.h
-  ${CMAKE_CURRENT_BINARY_DIR}/widgets-export.h
+  ${CMAKE_CURRENT_BINARY_DIR}/kiwi/widgets/widgets-export.h
 )
 
 # Tell MSVC we know sprintf is unsafe
@@ -56,7 +56,7 @@ endif()
 generate_export_header(
   core
   BASE_NAME KIWI_WIDGETS
-  EXPORT_FILE_NAME widgets-export.h
+  EXPORT_FILE_NAME kiwi/widgets/widgets-export.h
 )
 
 target_link_libraries(widgets PUBLIC kiwi::core SDL2 SDL2_image SDL2_ttf)
@@ -72,6 +72,7 @@ set_target_properties(widgets PROPERTIES
 
 target_include_directories(widgets PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../../include>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
   $<INSTALL_INTERFACE:include>
 )
 

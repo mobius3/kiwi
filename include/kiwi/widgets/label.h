@@ -1,37 +1,14 @@
-/*
-  Copyright (c) 2014, Leonardo Guilherme de Freitas
-  All rights reserved.
-
-  This software is provided 'as-is', without any express or implied
-  warranty. In no event will the authors be held liable for any damages
-  arising from the use of this software.
-
-  Permission is granted to anyone to use this software for any purpose,
-  including commercial applications, and to alter it and redistribute it
-  freely, subject to the following restrictions:
-
-     1. The origin of this software must not be misrepresented; you must not
-     claim that you wrote the original software. If you use this software
-     in a product, an acknowledgment in the product documentation would be
-     appreciated but is not required.
-
-     2. Altered source versions must be plainly marked as such, and must not be
-     misrepresented as being the original software.
-
-     3. This notice may not be removed or altered from any source
-     distribution.
-*/
-
 /**
  * \file KW_label.h
  * 
  * Declares functions for creating and managing labels.
  */
 
-#ifndef KW_LABEL_H
-#define KW_LABEL_H
+#ifndef KIWI_WIDGETS_LABEL_H
+#define KIWI_WIDGETS_LABEL_H
 
 #include "kiwi/core/widget.h"
+#include "kiwi/widgets/widgets-export.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -69,28 +46,28 @@ typedef enum KW_LabelHorizontalAlignment {
  * \param   geometry The relative geometry of this label.
  * \return  The label instance.
  */
-extern DECLSPEC KW_Widget * KW_CreateLabel(KW_GUI * gui, KW_Widget * parent, const char * text, const KW_Rect * geometry);
+extern KIWI_WIDGETS_EXPORT KW_Widget * KW_CreateLabel(KW_GUI * gui, KW_Widget * parent, const char * text, const KW_Rect * geometry);
 
 /**
  * \brief   Set the text being rendered in this label.
  * \param   widget The label widget.
  * \param   text The text to render.
  */
-extern DECLSPEC void KW_SetLabelText(KW_Widget * widget, const char * text);
+extern KIWI_WIDGETS_EXPORT void KW_SetLabelText(KW_Widget * widget, const char * text);
 
 /**
  * \brief   Set the text style for this label.
  * \param   widget The label widget.
  * \param   style The style of the text
  */
-extern DECLSPEC void KW_SetLabelStyle(KW_Widget * widget, KW_Label_Style style);
+extern KIWI_WIDGETS_EXPORT void KW_SetLabelStyle(KW_Widget * widget, KW_Label_Style style);
 
 /**
  * \brief   Sets the color of the label text.
  * \param   widget The label instance.
  * \param   color The color to assign to the label.
  */
-extern DECLSPEC void KW_SetLabelTextColor(KW_Widget * widget, KW_Color color);
+extern KIWI_WIDGETS_EXPORT void KW_SetLabelTextColor(KW_Widget * widget, KW_Color color);
 
 /**
  * \brief   Changes the font of the label's text.
@@ -98,7 +75,7 @@ extern DECLSPEC void KW_SetLabelTextColor(KW_Widget * widget, KW_Color color);
  * \param   widget The label widget.
  * \param   font The font to assign to the label.
  */
-extern DECLSPEC void KW_SetLabelFont(KW_Widget * widget, KW_Font * font);
+extern KIWI_WIDGETS_EXPORT void KW_SetLabelFont(KW_Widget * widget, KW_Font * font);
 
 /**
  * \brief   Sets label alignment inside a geometry.
@@ -108,7 +85,7 @@ extern DECLSPEC void KW_SetLabelFont(KW_Widget * widget, KW_Font * font);
  * \param   valign The vertical alignment used.
  * \param   voffset The vertical offset to be added to the label position after its aligned.
  */
-extern DECLSPEC void KW_SetLabelAlignment(KW_Widget * widget, KW_LabelHorizontalAlignment halign, int hoffset, KW_LabelVerticalAlignment valign, int voffset);
+extern KIWI_WIDGETS_EXPORT void KW_SetLabelAlignment(KW_Widget * widget, KW_LabelHorizontalAlignment halign, int hoffset, KW_LabelVerticalAlignment valign, int voffset);
 
 /**
  * \brief   Display an icon in the left side of the text.
@@ -117,14 +94,14 @@ extern DECLSPEC void KW_SetLabelAlignment(KW_Widget * widget, KW_LabelHorizontal
  * \param   iconclip The clipping rect in the tileset to clip the icon from. Set
  *          to NULL to remove the icon.
  */
-extern DECLSPEC void KW_SetLabelIcon(KW_Widget * widget, const KW_Rect * iconclip);
+extern KIWI_WIDGETS_EXPORT void KW_SetLabelIcon(KW_Widget * widget, const KW_Rect * iconclip);
 
 /**
  * \brief   Gets the associated font with a label.
  * \param   widget The label widget.
  * \returns A KW_Font pointer to the currently label's associated font.
  */
-extern DECLSPEC KW_Font * KW_GetLabelFont(KW_Widget * widget);
+extern KIWI_WIDGETS_EXPORT KW_Font * KW_GetLabelFont(KW_Widget * widget);
 
 /**
  * \brief   Gets the associated font color with a label.
@@ -134,7 +111,7 @@ extern DECLSPEC KW_Font * KW_GetLabelFont(KW_Widget * widget);
  * \sa KW_WasLabelTextColorSet
  * \sa KW_SetLabelTextColor
  */
-extern DECLSPEC KW_Color KW_GetLabelTextColor(KW_Widget * widget);
+extern KIWI_WIDGETS_EXPORT KW_Color KW_GetLabelTextColor(KW_Widget * widget);
 
 /**
  * \brief   Check if the label is using its own color or the default one
@@ -143,7 +120,7 @@ extern DECLSPEC KW_Color KW_GetLabelTextColor(KW_Widget * widget);
  * \sa KW_GetLabelTextColor
  * \sa KW_SetLabelTextColor
  */
-extern DECLSPEC KW_bool KW_WasLabelTextColorSet(KW_Widget * widget);
+extern KIWI_WIDGETS_EXPORT KW_bool KW_WasLabelTextColorSet(KW_Widget * widget);
 
 #ifdef __cplusplus
 }

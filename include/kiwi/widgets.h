@@ -1,5 +1,5 @@
-#ifndef KW_WIDGETS_H
-#define KW_WIDGETS_H
+#ifndef KIWI_WIDGETS_H
+#define KIWI_WIDGETS_H
 
 #include "kiwi/widgets/button.h"
 #include "kiwi/widgets/checkbox.h"
