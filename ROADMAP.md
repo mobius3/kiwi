@@ -19,7 +19,7 @@ are needed to reach version 1.0.0. Things might get added periodically.
         tileset
   - [ ] Users should be capable of using tilesets with other tile width and
         height
-  - [ ] Stop using custom KIWI_EXPORTS macro and use CMake's generated one
+  - [x] Stop using custom KIWI_EXPORTS macro and use CMake's generated one
   - [ ] SDL2 render driver should be decoupled and replaceable
   - [ ] Current render-driver API is too low level, it must be easier to
         implement
@@ -70,7 +70,7 @@ are needed to reach version 1.0.0. Things might get added periodically.
   - [ ] The library needs a website or homepage
      - [ ] Needs logo
 - [ ] Pacakging
-  - [x] Generated library should be called `kiwi.so/dll` and not `KiWi.so/dll`
+  - [x] Generated library should be called <lib>kiwi.so/dll` and not `<lib>KiWi.so/dll`
   - [x] Core and Widgets should be separated in two libraries (and include
         files)
       - [x] `#include "kiwi/core.h"`
