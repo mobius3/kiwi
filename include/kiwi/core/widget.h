@@ -1,31 +1,7 @@
-/*
-  Copyright (c) 2014, Leonardo Guilherme de Freitas
-  All rights reserved.
+#ifndef KIWI_CORE_WIDGET_H
+#define KIWI_CORE_WIDGET_H
 
-  This software is provided 'as-is', without any express or implied
-  warranty. In no event will the authors be held liable for any damages
-  arising from the use of this software.
-
-  Permission is granted to anyone to use this software for any purpose,
-  including commercial applications, and to alter it and redistribute it
-  freely, subject to the following restrictions:
-
-     1. The origin of this software must not be misrepresented; you must not
-     claim that you wrote the original software. If you use this software
-     in a product, an acknowledgment in the product documentation would be
-     appreciated but is not required.
-
-     2. Altered source versions must be plainly marked as such, and must not be
-     misrepresented as being the original software.
-
-     3. This notice may not be removed or altered from any source
-     distribution.
-*/
-
-#ifndef KW_WIDGET_H
-#define KW_WIDGET_H
-
-#include "macros.h"
+#include "kiwi/core/core-export.h"
 #include "renderdriver.h"
 #include "bool.h"
 #include "SDL.h"
@@ -47,8 +23,8 @@ struct KW_GUI;
 typedef struct KW_GUI KW_GUI;
 
 /* forward declarations of these */
-extern DECLSPEC KW_RenderDriver * KW_GetGUIRenderer(KW_GUI * gui);
-extern DECLSPEC KW_GUI * KW_GetGUI(const KW_Widget * widget);
+extern KIWI_CORE_EXPORT KW_RenderDriver * KW_GetGUIRenderer(KW_GUI * gui);
+extern KIWI_CORE_EXPORT KW_GUI * KW_GetGUI(const KW_Widget * widget);
 
 
 
@@ -178,7 +154,7 @@ typedef enum KW_WidgetHint {
  * \param   data Any private data associated with this widget. Mostly to be used by widget implementations.
  * \returns The new widget.
  */
-extern DECLSPEC KW_Widget * KW_CreateWidget(KW_GUI * gui, 
+extern KIWI_CORE_EXPORT KW_Widget * KW_CreateWidget(KW_GUI * gui, 
                                               KW_Widget * parent, 
                                               const KW_Rect * geometry,
                                               KW_WidgetPaintFunction widgetpaint,
@@ -203,14 +179,14 @@ extern DECLSPEC KW_Widget * KW_CreateWidget(KW_GUI * gui,
  * \param   widget The widget that will have its parent changed.
  * \param   parent The new \p widget parent.
  */
-extern DECLSPEC void KW_ReparentWidget(KW_Widget * widget, KW_Widget * parent);
+extern KIWI_CORE_EXPORT void KW_ReparentWidget(KW_Widget * widget, KW_Widget * parent);
 
 /**
  * \brief   Retrieves the parent widget of a widget.
  * \param   widget The KW_Widget instance to retrieve the parent from.
  * \returns The parent widget or NULL if its a top-level widget.
  */
-extern DECLSPEC KW_Widget * KW_GetWidgetParent(const KW_Widget * widget);
+extern KIWI_CORE_EXPORT KW_Widget * KW_GetWidgetParent(const KW_Widget * widget);
 
 /**
  * \brief      Returns an array of all childrens of this widget.
@@ -222,7 +198,7 @@ extern DECLSPEC KW_Widget * KW_GetWidgetParent(const KW_Widget * widget);
  *             children count of the widget.
  * \returns    An array of constant pointers to all childrens of \p widget.
  */
-extern DECLSPEC KW_Widget * const * KW_GetWidgetChildren(const KW_Widget * widget, unsigned int * count);
+extern KIWI_CORE_EXPORT KW_Widget * const * KW_GetWidgetChildren(const KW_Widget * widget, unsigned int * count);
 
 /**
  * \brief   Retrieves the current data associated with a widget.
@@ -232,7 +208,7 @@ extern DECLSPEC KW_Widget * const * KW_GetWidgetChildren(const KW_Widget * widge
  * \param   type The address of the widget paint function (to confirm that you actually know this widget)
  * \returns The data pointer or NULL if the widget types don't match.
  */
-extern DECLSPEC void * KW_GetWidgetData(const KW_Widget * widget, KW_WidgetPaintFunction paint);
+extern KIWI_CORE_EXPORT void * KW_GetWidgetData(const KW_Widget * widget, KW_WidgetPaintFunction paint);
 
 
 /**
@@ -244,7 +220,7 @@ extern DECLSPEC void * KW_GetWidgetData(const KW_Widget * widget, KW_WidgetPaint
  * \param   widget The widget to set the user data.
  * \param   userdata The associated user data
  */
-extern DECLSPEC void KW_SetWidgetUserData(KW_Widget * widget, void * userdata);
+extern KIWI_CORE_EXPORT void KW_SetWidgetUserData(KW_Widget * widget, void * userdata);
 
 /**
  * \brief   Returns the associated user data of a widget.
@@ -252,7 +228,7 @@ extern DECLSPEC void KW_SetWidgetUserData(KW_Widget * widget, void * userdata);
  * \param   widget The widget to get userdata from.
  * \returns The usertdata pointer
  */
-extern DECLSPEC void * KW_GetWidgetUserData(const KW_Widget * widget);
+extern KIWI_CORE_EXPORT void * KW_GetWidgetUserData(const KW_Widget * widget);
 
 /**
  * \brief   Destroys a widget and free its resources.
@@ -261,7 +237,7 @@ extern DECLSPEC void * KW_GetWidgetUserData(const KW_Widget * widget);
  * \param   destroychildren Set to 1 if you want also to destroy all childrens (and their childrens) of this widget. If not, they will be
  *                          reparented to @p widget parent.
  */
-extern DECLSPEC void KW_DestroyWidget(KW_Widget * widget, int destroychildren);
+extern KIWI_CORE_EXPORT void KW_DestroyWidget(KW_Widget * widget, int destroychildren);
 
 /**
  * \brief   Returns the associated KW_GUI instance of a widget.
@@ -269,7 +245,7 @@ extern DECLSPEC void KW_DestroyWidget(KW_Widget * widget, int destroychildren);
  * \param   widget The widget to get the KW_GUI instance from.
  * \return  The KW_GUI instance associated with the widget.
  */
-extern DECLSPEC KW_GUI * KW_GetWidgetGUI(const KW_Widget * widget);
+extern KIWI_CORE_EXPORT KW_GUI * KW_GetWidgetGUI(const KW_Widget * widget);
 
 /**
  * \brief   Returns the KW_RenderDriver associated with a KW_GUI instance that the @p widget is associated with.
@@ -277,7 +253,7 @@ extern DECLSPEC KW_GUI * KW_GetWidgetGUI(const KW_Widget * widget);
  * \param   widget The widget to get the KW_RenderDriver instance from.
  * \returns The associated KW_RenderDriver instance.
  */
-extern DECLSPEC KW_RenderDriver * KW_GetWidgetRenderer(const KW_Widget * widget);
+extern KIWI_CORE_EXPORT KW_RenderDriver * KW_GetWidgetRenderer(const KW_Widget * widget);
 
 /**
  * \brief		Get custom draw-widget function
@@ -286,7 +262,7 @@ extern DECLSPEC KW_RenderDriver * KW_GetWidgetRenderer(const KW_Widget * widget)
  * \param   widget The widget to get function from
  * \returns Address of the rendering function for the widget or NULL if no such function specified.
  */
-extern DECLSPEC KW_CustomRenderFunction KW_GetWidgetCustomRenderFunction(const KW_Widget * widget);
+extern KIWI_CORE_EXPORT KW_CustomRenderFunction KW_GetWidgetCustomRenderFunction(const KW_Widget * widget);
 
 /**
  * \brief   Set custom function for widget rendering
@@ -295,7 +271,7 @@ extern DECLSPEC KW_CustomRenderFunction KW_GetWidgetCustomRenderFunction(const K
  * \param   widget The widget whose renderer function you need to change
  * \param   renderfunction The function to be called to obtain widget's face on resizing
  */
-extern DECLSPEC void KW_SetWidgetCustomRenderFunction(KW_Widget * widget, KW_CustomRenderFunction renderfunction);
+extern KIWI_CORE_EXPORT void KW_SetWidgetCustomRenderFunction(KW_Widget * widget, KW_CustomRenderFunction renderfunction);
 
 /**
  * \brief   Sets a new geometry for a widget.
@@ -303,7 +279,7 @@ extern DECLSPEC void KW_SetWidgetCustomRenderFunction(KW_Widget * widget, KW_Cus
  * \param   widget The widget that will have its size changed.
  * \param   geometry The new widget geometry.
  */
-extern DECLSPEC void KW_SetWidgetGeometry(KW_Widget * widget, const KW_Rect * geometry);
+extern KIWI_CORE_EXPORT void KW_SetWidgetGeometry(KW_Widget * widget, const KW_Rect * geometry);
 
 /**
  * \brief   Gets the widget geometry.
@@ -311,7 +287,7 @@ extern DECLSPEC void KW_SetWidgetGeometry(KW_Widget * widget, const KW_Rect * ge
  * \param   widget The widget to get the geometry from.
  * \param   geometry A KW_Rect pointer that will receive the @p widget geometry.
  */
-extern DECLSPEC void KW_GetWidgetGeometry(const KW_Widget * widget, KW_Rect * geometry);
+extern KIWI_CORE_EXPORT void KW_GetWidgetGeometry(const KW_Widget * widget, KW_Rect * geometry);
 
 /**
  * \brief   Returns the widget geometry.
@@ -319,7 +295,7 @@ extern DECLSPEC void KW_GetWidgetGeometry(const KW_Widget * widget, KW_Rect * ge
  * \param   widget The widget to get the geometry from.
  * \returns A KW_Rect pointer that will point to the the @p widget geometry.
  */
-extern DECLSPEC const KW_Rect * KW_ReturnWidgetGeometry(const KW_Widget * widget);
+extern KIWI_CORE_EXPORT const KW_Rect * KW_ReturnWidgetGeometry(const KW_Widget * widget);
 
 /**
  * \brief   Gets the absolute widget geometry.
@@ -328,7 +304,7 @@ extern DECLSPEC const KW_Rect * KW_ReturnWidgetGeometry(const KW_Widget * widget
  * \param   widget The widget to get the absolute geometry from.
  * \param   geometry A KW_Rect pointer that will receive the @p widget absolute geometry.
  */
-extern DECLSPEC void KW_GetWidgetAbsoluteGeometry(const KW_Widget * widget, KW_Rect * geometry);
+extern KIWI_CORE_EXPORT void KW_GetWidgetAbsoluteGeometry(const KW_Widget * widget, KW_Rect * geometry);
 
 /**
  * \brief   Gets the composed geometry of a widget.
@@ -337,7 +313,7 @@ extern DECLSPEC void KW_GetWidgetAbsoluteGeometry(const KW_Widget * widget, KW_R
  * \param   widget The widget to get the compsoed geometry from.
  * \param   geometry A KW_Rect pointer that will receive the @p widget composed geometry.
  */
-extern DECLSPEC void KW_GetWidgetComposedGeometry(const KW_Widget * widget, KW_Rect * composed);
+extern KIWI_CORE_EXPORT void KW_GetWidgetComposedGeometry(const KW_Widget * widget, KW_Rect * composed);
 
 /**
  * \brief   Paint a widget and all of its children unless they are hidden.
@@ -346,7 +322,7 @@ extern DECLSPEC void KW_GetWidgetComposedGeometry(const KW_Widget * widget, KW_R
  *          `KW_Paint()` rather than this function.
  * \param   widget The widget to paint.
  */
-extern DECLSPEC void KW_PaintWidget(KW_Widget * widget);
+extern KIWI_CORE_EXPORT void KW_PaintWidget(KW_Widget * widget);
 
 /**
  * \brief   Moves widget at the back of the rendering list.
@@ -354,14 +330,14 @@ extern DECLSPEC void KW_PaintWidget(KW_Widget * widget);
             put it at the back of chidlren to render makeing it effectivly be on top.
  * \param   widget The widget to apply changes to.
  */
-extern DECLSPEC void KW_BringToFront(KW_Widget * widget);
+extern KIWI_CORE_EXPORT void KW_BringToFront(KW_Widget * widget);
 
 /**
  * \brief   Moves GUI focus to given widget.
  * \details Make given widget target of user input, notify previous target and fire events.
  * \param   widget The widget to set focused.
  */
-extern DECLSPEC void KW_SetFocusedWidget(KW_Widget * widget);
+extern KIWI_CORE_EXPORT void KW_SetFocusedWidget(KW_Widget * widget);
 
 /**
  * \brief   Hides this widget and their children, effectively preventing them from being painted.
@@ -373,7 +349,7 @@ extern DECLSPEC void KW_SetFocusedWidget(KW_Widget * widget);
  *
  * \param   widget The widget to hide.
  */
-extern DECLSPEC void KW_HideWidget(KW_Widget * widget);
+extern KIWI_CORE_EXPORT void KW_HideWidget(KW_Widget * widget);
 
 /**
  * \brief   Shows a widget that was hidden.
@@ -383,7 +359,7 @@ extern DECLSPEC void KW_HideWidget(KW_Widget * widget);
  *          *This is just a wrapper of KW_DisableWidgetHint(w, KW_WIDGETHINT_HIDDEN)*
  * \param   widget The widget that will now be painted.
  */
-extern DECLSPEC void KW_ShowWidget(KW_Widget * widget);
+extern KIWI_CORE_EXPORT void KW_ShowWidget(KW_Widget * widget);
 
 /**
  * \brief   Returns KW_TRUE if this widget is hidden.
@@ -391,7 +367,7 @@ extern DECLSPEC void KW_ShowWidget(KW_Widget * widget);
  * \details This function is a wrapper of KW_QueryWidgetHint(w, KW_WIDGETHINT_HIDDEN)
  * \return  KW_TRUE or KW_FALSE if hidden or not.
  */
-extern DECLSPEC KW_bool KW_IsWidgetHidden(KW_Widget * widget);
+extern KIWI_CORE_EXPORT KW_bool KW_IsWidgetHidden(KW_Widget * widget);
 
 /**
  * \brief   Enable debug painting for this widget (and optionally its children);
@@ -402,7 +378,7 @@ extern DECLSPEC KW_bool KW_IsWidgetHidden(KW_Widget * widget);
  * \param   widget The widget to hide.
  * \param   enableInChildren If debug should be enabled in children widgets
  */
-extern DECLSPEC void KW_EnableWidgetDebug(KW_Widget * widget, KW_bool enableInChildren);
+extern KIWI_CORE_EXPORT void KW_EnableWidgetDebug(KW_Widget * widget, KW_bool enableInChildren);
 
 /**
  * \brief   Disables painting debug information for this widget
@@ -413,7 +389,7 @@ extern DECLSPEC void KW_EnableWidgetDebug(KW_Widget * widget, KW_bool enableInCh
  * \param   widget The widget will no longer paint debug info.
  * \param   disableInChildren If debug should be disabled in children widgets
  */
-extern DECLSPEC void KW_DisableWidgetDebug(KW_Widget * widget, KW_bool disableInChildren);
+extern KIWI_CORE_EXPORT void KW_DisableWidgetDebug(KW_Widget * widget, KW_bool disableInChildren);
 
 /**
  * \brief   Returns KW_TRUE if this widget should paint debug info.
@@ -421,7 +397,7 @@ extern DECLSPEC void KW_DisableWidgetDebug(KW_Widget * widget, KW_bool disableIn
  * \details This function is a wrapper of KW_QueryWidgetHint(w, KW_WIDGETHINT_DEBUG)
  * \return  KW_TRUE or KW_FALSE if debugging or not.
  */
-extern DECLSPEC KW_bool KW_IsDebugWidgetEnabled(KW_Widget * widget);
+extern KIWI_CORE_EXPORT KW_bool KW_IsDebugWidgetEnabled(KW_Widget * widget);
 
 /* Stuff now related to handling of events (focus, mouse, keyboard, etc) */
 
@@ -437,7 +413,7 @@ extern DECLSPEC KW_bool KW_IsDebugWidgetEnabled(KW_Widget * widget);
  *          *This is just a wrapper of KW_EnableWidgetHint(w, KW_WIDGETHINT_BLOCKINPUTEVENTS, KW_FALSE)*
  * \param   widget The widget that will stop receiving input evenets.
  */
-extern DECLSPEC void KW_BlockWidgetInputEvents(KW_Widget * widget);
+extern KIWI_CORE_EXPORT void KW_BlockWidgetInputEvents(KW_Widget * widget);
 
 /**
  * \brief   Unblocks this widget from receiving input events.
@@ -445,7 +421,7 @@ extern DECLSPEC void KW_BlockWidgetInputEvents(KW_Widget * widget);
  *          *This is just a wrapper of KW_DisableWidgetHint(w, KW_WIDGETHINT_BLOCKINPUTEVENTS, KW_FALSE)*
  * \param   widget The widget that will now receive input events.
  */
-extern DECLSPEC void KW_UnblockWidgetInputEvents(KW_Widget * widget);
+extern KIWI_CORE_EXPORT void KW_UnblockWidgetInputEvents(KW_Widget * widget);
 
 /**
  * \brief   Returns KW_TRUE if this widget is blocking input events.
@@ -453,11 +429,11 @@ extern DECLSPEC void KW_UnblockWidgetInputEvents(KW_Widget * widget);
  * \details This function is a wrapper of KW_QueryWidgetHint(w, KW_WIDGETHINT_BLOCKINPUTEVENTS)
  * \return  KW_TRUE or KW_FALSE in case events are blocked or not.
  */
-extern DECLSPEC KW_bool KW_IsWidgetInputEventsBlocked(KW_Widget * widget);
+extern KIWI_CORE_EXPORT KW_bool KW_IsWidgetInputEventsBlocked(KW_Widget * widget);
 
-extern DECLSPEC void KW_EnableWidgetHint(KW_Widget * widget, KW_WidgetHint hint, KW_bool down);
-extern DECLSPEC void KW_DisableWidgetHint(KW_Widget * widget, KW_WidgetHint hint, KW_bool down);
-extern DECLSPEC KW_bool KW_QueryWidgetHint(const KW_Widget * widget, KW_WidgetHint hint);
+extern KIWI_CORE_EXPORT void KW_EnableWidgetHint(KW_Widget * widget, KW_WidgetHint hint, KW_bool down);
+extern KIWI_CORE_EXPORT void KW_DisableWidgetHint(KW_Widget * widget, KW_WidgetHint hint, KW_bool down);
+extern KIWI_CORE_EXPORT KW_bool KW_QueryWidgetHint(const KW_Widget * widget, KW_WidgetHint hint);
 
 /**
  * \brief   Adds a function that will be called whenever the mouse/cursor gets over the widget.
@@ -465,7 +441,7 @@ extern DECLSPEC KW_bool KW_QueryWidgetHint(const KW_Widget * widget, KW_WidgetHi
  * \param   widget The widget to add a KW_OnMouseOver handler.
  * \param   handler The KW_OnMouseOver function pointer.
  */
-extern DECLSPEC void KW_AddWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler);
+extern KIWI_CORE_EXPORT void KW_AddWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler);
 
 /**
  * \brief   Remove a KW_OnMouseOver handler from a widget
@@ -473,7 +449,7 @@ extern DECLSPEC void KW_AddWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouse
  * \param   widget The widget to remove the KW_OnMouseOver handler.
  * \param   handler The KW_OnMouseOver function pointer.
  */
-extern DECLSPEC void KW_RemoveWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler);
+extern KIWI_CORE_EXPORT void KW_RemoveWidgetMouseOverHandler(KW_Widget * widget, KW_OnMouseOver handler);
 
 
 /**
@@ -482,7 +458,7 @@ extern DECLSPEC void KW_RemoveWidgetMouseOverHandler(KW_Widget * widget, KW_OnMo
  * \param   widget The widget to add a KW_OnMouseLeave handler.
  * \param   handler The KW_OnMouseLeave function pointer.
  */
-extern DECLSPEC void KW_AddWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler);
+extern KIWI_CORE_EXPORT void KW_AddWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler);
 
 /**
  * \brief   Remove a KW_OnMouseLeave handler from a widget
@@ -490,7 +466,7 @@ extern DECLSPEC void KW_AddWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMous
  * \param   widget The widget to remove the KW_OnMouseLeave handler.
  * \param   handler The KW_OnMouseLeave function pointer.
  */
-extern DECLSPEC void KW_RemoveWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler);
+extern KIWI_CORE_EXPORT void KW_RemoveWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnMouseLeave handler);
 
 /**
  * \brief   Adds a function that will be called whenever the mouse/cursor clicks the widget.
@@ -498,7 +474,7 @@ extern DECLSPEC void KW_RemoveWidgetMouseLeaveHandler(KW_Widget * widget, KW_OnM
  * \param   widget The widget to add a KW_OnMouseDown handler.
  * \param   handler The KW_OnMouseDown function pointer.
  */
-extern DECLSPEC void KW_AddWidgetMouseDownHandler(KW_Widget * widget, KW_OnMouseDown handler);
+extern KIWI_CORE_EXPORT void KW_AddWidgetMouseDownHandler(KW_Widget * widget, KW_OnMouseDown handler);
 
 /**
  * \brief   Remove a KW_OnMouseDown handler from a widget.
@@ -506,7 +482,7 @@ extern DECLSPEC void KW_AddWidgetMouseDownHandler(KW_Widget * widget, KW_OnMouse
  * \param   widget The widget to remove the KW_OnMouseDown handler.
  * \param   handler The KW_OnMouseDown function pointer.
  */
-extern DECLSPEC void KW_RemoveWidgetMouseDownHandler(KW_Widget * widget, KW_OnMouseDown handler);
+extern KIWI_CORE_EXPORT void KW_RemoveWidgetMouseDownHandler(KW_Widget * widget, KW_OnMouseDown handler);
 
 /**
  * \brief   Adds a function that will be called whenever the mouse/cursor un-clicks the widget.
@@ -514,7 +490,7 @@ extern DECLSPEC void KW_RemoveWidgetMouseDownHandler(KW_Widget * widget, KW_OnMo
  * \param   widget The widget to add a KW_OnMouseUp handler.
  * \param   handler The KW_OnMouseUp function pointer.
  */
-extern DECLSPEC void KW_AddWidgetMouseUpHandler(KW_Widget * widget, KW_OnMouseUp handler);
+extern KIWI_CORE_EXPORT void KW_AddWidgetMouseUpHandler(KW_Widget * widget, KW_OnMouseUp handler);
 
 /**
  * \brief   Remove a KW_OnMouseUp handler from a widget.
@@ -522,7 +498,7 @@ extern DECLSPEC void KW_AddWidgetMouseUpHandler(KW_Widget * widget, KW_OnMouseUp
  * \param   widget The widget to remove the KW_OnMouseUp handler.
  * \param   handler The KW_OnMouseUp function pointer.
  */
-extern DECLSPEC void KW_RemoveWidgetMouseUpHandler(KW_Widget * widget, KW_OnMouseUp handler);
+extern KIWI_CORE_EXPORT void KW_RemoveWidgetMouseUpHandler(KW_Widget * widget, KW_OnMouseUp handler);
 
 
 /**
@@ -531,7 +507,7 @@ extern DECLSPEC void KW_RemoveWidgetMouseUpHandler(KW_Widget * widget, KW_OnMous
  * \param   widget The widget to add a FocusGain handler.
  * \param   handler The OnFocusGain function pointer.
  */
-extern DECLSPEC void KW_AddWidgetFocusGainHandler(KW_Widget * widget, KW_OnFocusGain handler);
+extern KIWI_CORE_EXPORT void KW_AddWidgetFocusGainHandler(KW_Widget * widget, KW_OnFocusGain handler);
 
 /**
  * \brief   Remove a KW_OnFocusGain handler from a widget.
@@ -539,7 +515,7 @@ extern DECLSPEC void KW_AddWidgetFocusGainHandler(KW_Widget * widget, KW_OnFocus
  * \param   widget The widget to remove the KW_OnFocusGain handler.
  * \param   handler The KW_OnFocusGain function pointer.
  */
-extern DECLSPEC void KW_RemoveWidgetFocusGainHandler(KW_Widget * widget, KW_OnFocusGain handler);
+extern KIWI_CORE_EXPORT void KW_RemoveWidgetFocusGainHandler(KW_Widget * widget, KW_OnFocusGain handler);
 
 /**
  * \brief   Adds a function that will be called whenever the focus moves from this to another widget.
@@ -547,7 +523,7 @@ extern DECLSPEC void KW_RemoveWidgetFocusGainHandler(KW_Widget * widget, KW_OnFo
  * \param   widget The widget to add a FocusLose handler.
  * \param   handler The OnFocusLose function pointer.
  */
-extern DECLSPEC void KW_AddWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFocusLose handler);
+extern KIWI_CORE_EXPORT void KW_AddWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFocusLose handler);
 
 /**
  * \brief   Remove a KW_OnFocusLose handler from a widget.
@@ -555,7 +531,7 @@ extern DECLSPEC void KW_AddWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFocus
  * \param   widget The widget to remove the KW_OnFocusLose handler.
  * \param   handler The KW_OnFocusLose function pointer.
  */
-extern DECLSPEC void KW_RemoveWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFocusLose handler);
+extern KIWI_CORE_EXPORT void KW_RemoveWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFocusLose handler);
 
 /**
  * \brief   Adds a function that will be called when there's new text input.
@@ -563,7 +539,7 @@ extern DECLSPEC void KW_RemoveWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFo
  * \param   widget The widget to add a KW_OnTextInput handler.
  * \param   handler The KW_OnTextInput function pointer.
  */
-extern DECLSPEC void KW_AddWidgetTextInputHandler(KW_Widget * widget, KW_OnTextInput handler);
+extern KIWI_CORE_EXPORT void KW_AddWidgetTextInputHandler(KW_Widget * widget, KW_OnTextInput handler);
 
 
 /**
@@ -572,7 +548,7 @@ extern DECLSPEC void KW_AddWidgetTextInputHandler(KW_Widget * widget, KW_OnTextI
  * \param   widget The widget to remove the KW_OnTextInput handler.
  * \param   handler The KW_OnTextInput function pointer.
  */
-extern DECLSPEC void KW_RemoveWidgetTextInputHandler(KW_Widget * widget, KW_OnTextInput handler);
+extern KIWI_CORE_EXPORT void KW_RemoveWidgetTextInputHandler(KW_Widget * widget, KW_OnTextInput handler);
 
 
 /**
@@ -581,7 +557,7 @@ extern DECLSPEC void KW_RemoveWidgetTextInputHandler(KW_Widget * widget, KW_OnTe
  * \param   widget The widget to add a KW_OnKeyDown handler.
  * \param   handler The KW_OnKeyDown function pointer.
  */
-extern DECLSPEC void KW_AddWidgetKeyDownHandler(KW_Widget * widget, KW_OnKeyDown handler);
+extern KIWI_CORE_EXPORT void KW_AddWidgetKeyDownHandler(KW_Widget * widget, KW_OnKeyDown handler);
 
 
 /**
@@ -590,7 +566,7 @@ extern DECLSPEC void KW_AddWidgetKeyDownHandler(KW_Widget * widget, KW_OnKeyDown
  * \param   widget The widget to remove the KW_OnKeyDown handler.
  * \param   handler The KW_OnKeyDown function pointer.
  */
-extern DECLSPEC void KW_RemoveWidgetKeyDownHandler(KW_Widget * widget, KW_OnKeyDown handler);
+extern KIWI_CORE_EXPORT void KW_RemoveWidgetKeyDownHandler(KW_Widget * widget, KW_OnKeyDown handler);
 
 /**
  * \brief   Adds a function that will be called when there's a key released.
@@ -598,7 +574,7 @@ extern DECLSPEC void KW_RemoveWidgetKeyDownHandler(KW_Widget * widget, KW_OnKeyD
  * \param   widget The widget to add a KW_OnKeyUp handler.
  * \param   handler The KW_OnKeyUp function pointer.
  */
-extern DECLSPEC void KW_AddWidgetKeyUpHandler(KW_Widget * widget, KW_OnKeyUp handler);
+extern KIWI_CORE_EXPORT void KW_AddWidgetKeyUpHandler(KW_Widget * widget, KW_OnKeyUp handler);
 
 
 /**
@@ -607,7 +583,7 @@ extern DECLSPEC void KW_AddWidgetKeyUpHandler(KW_Widget * widget, KW_OnKeyUp han
  * \param   widget The widget to remove the KW_OnKeyUp handler.
  * \param   handler The KW_OnKeyUp function pointer.
  */
-extern DECLSPEC void KW_RemoveWidgetKeyUpHandler(KW_Widget * widget, KW_OnKeyUp handler);
+extern KIWI_CORE_EXPORT void KW_RemoveWidgetKeyUpHandler(KW_Widget * widget, KW_OnKeyUp handler);
 
 /**
  * \brief   Adds a function that will be called when drag is starting over the widget.
@@ -615,7 +591,7 @@ extern DECLSPEC void KW_RemoveWidgetKeyUpHandler(KW_Widget * widget, KW_OnKeyUp 
  * \param   widget The widget to add a KW_OnDragStart handler.
  * \param   handler The KW_OnDragStart function pointer.
  */
-extern DECLSPEC void KW_AddWidgetDragStartHandler(KW_Widget * widget, KW_OnDragStart handler);
+extern KIWI_CORE_EXPORT void KW_AddWidgetDragStartHandler(KW_Widget * widget, KW_OnDragStart handler);
 
 
 /**
@@ -624,7 +600,7 @@ extern DECLSPEC void KW_AddWidgetDragStartHandler(KW_Widget * widget, KW_OnDragS
  * \param   widget The widget to remove the KW_OnDragStart handler.
  * \param   handler The KW_OnDragStart function pointer.
  */
-extern DECLSPEC void KW_RemoveWidgetDragStartHandler(KW_Widget * widget, KW_OnDragStart handler);
+extern KIWI_CORE_EXPORT void KW_RemoveWidgetDragStartHandler(KW_Widget * widget, KW_OnDragStart handler);
 
 /**
  * \brief   Adds a function to be called when a drag stops.
@@ -632,7 +608,7 @@ extern DECLSPEC void KW_RemoveWidgetDragStartHandler(KW_Widget * widget, KW_OnDr
  * \param   widget The widget to add a KW_OnDragStop handler.
  * \param   handler The KW_OnDragStop function pointer.
  */
-extern DECLSPEC void KW_AddWidgetDragStopHandler(KW_Widget * widget, KW_OnDragStop handler);
+extern KIWI_CORE_EXPORT void KW_AddWidgetDragStopHandler(KW_Widget * widget, KW_OnDragStop handler);
 
 
 /**
@@ -641,7 +617,7 @@ extern DECLSPEC void KW_AddWidgetDragStopHandler(KW_Widget * widget, KW_OnDragSt
  * \param   widget The widget to remove the KW_OnDragStop handler.
  * \param   handler The KW_OnDragStop function pointer.
  */
-extern DECLSPEC void KW_RemoveWidgetDragStopHandler(KW_Widget * widget, KW_OnDragStop handler);
+extern KIWI_CORE_EXPORT void KW_RemoveWidgetDragStopHandler(KW_Widget * widget, KW_OnDragStop handler);
 
 /**
  * \brief   Adds a function to be called when a drag event occurs.
@@ -649,35 +625,35 @@ extern DECLSPEC void KW_RemoveWidgetDragStopHandler(KW_Widget * widget, KW_OnDra
  * \param   widget The widget to add a KW_OnDragStop handler.
  * \param   handler The KW_OnDragStop function pointer.
  */
-extern DECLSPEC void KW_AddWidgetDragHandler(KW_Widget * widget, KW_OnDrag handler);
+extern KIWI_CORE_EXPORT void KW_AddWidgetDragHandler(KW_Widget * widget, KW_OnDrag handler);
 
 /**
  * \brief   Adds a function to be called when this widget geometry is changed.
  * \param   widget The widget that has its geometry changed.
  * \param   handler The KW_OnGeometryChange function handler.
  */
-extern DECLSPEC void KW_AddWidgetGeometryChangeHandler(KW_Widget * widget, KW_OnGeometryChange handler);
+extern KIWI_CORE_EXPORT void KW_AddWidgetGeometryChangeHandler(KW_Widget * widget, KW_OnGeometryChange handler);
 
 /**
  * \brief   Remove a KW_OnGeometryChange handler.
  * \param   widget The widget to remove the KW_OnGeometryChange handler.
  * \param   handler The KW_OnGeometryChange function pointer.
  */
-extern DECLSPEC void KW_RemoveWidgetGeometryChangeHandler(KW_Widget * widget, KW_OnGeometryChange handler);
+extern KIWI_CORE_EXPORT void KW_RemoveWidgetGeometryChangeHandler(KW_Widget * widget, KW_OnGeometryChange handler);
 
 /**
  * \brief   Adds a function to call when this widget children count changes.
  * \param   widget The widget that has its children count changed.
  * \param   handler The KW_OnWidgetChildrenChange function handler.
  */
-extern DECLSPEC void KW_AddWidgetChildrenChangeHandler(KW_Widget * widget, KW_OnWidgetChildrenChange handler);
+extern KIWI_CORE_EXPORT void KW_AddWidgetChildrenChangeHandler(KW_Widget * widget, KW_OnWidgetChildrenChange handler);
 
 /**
  * \brief   Remove a KW_OnWidgetChildrenChange handler.
  * \param   widget The widget to remove the KW_OnWidgetChildrenChange handler.
  * \param   handler The KW_OnWidgetChildrenChange function pointer.
  */
-extern DECLSPEC void KW_RemoveWidgetChildrenChangeHandler(KW_Widget * widget, KW_OnWidgetChildrenChange handler);
+extern KIWI_CORE_EXPORT void KW_RemoveWidgetChildrenChangeHandler(KW_Widget * widget, KW_OnWidgetChildrenChange handler);
 
 /**
  * \brief   Remove a KW_OnDrag handler from a widget.
@@ -685,10 +661,10 @@ extern DECLSPEC void KW_RemoveWidgetChildrenChangeHandler(KW_Widget * widget, KW
  * \param   widget The widget to remove the KW_OnDrag handler.
  * \param   handler The KW_OnDrag function pointer.
  */
-extern DECLSPEC void KW_RemoveWidgetDragHandler(KW_Widget * widget, KW_OnDrag handler);
+extern KIWI_CORE_EXPORT void KW_RemoveWidgetDragHandler(KW_Widget * widget, KW_OnDrag handler);
 
-extern DECLSPEC void KW_AddWidgetTilesetChangeHandler(KW_Widget * widget, KW_OnWidgetTilesetChange handler);
-extern DECLSPEC void KW_RemoveWidgetTilesetChangeHandler(KW_Widget * widget, KW_OnWidgetTilesetChange handler);
+extern KIWI_CORE_EXPORT void KW_AddWidgetTilesetChangeHandler(KW_Widget * widget, KW_OnWidgetTilesetChange handler);
+extern KIWI_CORE_EXPORT void KW_RemoveWidgetTilesetChangeHandler(KW_Widget * widget, KW_OnWidgetTilesetChange handler);
 
 /**
  * \brief   Change the tileset used to render this widget.
@@ -696,7 +672,7 @@ extern DECLSPEC void KW_RemoveWidgetTilesetChangeHandler(KW_Widget * widget, KW_
  * \param   widget The widget to change the tileset.
  * \param   tileset The new tileset surface.
  */
-extern DECLSPEC void KW_SetWidgetTilesetSurface(KW_Widget * widget, KW_Surface * tileset);
+extern KIWI_CORE_EXPORT void KW_SetWidgetTilesetSurface(KW_Widget * widget, KW_Surface * tileset);
 
 /**
  * \brief   Returns the current tileset being used by the widget.
@@ -704,7 +680,7 @@ extern DECLSPEC void KW_SetWidgetTilesetSurface(KW_Widget * widget, KW_Surface *
  * \param   widget The widget to retrieve the tileset from.
  * \returns A pointer to the KW_Texture being used as a tileset.
  */
-extern DECLSPEC KW_Texture * KW_GetWidgetTilesetTexture(KW_Widget * widget);
+extern KIWI_CORE_EXPORT KW_Texture * KW_GetWidgetTilesetTexture(KW_Widget * widget);
 
 /**
  * \brief   Returns the current tileset being used by the widget.
@@ -712,7 +688,7 @@ extern DECLSPEC KW_Texture * KW_GetWidgetTilesetTexture(KW_Widget * widget);
  * \param   widget The widget to retrieve the tileset surface from.
  * \returns A pointer to the KW_Texture being used as a tileset.
  */
-extern DECLSPEC KW_Surface * KW_GetWidgetTilesetSurface(KW_Widget * widget);
+extern KIWI_CORE_EXPORT KW_Surface * KW_GetWidgetTilesetSurface(KW_Widget * widget);
 
 /**
  * \brief   Sets this widget to clip its children to its geometry.
@@ -721,7 +697,7 @@ extern DECLSPEC KW_Surface * KW_GetWidgetTilesetSurface(KW_Widget * widget);
  * \param   widget The widget that will have its children clipped or not.
  * \param   shouldclip If it should clip or not.
  */
-extern DECLSPEC void KW_SetClipChildrenWidgets(KW_Widget * widget, KW_bool shouldclip);
+extern KIWI_CORE_EXPORT void KW_SetClipChildrenWidgets(KW_Widget * widget, KW_bool shouldclip);
 
 /**
  * \brief Checks if there's a cursor over the widget.
@@ -730,14 +706,14 @@ extern DECLSPEC void KW_SetClipChildrenWidgets(KW_Widget * widget, KW_bool shoul
  * \param widget The widget to check if the cursor is over
  * \returns KW_TRUE if the cursor is over, KW_FALSE otherwise
  */
-extern DECLSPEC KW_bool KW_IsCursorOverWidget(KW_Widget * widget);
+extern KIWI_CORE_EXPORT KW_bool KW_IsCursorOverWidget(KW_Widget * widget);
 
 /**
  * \brief Checks if there's a cursor pressing on the widget
  * \param widget The widget to check if the cursor is pressing on
  * \returns KW_TRUE if the cursor is pressing, KW_FALSE otherwise
  */
-extern DECLSPEC KW_bool KW_IsCursorPressedOnWidget(KW_Widget * widget);
+extern KIWI_CORE_EXPORT KW_bool KW_IsCursorPressedOnWidget(KW_Widget * widget);
 
 /**
  * \brief Checks if the cursor was pressing and was just released.
@@ -746,7 +722,7 @@ extern DECLSPEC KW_bool KW_IsCursorPressedOnWidget(KW_Widget * widget);
  * \param widget The widget to check if the cursor is released
  * \returns KW_TRUE if the cursor is released, KW_FALSE otherwise
  */
-extern DECLSPEC KW_bool KW_IsCursorReleasedOnWidget(KW_Widget * widget);
+extern KIWI_CORE_EXPORT KW_bool KW_IsCursorReleasedOnWidget(KW_Widget * widget);
 
 #ifdef __cplusplus
 }

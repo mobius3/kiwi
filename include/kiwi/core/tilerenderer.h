@@ -1,29 +1,5 @@
-/*
-  Copyright (c) 2014, Leonardo Guilherme de Freitas
-  All rights reserved.
-
-  This software is provided 'as-is', without any express or implied
-  warranty. In no event will the authors be held liable for any damages
-  arising from the use of this software.
-
-  Permission is granted to anyone to use this software for any purpose,
-  including commercial applications, and to alter it and redistribute it
-  freely, subject to the following restrictions:
-
-     1. The origin of this software must not be misrepresented; you must not
-     claim that you wrote the original software. If you use this software
-     in a product, an acknowledgment in the product documentation would be
-     appreciated but is not required.
-
-     2. Altered source versions must be plainly marked as such, and must not be
-     misrepresented as being the original software.
-
-     3. This notice may not be removed or altered from any source
-     distribution.
-*/
-
-#ifndef KW_TILERENDERER_H
-#define KW_TILERENDERER_H
+#ifndef KIWI_CORE_TILERENDERER_H
+#define KIWI_CORE_TILERENDERER_H
 
 /**
  * \file KW_tilerenderer.h
@@ -33,7 +9,7 @@
  */
 
 #include "renderdriver.h"
-#include "macros.h"
+#include "kiwi/core/core-export.h"
 #include "bool.h"
 
 #define TILESIZE 8
@@ -51,7 +27,7 @@ extern "C" {
  * \param   x The x coordinate in the screen to render the tile.
  * \param   y The y coordinate in the screen to render the tile.
  */
-extern DECLSPEC void KW_RenderTile(KW_RenderDriver * renderer, KW_Texture * tileset, int column, int line, int x, int y);
+extern KIWI_CORE_EXPORT void KW_RenderTile(KW_RenderDriver * renderer, KW_Texture * tileset, int column, int line, int x, int y);
 
 /**
  * \brief   Blit a single tile from a tileset to a surface.
@@ -62,7 +38,7 @@ extern DECLSPEC void KW_RenderTile(KW_RenderDriver * renderer, KW_Texture * tile
  * \param   x The x coordinate in the destination surface to blit the tile.
  * \param   y The y coordinate in the destination surface to blit the tile.
  */
-extern DECLSPEC void KW_BlitTile(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * tileset, int column, int line, int x, int y);
+extern KIWI_CORE_EXPORT void KW_BlitTile(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * tileset, int column, int line, int x, int y);
 
 /**
  * \brief   Render a tile multiple times filling the whole w/h specified.
@@ -78,7 +54,7 @@ extern DECLSPEC void KW_BlitTile(KW_RenderDriver * renderer, KW_Surface * dst, K
  * \param   h The height to fill.
  * \param   stretch If the tile should stretch instead of being rendered multiple times
  */
-extern DECLSPEC void KW_RenderTileFill(KW_RenderDriver * renderer, KW_Texture * tileset, int column, int line, int x, int y, int w, int h, KW_bool stretch);
+extern KIWI_CORE_EXPORT void KW_RenderTileFill(KW_RenderDriver * renderer, KW_Texture * tileset, int column, int line, int x, int y, int w, int h, KW_bool stretch);
 
 /**
  * \brief   Blit (copy) a tile multiple times filling the whole w/h specified.
@@ -94,7 +70,7 @@ extern DECLSPEC void KW_RenderTileFill(KW_RenderDriver * renderer, KW_Texture * 
  * \param   h The height to fill.
  * \param   stretch If the tile should stretch instead of being blit multiple times
  */
-extern DECLSPEC void KW_BlitTileFill(KW_RenderDriver * renderer, KW_Surface * dst,  KW_Surface * tileset, int column, int line, int x, int y, int w, int h, KW_bool stretch);
+extern KIWI_CORE_EXPORT void KW_BlitTileFill(KW_RenderDriver * renderer, KW_Surface * dst,  KW_Surface * tileset, int column, int line, int x, int y, int w, int h, KW_bool stretch);
 
 /**
  * \brief   Render a frame using the set of tiles specified at startcolumn and startline.
@@ -138,7 +114,7 @@ extern DECLSPEC void KW_BlitTileFill(KW_RenderDriver * renderer, KW_Surface * ds
  * \note    Stretching makes for much faster renderings, and you should set it whenever possible.
  *          You should not use it if you have a tiling pattern in your tileset.
  */
-extern DECLSPEC void KW_RenderTileFrame(KW_RenderDriver * renderer, KW_Texture * tileset, int startcolumn, int startline, const KW_Rect * fillrect, KW_bool stretchcenter, KW_bool stretchsides);
+extern KIWI_CORE_EXPORT void KW_RenderTileFrame(KW_RenderDriver * renderer, KW_Texture * tileset, int startcolumn, int startline, const KW_Rect * fillrect, KW_bool stretchcenter, KW_bool stretchsides);
 
 /**
  * \brief   Blit a frame from tileset into a surface.
@@ -157,7 +133,7 @@ extern DECLSPEC void KW_RenderTileFrame(KW_RenderDriver * renderer, KW_Texture *
  * \note    Stretching for blitting is not really faster, but it does reduces the number of blit calls in the render
  *          driver, making it a little bit faster.
  */
-extern DECLSPEC void KW_BlitTileFrame(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * tileset, int startcolumn, int startline, const KW_Rect * fillrect, KW_bool stretchcenter, KW_bool stretchsides);
+extern KIWI_CORE_EXPORT void KW_BlitTileFrame(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * tileset, int startcolumn, int startline, const KW_Rect * fillrect, KW_bool stretchcenter, KW_bool stretchsides);
 
 /**
  * \brief   Creates a KW_Texture from a frame to be used as cache.
@@ -178,7 +154,7 @@ extern DECLSPEC void KW_BlitTileFrame(KW_RenderDriver * renderer, KW_Surface * d
  * \param   w The width to fill.
  * \param   h The height to fill.
  */
-extern DECLSPEC KW_Texture * KW_CreateTileFrameTexture(KW_RenderDriver * renderer, KW_Surface * tileset, int startcolumn, int startline, int w, int h, KW_bool stretchcenter, KW_bool stretchsides);
+extern KIWI_CORE_EXPORT KW_Texture * KW_CreateTileFrameTexture(KW_RenderDriver * renderer, KW_Surface * tileset, int startcolumn, int startline, int w, int h, KW_bool stretchcenter, KW_bool stretchsides);
 
 /**
  * Decides if a tile can be stretched
@@ -188,7 +164,7 @@ extern DECLSPEC KW_Texture * KW_CreateTileFrameTexture(KW_RenderDriver * rendere
  * @param column The tile column
  * @return KW_TRUE if all pixels are equal, KW_FALSE if not.
  */
-extern DECLSPEC KW_bool KW_IsTileStretchable(KW_RenderDriver * renderer, KW_Surface * tileset, int line, int column);
+extern KIWI_CORE_EXPORT KW_bool KW_IsTileStretchable(KW_RenderDriver * renderer, KW_Surface * tileset, int line, int column);
 
 
 #ifdef __cplusplus

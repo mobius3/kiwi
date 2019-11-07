@@ -1,31 +1,7 @@
-/*
-  Copyright (c) 2014, Leonardo Guilherme de Freitas
-  All rights reserved.
+#ifndef KIWI_RECT_H
+#define KIWI_RECT_H
 
-  This software is provided 'as-is', without any express or implied
-  warranty. In no event will the authors be held liable for any damages
-  arising from the use of this software.
-
-  Permission is granted to anyone to use this software for any purpose,
-  including commercial applications, and to alter it and redistribute it
-  freely, subject to the following restrictions:
-
-     1. The origin of this software must not be misrepresented; you must not
-     claim that you wrote the original software. If you use this software
-     in a product, an acknowledgment in the product documentation would be
-     appreciated but is not required.
-
-     2. Altered source versions must be plainly marked as such, and must not be
-     misrepresented as being the original software.
-
-     3. This notice may not be removed or altered from any source
-     distribution.
-*/
-
-#ifndef KW_RECT_H
-#define KW_RECT_H
-
-#include "macros.h"
+#include "kiwi/core/core-export.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -68,7 +44,7 @@ typedef enum KW_RectHorizontalAlignment {
  * \param outer The outer rectangle
  * \param inner The inner rectangle to center inside outer.
  */
-extern DECLSPEC void KW_RectCenterInParent(const KW_Rect * outer, KW_Rect * inner);
+extern KIWI_CORE_EXPORT void KW_RectCenterInParent(const KW_Rect * outer, KW_Rect * inner);
 
 /**
  * \brief Vertically center a rectangle inside another
@@ -77,7 +53,7 @@ extern DECLSPEC void KW_RectCenterInParent(const KW_Rect * outer, KW_Rect * inne
  * \param outer The outer rectangle
  * \param inner The inner rectangle to center inside outer.
  */
-extern DECLSPEC void KW_RectVerticallyCenterInParent(const KW_Rect * outer, KW_Rect * inner);
+extern KIWI_CORE_EXPORT void KW_RectVerticallyCenterInParent(const KW_Rect * outer, KW_Rect * inner);
 
 /**
  * \brief Horizontally center a rectangle inside another
@@ -86,7 +62,7 @@ extern DECLSPEC void KW_RectVerticallyCenterInParent(const KW_Rect * outer, KW_R
  * \param outer The outer rectangle
  * \param inner The inner rectangle to center inside outer.
  */
-extern DECLSPEC void KW_RectHorizontallyCenterInParent(const KW_Rect * outer, KW_Rect * inner);
+extern KIWI_CORE_EXPORT void KW_RectHorizontallyCenterInParent(const KW_Rect * outer, KW_Rect * inner);
 
 /**
  * \brief Layout rectangles vertically (like a list), aligning them horizontally.
@@ -95,7 +71,7 @@ extern DECLSPEC void KW_RectHorizontallyCenterInParent(const KW_Rect * outer, KW
  * \param padding Amount of padding between the rectangles
  * \param align How to align the rectangles
  */
-extern DECLSPEC void KW_RectLayoutVertically(KW_Rect * rects[], unsigned count, int padding, KW_RectHorizontalAlignment align);
+extern KIWI_CORE_EXPORT void KW_RectLayoutVertically(KW_Rect * rects[], unsigned count, int padding, KW_RectHorizontalAlignment align);
 
 /**
  * \brief Layout rectangles horizontally, aligning them vertically.
@@ -104,7 +80,7 @@ extern DECLSPEC void KW_RectLayoutVertically(KW_Rect * rects[], unsigned count, 
  * \param padding Amount of padding between the rectangles
  * \param align How to align the rectangles
  */
-extern DECLSPEC void KW_RectLayoutHorizontally(KW_Rect * rects[], unsigned count, int padding, KW_RectVerticalAlignment align);
+extern KIWI_CORE_EXPORT void KW_RectLayoutHorizontally(KW_Rect * rects[], unsigned count, int padding, KW_RectVerticalAlignment align);
 
 /**
  * \brief Layout and resize rectangles vertically, adjusting their height so they all fit inside the outer rectangle.
@@ -115,7 +91,7 @@ extern DECLSPEC void KW_RectLayoutHorizontally(KW_Rect * rects[], unsigned count
  * \param count The amount of rectangles in the array
  * \param padding The amount of padding between the rectangles
  */
-extern DECLSPEC void KW_RectFillParentVertically(const KW_Rect * outer, KW_Rect * rects[], unsigned weights[], unsigned count, int padding);
+extern KIWI_CORE_EXPORT void KW_RectFillParentVertically(const KW_Rect * outer, KW_Rect * rects[], unsigned weights[], unsigned count, int padding);
 
 /**
  * \brief Layout and resize rectangles horizontally, adjusting their width so they all fit inside the outer
@@ -127,7 +103,7 @@ extern DECLSPEC void KW_RectFillParentVertically(const KW_Rect * outer, KW_Rect 
  * \param count The amount of rectangles in the array
  * \param padding The amount of padding between the rectangles
  */
-extern DECLSPEC void KW_RectFillParentHorizontally(const KW_Rect * outer, KW_Rect * rects[], unsigned weights[], unsigned count,
+extern KIWI_CORE_EXPORT void KW_RectFillParentHorizontally(const KW_Rect * outer, KW_Rect * rects[], unsigned weights[], unsigned count,
                                              int padding, KW_RectVerticalAlignment align);
 
 
@@ -138,7 +114,7 @@ extern DECLSPEC void KW_RectFillParentHorizontally(const KW_Rect * outer, KW_Rec
  * \param count The amount of rectangles in the array
  * \param outer The outer rectangle to be filled
  */
-extern DECLSPEC void KW_RectCalculateEnclosingRect(KW_Rect * const rects[], unsigned count, KW_Rect * outer);
+extern KIWI_CORE_EXPORT void KW_RectCalculateEnclosingRect(KW_Rect * const rects[], unsigned count, KW_Rect * outer);
 
 /**
  * \brief Sets the x, y, w, and h of an rect
@@ -148,20 +124,20 @@ extern DECLSPEC void KW_RectCalculateEnclosingRect(KW_Rect * const rects[], unsi
  * \param w Value for w
  * \param h Value for h
  */
-extern DECLSPEC void KW_SetRect(KW_Rect * rect, int x, int y, int w, int h);
+extern KIWI_CORE_EXPORT void KW_SetRect(KW_Rect * rect, int x, int y, int w, int h);
 
 /**
  * \brief Copies an rect into another
  * \param src The rect that will be copied from
  * \param dst The rect that will be copied to
  */
-extern DECLSPEC void KW_CopyRect(const KW_Rect * src, KW_Rect * dst);
+extern KIWI_CORE_EXPORT void KW_CopyRect(const KW_Rect * src, KW_Rect * dst);
 
 /**
  * \brief Zeroes an rectangle, making all its values zero.
  * \param rect The rect to zero.
  */
-extern DECLSPEC void KW_ZeroRect(KW_Rect * rect);
+extern KIWI_CORE_EXPORT void KW_ZeroRect(KW_Rect * rect);
 
 /**
  * \brief Uses @p margin to resize @p inner so that its poisition and size margins the @p outer rect.
@@ -169,9 +145,9 @@ extern DECLSPEC void KW_ZeroRect(KW_Rect * rect);
  * \param inner The inner rect that will be resized
  * \param margin The margin to set.
  */
-extern DECLSPEC void KW_MarginRect(const KW_Rect * outer, KW_Rect * inner, int margin);
+extern KIWI_CORE_EXPORT void KW_MarginRect(const KW_Rect * outer, KW_Rect * inner, int margin);
 
-#define KW_PRINTRECT(command, rect) { \
+#define KIWI_CORE_PRINTRECT(command, rect) { \
   command("%dx%d+%dx%d\n", (rect).x, (rect).y, (rect).w, (rect).h); \
 }
 

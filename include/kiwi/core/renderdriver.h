@@ -1,5 +1,5 @@
-#ifndef RENDERDRIVER_H
-#define RENDERDRIVER_H
+#ifndef KIWI_CORE_RENDERDRIVER_H
+#define KIWI_CORE_RENDERDRIVER_H
 
 /**
  * \file KW_renderdriver.h
@@ -16,7 +16,7 @@
  * KW_CreateSDL2RenderDriver(), that receives the renderer and window instance to work with.
  **/
 
-#include "macros.h"
+#include "kiwi/core/core-export.h"
 #include "rect.h"
 #include "bool.h"
 
@@ -52,7 +52,7 @@ typedef struct KW_Color {
  * @param amount The amount to multiply
  * @return multiplied color
  */
-extern DECLSPEC KW_Color KW_MultiplyColor(KW_Color color, float amount);
+extern KIWI_CORE_EXPORT KW_Color KW_MultiplyColor(KW_Color color, float amount);
 
 typedef struct KW_RenderDriver KW_RenderDriver;
 
@@ -204,27 +204,27 @@ struct KW_RenderDriver {
   void * priv;
 };
 
-extern DECLSPEC void KW_RenderRect(KW_RenderDriver * driver, KW_Rect * rect, KW_Color color);
-extern DECLSPEC void KW_BlitSurface(KW_RenderDriver * driver, KW_Surface * src, const KW_Rect * srcRect, KW_Surface * dst, const KW_Rect * dstRect);
-extern DECLSPEC KW_Surface * KW_CreateSurface(KW_RenderDriver * driver, unsigned width, unsigned height);
-extern DECLSPEC void KW_GetSurfaceExtents(KW_RenderDriver * driver, const KW_Surface * surface, unsigned * width, unsigned * height);
-extern DECLSPEC void KW_GetTextureExtents(KW_RenderDriver * driver, KW_Texture * texture, unsigned * width, unsigned * height);
-extern DECLSPEC void KW_RenderCopy(KW_RenderDriver * driver, KW_Texture * src, const KW_Rect * clip, const KW_Rect * dstRect);
-extern DECLSPEC KW_Texture * KW_RenderText(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
-extern DECLSPEC KW_Font * KW_LoadFont(KW_RenderDriver * driver, const char * fontFile, unsigned ptSize);
-extern DECLSPEC KW_Font * KW_LoadFontFromMemory(KW_RenderDriver * driver, const void * fontMemory, unsigned long memSize, unsigned ptSize);
-extern DECLSPEC KW_Texture * KW_CreateTexture(KW_RenderDriver * driver, KW_Surface * surface);
-extern DECLSPEC KW_Texture * KW_LoadTexture(KW_RenderDriver * driver, const char * file);
-extern DECLSPEC KW_Surface * KW_LoadSurface(KW_RenderDriver * driver, const char * file);
-extern DECLSPEC void KW_ReleaseTexture(KW_RenderDriver * driver, KW_Texture * texture);
-extern DECLSPEC void KW_ReleaseSurface(KW_RenderDriver * driver, KW_Surface * surface);
-extern DECLSPEC void KW_ReleaseFont(KW_RenderDriver * driver, KW_Font * font);
-extern DECLSPEC KW_bool KW_GetClipRect(KW_RenderDriver * driver, KW_Rect * clip);
-extern DECLSPEC void KW_GetViewportSize(KW_RenderDriver * driver, KW_Rect * rect);
-extern DECLSPEC void KW_SetClipRect(KW_RenderDriver * driver, const KW_Rect * clip, int force);
-extern DECLSPEC void KW_ReleaseRenderDriver(KW_RenderDriver * driver);
-extern DECLSPEC void KW_UTF8TextSize(KW_RenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height);
-extern DECLSPEC unsigned int KW_GetPixel(KW_RenderDriver * driver, KW_Surface * surface, unsigned x, unsigned y);
+extern KIWI_CORE_EXPORT void KW_RenderRect(KW_RenderDriver * driver, KW_Rect * rect, KW_Color color);
+extern KIWI_CORE_EXPORT void KW_BlitSurface(KW_RenderDriver * driver, KW_Surface * src, const KW_Rect * srcRect, KW_Surface * dst, const KW_Rect * dstRect);
+extern KIWI_CORE_EXPORT KW_Surface * KW_CreateSurface(KW_RenderDriver * driver, unsigned width, unsigned height);
+extern KIWI_CORE_EXPORT void KW_GetSurfaceExtents(KW_RenderDriver * driver, const KW_Surface * surface, unsigned * width, unsigned * height);
+extern KIWI_CORE_EXPORT void KW_GetTextureExtents(KW_RenderDriver * driver, KW_Texture * texture, unsigned * width, unsigned * height);
+extern KIWI_CORE_EXPORT void KW_RenderCopy(KW_RenderDriver * driver, KW_Texture * src, const KW_Rect * clip, const KW_Rect * dstRect);
+extern KIWI_CORE_EXPORT KW_Texture * KW_RenderText(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
+extern KIWI_CORE_EXPORT KW_Font * KW_LoadFont(KW_RenderDriver * driver, const char * fontFile, unsigned ptSize);
+extern KIWI_CORE_EXPORT KW_Font * KW_LoadFontFromMemory(KW_RenderDriver * driver, const void * fontMemory, unsigned long memSize, unsigned ptSize);
+extern KIWI_CORE_EXPORT KW_Texture * KW_CreateTexture(KW_RenderDriver * driver, KW_Surface * surface);
+extern KIWI_CORE_EXPORT KW_Texture * KW_LoadTexture(KW_RenderDriver * driver, const char * file);
+extern KIWI_CORE_EXPORT KW_Surface * KW_LoadSurface(KW_RenderDriver * driver, const char * file);
+extern KIWI_CORE_EXPORT void KW_ReleaseTexture(KW_RenderDriver * driver, KW_Texture * texture);
+extern KIWI_CORE_EXPORT void KW_ReleaseSurface(KW_RenderDriver * driver, KW_Surface * surface);
+extern KIWI_CORE_EXPORT void KW_ReleaseFont(KW_RenderDriver * driver, KW_Font * font);
+extern KIWI_CORE_EXPORT KW_bool KW_GetClipRect(KW_RenderDriver * driver, KW_Rect * clip);
+extern KIWI_CORE_EXPORT void KW_GetViewportSize(KW_RenderDriver * driver, KW_Rect * rect);
+extern KIWI_CORE_EXPORT void KW_SetClipRect(KW_RenderDriver * driver, const KW_Rect * clip, int force);
+extern KIWI_CORE_EXPORT void KW_ReleaseRenderDriver(KW_RenderDriver * driver);
+extern KIWI_CORE_EXPORT void KW_UTF8TextSize(KW_RenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height);
+extern KIWI_CORE_EXPORT unsigned int KW_GetPixel(KW_RenderDriver * driver, KW_Surface * surface, unsigned x, unsigned y);
 
 #ifdef __cplusplus
 }

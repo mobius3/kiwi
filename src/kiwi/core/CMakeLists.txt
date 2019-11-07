@@ -22,21 +22,19 @@ set(KIWI_CORE_PRIVATE_INCLUDE_FILES
   widget_internal.h
 )
 
-
 set(I ../../../include/kiwi)
 
 set(KIWI_CORE_PUBLIC_INCLUDE_FILES
   ${I}/core/bool.h
   ${I}/core/eventwatcher.h
   ${I}/core/gui.h
-  ${I}/core/macros.h
   ${I}/core/rect.h
   ${I}/core/renderdriver.h
   ${I}/core/renderdriver_sdl2.h
   ${I}/core/tilerenderer.h
   ${I}/core/utf8.h
   ${I}/core/widget.h
-  ${CMAKE_CURRENT_BINARY_DIR}/core-export.h
+  ${CMAKE_CURRENT_BINARY_DIR}/kiwi/core/core-export.h
 )
 
 add_library(core
@@ -44,13 +42,13 @@ add_library(core
   ${KIWI_CORE_PUBLIC_INCLUDE_FILES}
   ${KIWI_CORE_PRIVATE_INCLUDE_FILES}
   ${I}/core.h
-  ${CMAKE_CURRENT_BINARY_DIR}/core-export.h
+  ${CMAKE_CURRENT_BINARY_DIR}/kiwi/core/core-export.h
 )
 
 generate_export_header(
   core
   BASE_NAME KIWI_CORE
-  EXPORT_FILE_NAME core-export.h
+  EXPORT_FILE_NAME kiwi/core/core-export.h
 )
 
 target_link_libraries(core PUBLIC SDL2 SDL2_image SDL2_ttf PRIVATE c-rez::fonts)
@@ -67,6 +65,7 @@ set_target_properties(core PROPERTIES
 
 target_include_directories(core PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../../include>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
   $<INSTALL_INTERFACE:include>
 )
 

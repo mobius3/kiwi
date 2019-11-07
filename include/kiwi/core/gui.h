@@ -1,31 +1,7 @@
-/*
-  Copyright (c) 2014, Leonardo Guilherme de Freitas
-  All rights reserved.
+#ifndef KIWI_CORE_GUI_H
+#define KIWI_CORE_GUI_H
 
-  This software is provided 'as-is', without any express or implied
-  warranty. In no event will the authors be held liable for any damages
-  arising from the use of this software.
-
-  Permission is granted to anyone to use this software for any purpose,
-  including commercial applications, and to alter it and redistribute it
-  freely, subject to the following restrictions:
-
-     1. The origin of this software must not be misrepresented; you must not
-     claim that you wrote the original software. If you use this software
-     in a product, an acknowledgment in the product documentation would be
-     appreciated but is not required.
-
-     2. Altered source versions must be plainly marked as such, and must not be
-     misrepresented as being the original software.
-
-     3. This notice may not be removed or altered from any source
-     distribution.
-*/
-
-#ifndef KW_GUI_H
-#define KW_GUI_H
-
-#include "macros.h"
+#include "kiwi/core/core-export.h"
 #include "widget.h"
 #include "renderdriver.h"
 
@@ -35,11 +11,8 @@
  * Main include for the KiWi library.
  */
 
-
 /**
  *  \mainpage KiWi
- *
- *  http://www.libsdl.org/
  *
  *  \section intro_sec Introduction
  * 
@@ -72,7 +45,6 @@ typedef void (*KW_OnGUIFontChanged)(KW_GUI * gui, void * data, KW_Font * font);
  */
 typedef void (*KW_OnGUITextColorChanged)(KW_GUI * gui, void * data, KW_Color color);
 
-
 /**
  * \brief   Initializes a new KW_GUI instance.
  * \details Each KW_Widget should be associated with a KW_GUI. For each KW_GUI
@@ -86,7 +58,7 @@ typedef void (*KW_OnGUITextColorChanged)(KW_GUI * gui, void * data, KW_Color col
  * \param   tileset The tile surface to use as a tileset.
  * \returns A initialized KW_GUI instance.
  */
-extern DECLSPEC KW_GUI * KW_CreateGUI(KW_RenderDriver * renderer, KW_Surface * tileset);
+extern KIWI_CORE_EXPORT KW_GUI * KW_CreateGUI(KW_RenderDriver * renderer, KW_Surface * tileset);
 
 /**
  * \brief   Quits this KW_GUI instance and free its resources.
@@ -95,7 +67,7 @@ extern DECLSPEC KW_GUI * KW_CreateGUI(KW_RenderDriver * renderer, KW_Surface * t
  *          You still have to free them yourself.
  * \param   gui The KW_GUI instance that is being quitted.
  */
-extern DECLSPEC void KW_DestroyGUI(KW_GUI * gui);
+extern KIWI_CORE_EXPORT void KW_DestroyGUI(KW_GUI * gui);
 
 /**
  * \brief   Sets a new KW_RenderDriver for this KW_GUI instance.
@@ -104,7 +76,7 @@ extern DECLSPEC void KW_DestroyGUI(KW_GUI * gui);
  * \param   gui The KW_GUI instance.
  * \param   render The KW_RenderDriver instance.
  */
-extern DECLSPEC void KW_SetRenderer(KW_GUI * gui, KW_RenderDriver * renderer);
+extern KIWI_CORE_EXPORT void KW_SetRenderer(KW_GUI * gui, KW_RenderDriver * renderer);
 
 /**
  * \brief   Returns the current associated renderer with a KW_GUI instance.
@@ -113,7 +85,7 @@ extern DECLSPEC void KW_SetRenderer(KW_GUI * gui, KW_RenderDriver * renderer);
  * \param   gui The KW_GUI instance.
  * \return  The associated KW_RenderDriver instance.
  */
-extern DECLSPEC KW_RenderDriver * KW_GetGUIRenderer(KW_GUI * gui);
+extern KIWI_CORE_EXPORT KW_RenderDriver * KW_GetGUIRenderer(KW_GUI * gui);
 
 /**
  * \brief   Set a new tileset surface to be used in this KW_GUI instance.
@@ -122,7 +94,7 @@ extern DECLSPEC KW_RenderDriver * KW_GetGUIRenderer(KW_GUI * gui);
  * \param   gui The KW_GUI instance to set a new tileset surface.
  * \param   surface The surface to set. You still have to free the old one.
  */
-extern DECLSPEC void KW_SetGUITilesetSurface(KW_GUI * gui, KW_Surface * tileset);
+extern KIWI_CORE_EXPORT void KW_SetGUITilesetSurface(KW_GUI * gui, KW_Surface * tileset);
 
 /**
  * \brief   Gets the tileset texture associated with a KW_GUI instance.
@@ -130,7 +102,7 @@ extern DECLSPEC void KW_SetGUITilesetSurface(KW_GUI * gui, KW_Surface * tileset)
  *          texture as it is managed by KiWi.
  * \param   gui The KW_GUI instance to get the tileset from.
  */
-extern DECLSPEC KW_Texture * KW_GetGUITilesetTexture(KW_GUI * gui);
+extern KIWI_CORE_EXPORT KW_Texture * KW_GetGUITilesetTexture(KW_GUI * gui);
 
 /**
  * \brief   Gets the tileset surface associated with a KW_GUI instance.
@@ -138,7 +110,7 @@ extern DECLSPEC KW_Texture * KW_GetGUITilesetTexture(KW_GUI * gui);
  *          the surface.
  * \param   gui The KW_GUI instance to get the tileset from.
  */
-extern DECLSPEC KW_Surface * KW_GetGUITilesetSurface(KW_GUI * gui);
+extern KIWI_CORE_EXPORT KW_Surface * KW_GetGUITilesetSurface(KW_GUI * gui);
 
 /**
  * \brief   Sets a uniform font to be used in label-rendering widgets.
@@ -147,7 +119,7 @@ extern DECLSPEC KW_Surface * KW_GetGUITilesetSurface(KW_GUI * gui);
  * \param   gui The KW_GUI instance to set the font.
  * \param   font The font to associate with a KW_GUI instance.
  */
-extern DECLSPEC void KW_SetGUIFont(KW_GUI * gui, KW_Font * font);
+extern KIWI_CORE_EXPORT void KW_SetGUIFont(KW_GUI * gui, KW_Font * font);
 /**
  * \brief   Sets a uniform font conlor to be used in label-rendering widgets.
  * \details All widgets that render text will use by default the font color set with this function unless
@@ -155,7 +127,7 @@ extern DECLSPEC void KW_SetGUIFont(KW_GUI * gui, KW_Font * font);
  * \param   gui The KW_GUI instance to set the font.
  * \param   color The font color to associate with a KW_GUI instance.
  */
-extern DECLSPEC void KW_SetGUITextColor(KW_GUI * gui, KW_Color color);
+extern KIWI_CORE_EXPORT void KW_SetGUITextColor(KW_GUI * gui, KW_Color color);
 
 
 /**
@@ -167,7 +139,7 @@ extern DECLSPEC void KW_SetGUITextColor(KW_GUI * gui, KW_Color color);
  * \param   handler The actual handler.
  * \param   priv Private data that will be passed to the handler.
  */
-extern DECLSPEC void KW_AddGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, void * priv);
+extern KIWI_CORE_EXPORT void KW_AddGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, void * priv);
 
 /**
  * \brief   Remove a previously added font changed handler.
@@ -176,7 +148,7 @@ extern DECLSPEC void KW_AddGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChang
  * \param   handler The handler to remove.
  * \param   priv The private data to match.
  */
-extern DECLSPEC void KW_RemoveGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, void * priv);
+extern KIWI_CORE_EXPORT void KW_RemoveGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, void * priv);
 
 /**
  * \brief   Add a function to be called when the current GUI text color changes.
@@ -187,7 +159,7 @@ extern DECLSPEC void KW_RemoveGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontCh
  * \param   handler The actual handler.
  * \param   priv Private data that will be passed to the handler.
  */
-extern DECLSPEC void KW_AddGUITextColorChangedHandler(KW_GUI * gui, KW_OnGUITextColorChanged handler, void * priv);
+extern KIWI_CORE_EXPORT void KW_AddGUITextColorChangedHandler(KW_GUI * gui, KW_OnGUITextColorChanged handler, void * priv);
 
 /**
  * \brief   Remove a previously added text color changed handler.
@@ -196,7 +168,7 @@ extern DECLSPEC void KW_AddGUITextColorChangedHandler(KW_GUI * gui, KW_OnGUIText
  * \param   handler The handler to remove.
  * \param   priv The private data to match.
  */
-extern DECLSPEC void KW_RemoveGUITextColorChangedHandler(KW_GUI * gui, KW_OnGUITextColorChanged handler, void * priv);
+extern KIWI_CORE_EXPORT void KW_RemoveGUITextColorChangedHandler(KW_GUI * gui, KW_OnGUITextColorChanged handler, void * priv);
 
 /**
  * \brief   Get the current font associated with a KW_GUI instance.
@@ -204,7 +176,7 @@ extern DECLSPEC void KW_RemoveGUITextColorChangedHandler(KW_GUI * gui, KW_OnGUIT
  * \param   gui The KW_GUI instance to get the font from.
  * \return  The current font associated with the KW_GUI instance.
  */
-extern DECLSPEC KW_Font * KW_GetGUIFont(KW_GUI * gui);
+extern KIWI_CORE_EXPORT KW_Font * KW_GetGUIFont(KW_GUI * gui);
 
 /**
  * \brief   Get the current font color associated with a KW_GUI instance.
@@ -212,14 +184,14 @@ extern DECLSPEC KW_Font * KW_GetGUIFont(KW_GUI * gui);
  * \param   gui The KW_GUI instance to get the font color from.
  * \return  The current font color associated with the KW_GUI instance.
  */
-extern DECLSPEC KW_Color KW_GetGUITextColor(KW_GUI * gui);
+extern KIWI_CORE_EXPORT KW_Color KW_GetGUITextColor(KW_GUI * gui);
 
 /**
  * \brief   Paint all the widgets associated with this GUI.
  * \details This will walk the widget tree, painting all of its widgets, from bottom to top.
  * \param   gui The KW_GUI instance holding the widget tree.
  */
-extern DECLSPEC void KW_PaintGUI(KW_GUI * gui);
+extern KIWI_CORE_EXPORT void KW_PaintGUI(KW_GUI * gui);
 
 /**
  * \brief   Process all pending events (mouse movement, keyboard movement, etc)
@@ -228,7 +200,7 @@ extern DECLSPEC void KW_PaintGUI(KW_GUI * gui);
  *          Most input based callbacks will be called before this function returns.
  * \param   gui The KW_GUI instance holding the widget tree.
  */
-extern DECLSPEC void KW_ProcessEvents(KW_GUI * gui);
+extern KIWI_CORE_EXPORT void KW_ProcessEvents(KW_GUI * gui);
 
 #ifdef __cplusplus
 }

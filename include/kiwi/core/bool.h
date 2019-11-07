@@ -1,16 +1,15 @@
-#ifndef KW_BOOL_H
-#define KW_BOOL_H
+#ifndef KIWI_CORE_BOOL_H
+#define KIWI_CORE_BOOL_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /**
  * \file KW_bool.h
  *
  * A helper enumeration with true and false values
  */
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef enum {
   KW_FALSE = 0,
   KW_TRUE = 1
