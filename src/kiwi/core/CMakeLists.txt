@@ -51,7 +51,7 @@ generate_export_header(
   EXPORT_FILE_NAME kiwi/core/core-export.h
 )
 
-target_link_libraries(core PUBLIC SDL2 SDL2_image SDL2_ttf PRIVATE c-rez::fonts)
+target_link_libraries(core PUBLIC SDL2 SDL2_image SDL2_ttf)
 
 add_library(kiwi::core ALIAS core)
 

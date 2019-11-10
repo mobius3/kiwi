@@ -28,8 +28,6 @@ if(WIN32)
 	set(SDL2_ROOT "/sdl2" CACHE STRING "Root of the SDL2 installation")
 endif(WIN32)
 
-add_subdirectory(third-party EXCLUDE_FROM_ALL)
-add_subdirectory(assets)
 add_subdirectory(src)
 
 include(cmake/setup-exports.cmake)
