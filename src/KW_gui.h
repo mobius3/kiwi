@@ -230,6 +230,23 @@ extern DECLSPEC void KW_Paint(KW_GUI * gui);
  */
 extern DECLSPEC void KW_ProcessEvents(KW_GUI * gui);
 
+/**
+ * \brief   Hides GUI
+ * \details This function is used to hide the gui to stop the events being handled.
+ *          This will prevent the eventqueue from filling up, overflowing and causing
+ *          a segmentation fault if events are not handled for a while.
+ * \param   gui The KW_GUI instance holding the widget tree.
+ */
+extern DECLSPEC void KW_HideGUI(KW_GUI * gui);
+
+/**
+ * \brief   Hides GUI
+ * \details Re-enables event handling on the GUI, to be used in conjunction with
+ * `KW_HideGUI();`
+ * \param   gui The KW_GUI instance holding the widget tree.
+ */
+extern DECLSPEC void KW_ShowGUI(KW_GUI * gui);
+
 #ifdef __cplusplus
 }
 #endif
