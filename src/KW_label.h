@@ -145,6 +145,18 @@ extern DECLSPEC KW_Color KW_GetLabelTextColor(KW_Widget * widget);
  */
 extern DECLSPEC KW_bool KW_WasLabelTextColorSet(KW_Widget * widget);
 
+/**
+ * \brief   Sets the Text to not Wrap
+ * \param   widget The label widget.
+ */
+extern DECLSPEC void KW_LabelDisableWrap(KW_Widget * widget);
+
+ /**
+  * \brief   Sets the Text to Wrap
+  * \param   widget The label widget.
+  */
+extern DECLSPEC void KW_LabelEnableWrap(KW_Widget * widget);
+
 #ifdef __cplusplus
 }
 #endif
