@@ -7,14 +7,16 @@ void LabelFontChanged(KW_GUI * gui, void * data, KW_Font * font) {
 }
 
 void RenderLabelText(KW_Widget * widget) {
+  KW_Rect g;
   KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, PaintLabel);
   if (label->textrender != NULL) {
     KW_ReleaseTexture(KW_GetWidgetRenderer(widget), label->textrender);
   }
+  KW_GetWidgetGeometry(widget, &g);
   /* use our own font */
   label->textrender = KW_RenderText(KW_GetWidgetRenderer(widget), KW_GetLabelFont(widget),
                                          label->text, KW_GetLabelTextColor(widget), (KW_RenderDriver_TextStyle)
-                                            label->style);
+                                            label->style, g.w);
 
   if (label->textrender != NULL)
     KW_GetTextureExtents(KW_GetWidgetRenderer(widget), label->textrender, &(label->textwidth), &(label->textheight));

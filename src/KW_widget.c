@@ -488,7 +488,7 @@ static void DrawDebugGizmos(KW_Widget * widget, KW_Color * color) {
     DrawDebugGizmos(widget->parent, color);
     if (old != widget) {
       if (text) KW_ReleaseTexture(renderer, text);
-      text = KW_RenderText(renderer, KW_GetFont(KW_GetGUI(widget)), buf, KW_MultiplyColor(widget->debug, 0.5f), KW_TTF_STYLE_NORMAL);
+      text = KW_RenderText(renderer, KW_GetFont(KW_GetGUI(widget)), buf, KW_MultiplyColor(widget->debug, 0.5f), KW_TTF_STYLE_NORMAL, 0);
       old = widget;
     }
     KW_GetTextureExtents(renderer, text, (unsigned *) &dbgrect.w, (unsigned *) &dbgrect.h);
