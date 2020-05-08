@@ -21,8 +21,8 @@ void KW_RenderCopy(KW_RenderDriver * driver, KW_Texture * src, const KW_Rect * c
 }
 
 KW_Texture * KW_RenderText(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color,
-                  KW_RenderDriver_TextStyle style) {
-    return driver->renderText(driver, font, text, color, style);
+                  KW_RenderDriver_TextStyle style, int wrapwidth) {
+    return driver->renderText(driver, font, text, color, style, wrapwidth);
 }
 
 void KW_RenderRect(KW_RenderDriver * driver, KW_Rect * rect, KW_Color color) {
