@@ -26,6 +26,7 @@ struct KW_Label {
   KW_bool colorset;
 
   
+  SDL_bool wraptext;
   unsigned textwidth;
   unsigned textheight;
   int cursorx;
