@@ -1,6 +1,6 @@
 KiWi - The Killer Widgets library
 =================================
-![Linux](https://github.com/Emersont1/kiwi/workflows/Linux/badge.svg)
+![Linux](https://github.com/mobius3/kiwi/workflows/Linux/badge.svg)
 
 *Killer Widgets* (KiWi) is a widget-based GUI library for game developers to use in their 2D games, written in C99. Its widgets are constructed by using a tileset, allowing you to easly customize the looks of your GUI by simply changing its tiles.
 
