@@ -95,16 +95,6 @@ void PaintLabel(KW_Widget * widget, const KW_Rect * absolute, void * data) {
     icondst.x = dst.x - (iconsrc.w/2);
     dst.x += iconsrc.w/2;
     icondst.y = dst.y - (iconsrc.h/2 - src.h/2); /* vertically center icon */
-    if (icondst.y < orig.y) {
-      iconsrc.y += orig.y - icondst.y;
-      icondst.y += orig.y - icondst.y;
-    }
-    
-    if (icondst.x < orig.x) {
-      iconsrc.x += orig.x - icondst.x;
-      icondst.x += orig.x - icondst.x;
-    }
-    
     if (iconsrc.h > orig.h) iconsrc.h = orig.h;
     if (iconsrc.w > orig.w) iconsrc.w = orig.w;
     icondst.h = iconsrc.h;
