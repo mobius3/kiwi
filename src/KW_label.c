@@ -10,7 +10,7 @@ KW_Widget * KW_CreateLabel(KW_GUI * gui, KW_Widget * parent, const char * text, 
   KW_SetLabelText(widget, text);
   KW_SetLabelAlignment(widget, KW_LABEL_ALIGN_CENTER, 0, KW_LABEL_ALIGN_MIDDLE, 0);
   KW_AddGUIFontChangedHandler(gui, LabelFontChanged, widget);
-  KW_LabelEnableWrap(widget);
+  KW_LabelDisableWrap(widget);
   return widget;
 }
 
@@ -82,12 +82,12 @@ void KW_SetLabelIcon(KW_Widget * widget, const KW_Rect * iconclip) {
 
 void KW_LabelDisableWrap(KW_Widget * widget){
   KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, PaintLabel);
-  label->wraptext = SDL_FALSE;
+  label->wraptext = KW_FALSE;
   RenderLabelText(widget);
 }
 
 void KW_LabelEnableWrap(KW_Widget * widget){
   KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, PaintLabel);
-  label->wraptext = SDL_FALSE;
+  label->wraptext = KW_TRUE;
   RenderLabelText(widget);
 }
