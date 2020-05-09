@@ -25,7 +25,6 @@ jobs:
     - name: install SDL
       run: |
         sudo apt-get --yes update
-        sudo apt-get --yes upgrade
         sudo apt-get --yes install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
     - name: generate CMAKE
       run: |
