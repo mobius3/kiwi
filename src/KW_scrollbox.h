@@ -14,7 +14,7 @@ extern "C" {
  * \details Unless specified otherwise, the scrollbox will scroll its children
  *          both horizonatlly and vertically, contained by its geometry. All
  *          childrens will be clipped to its geometry.
- * 
+ *
  *          The scroll box will manage the geometry of each children widget when
  *          its scrolled.
  * \param   geometry The geometry of this scrollbox. Contents will be clipped to

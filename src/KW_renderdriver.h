@@ -106,6 +106,20 @@ typedef void (*KW_UTF8TextSizeFunction)(KW_RenderDriver * driver, KW_Font * font
 typedef KW_Texture * (*KW_RenderTextFunction)(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
 
 /**
+ * \brief   Declares the prototype for a RenderTextWrapped function.
+ * \details A RenderTextWrapped function should be able to receive a font, a textline and a color and
+ *          it should be able to produce a surface (pixeldata in CPU's memory) to be later transformed
+ *          into a texture.
+ * \param   driver the RenderDriver that will render this texture.
+ * \param   font the font to use when rendering text.
+ * \param   color the color that should be used.
+ * \param   style the KW_RenderDriver_TextStyle style to apply.
+ * \param   wrapwidth the width at which to wrap the text, or 0 if not wrapping should occur
+ * \return  a KW_Texture with the rendered text
+ */
+typedef KW_Texture * (*KW_RenderTextWrappedFunction)(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style, int wrapwidth);
+
+/**
  * \brief   Declares the prototype for a LoadFont function.
  * \details LoadFont should be able to load a fontFile with the specified point size.
  * \param   driver the RenderDriver that will render this texture.
@@ -202,6 +216,7 @@ struct KW_RenderDriver {
   KW_ReleaseDriverFunction     release;
 
   void * priv;
+  KW_RenderTextWrappedFunction renderTextWrapped;
 };
 
 extern DECLSPEC void KW_RenderRect(KW_RenderDriver * driver, KW_Rect * rect, KW_Color color);
@@ -211,6 +226,7 @@ extern DECLSPEC void KW_GetSurfaceExtents(KW_RenderDriver * driver, const KW_Sur
 extern DECLSPEC void KW_GetTextureExtents(KW_RenderDriver * driver, KW_Texture * texture, unsigned * width, unsigned * height);
 extern DECLSPEC void KW_RenderCopy(KW_RenderDriver * driver, KW_Texture * src, const KW_Rect * clip, const KW_Rect * dstRect);
 extern DECLSPEC KW_Texture * KW_RenderText(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
+extern DECLSPEC KW_Texture * KW_RenderTextWrapped(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style, int wrapwidth);
 extern DECLSPEC KW_Font * KW_LoadFont(KW_RenderDriver * driver, const char * fontFile, unsigned ptSize);
 extern DECLSPEC KW_Font * KW_LoadFontFromMemory(KW_RenderDriver * driver, const void * fontMemory, unsigned long memSize, unsigned ptSize);
 extern DECLSPEC KW_Texture * KW_CreateTexture(KW_RenderDriver * driver, KW_Surface * surface);
