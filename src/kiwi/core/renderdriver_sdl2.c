@@ -13,6 +13,7 @@ typedef struct KWSDL {
 
 static void KWSDL_renderCopy(KW_RenderDriver * driver, KW_Texture * texture, const KW_Rect * src, const KW_Rect * dst);
 static KW_Texture * KWSDL_renderText(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
+static KW_Texture * KWSDL_renderTextWrapped(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style, int wrapwidth);
 static KW_Font * KWSDL_loadFont(KW_RenderDriver * driver, const char * font, unsigned ptSize);
 static KW_Font * KWSDL_loadFontFromMemory(KW_RenderDriver * driver, const void * fontMemory, unsigned long memSize, unsigned ptSize);
 static KW_Texture * KWSDL_createTexture(KW_RenderDriver * driver, KW_Surface * surface);
@@ -44,6 +45,7 @@ struct KW_RenderDriver * KW_CreateSDL2RenderDriver(SDL_Renderer * renderer, SDL_
 
   rd->renderCopy = KWSDL_renderCopy;
   rd->renderText = KWSDL_renderText;
+  rd->renderTextWrapped = KWSDL_renderTextWrapped;
   rd->utf8TextSize = KWSDL_utf8TextSize;
   rd->loadFont = KWSDL_loadFont;
   rd->loadFontFromMemory = KWSDL_loadFontFromMemory;
@@ -223,7 +225,7 @@ static KW_Texture * KWSDL_loadTexture(KW_RenderDriver * driver, const char * tex
   return KWSDL_wrapTexture(t);
 }
 
-static KW_Texture * KWSDL_renderText(KW_RenderDriver * driver, KW_Font * kwfont, const char * text, KW_Color color, KW_RenderDriver_TextStyle style) {
+static KW_Texture * KWSDL_renderTextWrapped(KW_RenderDriver * driver, KW_Font * kwfont, const char * text, KW_Color color, KW_RenderDriver_TextStyle style, int wrapwidth) {
   KWSDL * kwsdl = (KWSDL *) driver->priv;
   int previousstyle;
   SDL_Color sdlcolor;
@@ -237,11 +239,20 @@ static KW_Texture * KWSDL_renderText(KW_RenderDriver * driver, KW_Font * kwfont,
 
   previousstyle = TTF_GetFontStyle(font);
   TTF_SetFontStyle(font, style);
-  textsurface = TTF_RenderUTF8_Blended(font, text, sdlcolor);
+  if(wrapwidth > 0){
+    textsurface = TTF_RenderUTF8_Blended_Wrapped(font, text, sdlcolor, wrapwidth);
+  }else{
+    textsurface = TTF_RenderUTF8_Blended(font, text, sdlcolor);
+  }
   ret = SDL_CreateTextureFromSurface(kwsdl->renderer, textsurface);
   SDL_FreeSurface(textsurface);
   TTF_SetFontStyle(font, previousstyle);
   return KWSDL_wrapTexture(ret);
+}
+
+static KW_Texture * KWSDL_renderText(KW_RenderDriver * driver, KW_Font * kwfont, const char * text, KW_Color color, KW_RenderDriver_TextStyle style) {
+  /* save on duplicated code, this function should probably be removed in the future */
+  return KWSDL_renderTextWrapped(driver, kwfont, text, color, style, 0);
 }
 
 static void KWSDL_releaseTexture(KW_RenderDriver * driver, KW_Texture * texture) {

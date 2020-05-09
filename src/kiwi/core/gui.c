@@ -16,6 +16,7 @@ KW_GUI * KW_CreateGUI(KW_RenderDriver * renderer, KW_Surface * tileset) {
   gui->rootwidget = AllocWidget();
   gui->rootwidget->gui = gui;
   gui->evqueuelock = SDL_CreateMutex();
+  gui->handleevents = SDL_TRUE;
   SDL_AddEventWatch(KW_EventWatcher, (void*)gui);
   srand((unsigned) time(NULL));
   
@@ -165,4 +166,20 @@ void RemoveGUItHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, GUIHand
   }
   else
     gui->eventhandlers[handlertype].handlers = realloc(gui->eventhandlers[handlertype].handlers, *count * sizeof(struct KW_GUICallback));  
+}
+
+void KW_HideGUI(KW_GUI * gui) {
+  SDL_LockMutex(gui->evqueuelock);
+  gui->handleevents = SDL_FALSE;
+  /* make sure the queue is emptied */
+  gui->evqueuesize = 0;
+  SDL_UnlockMutex(gui->evqueuelock);
+}
+
+void KW_ShowGUI(KW_GUI * gui) {
+  SDL_LockMutex(gui->evqueuelock);
+  gui->handleevents = SDL_TRUE;
+  /* make sure the queue is emptied */
+  gui->evqueuesize = 0;
+  SDL_UnlockMutex(gui->evqueuelock);
 }

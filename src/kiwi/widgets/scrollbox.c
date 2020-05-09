@@ -33,12 +33,14 @@ KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const KW_Rect *
   buttongeom.w = TILESIZE*2;
   buttongeom.h = TILESIZE*2;
   scrollbox->vscroll = KW_CreateButton(gui, root, NULL, &buttongeom);
+  scrollbox->showvscroll = KW_TRUE;
   
   buttongeom.x = TILESIZE;
   buttongeom.y = geometry->h - TILESIZE * 3;
   buttongeom.w = TILESIZE*2;
   buttongeom.h = TILESIZE*2;
   scrollbox->hscroll = KW_CreateButton(gui, root, NULL, &buttongeom);
+  scrollbox->showhscroll = KW_TRUE;
   
   KW_AddWidgetChildrenChangeHandler(root, ChildrenChange);
 
@@ -77,4 +79,28 @@ void KW_ScrollboxHorizontalScroll(KW_Widget * scrollbox, int amount) {
     amount = outer.w - (sb->innercomposite.x + sb->innercomposite.w);
   geom.x += amount;
   KW_SetWidgetGeometry(sb->inner, &geom);
+}
+
+extern DECLSPEC void KW_ScrollboxHideHorizontal(KW_Widget * scrollbox) {
+  KW_Scrollbox * sb = KW_GetWidgetData(scrollbox, PaintScrollboxFrame);
+  sb->showhscroll = KW_FALSE;
+  KW_HideWidget(sb->hscroll);
+}
+
+extern DECLSPEC void KW_ScrollboxShowHorizontal(KW_Widget * scrollbox) {
+  KW_Scrollbox * sb = KW_GetWidgetData(scrollbox, PaintScrollboxFrame);
+  sb->showhscroll = KW_TRUE;
+  KW_ShowWidget(sb->hscroll);
+}
+
+extern DECLSPEC void KW_ScrollboxHideVertical(KW_Widget * scrollbox) {
+  KW_Scrollbox * sb = KW_GetWidgetData(scrollbox, PaintScrollboxFrame);
+  sb->showvscroll = KW_FALSE;
+  KW_HideWidget(sb->vscroll);
+}
+
+extern DECLSPEC void KW_ScrollboxShowVertical(KW_Widget * scrollbox) {
+  KW_Scrollbox * sb = KW_GetWidgetData(scrollbox, PaintScrollboxFrame);
+  sb->showvscroll = KW_TRUE;
+  KW_ShowWidget(sb->vscroll);
 }

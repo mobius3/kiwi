@@ -7,14 +7,20 @@ void LabelFontChanged(KW_GUI * gui, void * data, KW_Font * font) {
 }
 
 void RenderLabelText(KW_Widget * widget) {
+  KW_Rect g;
+  int w = 0;
   KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, PaintLabel);
   if (label->textrender != NULL) {
     KW_ReleaseTexture(KW_GetWidgetRenderer(widget), label->textrender);
   }
+  KW_GetWidgetGeometry(widget, &g);
+  if(label->wraptext) {
+    w = g.w;
+  }
   /* use our own font */
-  label->textrender = KW_RenderText(KW_GetWidgetRenderer(widget), KW_GetLabelFont(widget),
+  label->textrender = KW_RenderTextWrapped(KW_GetWidgetRenderer(widget), KW_GetLabelFont(widget),
                                          label->text, KW_GetLabelTextColor(widget), (KW_RenderDriver_TextStyle)
-                                            label->style);
+                                            label->style, w);
 
   if (label->textrender != NULL)
     KW_GetTextureExtents(KW_GetWidgetRenderer(widget), label->textrender, &(label->textwidth), &(label->textheight));
@@ -89,16 +95,6 @@ void PaintLabel(KW_Widget * widget, const KW_Rect * absolute, void * data) {
     icondst.x = dst.x - (iconsrc.w/2);
     dst.x += iconsrc.w/2;
     icondst.y = dst.y - (iconsrc.h/2 - src.h/2); /* vertically center icon */
-    if (icondst.y < orig.y) {
-      iconsrc.y += orig.y - icondst.y;
-      icondst.y += orig.y - icondst.y;
-    }
-    
-    if (icondst.x < orig.x) {
-      iconsrc.x += orig.x - icondst.x;
-      icondst.x += orig.x - icondst.x;
-    }
-    
     if (iconsrc.h > orig.h) iconsrc.h = orig.h;
     if (iconsrc.w > orig.w) iconsrc.w = orig.w;
     icondst.h = iconsrc.h;

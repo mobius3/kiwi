@@ -128,6 +128,11 @@ void KeyDown(KW_GUI * gui, SDL_Keycode key, SDL_Scancode scan) {
 int KW_EventWatcher(void * data, SDL_Event * event) {
   KW_GUI * gui = (KW_GUI *) data;
   SDL_LockMutex(gui->evqueuelock);    
+  if(!gui->handleevents)
+  {
+    SDL_UnlockMutex(gui->evqueuelock);
+    return;
+  }
   gui->evqueue[(gui->evqueuesize)++] = *event;
   SDL_UnlockMutex(gui->evqueuelock);  
   return 0;

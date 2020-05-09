@@ -33,6 +33,7 @@ struct KW_Label {
   KW_Rect iconclip;
   
   int x;
+  KW_bool wraptext;
 } KW_Label;
 
 void PaintLabel(KW_Widget * widget, const KW_Rect * absolute, void * data);

@@ -145,7 +145,7 @@ void Reparent(KW_Widget * widget, KW_Widget * newparent);
 
 void FreeWidget(KW_Widget * widget, int freechildren) {
   KW_Widget * tofree;
-  
+
   /* recursively delete children */
   if (freechildren) {
     while (widget->childrencount > 0) {
@@ -176,7 +176,7 @@ void CalculateAbsoluteGeometry(KW_Widget * widget) {
   widget->absolute.y = widget->geometry.y + parentabs.y;
   widget->absolute.w = widget->geometry.w;
   widget->absolute.h = widget->geometry.h;
-  
+
   /* absolute changed, children absolute must also change */
   if (oldabs.x != widget->absolute.x || oldabs.y != widget->absolute.y) {
     for (i = 0; i < widget->childrencount; i++) {
@@ -186,12 +186,12 @@ void CalculateAbsoluteGeometry(KW_Widget * widget) {
 }
 
 /* recursively calculate (childs->parent->parent->...->root) all composed geometries.
- * 
+ *
  * They are relative to its parent, thus, if a child has a .x coordinate less than
  * 0, it is outside the current widget box and it must be recalculated. The current
  * widget parent must also be notified of this change if we happend to be outside parent box */
 void CalculateComposedGeometry(KW_Widget * widget) {
-  
+
   KW_Rect composed, edges;
   KW_Widget * children = NULL;
   unsigned i = 0;
@@ -200,19 +200,19 @@ void CalculateComposedGeometry(KW_Widget * widget) {
     widget->composed = widget->geometry;
     return;
   }
-  
+
   edges = widget->geometry;
   for (i = 0; i < widget->childrencount; i++) {
     children = widget->children[i];
     KW_GetWidgetComposedGeometry(children, &composed);
     if (composed.x + composed.w > edges.w) edges.w = composed.x + composed.w;
-    if (composed.y + composed.h > edges.h) edges.h = composed.y + composed.h;    
+    if (composed.y + composed.h > edges.h) edges.h = composed.y + composed.h;
     if (composed.x < 0) edges.x += composed.x;
     if (composed.y < 0) edges.y += composed.y;
   }
   if (edges.x < widget->geometry.x) edges.w += widget->geometry.x - edges.x;
   if (edges.y < widget->geometry.y) edges.h += widget->geometry.y - edges.y;
-  
+
   widget->composed = edges;
   /* see if our composite geometry change is relevant to parent */
   if (widget->parent == NULL) return;
@@ -250,20 +250,20 @@ void KW_SetFocusedWidget(KW_Widget * widget)
     /* warn that its losing focus */
     if (gui->currentfocus != NULL) {
       count = gui->currentfocus->eventhandlers[KW_ON_FOCUSLOSE].count;
-      losehandlers = (KW_OnFocusLose *) gui->currentfocus->eventhandlers[KW_ON_FOCUSLOSE].handlers;    
+      losehandlers = (KW_OnFocusLose *) gui->currentfocus->eventhandlers[KW_ON_FOCUSLOSE].handlers;
       for (i = 0; i < count; i++) {
         losehandlers[i](gui->currentfocus);
       }
     }
-    
+
     /* watn that its gaining focus */
     count = widget->eventhandlers[KW_ON_FOCUSGAIN].count;
-    gainhandlers = (KW_OnFocusGain *) widget->eventhandlers[KW_ON_FOCUSGAIN].handlers;        
+    gainhandlers = (KW_OnFocusGain *) widget->eventhandlers[KW_ON_FOCUSGAIN].handlers;
     for (i = 0; i < count; i++) {
       gainhandlers[i](widget);
     }
     gui->currentfocus = widget;
-  }  
+  }
 }
 
 void KW_BringToFront(KW_Widget * widget)
@@ -284,40 +284,40 @@ void KW_BringToFront(KW_Widget * widget)
     if (wp->children[i] == widget) {
       j = i;
     }
-      
+
     /* move everything in front of it */
     if (j >= 0 && i + 1 < (int)wp->childrencount) {
       wp->children[i] = wp->children[i+1];
     }
   }
-  
+
   /* put widget at the last index */
   wp->children[wp->childrencount - 1] = widget;
 }
 
 /* reparent version that allow us to parent to NULL */
 void Reparent(KW_Widget * widget, KW_Widget * newparent) {
-  int i = 0, j = -1;  
-#if !defined(NDEBUG) && defined(DEBUG_GEOMETRY_CHANGE)  
+  int i = 0, j = -1;
+#if !defined(NDEBUG) && defined(DEBUG_GEOMETRY_CHANGE)
   printf("Reparenting %p: %d from %p to %p\n", (void*) widget, widget->type, (void*) widget->parent, (void*) newparent);
 #endif
   /* gotta remove from previous parent */
 
   if (widget->parent != NULL) {
     KW_Widget * wp = widget->parent;
-    
+
     /* iterate to find the position of widget */
     for (i = 0; i < (int)wp->childrencount; i++) {
       if (wp->children[i] == widget) {
         j = i;
       }
-      
+
       /* move everything in front of it */
       if (j >= 0 && i + 1 < (int)wp->childrencount) {
         wp->children[i] = wp->children[i+1];
       }
     }
-    
+
     /* realloc children array */
     if (wp->childrencount > 0) wp->childrencount--;
     if (wp->childrencount <= 0) {
@@ -329,16 +329,16 @@ void Reparent(KW_Widget * widget, KW_Widget * newparent) {
 
     /* warn parent widget handlers that children changed */
     for (i = 0; i < (int) wp->eventhandlers[KW_ON_CHILDRENCHANGE].count; i++) {
-      KW_OnWidgetChildrenChange handler = (KW_OnWidgetChildrenChange) 
+      KW_OnWidgetChildrenChange handler = (KW_OnWidgetChildrenChange)
           wp->eventhandlers[KW_ON_CHILDRENCHANGE].handlers[i];
       handler(wp, KW_CHILDRENCHANGE_REMOVED, widget);
     }
-    
+
     /* need to recalculate old parent area */
-    CalculateComposedGeometry(widget);    
+    CalculateComposedGeometry(widget);
     CalculateAbsoluteGeometry(widget);
   }
-  
+
   if (newparent != NULL) {
     newparent->childrencount++;
     newparent->children = realloc(newparent->children, newparent->childrencount * sizeof(KW_Widget *));
@@ -347,14 +347,14 @@ void Reparent(KW_Widget * widget, KW_Widget * newparent) {
 
     widget->debug = newparent->debug;
     widget->debug.a = 128;
-    
+
     /* warn new parent widget handlers that children array changed */
     for (i = 0; i < (int)newparent->eventhandlers[KW_ON_CHILDRENCHANGE].count; i++) {
       KW_OnWidgetChildrenChange handler = (KW_OnWidgetChildrenChange)
           newparent->eventhandlers[KW_ON_CHILDRENCHANGE].handlers[i];
       handler(newparent, KW_CHILDRENCHANGE_ADDED, widget);
     }
-    
+
     /* need to recalculate new parent area */
     CalculateComposedGeometry(newparent);
   }
@@ -363,18 +363,18 @@ void Reparent(KW_Widget * widget, KW_Widget * newparent) {
 
 /* public reparent that forces parenting to the root */
 void KW_ReparentWidget(KW_Widget * widget, KW_Widget * newparent) {
-  
+
   /* don't allow a null parent. not for users, at least. */
   if (newparent == NULL)
     newparent = widget->gui->rootwidget;
-  
+
   /* don't allow widgets from different guis to interact */
   if (newparent->gui != widget->gui)
     return;
-  
+
   if (newparent == widget->parent)
     return;
-  
+
   Reparent(widget, newparent);
 }
 
@@ -420,7 +420,7 @@ void KW_PaintWidget(KW_Widget * root) {
   KW_RenderDriver * renderer = KW_GetWidgetRenderer(root);
 
   if (KW_IsWidgetHidden(root)) return;
-  
+
   /* paint the root, then paint its childrens */
   if (root->paint != NULL) {
     root->paint(root, &(root->absolute), root->privdata);
@@ -522,7 +522,7 @@ void KW_SetWidgetGeometry(KW_Widget * widget, const KW_Rect * geometry) {
       widget->geometry.y != g.y ||
       widget->geometry.w != g.w ||
       widget->geometry.h != g.h)
-     || 
+     ||
      (g.x == 0 && g.y == 0 && g.w == 0 && g.h == 0))
   {
     old = widget->geometry;
@@ -607,7 +607,7 @@ void KW_AddWidgetFocusGainHandler(KW_Widget * widget, KW_OnFocusGain handler) {
 }
 
 void KW_RemoveWidgetFocusGainHandler(KW_Widget * widget, KW_OnFocusGain handler) {
-  RemoveWidgetHandler(widget, KW_ON_FOCUSLOSE, (WidgetHandler) handler);
+  RemoveWidgetHandler(widget, KW_ON_FOCUSGAIN, (WidgetHandler) handler);
 }
 
 void KW_AddWidgetFocusLoseHandler(KW_Widget * widget, KW_OnFocusLose handler) {
@@ -687,4 +687,3 @@ KW_bool KW_IsCursorReleasedOnWidget(KW_Widget * widget) {
 const KW_Rect * KW_ReturnWidgetGeometry(const KW_Widget * widget) {
   return &(widget->geometry);
 }
-
