@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Linux
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -32,8 +32,17 @@ jobs:
         cd $GITHUB_WORKSPACE
         mkdir build
         cd build
-        cmake ..
+        mkdir install
+        cmake -DCMAKE_INSTALL_PREFIX="$GITHUB_WORKSPACE/build/install" ..
     - name: make
       run: |
         cd $GITHUB_WORKSPACE/build
         make -j2
+    - name: install
+      run: |
+         cd $GITHUB_WORKSPACE/build
+         make install
+    - uses: actions/upload-artifact@v2
+      with:
+        name: linux-binaries
+        path: $GITHUB_WORKSPACE/build/install/* # or path/to/artifact
