@@ -46,24 +46,35 @@ void PaintScrollboxFrame(KW_Widget * widget, const KW_Rect * absolute, void * da
       sb->innercomposite.h != innergeom.h) 
   {
     /* vertical scroll stuff */
-    innerh = innergeom.h;
-    KW_GetWidgetGeometry(sb->vscroll, &scrollgeom);
-    scrollgeom.x = imax(boxgeom.w - TILESIZE * 3, TILESIZE);
-    scrollgeom.w = imin(TILESIZE *2, boxgeom.w - TILESIZE);
-    scrollgeom.h = (unsigned)((outergeom.h / innerh) * outergeom.h);
-    scrollgeom.y = (unsigned)((-innergeom.y / innerh) * outergeom.h + TILESIZE);
-    innergeom.h = (unsigned)innerh;
-    KW_SetWidgetGeometry(sb->vscroll, &scrollgeom);
-    
+      innerh = innergeom.h;
+      KW_GetWidgetGeometry(sb->vscroll, &scrollgeom);
+      scrollgeom.x = imax(boxgeom.w - TILESIZE * 3, TILESIZE);
+      scrollgeom.w = imin(TILESIZE *2, boxgeom.w - TILESIZE);
+      scrollgeom.h = (unsigned)((outergeom.h / innerh) * outergeom.h);
+      scrollgeom.y = (unsigned)((-innergeom.y / innerh) * outergeom.h + TILESIZE);
+      innergeom.h = (unsigned)innerh;
+      KW_SetWidgetGeometry(sb->vscroll, &scrollgeom);
+    if(sb->showvscroll) {
+      KW_ShowWidget(sb->vscroll);
+    } else {
+      KW_HideWidget(sb->vscroll);
+    }
+
     /* horizontal scroll stuff */
-    innerw = innergeom.w;
-    KW_GetWidgetGeometry(sb->hscroll, &scrollgeom);
-    scrollgeom.y = imax(boxgeom.h - TILESIZE * 3, TILESIZE);
-    scrollgeom.w = (unsigned)((outergeom.w / innerw) * outergeom.w);
-    scrollgeom.h = imin(TILESIZE * 2, boxgeom.h - TILESIZE);
-    scrollgeom.x = (unsigned)((-innergeom.x / innerw) * outergeom.w + TILESIZE);
-    innergeom.w = (unsigned)innerw;
-    KW_SetWidgetGeometry(sb->hscroll, &scrollgeom);
+      innerw = innergeom.w;
+      KW_GetWidgetGeometry(sb->hscroll, &scrollgeom);
+      scrollgeom.y = imax(boxgeom.h - TILESIZE * 3, TILESIZE);
+      scrollgeom.w = (unsigned)((outergeom.w / innerw) * outergeom.w);
+      scrollgeom.h = imin(TILESIZE * 2, boxgeom.h - TILESIZE);
+      scrollgeom.x = (unsigned)((-innergeom.x / innerw) * outergeom.w + TILESIZE);
+      innergeom.w = (unsigned)innerw;
+      KW_SetWidgetGeometry(sb->hscroll, &scrollgeom);
+    if(sb->showhscroll) {
+      KW_ShowWidget(sb->hscroll);
+    } else {
+      KW_HideWidget(sb->hscroll);
+    }
+
     sb->innercomposite = innergeom;
   }
   

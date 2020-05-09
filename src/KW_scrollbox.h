@@ -14,7 +14,7 @@ extern "C" {
  * \details Unless specified otherwise, the scrollbox will scroll its children
  *          both horizonatlly and vertically, contained by its geometry. All
  *          childrens will be clipped to its geometry.
- * 
+ *
  *          The scroll box will manage the geometry of each children widget when
  *          its scrolled.
  * \param   geometry The geometry of this scrollbox. Contents will be clipped to
@@ -40,28 +40,28 @@ extern DECLSPEC void KW_ScrollboxVerticalScroll(KW_Widget * scrollbox, int amoun
 extern DECLSPEC void KW_ScrollboxHorizontalScroll(KW_Widget * scrollbox, int amount);
 
 /**
- * \brief   Hides the Vertical Scrollbar
+ * \brief   Hides horizontal Scrollbar
  * \param   scrollbox The scrollbox widget to scroll its contents.
  */
-extern DECLSPEC void KW_ScrollboxHideVerticalBar(KW_Widget * scrollbox);
+extern DECLSPEC void KW_ScrollboxHideHorizontal(KW_Widget * scrollbox);
 
 /**
- * \brief   Hides the Horizontal Scrollbar
+ * \brief   Shows horizontal Scrollbar
  * \param   scrollbox The scrollbox widget to scroll its contents.
  */
-extern DECLSPEC void KW_ScrollboxHideHorizontalBar(KW_Widget * scrollbox);
+extern DECLSPEC void KW_ScrollboxShowHorizontal(KW_Widget * scrollbox);
 
 /**
- * \brief   Hides the Vertical Scrollbar
+ * \brief   Hides vertical Scrollbar
  * \param   scrollbox The scrollbox widget to scroll its contents.
  */
-extern DECLSPEC void KW_ScrollboxShowVerticalBar(KW_Widget * scrollbox);
+extern DECLSPEC void KW_ScrollboxHideVertical(KW_Widget * scrollbox);
 
 /**
- * \brief   Hides the Horizontal Scrollbar
+ * \brief   Shows vertical Scrollbar
  * \param   scrollbox The scrollbox widget to scroll its contents.
  */
-extern DECLSPEC void KW_ScrollboxShowHorizontalBar(KW_Widget * scrollbox);
+extern DECLSPEC void KW_ScrollboxShowVertical(KW_Widget * scrollbox);
 
 #ifdef __cplusplus
 }
