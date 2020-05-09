@@ -18,7 +18,7 @@ void RenderLabelText(KW_Widget * widget) {
     w = g.w;
   }
   /* use our own font */
-  label->textrender = KW_RenderText(KW_GetWidgetRenderer(widget), KW_GetLabelFont(widget),
+  label->textrender = KW_RenderTextWrapped(KW_GetWidgetRenderer(widget), KW_GetLabelFont(widget),
                                          label->text, KW_GetLabelTextColor(widget), (KW_RenderDriver_TextStyle)
                                             label->style, w);
 

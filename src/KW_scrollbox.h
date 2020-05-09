@@ -39,6 +39,30 @@ extern DECLSPEC void KW_ScrollboxVerticalScroll(KW_Widget * scrollbox, int amoun
  */
 extern DECLSPEC void KW_ScrollboxHorizontalScroll(KW_Widget * scrollbox, int amount);
 
+/**
+ * \brief   Hides the Vertical Scrollbar
+ * \param   scrollbox The scrollbox widget to scroll its contents.
+ */
+extern DECLSPEC void KW_ScrollboxHideVerticalBar(KW_Widget * scrollbox);
+
+/**
+ * \brief   Hides the Horizontal Scrollbar
+ * \param   scrollbox The scrollbox widget to scroll its contents.
+ */
+extern DECLSPEC void KW_ScrollboxHideHorizontalBar(KW_Widget * scrollbox);
+
+/**
+ * \brief   Hides the Vertical Scrollbar
+ * \param   scrollbox The scrollbox widget to scroll its contents.
+ */
+extern DECLSPEC void KW_ScrollboxShowVerticalBar(KW_Widget * scrollbox);
+
+/**
+ * \brief   Hides the Horizontal Scrollbar
+ * \param   scrollbox The scrollbox widget to scroll its contents.
+ */
+extern DECLSPEC void KW_ScrollboxShowHorizontalBar(KW_Widget * scrollbox);
+
 #ifdef __cplusplus
 }
 #endif
