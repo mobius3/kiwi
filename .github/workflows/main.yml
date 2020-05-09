@@ -30,9 +30,10 @@ jobs:
     - name: generate CMAKE
       run: |
         cd $GITHUB_WORKSPACE
-        ls
         mkdir build
         cd build
         cmake ..
     - name: make
-      run: make -j2
+      run: |
+        cd $GITHUB_WORKSPACE/build
+        make -j2
