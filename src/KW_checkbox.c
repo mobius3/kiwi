@@ -27,7 +27,7 @@ KW_Widget * KW_CreateCheckbox(KW_GUI * gui, KW_Widget * parent, const char * tex
   KW_AddGUIFontChangedHandler(gui, LabelFontChanged, widget);
   KW_LabelDisableWrap(widget);
   KW_SetWidgetUserData(widget, checkbox);
-KW_AddWidgetMouseUpHandler(widget, & MouseUpCheckbox);
+  KW_AddWidgetMouseUpHandler(widget, & MouseUpCheckbox);
   return widget;
 }
 
