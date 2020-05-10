@@ -1,5 +1,6 @@
 #include "KW_checkbox.h"
 #include "KW_checkbox_internal.h"
+#include "KW_gui.h"
 #include "KW_label.h"
 #include "KW_label_internal.h"
 
