@@ -5,6 +5,9 @@
 
 void MouseUpCheckbox(KW_Widget* widget, int b) {
   KW_Checkbox * checkbox = (KW_Checkbox *) KW_GetWidgetUserData(widget);
+  if(b != 1) {
+    return;
+  }
   checkbox->checked = !checkbox ->checked;
   if(checkbox->checked){
     KW_SetLabelIcon(widget, &checkbox->selected);
