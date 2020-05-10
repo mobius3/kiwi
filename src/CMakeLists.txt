@@ -23,6 +23,7 @@ set(API_HEADERS
   KW_bool.h
   KW_toggle.h
   KW_checkbox.h
+  KW_radio.h
 )
 
 set(LIB_SOURCES
@@ -46,6 +47,8 @@ set(LIB_SOURCES
   KW_rect.c
   KW_toggle.c
   KW_checkbox.c
+  KW_radio.c
+  KW_radio_internal.c
 )
 
 kiwires(HEADER resources.h BODY resources.c RESOURCES resources/sourcesans-pro-semibold.ttf)
