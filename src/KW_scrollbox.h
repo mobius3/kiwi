@@ -18,10 +18,10 @@ extern "C" {
  *          its scrolled.
  * \param   geometry The geometry of this scrollbox. Contents will be clipped to
  *          its internal area (inside borders).
- * \note    A scrollbox has the hint KW_WIDGETHINT_ALLOWTILESTRETCH enabled by
- * default, and will stretch its tiles for better performance. You can turn this
- * off by using ::KW_DisableWidgetHint, but it is not recommended unless you
- * have a tiling pattern.
+ * \note    A scrollbox has the hint KW_WIDGETHINT_ALLOWTILESTRETCH enabled by default, and will stretch its
+ *          tiles for better performance. You can turn this off by using
+ * ::KW_DisableWidgetHint, but it is not recommended unless you have a tiling
+ * pattern.
  */
 extern DECLSPEC KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent,
                                                const KW_Rect * geometry);

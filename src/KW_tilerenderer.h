@@ -80,8 +80,7 @@ extern DECLSPEC void KW_BlitTile(KW_RenderDriver * renderer, KW_Surface * dst,
  * \param   y The y coordinate in the screen to render the tile.
  * \param   w The width to fill.
  * \param   h The height to fill.
- * \param   stretch If the tile should stretch instead of being rendered
- * multiple times
+ * \param   stretch If the tile should stretch instead of being rendered multiple times
  */
 extern DECLSPEC void KW_RenderTileFill(KW_RenderDriver * renderer,
                                        KW_Texture * tileset, int column,
@@ -100,8 +99,7 @@ extern DECLSPEC void KW_RenderTileFill(KW_RenderDriver * renderer,
  * \param   y The y coordinate in the surface to blit the tile.
  * \param   w The width to fill.
  * \param   h The height to fill.
- * \param   stretch If the tile should stretch instead of being blit multiple
- * times
+ * \param   stretch If the tile should stretch instead of being blit multiple times
  */
 extern DECLSPEC void KW_BlitTileFill(KW_RenderDriver * renderer,
                                      KW_Surface * dst, KW_Surface * tileset,
@@ -109,9 +107,8 @@ extern DECLSPEC void KW_BlitTileFill(KW_RenderDriver * renderer,
                                      int h, KW_bool stretch);
 
 /**
- * \brief   Render a frame using the set of tiles specified at startcolumn and
- * startline. \details This function will make use of the 3x3 set of tiles to
- * draw a frame. They are addressed by column-then-line, like this:
+ * \brief   Render a frame using the set of tiles specified at startcolumn and startline.
+ * \details This function will make use of the 3x3 set of tiles to draw a frame. They are addressed by column-then-line, like this:
  *          - 0,0 is the top-left corner
  *          - 1,0 is the top
  *          - 2,0 is the top-right corner
@@ -148,9 +145,8 @@ extern DECLSPEC void KW_BlitTileFill(KW_RenderDriver * renderer,
  * \param   fillrect The fill rectangle
  * \param   stretchcenter Allow stretching of filling center tiles.
  * \param   stretchsides  Allow stretching of filling side tiles
- * \note    Stretching makes for much faster renderings, and you should set it
- * whenever possible. You should not use it if you have a tiling pattern in your
- * tileset.
+ * \note    Stretching makes for much faster renderings, and you should set it whenever possible.
+ *          You should not use it if you have a tiling pattern in your tileset.
  */
 extern DECLSPEC void KW_RenderTileFrame(KW_RenderDriver * renderer,
                                         KW_Texture * tileset, int startcolumn,
@@ -172,8 +168,8 @@ extern DECLSPEC void KW_RenderTileFrame(KW_RenderDriver * renderer,
  * \param   fillrect The fill rectangle
  * \param   stretchcenter Allow stretching of filling center tiles.
  * \param   stretchsides  Allow stretching of filling side tiles
- * \note    Stretching for blitting is not really faster, but it does reduces
- * the number of blit calls in the render driver, making it a little bit faster.
+ * \note    Stretching for blitting is not really faster, but it does reduces the number of blit calls in the render
+ *          driver, making it a little bit faster.
  */
 extern DECLSPEC void KW_BlitTileFrame(KW_RenderDriver * renderer,
                                       KW_Surface * dst, KW_Surface * tileset,

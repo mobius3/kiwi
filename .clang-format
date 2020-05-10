@@ -6,4 +6,6 @@ BraceWrapping:
   AfterEnum: false
 AlignConsecutiveDeclarations: true
 PointerAlignment: Middle
+CommentPragmas: '^\\.+'
+SpaceAfterCStyleCast: true
 ---

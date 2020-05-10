@@ -8,7 +8,7 @@ void PaintEditbox(KW_Widget * widget, const KW_Rect * absolute, void * data) {
   KW_Rect           targetgeom = *absolute;
   KW_RenderDriver * renderer;
   KW_Texture *      tileset;
-  KW_Editbox *      editbox = (KW_Editbox *)data;
+  KW_Editbox *      editbox = (KW_Editbox *) data;
   /* base column for tile rendering */
   int basec = 0;
   if (editbox->mouseover || editbox->active)
@@ -79,7 +79,7 @@ void PaintEditboxText(KW_Editbox * editbox, KW_Rect * _dst) {
 
     /* see if clipping rect is bigger than total width, might have
      * to adjust clipping origin */
-    if ((unsigned)(src.x + src.w) > editbox->textwidth) {
+    if ((unsigned) (src.x + src.w) > editbox->textwidth) {
       src.x -= (src.x + src.w) - editbox->textwidth;
     }
 
@@ -139,7 +139,7 @@ void DestroyEditbox(KW_Widget * widget) {
 }
 void AdjustCursor(KW_Editbox * editbox, int cursormove) {
   char     save;
-  unsigned len = (unsigned)SDL_strlen(editbox->text);
+  unsigned len = (unsigned) SDL_strlen(editbox->text);
 
   /* adjust cursormove, don't let it over/underflow. */
   if (cursormove > 0) {
@@ -147,7 +147,7 @@ void AdjustCursor(KW_Editbox * editbox, int cursormove) {
       cursormove = len - editbox->cursor;
     }
   } else if (cursormove < 0) {
-    if (-cursormove > (int)editbox->cursor) {
+    if (-cursormove > (int) editbox->cursor) {
       cursormove = -editbox->cursor;
     }
   }
@@ -156,15 +156,15 @@ void AdjustCursor(KW_Editbox * editbox, int cursormove) {
   if (cursormove > 0) {
     /* its a UTF-8 sequence */
     while (cursormove-- > 0) {
-      (void)(isutf(editbox->text[++(editbox->cursor)]) ||
-             isutf(editbox->text[++(editbox->cursor)]) ||
-             isutf(editbox->text[++(editbox->cursor)]) || ++(editbox->cursor));
+      (void) (isutf(editbox->text[++(editbox->cursor)]) ||
+              isutf(editbox->text[++(editbox->cursor)]) ||
+              isutf(editbox->text[++(editbox->cursor)]) || ++(editbox->cursor));
     }
   } else if (cursormove < 0) {
     while (cursormove++ < 0) {
-      (void)(isutf(editbox->text[--(editbox->cursor)]) ||
-             isutf(editbox->text[--(editbox->cursor)]) ||
-             isutf(editbox->text[--(editbox->cursor)]) || --(editbox->cursor));
+      (void) (isutf(editbox->text[--(editbox->cursor)]) ||
+              isutf(editbox->text[--(editbox->cursor)]) ||
+              isutf(editbox->text[--(editbox->cursor)]) || --(editbox->cursor));
     }
   }
 
@@ -173,7 +173,7 @@ void AdjustCursor(KW_Editbox * editbox, int cursormove) {
   editbox->text[editbox->cursor] = '\0';
   KW_UTF8TextSize(KW_GetWidgetRenderer(editbox->widget),
                   KW_GetEditboxFont(editbox->widget), editbox->text,
-                  (unsigned *)&(editbox->cursorx), NULL);
+                  (unsigned *) &(editbox->cursorx), NULL);
   editbox->text[editbox->cursor] = save;
 }
 
@@ -184,7 +184,7 @@ void TextBackspace(KW_Editbox * editbox) {
 
 void TextDelete(KW_Editbox * editbox) {
   int i = 0;
-  int len = (int)SDL_strlen(editbox->text);
+  int len = (int) SDL_strlen(editbox->text);
   int seq = u8_seqlen(editbox->text[editbox->cursor]);
   for (i = editbox->cursor; i < len; i++) {
     editbox->text[i] = editbox->text[i + seq];
@@ -195,7 +195,7 @@ void TextDelete(KW_Editbox * editbox) {
 /* KiWi callbacks */
 void EditboxKeyDown(KW_Widget * widget, SDL_Keycode key, SDL_Scancode scan) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, PaintEditbox);
-  (void)key;
+  (void) key;
   switch (scan) {
   /* set up cursor states */
   case SDL_SCANCODE_LEFT:
@@ -232,9 +232,9 @@ void EditboxTextInput(KW_Widget * widget, const char * text) {
 
   /* make room in the middle */
   i = editbox->cursor;
-  insertlen = (int)SDL_strlen(text);
+  insertlen = (int) SDL_strlen(text);
   cursoradjust = insertlen;
-  textlen = (int)SDL_strlen(editbox->text);
+  textlen = (int) SDL_strlen(editbox->text);
 
   for (i = textlen; i >= editbox->cursor && i > 0; i--) {
     editbox->text[textlen + insertlen - (textlen - i)] = editbox->text[i];
@@ -264,13 +264,13 @@ void EditboxMouseLeave(KW_Widget * widget) {
 
 void EditboxMousePress(KW_Widget * widget, int b) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, PaintEditbox);
-  (void)b;
+  (void) b;
   editbox->clicked = KW_TRUE;
 }
 
 void EditboxMouseRelease(KW_Widget * widget, int b) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, PaintEditbox);
-  (void)b;
+  (void) b;
   editbox->clicked = KW_FALSE;
 }
 
@@ -287,8 +287,8 @@ void EditboxFocusLose(KW_Widget * widget) {
 }
 
 void EditboxFontChanged(KW_GUI * gui, void * priv, KW_Font * font) {
-  KW_Editbox * editbox = KW_GetWidgetData((KW_Widget *)priv, PaintEditbox);
-  (void)font;
-  (void)gui;
+  KW_Editbox * editbox = KW_GetWidgetData((KW_Widget *) priv, PaintEditbox);
+  (void) font;
+  (void) gui;
   RenderEditboxText(editbox);
 }

@@ -36,8 +36,7 @@ extern "C" {
 
 /**
  * \brief   The KW_Widget type represents a widget on the KW_GUI instance.
- * \details Regardless of the widget type, they are all represented by this
- * opaque type.
+ * \details Regardless of the widget type, they are all represented by this opaque type.
  */
 struct KW_Widget;
 typedef struct KW_Widget KW_Widget;
@@ -130,9 +129,9 @@ typedef enum KW_WidgetHint {
 
 /**
  * \brief   Creates a new custom widget instance.
- * \details If you want to provide a new custom widget this is the function that
- * you should call. All KW_Widget instances are built using this function, if
- * you should need additional widget information you can use the data parameter.
+ * \details If you want to provide a new custom widget this is the function that you should call.
+ *          All KW_Widget instances are built using this function, if you should
+ * need additional widget information you can use the data parameter.
  *
  *          The widgetpaint function is called to paint the widget after the
  * parent widget has been painted, never before, so you are garanteed to be
@@ -185,12 +184,13 @@ typedef enum KW_WidgetHint {
  *          The absolute geometry of a widget is calculating by iterating the
  * parent tree and adding their position (x and y).
  *
- * \param   gui The KW_GUI instace that will hold this widget in its widget
- * tree. \param   parent The parent widget. \param   geometry The geometry of
- * this widget *relative* to its parent. \param   widgetpaing The paint function
- * of this widget. \param   widgetdestroy The destroy function of this widget.
- * \param   data Any private data associated with this widget. Mostly to be used
- * by widget implementations. \returns The new widget.
+ * \param   gui The KW_GUI instace that will hold this widget in its widget tree.
+ * \param   parent The parent widget.
+ * \param   geometry The geometry of this widget *relative* to its parent.
+ * \param   widgetpaing The paint function of this widget.
+ * \param   widgetdestroy The destroy function of this widget.
+ * \param   data Any private data associated with this widget. Mostly to be used by widget implementations.
+ * \returns The new widget.
  */
 extern DECLSPEC KW_Widget *
                 KW_CreateWidget(KW_GUI * gui, KW_Widget * parent, const KW_Rect * geometry,
@@ -199,11 +199,10 @@ extern DECLSPEC KW_Widget *
 
 /**
  * \brief   Change the parent of a widget to another parent.
- * \details Remove \p widget as a child from its current parent and adds it as a
- * child to \p parent. Every child of \p widget will then belong to the new \p
- * parent tree. Note that \p widget geometry is **NOT** updated to keep it in
- * the previous absolute position. You should call KW_SetWidgetGeometry() to
- * update it.
+ * \details Remove \p widget as a child from its current parent and adds it as a child to \p parent.
+ *          Every child of \p widget will then belong to the new \p parent tree.
+ * Note that \p widget geometry is **NOT** updated to keep it in the previous
+ * absolute position. You should call KW_SetWidgetGeometry() to update it.
  *
  *          Keep in mind that this is one of the costliest functions to call in
  * the KiWi library as it might involve memory reallocation both in the previous
@@ -228,9 +227,9 @@ extern DECLSPEC KW_Widget * KW_GetWidgetParent(const KW_Widget * widget);
 
 /**
  * \brief      Returns an array of all childrens of this widget.
- * \details    The returned array is the same as stored internally and its
- * contents can change if any reparenting is done after calling this function,
- *             thus, you should not store its value.
+ * \details    The returned array is the same as stored internally and its contents
+ *             can change if any reparenting is done after calling this
+ * function, thus, you should not store its value.
  * \param       widget The widget to return childrens from.
  * \param[out] count If not NULL, the unsigned int pointed by it will have the
  *             children count of the widget.
@@ -241,10 +240,10 @@ extern DECLSPEC KW_Widget * const *
 
 /**
  * \brief   Retrieves the current data associated with a widget.
- * \details If you are implementing a custom widget, you must call this function
- * to access the data you set up previously when the widget was created. \param
- * widget The widget to retrieve the data from. \param   type The address of the
- * widget paint function (to confirm that you actually know this widget)
+ * \details If you are implementing a custom widget, you must call this function to access the data you
+ *          set up previously when the widget was created.
+ * \param   widget The widget to retrieve the data from.
+ * \param   type The address of the widget paint function (to confirm that you actually know this widget)
  * \returns The data pointer or NULL if the widget types don't match.
  */
 extern DECLSPEC void * KW_GetWidgetData(const KW_Widget *      widget,
@@ -271,49 +270,47 @@ extern DECLSPEC void * KW_GetWidgetUserData(const KW_Widget * widget);
 
 /**
  * \brief   Destroys a widget and free its resources.
- * \details Any custom resource that you set (fonts, custom textures, etc) needs
- * to be freed by you unless specified otherwise. \param   widget The widget to
- * destroy. \param   destroychildren Set to 1 if you want also to destroy all
- * childrens (and their childrens) of this widget. If not, they will be
+ * \details Any custom resource that you set (fonts, custom textures, etc) needs to be freed by you unless specified otherwise.
+ * \param   widget The widget to destroy.
+ * \param   destroychildren Set to 1 if you want also to destroy all childrens (and their childrens) of this widget. If not, they will be
  *                          reparented to @p widget parent.
  */
 extern DECLSPEC void KW_DestroyWidget(KW_Widget * widget, int destroychildren);
 
 /**
  * \brief   Returns the associated KW_GUI instance of a widget.
- * \details If you have a widget instance, this is the means of retrieving its
- * KW_GUI instance. \param   widget The widget to get the KW_GUI instance from.
+ * \details If you have a widget instance, this is the means of retrieving its KW_GUI instance.
+ * \param   widget The widget to get the KW_GUI instance from.
  * \return  The KW_GUI instance associated with the widget.
  */
 extern DECLSPEC KW_GUI * KW_GetWidgetGUI(const KW_Widget * widget);
 
 /**
- * \brief   Returns the KW_RenderDriver associated with a KW_GUI instance that
- * the @p widget is associated with. \details This is a helper function and its
- * effects are the same of `KW_GetRenderer(KW_GetWidgetGUI(widget))` \param
- * widget The widget to get the KW_RenderDriver instance from. \returns The
- * associated KW_RenderDriver instance.
+ * \brief   Returns the KW_RenderDriver associated with a KW_GUI instance that the @p widget is associated with.
+ * \details This is a helper function and its effects are the same of `KW_GetRenderer(KW_GetWidgetGUI(widget))`
+ * \param   widget The widget to get the KW_RenderDriver instance from.
+ * \returns The associated KW_RenderDriver instance.
  */
 extern DECLSPEC KW_RenderDriver *
                 KW_GetWidgetRenderer(const KW_Widget * widget);
 
 /**
  * \brief		Get custom draw-widget function
- * \details Call this function from within a KW_OnGeometryChange handler to
- * update image of the widget. if no such function specified forf the widget,
- * default widget renderer will be called instead. \param   widget The widget to
- * get function from \returns Address of the rendering function for the widget
- * or NULL if no such function specified.
+ * \details Call this function from within a KW_OnGeometryChange handler to update image of the widget.
+ *          if no such function specified forf the widget, default widget
+ * renderer will be called instead.
+ * \param   widget The widget to get function from
+ * \returns Address of the rendering function for the widget or NULL if no such function specified.
  */
 extern DECLSPEC KW_CustomRenderFunction
 KW_GetWidgetCustomRenderFunction(const KW_Widget * widget);
 
 /**
  * \brief   Set custom function for widget rendering
- * \details If this function is not specified default rendering function for the
- * widget will be called to update widget's image after resizing \param   widget
- * The widget whose renderer function you need to change \param   renderfunction
- * The function to be called to obtain widget's face on resizing
+ * \details If this function is not specified default rendering function for the widget will be called
+ *          to update widget's image after resizing
+ * \param   widget The widget whose renderer function you need to change
+ * \param   renderfunction The function to be called to obtain widget's face on resizing
  */
 extern DECLSPEC void
 KW_SetWidgetCustomRenderFunction(KW_Widget *             widget,
@@ -321,8 +318,8 @@ KW_SetWidgetCustomRenderFunction(KW_Widget *             widget,
 
 /**
  * \brief   Sets a new geometry for a widget.
- * \details Use this function if you need to change the widget relative position
- * or its size. \param   widget The widget that will have its size changed.
+ * \details Use this function if you need to change the widget relative position or its size.
+ * \param   widget The widget that will have its size changed.
  * \param   geometry The new widget geometry.
  */
 extern DECLSPEC void KW_SetWidgetGeometry(KW_Widget *     widget,
@@ -330,49 +327,48 @@ extern DECLSPEC void KW_SetWidgetGeometry(KW_Widget *     widget,
 
 /**
  * \brief   Gets the widget geometry.
- * \details Use this function to retrieve the current *relative* geometry of the
- * widget. \param   widget The widget to get the geometry from. \param geometry
- * A KW_Rect pointer that will receive the @p widget geometry.
+ * \details Use this function to retrieve the current *relative* geometry of the widget.
+ * \param   widget The widget to get the geometry from.
+ * \param   geometry A KW_Rect pointer that will receive the @p widget geometry.
  */
 extern DECLSPEC void KW_GetWidgetGeometry(const KW_Widget * widget,
                                           KW_Rect *         geometry);
 
 /**
  * \brief   Returns the widget geometry.
- * \details Use this function to retrieve the current *relative* geometry of the
- * widget. \param   widget The widget to get the geometry from. \returns A
- * KW_Rect pointer that will point to the the @p widget geometry.
+ * \details Use this function to retrieve the current *relative* geometry of the widget.
+ * \param   widget The widget to get the geometry from.
+ * \returns A KW_Rect pointer that will point to the the @p widget geometry.
  */
 extern DECLSPEC const KW_Rect *
                       KW_ReturnWidgetGeometry(const KW_Widget * widget);
 
 /**
  * \brief   Gets the absolute widget geometry.
- * \details Use this if you need to know the absolute widget geometry calculated
- * taking its parents in consideration. It is useful inside the paint function
- * of a widget. \param   widget The widget to get the absolute geometry from.
- * \param   geometry A KW_Rect pointer that will receive the @p widget absolute
- * geometry.
+ * \details Use this if you need to know the absolute widget geometry calculated taking its parents in consideration.
+ *          It is useful inside the paint function of a widget.
+ * \param   widget The widget to get the absolute geometry from.
+ * \param   geometry A KW_Rect pointer that will receive the @p widget absolute geometry.
  */
 extern DECLSPEC void KW_GetWidgetAbsoluteGeometry(const KW_Widget * widget,
                                                   KW_Rect *         geometry);
 
 /**
  * \brief   Gets the composed geometry of a widget.
- * \details   Returns the total area occupied by a widget and its children. Note
- * that the position is still relative to its parent widget. \param   widget The
- * widget to get the compsoed geometry from. \param   geometry A KW_Rect pointer
- * that will receive the @p widget composed geometry.
+ * \details   Returns the total area occupied by a widget and its children. Note that the position is
+ *          still relative to its parent widget.
+ * \param   widget The widget to get the compsoed geometry from.
+ * \param   geometry A KW_Rect pointer that will receive the @p widget composed geometry.
  */
 extern DECLSPEC void KW_GetWidgetComposedGeometry(const KW_Widget * widget,
                                                   KW_Rect *         composed);
 
 /**
  * \brief   Paint a widget and all of its children unless they are hidden.
- * \details Iterates through all of the @p widget subtree calling their paint
- * functions. If you wish to paint all widgets of a KW_GUI instance it is better
- * to call `KW_Paint()` rather than this function. \param   widget The widget to
- * paint.
+ * \details Iterates through all of the @p widget subtree calling their paint functions.
+ *          If you wish to paint all widgets of a KW_GUI instance it is better
+ * to call `KW_Paint()` rather than this function.
+ * \param   widget The widget to paint.
  */
 extern DECLSPEC void KW_PaintWidget(KW_Widget * widget);
 
@@ -386,16 +382,16 @@ extern DECLSPEC void KW_BringToFront(KW_Widget * widget);
 
 /**
  * \brief   Moves GUI focus to given widget.
- * \details Make given widget target of user input, notify previous target and
- * fire events. \param   widget The widget to set focused.
+ * \details Make given widget target of user input, notify previous target and fire events.
+ * \param   widget The widget to set focused.
  */
 extern DECLSPEC void KW_SetFocusedWidget(KW_Widget * widget);
 
 /**
- * \brief   Hides this widget and their children, effectively preventing them
- * from being painted. \details You can use this function if you want to prevent
- * the paint function of the widget from being called. Please note that this
- * also disables event dispatching for this widget and their children.
+ * \brief   Hides this widget and their children, effectively preventing them from being painted.
+ * \details You can use this function if you want to prevent the paint function of the widget from
+ *          being called. Please note that this also disables event dispatching
+ * for this widget and their children.
  *
  *          *This is just a wrapper for KW_EnableWidgetHint(widget,
  * KW_WIDGETHINT_HIDDEN, KW_TRUE)*
@@ -406,8 +402,7 @@ extern DECLSPEC void KW_HideWidget(KW_Widget * widget);
 
 /**
  * \brief   Shows a widget that was hidden.
- * \details See ::KW_HideWidget. This enables the painting of this widget (and
- * childrens) in the next
+ * \details See ::KW_HideWidget. This enables the painting of this widget (and childrens) in the next
  *          ::KW_Paint call.
  *
  *          *This is just a wrapper of KW_DisableWidgetHint(w,
@@ -418,15 +413,14 @@ extern DECLSPEC void KW_ShowWidget(KW_Widget * widget);
 /**
  * \brief   Returns KW_TRUE if this widget is hidden.
  * \param   widget The widget to query.
- * \details This function is a wrapper of KW_QueryWidgetHint(w,
- * KW_WIDGETHINT_HIDDEN) \return  KW_TRUE or KW_FALSE if hidden or not.
+ * \details This function is a wrapper of KW_QueryWidgetHint(w, KW_WIDGETHINT_HIDDEN)
+ * \return  KW_TRUE or KW_FALSE if hidden or not.
  */
 extern DECLSPEC KW_bool KW_IsWidgetHidden(KW_Widget * widget);
 
 /**
  * \brief   Enable debug painting for this widget (and optionally its children);
- * \details Use this funcion if you want to debug rhe resulting geometry of your
- * widget.
+ * \details Use this funcion if you want to debug rhe resulting geometry of your widget.
  *
  *          *This is just a wrapper for KW_EnableWidgetHint(widget,
  * KW_WIDGETHINT_DEBUG)*
@@ -453,18 +447,18 @@ extern DECLSPEC void KW_DisableWidgetDebug(KW_Widget * widget,
 /**
  * \brief   Returns KW_TRUE if this widget should paint debug info.
  * \param   widget The widget to query.
- * \details This function is a wrapper of KW_QueryWidgetHint(w,
- * KW_WIDGETHINT_DEBUG) \return  KW_TRUE or KW_FALSE if debugging or not.
+ * \details This function is a wrapper of KW_QueryWidgetHint(w, KW_WIDGETHINT_DEBUG)
+ * \return  KW_TRUE or KW_FALSE if debugging or not.
  */
 extern DECLSPEC KW_bool KW_IsDebugWidgetEnabled(KW_Widget * widget);
 
 /* Stuff now related to handling of events (focus, mouse, keyboard, etc) */
 
 /**
- * \brief   Block this widget from receiving input events (mouse, keyboard,
- * touch, etc) \details You can use this function if you want to keep the widget
- * from receiving input related events. The widget will not know if the cursor
- * is over it, if a key was pressed, etc.
+ * \brief   Block this widget from receiving input events (mouse, keyboard, touch, etc)
+ * \details You can use this function if you want to keep the widget from receiving input related events.
+ *          The widget will not know if the cursor is over it, if a key was
+ * pressed, etc.
  *
  *          If you have composite widgets and want the widgets on top to not
  * steal mouse-over or press events from the widgets below this function might
@@ -472,26 +466,25 @@ extern DECLSPEC KW_bool KW_IsDebugWidgetEnabled(KW_Widget * widget);
  *
  *          All children widgets will also have its input events blocked.
  *          *This is just a wrapper of KW_EnableWidgetHint(w,
- * KW_WIDGETHINT_BLOCKINPUTEVENTS, KW_FALSE)* \param   widget The widget that
- * will stop receiving input evenets.
+ * KW_WIDGETHINT_BLOCKINPUTEVENTS, KW_FALSE)*
+ * \param   widget The widget that will stop receiving input evenets.
  */
 extern DECLSPEC void KW_BlockWidgetInputEvents(KW_Widget * widget);
 
 /**
  * \brief   Unblocks this widget from receiving input events.
- * \details See ::KW_BlockWidgetEvents. All children widgets will have its input
- * events unblocked. *This is just a wrapper of KW_DisableWidgetHint(w,
- * KW_WIDGETHINT_BLOCKINPUTEVENTS, KW_FALSE)* \param   widget The widget that
- * will now receive input events.
+ * \details See ::KW_BlockWidgetEvents. All children widgets will have its input events unblocked.
+ *          *This is just a wrapper of KW_DisableWidgetHint(w,
+ * KW_WIDGETHINT_BLOCKINPUTEVENTS, KW_FALSE)*
+ * \param   widget The widget that will now receive input events.
  */
 extern DECLSPEC void KW_UnblockWidgetInputEvents(KW_Widget * widget);
 
 /**
  * \brief   Returns KW_TRUE if this widget is blocking input events.
  * \param   widget The widget to query.
- * \details This function is a wrapper of KW_QueryWidgetHint(w,
- * KW_WIDGETHINT_BLOCKINPUTEVENTS) \return  KW_TRUE or KW_FALSE in case events
- * are blocked or not.
+ * \details This function is a wrapper of KW_QueryWidgetHint(w, KW_WIDGETHINT_BLOCKINPUTEVENTS)
+ * \return  KW_TRUE or KW_FALSE in case events are blocked or not.
  */
 extern DECLSPEC KW_bool KW_IsWidgetInputEventsBlocked(KW_Widget * widget);
 
@@ -503,113 +496,108 @@ extern DECLSPEC KW_bool KW_QueryWidgetHint(const KW_Widget * widget,
                                            KW_WidgetHint     hint);
 
 /**
- * \brief   Adds a function that will be called whenever the mouse/cursor gets
- * over the widget. \details If you want to know when the cursor is over the
- * widget, you can add a handler to the list. \param   widget The widget to add
- * a KW_OnMouseOver handler. \param   handler The KW_OnMouseOver function
- * pointer.
+ * \brief   Adds a function that will be called whenever the mouse/cursor gets over the widget.
+ * \details If you want to know when the cursor is over the widget, you can add a handler to the list.
+ * \param   widget The widget to add a KW_OnMouseOver handler.
+ * \param   handler The KW_OnMouseOver function pointer.
  */
 extern DECLSPEC void KW_AddWidgetMouseOverHandler(KW_Widget *    widget,
                                                   KW_OnMouseOver handler);
 
 /**
  * \brief   Remove a KW_OnMouseOver handler from a widget
- * \details If you're not interested anymore in MouseOver events, remove your
- * handler. \param   widget The widget to remove the KW_OnMouseOver handler.
+ * \details If you're not interested anymore in MouseOver events, remove your handler.
+ * \param   widget The widget to remove the KW_OnMouseOver handler.
  * \param   handler The KW_OnMouseOver function pointer.
  */
 extern DECLSPEC void KW_RemoveWidgetMouseOverHandler(KW_Widget *    widget,
                                                      KW_OnMouseOver handler);
 
 /**
- * \brief   Adds a function that will be called whenever the mouse/cursor leaves
- * the widget. \details If you want to know when the cursor lefts the widget
- * geometry, you can add a handler to the list. \param   widget The widget to
- * add a KW_OnMouseLeave handler. \param   handler The KW_OnMouseLeave function
- * pointer.
+ * \brief   Adds a function that will be called whenever the mouse/cursor leaves the widget.
+ * \details If you want to know when the cursor lefts the widget geometry, you can add a handler to the list.
+ * \param   widget The widget to add a KW_OnMouseLeave handler.
+ * \param   handler The KW_OnMouseLeave function pointer.
  */
 extern DECLSPEC void KW_AddWidgetMouseLeaveHandler(KW_Widget *     widget,
                                                    KW_OnMouseLeave handler);
 
 /**
  * \brief   Remove a KW_OnMouseLeave handler from a widget
- * \details If you're not interested anymore in MouseLeave events, remove your
- * handler. \param   widget The widget to remove the KW_OnMouseLeave handler.
+ * \details If you're not interested anymore in MouseLeave events, remove your handler.
+ * \param   widget The widget to remove the KW_OnMouseLeave handler.
  * \param   handler The KW_OnMouseLeave function pointer.
  */
 extern DECLSPEC void KW_RemoveWidgetMouseLeaveHandler(KW_Widget *     widget,
                                                       KW_OnMouseLeave handler);
 
 /**
- * \brief   Adds a function that will be called whenever the mouse/cursor clicks
- * the widget. \details If you want to know when the user clicked in your widget
- * and with which button, insert a callback :) \param   widget The widget to add
- * a KW_OnMouseDown handler. \param   handler The KW_OnMouseDown function
- * pointer.
+ * \brief   Adds a function that will be called whenever the mouse/cursor clicks the widget.
+ * \details If you want to know when the user clicked in your widget and with which button, insert a callback :)
+ * \param   widget The widget to add a KW_OnMouseDown handler.
+ * \param   handler The KW_OnMouseDown function pointer.
  */
 extern DECLSPEC void KW_AddWidgetMouseDownHandler(KW_Widget *    widget,
                                                   KW_OnMouseDown handler);
 
 /**
  * \brief   Remove a KW_OnMouseDown handler from a widget.
- * \details If you're not interested anymore in MouseDown events, remove your
- * handler. \param   widget The widget to remove the KW_OnMouseDown handler.
+ * \details If you're not interested anymore in MouseDown events, remove your handler.
+ * \param   widget The widget to remove the KW_OnMouseDown handler.
  * \param   handler The KW_OnMouseDown function pointer.
  */
 extern DECLSPEC void KW_RemoveWidgetMouseDownHandler(KW_Widget *    widget,
                                                      KW_OnMouseDown handler);
 
 /**
- * \brief   Adds a function that will be called whenever the mouse/cursor
- * un-clicks the widget. \details If you want to know when the user released the
- * cursor in your widget and with which button, insert a callback :) \param
- * widget The widget to add a KW_OnMouseUp handler. \param   handler The
- * KW_OnMouseUp function pointer.
+ * \brief   Adds a function that will be called whenever the mouse/cursor un-clicks the widget.
+ * \details If you want to know when the user released the cursor in your widget and with which button, insert a callback :)
+ * \param   widget The widget to add a KW_OnMouseUp handler.
+ * \param   handler The KW_OnMouseUp function pointer.
  */
 extern DECLSPEC void KW_AddWidgetMouseUpHandler(KW_Widget *  widget,
                                                 KW_OnMouseUp handler);
 
 /**
  * \brief   Remove a KW_OnMouseUp handler from a widget.
- * \details If you're not interested anymore in KW_OnMouseUp events, remove your
- * handler. \param   widget The widget to remove the KW_OnMouseUp handler.
+ * \details If you're not interested anymore in KW_OnMouseUp events, remove your handler.
+ * \param   widget The widget to remove the KW_OnMouseUp handler.
  * \param   handler The KW_OnMouseUp function pointer.
  */
 extern DECLSPEC void KW_RemoveWidgetMouseUpHandler(KW_Widget *  widget,
                                                    KW_OnMouseUp handler);
 
 /**
- * \brief   Adds a function that will be called whenever the focus is gained by
- * this widget. \details Focus usually happens when the user clicks on the
- * widget or navigates via tab key. \param   widget The widget to add a
- * FocusGain handler. \param   handler The OnFocusGain function pointer.
+ * \brief   Adds a function that will be called whenever the focus is gained by this widget.
+ * \details Focus usually happens when the user clicks on the widget or navigates via tab key.
+ * \param   widget The widget to add a FocusGain handler.
+ * \param   handler The OnFocusGain function pointer.
  */
 extern DECLSPEC void KW_AddWidgetFocusGainHandler(KW_Widget *    widget,
                                                   KW_OnFocusGain handler);
 
 /**
  * \brief   Remove a KW_OnFocusGain handler from a widget.
- * \details If you're not interested anymore in FocusGain events, remove your
- * handler. \param   widget The widget to remove the KW_OnFocusGain handler.
+ * \details If you're not interested anymore in FocusGain events, remove your handler.
+ * \param   widget The widget to remove the KW_OnFocusGain handler.
  * \param   handler The KW_OnFocusGain function pointer.
  */
 extern DECLSPEC void KW_RemoveWidgetFocusGainHandler(KW_Widget *    widget,
                                                      KW_OnFocusGain handler);
 
 /**
- * \brief   Adds a function that will be called whenever the focus moves from
- * this to another widget. \details If you want to be notified when the widget
- * loses the focus, you should add a handler to it. \param   widget The widget
- * to add a FocusLose handler. \param   handler The OnFocusLose function
- * pointer.
+ * \brief   Adds a function that will be called whenever the focus moves from this to another widget.
+ * \details If you want to be notified when the widget loses the focus, you should add a handler to it.
+ * \param   widget The widget to add a FocusLose handler.
+ * \param   handler The OnFocusLose function pointer.
  */
 extern DECLSPEC void KW_AddWidgetFocusLoseHandler(KW_Widget *    widget,
                                                   KW_OnFocusLose handler);
 
 /**
  * \brief   Remove a KW_OnFocusLose handler from a widget.
- * \details If you're not interested anymore in FocusLose events, remove your
- * handler. \param   widget The widget to remove the KW_OnFocusLose handler.
+ * \details If you're not interested anymore in FocusLose events, remove your handler.
+ * \param   widget The widget to remove the KW_OnFocusLose handler.
  * \param   handler The KW_OnFocusLose function pointer.
  */
 extern DECLSPEC void KW_RemoveWidgetFocusLoseHandler(KW_Widget *    widget,
@@ -617,36 +605,35 @@ extern DECLSPEC void KW_RemoveWidgetFocusLoseHandler(KW_Widget *    widget,
 
 /**
  * \brief   Adds a function that will be called when there's new text input.
- * \details This handler will *only* be called if this widget is the focused
- * widget *and* you called SDL_StartTextInput(). \param   widget The widget to
- * add a KW_OnTextInput handler. \param   handler The KW_OnTextInput function
- * pointer.
+ * \details This handler will *only* be called if this widget is the focused widget *and* you called SDL_StartTextInput().
+ * \param   widget The widget to add a KW_OnTextInput handler.
+ * \param   handler The KW_OnTextInput function pointer.
  */
 extern DECLSPEC void KW_AddWidgetTextInputHandler(KW_Widget *    widget,
                                                   KW_OnTextInput handler);
 
 /**
  * \brief   Remove a KW_OnTextInput handler from a widget.
- * \details If you're not interested anymore in KW_OnTextInput events, remove
- * your handler. \param   widget The widget to remove the KW_OnTextInput
- * handler. \param   handler The KW_OnTextInput function pointer.
+ * \details If you're not interested anymore in KW_OnTextInput events, remove your handler.
+ * \param   widget The widget to remove the KW_OnTextInput handler.
+ * \param   handler The KW_OnTextInput function pointer.
  */
 extern DECLSPEC void KW_RemoveWidgetTextInputHandler(KW_Widget *    widget,
                                                      KW_OnTextInput handler);
 
 /**
  * \brief   Adds a function that will be called when there's a key pressed.
- * \details This handler will *only* be called if this widget is the focused
- * widget. \param   widget The widget to add a KW_OnKeyDown handler. \param
- * handler The KW_OnKeyDown function pointer.
+ * \details This handler will *only* be called if this widget is the focused widget.
+ * \param   widget The widget to add a KW_OnKeyDown handler.
+ * \param   handler The KW_OnKeyDown function pointer.
  */
 extern DECLSPEC void KW_AddWidgetKeyDownHandler(KW_Widget *  widget,
                                                 KW_OnKeyDown handler);
 
 /**
  * \brief   Remove a KW_OnKeyDown handler from a widget.
- * \details If you're not interested anymore in KW_OnKeyDown events, remove your
- * handler. \param   widget The widget to remove the KW_OnKeyDown handler.
+ * \details If you're not interested anymore in KW_OnKeyDown events, remove your handler.
+ * \param   widget The widget to remove the KW_OnKeyDown handler.
  * \param   handler The KW_OnKeyDown function pointer.
  */
 extern DECLSPEC void KW_RemoveWidgetKeyDownHandler(KW_Widget *  widget,
@@ -654,53 +641,53 @@ extern DECLSPEC void KW_RemoveWidgetKeyDownHandler(KW_Widget *  widget,
 
 /**
  * \brief   Adds a function that will be called when there's a key released.
- * \details This handler will *only* be called if this widget is the focused
- * widget. \param   widget The widget to add a KW_OnKeyUp handler. \param
- * handler The KW_OnKeyUp function pointer.
+ * \details This handler will *only* be called if this widget is the focused widget.
+ * \param   widget The widget to add a KW_OnKeyUp handler.
+ * \param   handler The KW_OnKeyUp function pointer.
  */
 extern DECLSPEC void KW_AddWidgetKeyUpHandler(KW_Widget * widget,
                                               KW_OnKeyUp  handler);
 
 /**
  * \brief   Remove a KW_OnKeyUp handler from a widget.
- * \details If you're not interested anymore in KW_OnKeyUp events, remove your
- * handler. \param   widget The widget to remove the KW_OnKeyUp handler. \param
- * handler The KW_OnKeyUp function pointer.
+ * \details If you're not interested anymore in KW_OnKeyUp events, remove your handler.
+ * \param   widget The widget to remove the KW_OnKeyUp handler.
+ * \param   handler The KW_OnKeyUp function pointer.
  */
 extern DECLSPEC void KW_RemoveWidgetKeyUpHandler(KW_Widget * widget,
                                                  KW_OnKeyUp  handler);
 
 /**
- * \brief   Adds a function that will be called when drag is starting over the
- * widget. \details This handler is called after the cursor is pressed and then
- * moved. \param   widget The widget to add a KW_OnDragStart handler. \param
- * handler The KW_OnDragStart function pointer.
+ * \brief   Adds a function that will be called when drag is starting over the widget.
+ * \details This handler is called after the cursor is pressed and then moved.
+ * \param   widget The widget to add a KW_OnDragStart handler.
+ * \param   handler The KW_OnDragStart function pointer.
  */
 extern DECLSPEC void KW_AddWidgetDragStartHandler(KW_Widget *    widget,
                                                   KW_OnDragStart handler);
 
 /**
  * \brief   Remove a KW_OnDragStart handler from a widget.
- * \details If you're not interested anymore in KW_OnDragStart events, remove
- * your handler. \param   widget The widget to remove the KW_OnDragStart
- * handler. \param   handler The KW_OnDragStart function pointer.
+ * \details If you're not interested anymore in KW_OnDragStart events, remove your handler.
+ * \param   widget The widget to remove the KW_OnDragStart handler.
+ * \param   handler The KW_OnDragStart function pointer.
  */
 extern DECLSPEC void KW_RemoveWidgetDragStartHandler(KW_Widget *    widget,
                                                      KW_OnDragStart handler);
 
 /**
  * \brief   Adds a function to be called when a drag stops.
- * \details The handler will be called only if the drag was started over this
- * widget. \param   widget The widget to add a KW_OnDragStop handler. \param
- * handler The KW_OnDragStop function pointer.
+ * \details The handler will be called only if the drag was started over this widget.
+ * \param   widget The widget to add a KW_OnDragStop handler.
+ * \param   handler The KW_OnDragStop function pointer.
  */
 extern DECLSPEC void KW_AddWidgetDragStopHandler(KW_Widget *   widget,
                                                  KW_OnDragStop handler);
 
 /**
  * \brief   Remove a KW_OnDragStop handler from a widget.
- * \details If you're not interested anymore in KW_OnDragStop events, remove
- * your handler. \param   widget The widget to remove the KW_OnDragStop handler.
+ * \details If you're not interested anymore in KW_OnDragStop events, remove your handler.
+ * \param   widget The widget to remove the KW_OnDragStop handler.
  * \param   handler The KW_OnDragStop function pointer.
  */
 extern DECLSPEC void KW_RemoveWidgetDragStopHandler(KW_Widget *   widget,
@@ -708,10 +695,9 @@ extern DECLSPEC void KW_RemoveWidgetDragStopHandler(KW_Widget *   widget,
 
 /**
  * \brief   Adds a function to be called when a drag event occurs.
- * \details The handler will be called only if the drag was started over this
- * widget and the DragStart handler was called. \param   widget The widget to
- * add a KW_OnDragStop handler. \param   handler The KW_OnDragStop function
- * pointer.
+ * \details The handler will be called only if the drag was started over this widget and the DragStart handler was called.
+ * \param   widget The widget to add a KW_OnDragStop handler.
+ * \param   handler The KW_OnDragStop function pointer.
  */
 extern DECLSPEC void KW_AddWidgetDragHandler(KW_Widget * widget,
                                              KW_OnDrag   handler);
@@ -754,9 +740,9 @@ KW_RemoveWidgetChildrenChangeHandler(KW_Widget *               widget,
 
 /**
  * \brief   Remove a KW_OnDrag handler from a widget.
- * \details If you're not interested anymore in KW_OnDrag events, remove your
- * handler. \param   widget The widget to remove the KW_OnDrag handler. \param
- * handler The KW_OnDrag function pointer.
+ * \details If you're not interested anymore in KW_OnDrag events, remove your handler.
+ * \param   widget The widget to remove the KW_OnDrag handler.
+ * \param   handler The KW_OnDrag function pointer.
  */
 extern DECLSPEC void KW_RemoveWidgetDragHandler(KW_Widget * widget,
                                                 KW_OnDrag   handler);
@@ -779,16 +765,16 @@ extern DECLSPEC void KW_SetWidgetTilesetSurface(KW_Widget *  widget,
 
 /**
  * \brief   Returns the current tileset being used by the widget.
- * \details Keep in mind that this can be the same of the set in the KW_GUI
- * instance. \param   widget The widget to retrieve the tileset from. \returns A
- * pointer to the KW_Texture being used as a tileset.
+ * \details Keep in mind that this can be the same of the set in the KW_GUI instance.
+ * \param   widget The widget to retrieve the tileset from.
+ * \returns A pointer to the KW_Texture being used as a tileset.
  */
 extern DECLSPEC KW_Texture * KW_GetWidgetTilesetTexture(KW_Widget * widget);
 
 /**
  * \brief   Returns the current tileset being used by the widget.
- * \details Keep in mind that this can be the same of the set in the KW_GUI
- * instance. \param   widget The widget to retrieve the tileset surface from.
+ * \details Keep in mind that this can be the same of the set in the KW_GUI instance.
+ * \param   widget The widget to retrieve the tileset surface from.
  * \returns A pointer to the KW_Texture being used as a tileset.
  */
 extern DECLSPEC KW_Surface * KW_GetWidgetTilesetSurface(KW_Widget * widget);
@@ -805,8 +791,8 @@ extern DECLSPEC void KW_SetClipChildrenWidgets(KW_Widget * widget,
 
 /**
  * \brief Checks if there's a cursor over the widget.
- * \details This does not takes in consideration parent widgets (e.g, if cursor
- * is over a widget, calling this function on its parent would return KW_FALSE)
+ * \details This does not takes in consideration parent widgets (e.g, if cursor is over a widget,
+ *          calling this function on its parent would return KW_FALSE)
  * \param widget The widget to check if the cursor is over
  * \returns KW_TRUE if the cursor is over, KW_FALSE otherwise
  */

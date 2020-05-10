@@ -142,18 +142,18 @@ extern DECLSPEC KW_Surface * KW_GetTilesetSurface(KW_GUI * gui);
 
 /**
  * \brief   Sets a uniform font to be used in label-rendering widgets.
- * \details All widgets that needs a font to render text will use by default the
- * font set with this function unless you specify otherwise in their respective
- * SetFont calls. \param   gui The KW_GUI instance to set the font. \param font
- * The font to associate with a KW_GUI instance.
+ * \details All widgets that needs a font to render text will use by default the font set with this function unless
+ *          you specify otherwise in their respective SetFont calls.
+ * \param   gui The KW_GUI instance to set the font.
+ * \param   font The font to associate with a KW_GUI instance.
  */
 extern DECLSPEC void KW_SetFont(KW_GUI * gui, KW_Font * font);
 /**
  * \brief   Sets a uniform font conlor to be used in label-rendering widgets.
- * \details All widgets that render text will use by default the font color set
- * with this function unless you specify otherwise in their respective
- * SetLabelColor calls. \param   gui The KW_GUI instance to set the font. \param
- * color The font color to associate with a KW_GUI instance.
+ * \details All widgets that render text will use by default the font color set with this function unless
+ *          you specify otherwise in their respective SetLabelColor calls.
+ * \param   gui The KW_GUI instance to set the font.
+ * \param   color The font color to associate with a KW_GUI instance.
  */
 extern DECLSPEC void KW_SetTextColor(KW_GUI * gui, KW_Color color);
 
@@ -206,31 +206,31 @@ extern DECLSPEC void KW_RemoveGUITextColorChangedHandler(
 
 /**
  * \brief   Get the current font associated with a KW_GUI instance.
- * \details You might want to use this function if you need to render text in a
- * custom widget. \param   gui The KW_GUI instance to get the font from. \return
- * The current font associated with the KW_GUI instance.
+ * \details You might want to use this function if you need to render text in a custom widget.
+ * \param   gui The KW_GUI instance to get the font from.
+ * \return  The current font associated with the KW_GUI instance.
  */
 extern DECLSPEC KW_Font * KW_GetFont(KW_GUI * gui);
 
 /**
  * \brief   Get the current font color associated with a KW_GUI instance.
- * \details You might want to use this function if you need to render text in a
- * custom widget. \param   gui The KW_GUI instance to get the font color from.
+ * \details You might want to use this function if you need to render text in a custom widget.
+ * \param   gui The KW_GUI instance to get the font color from.
  * \return  The current font color associated with the KW_GUI instance.
  */
 extern DECLSPEC KW_Color KW_GetTextColor(KW_GUI * gui);
 
 /**
  * \brief   Paint all the widgets associated with this GUI.
- * \details This will walk the widget tree, painting all of its widgets, from
- * bottom to top. \param   gui The KW_GUI instance holding the widget tree.
+ * \details This will walk the widget tree, painting all of its widgets, from bottom to top.
+ * \param   gui The KW_GUI instance holding the widget tree.
  */
 extern DECLSPEC void KW_Paint(KW_GUI * gui);
 
 /**
  * \brief   Process all pending events (mouse movement, keyboard movement, etc)
- * \details This function should be called before KW_Paint. It will update the
- * state of the widgets based on the position of the cursor, clicks/touches and
+ * \details This function should be called before KW_Paint. It will update the state of the
+ *          widgets based on the position of the cursor, clicks/touches and
  * keyboard inputs. Most input based callbacks will be called before this
  * function returns. \param   gui The KW_GUI instance holding the widget tree.
  */
@@ -238,10 +238,10 @@ extern DECLSPEC void KW_ProcessEvents(KW_GUI * gui);
 
 /**
  * \brief   Hides GUI
- * \details This function is used to hide the gui to stop the events being
- * handled. This will prevent the eventqueue from filling up, overflowing and
- * causing a segmentation fault if events are not handled for a while. \param
- * gui The KW_GUI instance holding the widget tree.
+ * \details This function is used to hide the gui to stop the events being handled.
+ *          This will prevent the eventqueue from filling up, overflowing and
+ * causing a segmentation fault if events are not handled for a while.
+ * \param   gui The KW_GUI instance holding the widget tree.
  */
 extern DECLSPEC void KW_HideGUI(KW_GUI * gui);
 

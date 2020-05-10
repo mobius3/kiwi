@@ -70,13 +70,13 @@ typedef enum KW_RenderDriver_TextStyle {
 
 /**
  * \brief   Declares the prototype for a RenderCopy function
- * \details A RenderCopy function deals with Textures that are possibly in GPU's
- * RAM. It should be able to take a src texture and render it, applying clipping
- * with clipRect and scaling with dstRect. \param   driver the RenderDriver that
- * will render this texture. \param   src the source texture. \param   clip the
- * clipping rectangle for the source texture (in pixels) \param   dstRect the
- * destination rect. If different that clipping rectangle, it should scale to
- * fit.
+ * \details A RenderCopy function deals with Textures that are possibly in GPU's RAM.
+ *          It should be able to take a src texture and render it, applying
+ * clipping with clipRect and scaling with dstRect.
+ * \param   driver the RenderDriver that will render this texture.
+ * \param   src the source texture.
+ * \param   clip the clipping rectangle for the source texture (in pixels)
+ * \param   dstRect the destination rect. If different that clipping rectangle, it should scale to fit.
  */
 typedef void (*KW_RenderCopyFunction)(KW_RenderDriver * driver,
                                       KW_Texture * src, const KW_Rect * clip,
@@ -84,11 +84,13 @@ typedef void (*KW_RenderCopyFunction)(KW_RenderDriver * driver,
 
 /**
  * \brief   Declares the prototype for a UTF8TextSize function
- * \details A UTF8TextSize funciton returns wthe width and height of that text
- * if rendered using the passed in font. \param   driver the RenderDriver that
- * will render this texture. \param   font the font \param   text the text to
- * calculate the size \param   width The returned width \param   height The
- * returned height
+ * \details A UTF8TextSize funciton returns wthe width and height of that text if rendered
+ *          using the passed in font.
+ * \param   driver the RenderDriver that will render this texture.
+ * \param   font the font
+ * \param   text the text to calculate the size
+ * \param   width The returned width
+ * \param   height The returned height
  */
 typedef void (*KW_UTF8TextSizeFunction)(KW_RenderDriver * driver,
                                         KW_Font * font, const char * text,
@@ -96,13 +98,14 @@ typedef void (*KW_UTF8TextSizeFunction)(KW_RenderDriver * driver,
 
 /**
  * \brief   Declares the prototype for a RenderText function.
- * \details A RenderText function should be able to receive a font, a textline
- * and a color and it should be able to produce a surface (pixeldata in CPU's
- * memory) to be later transformed into a texture. \param   driver the
- * RenderDriver that will render this texture. \param   font the font to use
- * when rendering text. \param   color the color that should be used. \param
- * style the KW_RenderDriver_TextStyle style to apply. \return  a KW_Texture
- * with the rendered text
+ * \details A RenderText function should be able to receive a font, a textline and a color and
+ *          it should be able to produce a surface (pixeldata in CPU's memory)
+ * to be later transformed into a texture.
+ * \param   driver the RenderDriver that will render this texture.
+ * \param   font the font to use when rendering text.
+ * \param   color the color that should be used.
+ * \param   style the KW_RenderDriver_TextStyle style to apply.
+ * \return  a KW_Texture with the rendered text
  */
 typedef KW_Texture * (*KW_RenderTextFunction)(KW_RenderDriver * driver,
                                               KW_Font * font, const char * text,
@@ -111,14 +114,15 @@ typedef KW_Texture * (*KW_RenderTextFunction)(KW_RenderDriver * driver,
 
 /**
  * \brief   Declares the prototype for a RenderTextWrapped function.
- * \details A RenderTextWrapped function should be able to receive a font, a
- * textline and a color and it should be able to produce a surface (pixeldata in
- * CPU's memory) to be later transformed into a texture. \param   driver the
- * RenderDriver that will render this texture. \param   font the font to use
- * when rendering text. \param   color the color that should be used. \param
- * style the KW_RenderDriver_TextStyle style to apply. \param   wrapwidth the
- * width at which to wrap the text, or 0 if not wrapping should occur \return  a
- * KW_Texture with the rendered text
+ * \details A RenderTextWrapped function should be able to receive a font, a textline and a color and
+ *          it should be able to produce a surface (pixeldata in CPU's memory)
+ * to be later transformed into a texture.
+ * \param   driver the RenderDriver that will render this texture.
+ * \param   font the font to use when rendering text.
+ * \param   color the color that should be used.
+ * \param   style the KW_RenderDriver_TextStyle style to apply.
+ * \param   wrapwidth the width at which to wrap the text, or 0 if not wrapping should occur
+ * \return  a KW_Texture with the rendered text
  */
 typedef KW_Texture * (*KW_RenderTextWrappedFunction)(
     KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color,
@@ -126,10 +130,10 @@ typedef KW_Texture * (*KW_RenderTextWrappedFunction)(
 
 /**
  * \brief   Declares the prototype for a LoadFont function.
- * \details LoadFont should be able to load a fontFile with the specified point
- * size. \param   driver the RenderDriver that will render this texture. \param
- * fontFile the file containing the font (usually .ttf) \return   a KW_Font
- * suitable to use with KW_RenderText
+ * \details LoadFont should be able to load a fontFile with the specified point size.
+ * \param   driver the RenderDriver that will render this texture.
+ * \param   fontFile the file containing the font (usually .ttf)
+ * \return   a KW_Font suitable to use with KW_RenderText
  */
 typedef KW_Font * (*KW_LoadFontFunction)(KW_RenderDriver * driver,
                                          const char *      fontFile,
@@ -137,10 +141,11 @@ typedef KW_Font * (*KW_LoadFontFunction)(KW_RenderDriver * driver,
 
 /**
  * \brief   Declares the prototype for a LoadFontFromMemory function.
- * \details LoadFont should be able to load a fontFile with the specified point
- * size. \param   driver the RenderDriver that will render this texture. \param
- * fontMemory the memory buffer containing the font. \param   memSize the size
- * of the buffer \return   a KW_Font suitable to use with KW_RenderText
+ * \details LoadFont should be able to load a fontFile with the specified point size.
+ * \param   driver the RenderDriver that will render this texture.
+ * \param   fontMemory the memory buffer containing the font.
+ * \param   memSize the size of the buffer
+ * \return   a KW_Font suitable to use with KW_RenderText
  */
 typedef KW_Font * (*KW_LoadFontFromMemoryFunction)(KW_RenderDriver * driver,
                                                    const void *      fontMemory,
@@ -149,8 +154,8 @@ typedef KW_Font * (*KW_LoadFontFromMemoryFunction)(KW_RenderDriver * driver,
 
 /**
  * \brief   Declares the prototype for a CreateTexture function.
- * \details CreateTexture should be able to create a KW_Texture from a
- * KW_Surface. \param   driver the RenderDriver that will render this texture.
+ * \details CreateTexture should be able to create a KW_Texture from a KW_Surface.
+ * \param   driver the RenderDriver that will render this texture.
  * \param   src the source KW_Surface.
  * \return  a KW_Texture in suitable to use with KW_RenderCopy
  */

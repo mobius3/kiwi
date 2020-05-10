@@ -39,10 +39,11 @@ extern "C" {
 
 /**
  * \brief Creates a toggle button that can be checked or not checked.
- * \details The toggle occupies by default the column 12, lines 0 through 12 in
- * the tileset. \param gui The gui to create this widget on \param parent The
- * parentof this widget \param geometry The geometry of this widget. Big toggles
- * may look ugly. \returns The instance of the toggle as a widget
+ * \details The toggle occupies by default the column 12, lines 0 through 12 in the tileset.
+ * \param gui The gui to create this widget on
+ * \param parent The parentof this widget
+ * \param geometry The geometry of this widget. Big toggles may look ugly.
+ * \returns The instance of the toggle as a widget
  */
 extern DECLSPEC KW_Widget * KW_CreateToggle(KW_GUI * gui, KW_Widget * parent,
                                             const KW_Rect * geometry);

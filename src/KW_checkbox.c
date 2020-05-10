@@ -35,8 +35,8 @@ void Reposition(KW_Checkbox * cb, const KW_Rect * newgeom) {
   unsigned  weights[] = {0, 0};
   geoms[0] = &togglegeom;
   geoms[1] = &labelgeom;
-  weights[0] = (unsigned)((30.0f / newgeom->w) * 100.0f);
-  weights[1] = (unsigned)(((newgeom->w - 30.0f) / newgeom->w) * 100.0f);
+  weights[0] = (unsigned) ((30.0f / newgeom->w) * 100.0f);
+  weights[1] = (unsigned) (((newgeom->w - 30.0f) / newgeom->w) * 100.0f);
   KW_GetWidgetGeometry(cb->label, &labelgeom);
   if (labelgeom.h == 0)
     labelgeom.h = newgeom->h;
@@ -51,14 +51,14 @@ void Reposition(KW_Checkbox * cb, const KW_Rect * newgeom) {
 void GeometryChanged(KW_Widget * widget, const KW_Rect * newgeom,
                      const KW_Rect * oldgeom) {
   KW_Checkbox * cb = KW_GetWidgetData(widget, PaintCheckbox);
-  (void)oldgeom;
+  (void) oldgeom;
   Reposition(cb, newgeom);
 }
 
 void PaintCheckbox(KW_Widget * widget, const KW_Rect * absolute, void * data) {
-  (void)widget;
-  (void)absolute;
-  (void)data;
+  (void) widget;
+  (void) absolute;
+  (void) data;
 }
 
 void DestroyCheckbox(KW_Widget * widget) {
@@ -68,12 +68,12 @@ void DestroyCheckbox(KW_Widget * widget) {
 static void MouseUp(KW_Widget * widget, int b) {
   KW_Checkbox * cb =
       KW_GetWidgetData(KW_GetWidgetParent(widget), PaintCheckbox);
-  (void)b;
-  KW_SetToggleChecked(cb->toggle, (KW_bool)!KW_IsToggleChecked(cb->toggle));
+  (void) b;
+  KW_SetToggleChecked(cb->toggle, (KW_bool) !KW_IsToggleChecked(cb->toggle));
 }
 
 KW_Widget * KW_GetCheckboxLabel(KW_Widget * widget) {
-  return ((KW_Checkbox *)KW_GetWidgetData(widget, PaintCheckbox))->label;
+  return ((KW_Checkbox *) KW_GetWidgetData(widget, PaintCheckbox))->label;
 }
 
 KW_Widget * KW_SetCheckboxLabel(KW_Widget * widget, KW_Widget * label) {

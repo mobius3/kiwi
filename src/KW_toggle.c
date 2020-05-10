@@ -36,7 +36,7 @@ void KW_SetToggleChecked(KW_Widget * widget, KW_bool checked) {
 KW_Toggle * AllocToggle() { return calloc(sizeof(KW_Toggle), 1); }
 
 void PaintToggle(KW_Widget * widget, const KW_Rect * absolute, void * data) {
-  KW_Toggle *       tg = (KW_Toggle *)data;
+  KW_Toggle *       tg = (KW_Toggle *) data;
   KW_Rect           targetgeom = *absolute;
   int               column = 0;
   KW_RenderDriver * renderer = KW_GetWidgetRenderer(widget);
@@ -54,6 +54,6 @@ void DestroyToggle(KW_Widget * widget) {
 
 void MouseRelease(KW_Widget * widget, int b) {
   KW_Toggle * tg = KW_GetWidgetData(widget, PaintToggle);
-  (void)b;
-  tg->pushed = (KW_bool)!tg->pushed;
+  (void) b;
+  tg->pushed = (KW_bool) !tg->pushed;
 }

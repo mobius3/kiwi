@@ -281,7 +281,7 @@ KW_Texture * KW_CreateTileFrameTexture(KW_RenderDriver * renderer,
   fillrect.y = 0;
   fillrect.w = w;
   fillrect.h = h;
-  target = KW_CreateSurface(renderer, (unsigned)w, (unsigned)h);
+  target = KW_CreateSurface(renderer, (unsigned) w, (unsigned) h);
   KW_BlitTileFrame(renderer, target, tileset, startcolumn, startline, &fillrect,
                    stretchcenter, stretchsides);
   result = KW_CreateTexture(renderer, target);

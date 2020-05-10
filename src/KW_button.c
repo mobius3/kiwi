@@ -44,7 +44,7 @@ KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, KW_Widget * label,
 
 /** internal stuff **/
 void PaintButton(KW_Widget * widget, const KW_Rect * absolute, void * data) {
-  KW_Button *       button = (KW_Button *)data;
+  KW_Button *       button = (KW_Button *) data;
   KW_RenderDriver * renderer = KW_GetWidgetRenderer(widget);
   /* don't draw frame if requested. */
   if (KW_QueryWidgetHint(widget, KW_WIDGETHINT_FRAMELESS) == KW_TRUE)
@@ -103,7 +103,7 @@ KW_Button * AllocButton() {
 }
 
 KW_Widget * KW_GetButtonLabel(KW_Widget * widget) {
-  return ((KW_Button *)KW_GetWidgetData(widget, PaintButton))->labelwidget;
+  return ((KW_Button *) KW_GetWidgetData(widget, PaintButton))->labelwidget;
 }
 
 KW_Widget * KW_SetButtonLabel(KW_Widget * widget, KW_Widget * label) {

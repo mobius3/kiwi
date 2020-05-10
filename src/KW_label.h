@@ -66,9 +66,9 @@ typedef enum KW_LabelHorizontalAlignment {
 
 /**
  * \brief   Creates a label widget.
- * \details The label uses the font specified in the KW_GUI instance unless
- * specified otherwise. The geometry of the label is used to align horizontally
- * and vertically the label and also to clip its contents if they exceed it.
+ * \details The label uses the font specified in the KW_GUI instance unless specified otherwise.
+ *          The geometry of the label is used to align horizontally and
+ * vertically the label and also to clip its contents if they exceed it.
  * \param   gui The KW_GUI instance that will hold this widget.
  * \param   parent The parent widget of this widget.
  * \param   geometry The relative geometry of this label.
@@ -101,9 +101,9 @@ extern DECLSPEC void KW_SetLabelTextColor(KW_Widget * widget, KW_Color color);
 
 /**
  * \brief   Changes the font of the label's text.
- * \details Please note that you are responsible for managing the font memory
- * and should free the previous font if its not required anymore. \param widget
- * The label widget. \param   font The font to assign to the label.
+ * \details Please note that you are responsible for managing the font memory and should free the previous font if its not required anymore.
+ * \param   widget The label widget.
+ * \param   font The font to assign to the label.
  */
 extern DECLSPEC void KW_SetLabelFont(KW_Widget * widget, KW_Font * font);
 
@@ -111,10 +111,9 @@ extern DECLSPEC void KW_SetLabelFont(KW_Widget * widget, KW_Font * font);
  * \brief   Sets label alignment inside a geometry.
  * \param   widget The widget to ajust the alignment.
  * \param   halign The horizontal alignment used.
- * \param   hoffset The horizontal offset to be added to the label position
- * after its aligned. \param   valign The vertical alignment used. \param
- * voffset The vertical offset to be added to the label position after its
- * aligned.
+ * \param   hoffset The horizontal offset to be added to the label position after its aligned.
+ * \param   valign The vertical alignment used.
+ * \param   voffset The vertical offset to be added to the label position after its aligned.
  */
 extern DECLSPEC void KW_SetLabelAlignment(KW_Widget *                 widget,
                                           KW_LabelHorizontalAlignment halign,

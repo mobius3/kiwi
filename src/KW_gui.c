@@ -18,8 +18,8 @@ KW_GUI * KW_Init(KW_RenderDriver * renderer, KW_Surface * tileset) {
       KW_LoadFontFromMemory(renderer, resources_sourcesans_pro_semibold_ttf,
                             resources_sourcesans_pro_semibold_ttf_size, 12);
   gui->handleevents = SDL_TRUE;
-  SDL_AddEventWatch(KW_EventWatcher, (void *)gui);
-  srand((unsigned)time(NULL));
+  SDL_AddEventWatch(KW_EventWatcher, (void *) gui);
+  srand((unsigned) time(NULL));
 
   return gui;
 }
@@ -37,7 +37,7 @@ void KW_SetTilesetSurface(KW_GUI * gui, KW_Surface * tileset) {
   for (i = 0; i < gui->eventhandlers[KW_GUI_ONTILESETCHANGED].count; i++) {
     widget = gui->eventhandlers[KW_GUI_ONTILESETCHANGED].handlers[i].priv;
     handler =
-        (KW_OnWidgetTilesetChange)gui->eventhandlers[KW_GUI_ONTILESETCHANGED]
+        (KW_OnWidgetTilesetChange) gui->eventhandlers[KW_GUI_ONTILESETCHANGED]
             .handlers[i]
             .handler;
     handler(widget);
@@ -55,7 +55,7 @@ KW_Texture * KW_GetTilesetTexture(KW_GUI * gui) { return gui->tilesettexture; }
 KW_Surface * KW_GetTilesetSurface(KW_GUI * gui) { return gui->tilesetsurface; }
 
 void KW_Quit(KW_GUI * gui) {
-  SDL_DelEventWatch(KW_EventWatcher, (void *)gui);
+  SDL_DelEventWatch(KW_EventWatcher, (void *) gui);
   KW_DestroyWidget(gui->rootwidget, 1);
   KW_ReleaseFont(gui->renderer, gui->defaultfont);
   KW_ReleaseTexture(gui->renderer, gui->tilesettexture);
@@ -70,7 +70,7 @@ void KW_SetFont(KW_GUI * gui, KW_Font * font) {
   gui->font = font;
 
   for (i = 0; i < gui->eventhandlers[KW_GUI_ONFONTCHANGED].count; i++) {
-    handler = (KW_OnGUIFontChanged)gui->eventhandlers[KW_GUI_ONFONTCHANGED]
+    handler = (KW_OnGUIFontChanged) gui->eventhandlers[KW_GUI_ONFONTCHANGED]
                   .handlers[i]
                   .handler;
     handler(gui, gui->eventhandlers[KW_GUI_ONFONTCHANGED].handlers[i].priv,
@@ -85,7 +85,7 @@ void KW_SetTextColor(KW_GUI * gui, KW_Color color) {
   gui->textcolor = color;
   for (i = 0; i < gui->eventhandlers[KW_GUI_ONTEXTCOLORCHANGED].count; i++) {
     handler =
-        (KW_OnGUITextColorChanged)gui->eventhandlers[KW_GUI_ONTEXTCOLORCHANGED]
+        (KW_OnGUITextColorChanged) gui->eventhandlers[KW_GUI_ONTEXTCOLORCHANGED]
             .handlers[i]
             .handler;
     handler(gui, gui->eventhandlers[KW_GUI_ONTEXTCOLORCHANGED].handlers[i].priv,
@@ -96,24 +96,24 @@ void KW_SetTextColor(KW_GUI * gui, KW_Color color) {
 
 void KW_AddGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler,
                                  void * priv) {
-  AddGUIHandler(gui, KW_GUI_ONFONTCHANGED, (GUIHandler)handler, priv);
+  AddGUIHandler(gui, KW_GUI_ONFONTCHANGED, (GUIHandler) handler, priv);
 }
 
 void KW_RemoveGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler,
                                     void * priv) {
-  RemoveGUItHandler(gui, KW_GUI_ONFONTCHANGED, (GUIHandler)handler, priv);
+  RemoveGUItHandler(gui, KW_GUI_ONFONTCHANGED, (GUIHandler) handler, priv);
 }
 
 void KW_AddGUITextColorChangedHandler(KW_GUI *                 gui,
                                       KW_OnGUITextColorChanged handler,
                                       void *                   priv) {
-  AddGUIHandler(gui, KW_GUI_ONTEXTCOLORCHANGED, (GUIHandler)handler, priv);
+  AddGUIHandler(gui, KW_GUI_ONTEXTCOLORCHANGED, (GUIHandler) handler, priv);
 }
 
 void KW_RemoveGUITextColorChangedHandler(KW_GUI *                 gui,
                                          KW_OnGUITextColorChanged handler,
                                          void *                   priv) {
-  RemoveGUItHandler(gui, KW_GUI_ONTEXTCOLORCHANGED, (GUIHandler)handler, priv);
+  RemoveGUItHandler(gui, KW_GUI_ONTEXTCOLORCHANGED, (GUIHandler) handler, priv);
 }
 
 KW_Font * KW_GetFont(KW_GUI * gui) {

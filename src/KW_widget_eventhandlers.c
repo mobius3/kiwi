@@ -29,7 +29,7 @@ void RemoveWidgetHandler(KW_Widget *               widget,
   /* iterate to find the position of widget */
   for (i = 0; i < *count; i++) {
     if (widget->eventhandlers[handlertype].handlers[i] == handler) {
-      j = (int)i;
+      j = (int) i;
     }
 
     /* move everything in front of it */

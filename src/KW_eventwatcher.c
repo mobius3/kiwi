@@ -7,7 +7,7 @@
     unsigned __i;                                                              \
     for (__i = 0; __i < widget->eventhandlers[event].count; __i++) {           \
       ((callbacktype)(                                                         \
-          (callbacktype *)widget->eventhandlers[event].handlers)[__i]) args;   \
+          (callbacktype *) widget->eventhandlers[event].handlers)[__i]) args;  \
     }                                                                          \
   }
 
@@ -83,8 +83,8 @@ void MouseMoved(KW_GUI * gui, int mousex, int mousey, int xrel, int yrel) {
 
 void MousePressed(KW_GUI * gui, int mousex, int mousey, int button) {
   KW_Widget * widget = gui->currentmouseover;
-  (void)mousex;
-  (void)mousey;
+  (void) mousex;
+  (void) mousey;
   if (widget != NULL) {
     if (KW_IsWidgetInputEventsBlocked(widget) || KW_IsWidgetHidden(widget))
       return;
@@ -143,7 +143,7 @@ void KeyDown(KW_GUI * gui, SDL_Keycode key, SDL_Scancode scan) {
 
 /* to capture mouse movements, clicks, types, etc */
 int KW_EventWatcher(void * data, SDL_Event * event) {
-  KW_GUI * gui = (KW_GUI *)data;
+  KW_GUI * gui = (KW_GUI *) data;
   SDL_LockMutex(gui->evqueuelock);
   if (!gui->handleevents) {
     SDL_UnlockMutex(gui->evqueuelock);

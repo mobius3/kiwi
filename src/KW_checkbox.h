@@ -16,11 +16,13 @@ extern "C" {
 
 /**
  * \brief Creates a new checkbox.
- * \details Checkboxes listen to the mouseup event, when they happen either in
- * the label or in the toggle, the checkbox value will be toggled. \param gui
- * The KW_GUI instance \param parent The parent widget \param label The label
- * widget. The label will be reparented to be a child of this widget. \param
- * geometry The geometry of this widget \returns The instance of the checkbox
+ * \details Checkboxes listen to the mouseup event, when they happen either in the label
+ *          or in the toggle, the checkbox value will be toggled.
+ *  \param gui The KW_GUI instance
+ * \param parent The parent widget
+ * \param label The label widget. The label will be reparented to be a child of this widget.
+ * \param geometry The geometry of this widget
+ * \returns The instance of the checkbox
  */
 extern DECLSPEC KW_Widget * KW_CreateCheckbox(KW_GUI * gui, KW_Widget * parent,
                                               KW_Widget *     label,

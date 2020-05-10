@@ -65,9 +65,10 @@ typedef enum KW_RectHorizontalAlignment {
 
 /**
  * \brief Center a rectangle horizontally and vertically inside another.
- * \details This function changes the inner rectangle x and y coordinates so
- * that it is centered inside the outer rectangle. \param outer The outer
- * rectangle \param inner The inner rectangle to center inside outer.
+ * \details This function changes the inner rectangle x and y coordinates so that it is
+ *          centered inside the outer rectangle.
+ * \param outer The outer rectangle
+ * \param inner The inner rectangle to center inside outer.
  */
 extern DECLSPEC void KW_RectCenterInParent(const KW_Rect * outer,
                                            KW_Rect *       inner);
@@ -93,10 +94,11 @@ extern DECLSPEC void KW_RectHorizontallyCenterInParent(const KW_Rect * outer,
                                                        KW_Rect *       inner);
 
 /**
- * \brief Layout rectangles vertically (like a list), aligning them
- * horizontally. \param rects The array of rectangles to layout \param count The
- * amount of rectangles in the array \param padding Amount of padding between
- * the rectangles \param align How to align the rectangles
+ * \brief Layout rectangles vertically (like a list), aligning them horizontally.
+ * \param rects The array of rectangles to layout
+ * \param count The amount of rectangles in the array
+ * \param padding Amount of padding between the rectangles
+ * \param align How to align the rectangles
  */
 extern DECLSPEC void KW_RectLayoutVertically(KW_Rect * rects[], unsigned count,
                                              int                        padding,
@@ -114,14 +116,13 @@ extern DECLSPEC void KW_RectLayoutHorizontally(KW_Rect * rects[],
                                                KW_RectVerticalAlignment align);
 
 /**
- * \brief Layout and resize rectangles vertically, adjusting their height so
- * they all fit inside the outer rectangle.
+ * \brief Layout and resize rectangles vertically, adjusting their height so they all fit inside the outer rectangle.
  * * \details This does not ajust the item width nor align them.
  * \param rects The array of rectangles to layout
  * \param weight The weight of each rectangle passed in @p rects.
  *               The higher the weight, the more space the rectangle will
- * occupy. \param count The amount of rectangles in the array \param padding The
- * amount of padding between the rectangles
+ * occupy. \param count The amount of rectangles in the array
+ * \param padding The amount of padding between the rectangles
  */
 extern DECLSPEC void KW_RectFillParentVertically(const KW_Rect * outer,
                                                  KW_Rect *       rects[],
@@ -129,13 +130,14 @@ extern DECLSPEC void KW_RectFillParentVertically(const KW_Rect * outer,
                                                  unsigned count, int padding);
 
 /**
- * \brief Layout and resize rectangles horizontally, adjusting their width so
- * they all fit inside the outer rectangle. \details This does not ajust the
- * item height nor align them. \param rects The array of rectangles to layout
+ * \brief Layout and resize rectangles horizontally, adjusting their width so they all fit inside the outer
+ * rectangle.
+ * \details This does not ajust the item height nor align them.
+ * \param rects The array of rectangles to layout
  * \param weight The weight of each rectangle passed in @p rects.
  *               The higher the weight, the more space the rectangle will
- * occupy. \param count The amount of rectangles in the array \param padding The
- * amount of padding between the rectangles
+ * occupy. \param count The amount of rectangles in the array
+ * \param padding The amount of padding between the rectangles
  */
 extern DECLSPEC void
 KW_RectFillParentHorizontally(const KW_Rect * outer, KW_Rect * rects[],
@@ -177,9 +179,10 @@ extern DECLSPEC void KW_CopyRect(const KW_Rect * src, KW_Rect * dst);
 extern DECLSPEC void KW_ZeroRect(KW_Rect * rect);
 
 /**
- * \brief Uses @p margin to resize @p inner so that its poisition and size
- * margins the @p outer rect. \param outer The outer rect \param inner The inner
- * rect that will be resized \param margin The margin to set.
+ * \brief Uses @p margin to resize @p inner so that its poisition and size margins the @p outer rect.
+ * \param outer The outer rect
+ * \param inner The inner rect that will be resized
+ * \param margin The margin to set.
  */
 extern DECLSPEC void KW_MarginRect(const KW_Rect * outer, KW_Rect * inner,
                                    int margin);
