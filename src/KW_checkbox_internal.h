@@ -22,36 +22,24 @@
      distribution.
 */
 
-#ifndef KW_CHECKBOX
-#define KW_CHECKBOX
+#ifndef KW_CHECKBOX_INTERNAL
+#define KW_CHECKBOX_INTERNAL
 
 #include "KW_widget.h"
+#include "KW_label.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/*
- * \brief   Creates a checkbox widget.
- * \details The checkbox uses the font specified in the KW_GUI instance unless specified otherwise.
- *          The geometry of the label is used to align horizontally and vertically the label and also
- *          to clip its contents if they exceed it.
- * \param   gui The KW_GUI instance that will hold this widget.
- * \param   parent The parent widget of this widget.
- * \param   geometry The relative geometry of this label.
- * \return  The checkbox instance.
- * \sa KW_CreateLabel
- */
-extern DECLSPEC KW_Widget * KW_CreateCheckbox(KW_GUI * gui, KW_Widget * parent, const char * text, const KW_Rect * geometry);
+typedef struct KW_Checkbox {
+  KW_Widget* label;
+  KW_bool checked;
+  KW_Rect selected;
+  KW_Rect unselected;
+} KW_Checkbox;
 
-/**
- * \brief   Gets The Checked Status of the Widget.
- * \param   widget The label widget.
- */
-KW_bool KW_IsCheckboxChecked(KW_Widget* widget);
-
-KW_bool KW_CheckboxSetChecked(KW_Widget* widget, KW_Rect* Rect);
-KW_bool KW_CheckboxSetUnchecked(KW_Widget* widget, KW_Rect* Rect);
+void DestroyCheckbox(KW_Widget* widget);
 
 #ifdef __cplusplus
 }
