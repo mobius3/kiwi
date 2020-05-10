@@ -32,12 +32,10 @@
 extern "C" {
 #endif
 
-
 int KW_EventWatcher(void * gui, SDL_Event * event);
 
 #ifdef __cplusplus
 }
 #endif
-
 
 #endif

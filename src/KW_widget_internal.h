@@ -30,40 +30,41 @@ typedef enum KW_WidgetEventHandlerType {
 
 typedef void (*WidgetHandler)(void);
 
-void AddWidgetHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype, WidgetHandler handler);
-void RemoveWidgetHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype, WidgetHandler handler);
+void AddWidgetHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype,
+                      WidgetHandler handler);
+void RemoveWidgetHandler(KW_Widget *               widget,
+                         KW_WidgetEventHandlerType handlertype,
+                         WidgetHandler             handler);
 
 struct KW_Widget {
-  unsigned int childrencount;
-  struct KW_GUI *     gui;
-  KW_Rect             absolute;
-  KW_Rect             geometry;
-  KW_Rect             composed;
-  unsigned int        hints;
-  
+  unsigned int    childrencount;
+  struct KW_GUI * gui;
+  KW_Rect         absolute;
+  KW_Rect         geometry;
+  KW_Rect         composed;
+  unsigned int    hints;
+
   struct KW_Widget ** children;
   struct KW_Widget *  parent;
 
-  
-  KW_Texture *       tilesettexture;
-  KW_Surface *       tilesetsurface;
-  
-  KW_WidgetPaintFunction paint;
+  KW_Texture * tilesettexture;
+  KW_Surface * tilesetsurface;
+
+  KW_WidgetPaintFunction   paint;
   KW_WidgetDestroyFunction destroy;
-  KW_CustomRenderFunction render;
-  
+  KW_CustomRenderFunction  render;
+
   struct {
-    WidgetHandler *   handlers;
-    unsigned int      count;
+    WidgetHandler * handlers;
+    unsigned int    count;
   } eventhandlers[KW_EVENTHANDLER_TOTAL];
-  
-  
-  KW_Rect            oldcliprect;
-  KW_bool            clipchildren;
-  
-  void *              userdata;
-  void *              privdata;
-  KW_Color            debug;
+
+  KW_Rect oldcliprect;
+  KW_bool clipchildren;
+
+  void *   userdata;
+  void *   privdata;
+  KW_Color debug;
 };
 
 KW_Widget * AllocWidget();

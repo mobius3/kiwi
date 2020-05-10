@@ -11,10 +11,7 @@
 extern "C" {
 #endif
 
-typedef enum {
-  KW_FALSE = 0,
-  KW_TRUE = 1
-} KW_bool;
+typedef enum { KW_FALSE = 0, KW_TRUE = 1 } KW_bool;
 
 #ifdef __cplusplus
 }

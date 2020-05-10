@@ -1,0 +1,9 @@
+---
+BasedOnStyle: LLVM
+IndentWidth: 2
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterEnum: false
+AlignConsecutiveDeclarations: true
+PointerAlignment: Middle
+---
