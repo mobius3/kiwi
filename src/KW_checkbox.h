@@ -50,8 +50,8 @@ extern DECLSPEC KW_Widget * KW_CreateCheckbox(KW_GUI * gui, KW_Widget * parent, 
  */
 KW_bool KW_IsCheckboxChecked(KW_Widget* widget);
 
-KW_bool KW_CheckboxSetChecked(KW_Widget* widget, KW_Rect* Rect);
-KW_bool KW_CheckboxSetUnchecked(KW_Widget* widget, KW_Rect* Rect);
+void KW_CheckboxSetChecked(KW_Widget* widget, KW_Rect* Rect);
+void KW_CheckboxSetUnchecked(KW_Widget* widget, KW_Rect* Rect);
 
 #ifdef __cplusplus
 }

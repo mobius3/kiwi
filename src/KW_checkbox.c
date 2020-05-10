@@ -31,14 +31,14 @@ KW_AddWidgetMouseUpHandler(widget, & MouseUpCheckbox);
   return widget;
 }
 
-KW_bool KW_CheckboxSetChecked(KW_Widget* widget, KW_Rect* Rect){
+void KW_CheckboxSetChecked(KW_Widget* widget, KW_Rect* Rect){
   KW_Checkbox* checkbox = (KW_Checkbox *) KW_GetWidgetUserData(widget);
   checkbox->selected = *Rect;
   if(checkbox->checked){
     KW_SetLabelIcon(widget, &checkbox->selected);
   }
 }
-KW_bool KW_CheckboxSetUnchecked(KW_Widget* widget, KW_Rect* Rect){
+void KW_CheckboxSetUnchecked(KW_Widget* widget, KW_Rect* Rect){
   KW_Checkbox* checkbox = (KW_Checkbox *) KW_GetWidgetUserData(widget);
   checkbox->unselected = *Rect;
   if(!checkbox->checked){
