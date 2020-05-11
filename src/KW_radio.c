@@ -64,8 +64,8 @@ KW_Widget * KW_CreateRadio(KW_GUI * gui, KW_Widget * parent,
                            KW_RadioManager * manager, const char * text,
                            int value, const KW_Rect * geometry) {
   KW_RadioButton * radiobutton = calloc(sizeof(KW_RadioButton), 1);
-  KW_Widget *      widget =
-      KW_CreateWidget(gui, parent, geometry, PaintLabel, DestroyRadio, radiobutton);
+  KW_Widget *      widget = KW_CreateWidget(gui, parent, geometry, PaintLabel,
+                                       DestroyRadio, radiobutton);
   KW_SetLabelText(widget, text);
   KW_SetLabelAlignment(widget, KW_LABEL_ALIGN_LEFT, 0, KW_LABEL_ALIGN_MIDDLE,
                        0);

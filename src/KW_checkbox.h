@@ -33,9 +33,6 @@ extern "C" {
 
 /*
  * \brief   Creates a checkbox widget.
- * \details The checkbox uses the font specified in the KW_GUI instance unless specified otherwise.
- *          The geometry of the label is used to align horizontally and
- * vertically the label and also to clip its contents if they exceed it.
  * \param   gui The KW_GUI instance that will hold this widget.
  * \param   parent The parent widget of this widget.
  * \param   geometry The relative geometry of this label.
@@ -52,8 +49,18 @@ extern DECLSPEC KW_Widget * KW_CreateCheckbox(KW_GUI * gui, KW_Widget * parent,
  */
 extern DECLSPEC KW_bool KW_IsCheckboxChecked(KW_Widget * widget);
 
+/*
+ * \brief Sets the checked icon to be used
+ * \param widget the widget to be used
+ * \param Rect the icon sprite
+ */
 extern DECLSPEC void KW_CheckboxSetChecked(KW_Widget * widget, KW_Rect * Rect);
 
+/*
+ * \brief Sets the unchecked icon to be used
+ * \param widget the widget to be used
+ * \param Rect the icon sprite
+ */
 extern DECLSPEC void KW_CheckboxSetUnchecked(KW_Widget * widget,
                                              KW_Rect *   Rect);
 

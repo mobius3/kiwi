@@ -41,7 +41,7 @@ struct KW_RadioManager {
 };
 
 typedef struct KW_RadioButton {
-  KW_Label label;
+  KW_Label          label;
   KW_RadioManager * manager;
   int               value;
   void *            userdata;
