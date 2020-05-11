@@ -70,7 +70,7 @@ void PaintLabel(KW_Widget * widget, const KW_Rect * absolute, void * data) {
   };
 
   /* apply horizontal offset and icon offset */
-  dst.x += label->hoffset;
+  dst.x += label->hoffset+label->iconclip.w/2;
 
   /* calculate y according to valign */
   switch (label->valign) {
