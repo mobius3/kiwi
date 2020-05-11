@@ -30,19 +30,19 @@ extern "C" {
 #endif
 
 struct KW_RadioManager {
-  KW_Widget* items[1024];
-  int current_items;
-  KW_Widget* checked;
-  KW_Rect selected;
-  KW_Rect unselected;
+  KW_Widget * items[1024];
+  int         current_items;
+  KW_Widget * checked;
+  KW_Rect     selected;
+  KW_Rect     unselected;
 };
 
-typedef struct KW_RadioButton{
-  KW_RadioManager* manager;
-  int value;
+typedef struct KW_RadioButton {
+  KW_RadioManager * manager;
+  int               value;
 } KW_RadioButton;
 
-void DestroyRadio(KW_Widget* widget);
+void DestroyRadio(KW_Widget * widget);
 
 #ifdef __cplusplus
 }

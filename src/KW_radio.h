@@ -34,13 +34,16 @@ extern "C" {
 struct KW_RadioManager;
 typedef struct KW_RadioManager KW_RadioManager;
 
-KW_RadioManager* KW_CreateRadioManager();
-void KW_RadioManagerSetChecked(KW_RadioManager* manager, KW_Rect* Rect);
-void KW_RadioManagerSetUnchecked(KW_RadioManager* manager, KW_Rect* Rect);
+KW_RadioManager * KW_CreateRadioManager();
+void KW_RadioManagerSetChecked(KW_RadioManager * manager, KW_Rect * Rect);
+void KW_RadioManagerSetUnchecked(KW_RadioManager * manager, KW_Rect * Rect);
 
-int KW_RadioManagerGetSelected(KW_RadioManager* manager);
+int KW_RadioManagerGetSelected(KW_RadioManager * manager);
 
-extern DECLSPEC KW_Widget * KW_CreateRadio(KW_GUI * gui, KW_Widget * parent, KW_RadioManager * manager, const char * text, int value, const KW_Rect * geometry);
+extern DECLSPEC KW_Widget * KW_CreateRadio(KW_GUI * gui, KW_Widget * parent,
+                                           KW_RadioManager * manager,
+                                           const char * text, int value,
+                                           const KW_Rect * geometry);
 
 #ifdef __cplusplus
 }
