@@ -26,6 +26,7 @@
 #define KW_CHECKBOX_INTERNAL
 
 #include "KW_label.h"
+#include "KW_label_internal.h"
 #include "KW_widget.h"
 
 #ifdef __cplusplus
@@ -33,7 +34,8 @@ extern "C" {
 #endif
 
 typedef struct KW_Checkbox {
-  KW_Widget * label;
+  /* so it can be used as a label... I think */
+  KW_Label    label;
   KW_bool     checked;
   KW_Rect     selected;
   KW_Rect     unselected;

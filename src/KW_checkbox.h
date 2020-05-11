@@ -50,10 +50,11 @@ extern DECLSPEC KW_Widget * KW_CreateCheckbox(KW_GUI * gui, KW_Widget * parent,
  * \brief   Gets The Checked Status of the Widget.
  * \param   widget The label widget.
  */
-KW_bool KW_IsCheckboxChecked(KW_Widget * widget);
+extern DECLSPEC KW_bool KW_IsCheckboxChecked(KW_Widget * widget);
 
-void KW_CheckboxSetChecked(KW_Widget * widget, KW_Rect * Rect);
-void KW_CheckboxSetUnchecked(KW_Widget * widget, KW_Rect * Rect);
+extern DECLSPEC void KW_CheckboxSetChecked(KW_Widget * widget, KW_Rect * Rect);
+extern DECLSPEC void KW_CheckboxSetUnchecked(KW_Widget * widget,
+                                             KW_Rect *   Rect);
 
 #ifdef __cplusplus
 }
