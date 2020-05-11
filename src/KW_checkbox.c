@@ -52,3 +52,13 @@ void KW_CheckboxSetUnchecked(KW_Widget * widget, KW_Rect * Rect) {
     KW_SetLabelIcon(widget, &checkbox->unselected);
   }
 }
+
+extern DECLSPEC void * KW_GetRadioButtonUserData(KW_Widget * widget) {
+  KW_Checkbox * checkbox = (KW_Checkbox *) KW_GetWidgetUserData(widget);
+  return checkbox->userdata;
+}
+extern DECLSPEC void KW_SetRadioButtonUserData(KW_Widget * widget,
+                                               void *      data) {
+  KW_Checkbox * checkbox = (KW_Checkbox *) KW_GetWidgetUserData(widget);
+  checkbox->userdata = data;
+}

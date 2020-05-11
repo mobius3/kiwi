@@ -87,3 +87,19 @@ int KW_RadioManagerGetSelected(KW_RadioManager * manager) {
   }
   return 0;
 }
+void * KW_GetRadioManagerUserData(KW_RadioManager * manager) {
+  return manager->userdata;
+}
+
+void KW_SetRadioManagerUserData(KW_RadioManager * manager, void * data) {
+  manager->userdata = data;
+}
+
+void * KW_GetRadioButtonUserData(KW_Widget * widget) {
+  KW_RadioButton * rb = KW_GetWidgetUserData(widget);
+  return rb->userdata;
+}
+void KW_SetRadioButtonUserData(KW_Widget * widget, void * data) {
+  KW_RadioButton * rb = KW_GetWidgetUserData(widget);
+  rb->userdata = data;
+}

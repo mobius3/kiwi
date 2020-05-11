@@ -53,7 +53,11 @@ extern DECLSPEC KW_Widget * KW_CreateCheckbox(KW_GUI * gui, KW_Widget * parent,
 extern DECLSPEC KW_bool KW_IsCheckboxChecked(KW_Widget * widget);
 
 extern DECLSPEC void KW_CheckboxSetChecked(KW_Widget * widget, KW_Rect * Rect);
-extern DECLSPEC void KW_CheckboxSetUnchecked(KW_Widget * widget, KW_Rect * Rect);
+extern DECLSPEC void KW_CheckboxSetUnchecked(KW_Widget * widget,
+                                             KW_Rect *   Rect);
+
+extern DECLSPEC void * KW_GetCheckboxUserData(KW_Widget * widget);
+extern DECLSPEC void   KW_SetCheckboxUserData(KW_Widget * widget, void * data);
 
 #ifdef __cplusplus
 }

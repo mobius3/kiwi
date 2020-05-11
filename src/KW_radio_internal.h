@@ -35,11 +35,13 @@ struct KW_RadioManager {
   KW_Widget * checked;
   KW_Rect     selected;
   KW_Rect     unselected;
+  void *      userdata;
 };
 
 typedef struct KW_RadioButton {
   KW_RadioManager * manager;
   int               value;
+  void *            userdata;
 } KW_RadioButton;
 
 void DestroyRadio(KW_Widget * widget);

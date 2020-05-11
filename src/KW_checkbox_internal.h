@@ -37,6 +37,7 @@ typedef struct KW_Checkbox {
   KW_bool     checked;
   KW_Rect     selected;
   KW_Rect     unselected;
+  void *      userdata;
 } KW_Checkbox;
 
 void DestroyCheckbox(KW_Widget * widget);
