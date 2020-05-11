@@ -35,10 +35,10 @@ extern "C" {
 
 typedef struct KW_Checkbox {
   /* so it can be used as a label... I think */
-  KW_Label    label;
-  KW_bool     checked;
-  KW_Rect     selected;
-  KW_Rect     unselected;
+  KW_Label label;
+  KW_bool  checked;
+  KW_Rect  selected;
+  KW_Rect  unselected;
 } KW_Checkbox;
 
 void DestroyCheckbox(KW_Widget * widget);

@@ -30,7 +30,7 @@ void KW_RadioManagerSetUnchecked(KW_RadioManager * manager, KW_Rect * Rect) {
 
 void MouseUpRadio(KW_Widget * widget, int b) {
   KW_RadioButton * radiobutton =
-      (KW_RadioButton *) KW_GetWidgetUserData(widget);
+      (KW_RadioButton *) KW_GetWidgetData(widget, PaintLabel);
   int i;
   if (b != 1) {
     return;
@@ -44,7 +44,7 @@ void MouseUpRadio(KW_Widget * widget, int b) {
 }
 
 void DestroyRadio(KW_Widget * widget) {
-  KW_RadioButton * rb = (KW_RadioButton *) KW_GetWidgetUserData(widget);
+  KW_RadioButton * rb = (KW_RadioButton *) KW_GetWidgetData(widget, PaintLabel);
   int              i;
   for (i = 0; i < rb->manager->current_items; i++) {
     if (rb->manager->items[i] == widget) {
@@ -55,23 +55,22 @@ void DestroyRadio(KW_Widget * widget) {
   if (rb->manager->current_items > 0) {
     rb->manager->items[i] = rb->manager->items[rb->manager->current_items - 1];
   }
-  DestroyLabel(widget);
+  SDL_free(rb->label.text);
+  KW_ReleaseTexture(KW_GetWidgetRenderer(widget), rb->label.textrender);
   free(rb);
 }
 
 KW_Widget * KW_CreateRadio(KW_GUI * gui, KW_Widget * parent,
                            KW_RadioManager * manager, const char * text,
                            int value, const KW_Rect * geometry) {
-  KW_Label *       label = calloc(sizeof(KW_Label), 1);
   KW_RadioButton * radiobutton = calloc(sizeof(KW_RadioButton), 1);
   KW_Widget *      widget =
-      KW_CreateWidget(gui, parent, geometry, PaintLabel, DestroyRadio, label);
+      KW_CreateWidget(gui, parent, geometry, PaintLabel, DestroyRadio, radiobutton);
   KW_SetLabelText(widget, text);
   KW_SetLabelAlignment(widget, KW_LABEL_ALIGN_LEFT, 0, KW_LABEL_ALIGN_MIDDLE,
                        0);
   KW_AddGUIFontChangedHandler(gui, LabelFontChanged, widget);
   KW_LabelDisableWrap(widget);
-  KW_SetWidgetUserData(widget, radiobutton);
   KW_AddWidgetMouseUpHandler(widget, &MouseUpRadio);
   KW_SetLabelIcon(widget, &manager->unselected);
   radiobutton->manager = manager;
@@ -86,4 +85,20 @@ int KW_RadioManagerGetSelected(KW_RadioManager * manager) {
     return rb->value;
   }
   return 0;
+}
+void * KW_GetRadioManagerUserData(KW_RadioManager * manager) {
+  return manager->userdata;
+}
+
+void KW_SetRadioManagerUserData(KW_RadioManager * manager, void * data) {
+  manager->userdata = data;
+}
+
+void * KW_GetRadioButtonUserData(KW_Widget * widget) {
+  KW_RadioButton * rb = KW_GetWidgetUserData(widget);
+  return rb->userdata;
+}
+void KW_SetRadioButtonUserData(KW_Widget * widget, void * data) {
+  KW_RadioButton * rb = KW_GetWidgetUserData(widget);
+  rb->userdata = data;
 }
