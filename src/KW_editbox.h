@@ -27,7 +27,7 @@
 
 /**
  * \file KW_editbox.h
- * 
+ *
  * Defines functions related to creating and managing edit boxes
  */
 
@@ -48,7 +48,7 @@ extern "C" {
  * \return  The editbox instance.
  */
 extern DECLSPEC KW_Widget * KW_CreateEditbox(KW_GUI * gui, KW_Widget * parent,
-                                             const char * text,
+                                             const char *    text,
                                              const KW_Rect * geometry);
 
 /**
@@ -71,7 +71,7 @@ extern DECLSPEC const char * KW_GetEditboxText(KW_Widget * widget);
  * \param widget the edtibox widget to change
  * \param pos the cursor position
  */
-extern DECLSPEC void KW_SetEditboxCursorPosition(KW_Widget * widget,
+extern DECLSPEC void KW_SetEditboxCursorPosition(KW_Widget *  widget,
                                                  unsigned int pos);
 
 /**

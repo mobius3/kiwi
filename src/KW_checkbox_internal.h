@@ -25,21 +25,21 @@
 #ifndef KW_CHECKBOX_INTERNAL
 #define KW_CHECKBOX_INTERNAL
 
-#include "KW_widget.h"
 #include "KW_label.h"
+#include "KW_widget.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 typedef struct KW_Checkbox {
-  KW_Widget* label;
-  KW_bool checked;
-  KW_Rect selected;
-  KW_Rect unselected;
+  KW_Widget * label;
+  KW_bool     checked;
+  KW_Rect     selected;
+  KW_Rect     unselected;
 } KW_Checkbox;
 
-void DestroyCheckbox(KW_Widget* widget);
+void DestroyCheckbox(KW_Widget * widget);
 
 #ifdef __cplusplus
 }

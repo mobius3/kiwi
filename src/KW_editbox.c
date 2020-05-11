@@ -1,12 +1,14 @@
 #include "KW_editbox.h"
-#include "KW_widget.h"
-#include "KW_gui.h"
 #include "KW_editbox_internal.h"
+#include "KW_gui.h"
+#include "KW_widget.h"
 
 /* public functions */
-KW_Widget * KW_CreateEditbox(KW_GUI * gui, KW_Widget * parent, const char * text, const KW_Rect * geometry) {
+KW_Widget * KW_CreateEditbox(KW_GUI * gui, KW_Widget * parent,
+                             const char * text, const KW_Rect * geometry) {
   KW_Editbox * editbox = AllocEditbox();
-  KW_Widget * widget = KW_CreateWidget(gui, parent, geometry, PaintEditbox, DestroyEditbox, editbox);
+  KW_Widget *  widget = KW_CreateWidget(gui, parent, geometry, PaintEditbox,
+                                       DestroyEditbox, editbox);
   SDL_strlcat(editbox->text, text, 1024);
   editbox->font = NULL;
   editbox->widget = widget;
@@ -19,11 +21,11 @@ KW_Widget * KW_CreateEditbox(KW_GUI * gui, KW_Widget * parent, const char * text
   KW_AddWidgetFocusLoseHandler(widget, EditboxFocusLose);
   KW_AddWidgetTextInputHandler(widget, EditboxTextInput);
   KW_AddWidgetKeyDownHandler(widget, EditboxKeyDown);
-  
+
   KW_AddGUIFontChangedHandler(gui, EditboxFontChanged, widget);
 
   RenderEditboxText(editbox);
-  AdjustCursor(editbox, (int)SDL_strlen(text));
+  AdjustCursor(editbox, (int) SDL_strlen(text));
   return widget;
 }
 
@@ -60,7 +62,6 @@ void KW_SetEditboxText(KW_Widget * widget, const char * text) {
   RenderEditboxText(editbox);
 }
 
-
 void KW_SetEditboxTextColor(KW_Widget * widget, KW_Color color) {
   KW_Editbox * editbox = (KW_Editbox *) KW_GetWidgetData(widget, PaintEditbox);
   editbox->color = color;
@@ -70,7 +71,8 @@ void KW_SetEditboxTextColor(KW_Widget * widget, KW_Color color) {
 
 KW_Color KW_GetEditboxTextColor(KW_Widget * widget) {
   KW_Editbox * editbox = (KW_Editbox *) KW_GetWidgetData(widget, PaintEditbox);
-  return editbox->colorset ? editbox->color : KW_GetTextColor(KW_GetGUI(widget));
+  return editbox->colorset ? editbox->color
+                           : KW_GetTextColor(KW_GetGUI(widget));
 }
 
 KW_bool KW_WasEditboxTextColorSet(KW_Widget * widget) {

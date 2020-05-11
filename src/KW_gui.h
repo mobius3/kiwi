@@ -26,15 +26,14 @@
 #define KW_GUI_H
 
 #include "KW_macros.h"
-#include "KW_widget.h"
 #include "KW_renderdriver.h"
+#include "KW_widget.h"
 
-/** 
+/**
  * \file KW_gui.h
- * 
+ *
  * Main include for the KiWi library.
  */
-
 
 /**
  *  \mainpage KiWi
@@ -42,13 +41,13 @@
  *  http://www.libsdl.org/
  *
  *  \section intro_sec Introduction
- * 
+ *
  *  KiWi is a widget-based GUI library for 2D games using SDL2. Its widgets
  *  are built from a tileset allowing you to customize the looks of your GUI
  *  by simply changing the source tile set.
- * 
+ *
  *  You can also create custom widgets.
- * 
+ *
  */
 
 #ifdef __cplusplus
@@ -70,15 +69,15 @@ typedef void (*KW_OnGUIFontChanged)(KW_GUI * gui, void * data, KW_Font * font);
  * \brief The type of a text color changed handler
  * \sa KW_AddGUITextColorChangedHandler
  */
-typedef void (*KW_OnGUITextColorChanged)(KW_GUI * gui, void * data, KW_Color color);
-
+typedef void (*KW_OnGUITextColorChanged)(KW_GUI * gui, void * data,
+                                         KW_Color color);
 
 /**
  * \brief   Initializes a new KW_GUI instance.
  * \details Each KW_Widget should be associated with a KW_GUI. For each KW_GUI
  *          that you create, you should call KW_Quit(gui) when quitting. KW_GUI
  *          doesn't take ownership of either the renderer or the tileset.
- * 
+ *
  *          The tileset will be available to widgets both in the surface and
  *          texture forms. This is useful if your widget doesn'nt change a lot
  *          and you want to compose a texture to use always.
@@ -86,7 +85,8 @@ typedef void (*KW_OnGUITextColorChanged)(KW_GUI * gui, void * data, KW_Color col
  * \param   tileset The tile surface to use as a tileset.
  * \returns A initialized KW_GUI instance.
  */
-extern DECLSPEC KW_GUI * KW_Init(KW_RenderDriver * renderer, KW_Surface * tileset);
+extern DECLSPEC KW_GUI * KW_Init(KW_RenderDriver * renderer,
+                                 KW_Surface *      tileset);
 
 /**
  * \brief   Quits this KW_GUI instance and free its resources.
@@ -157,7 +157,6 @@ extern DECLSPEC void KW_SetFont(KW_GUI * gui, KW_Font * font);
  */
 extern DECLSPEC void KW_SetTextColor(KW_GUI * gui, KW_Color color);
 
-
 /**
  * \brief   Add a function to be called when the current GUI font changes.
  * \details If you are rendering text somewhere, you might want to know when
@@ -167,7 +166,9 @@ extern DECLSPEC void KW_SetTextColor(KW_GUI * gui, KW_Color color);
  * \param   handler The actual handler.
  * \param   priv Private data that will be passed to the handler.
  */
-extern DECLSPEC void KW_AddGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, void * priv);
+extern DECLSPEC void KW_AddGUIFontChangedHandler(KW_GUI *            gui,
+                                                 KW_OnGUIFontChanged handler,
+                                                 void *              priv);
 
 /**
  * \brief   Remove a previously added font changed handler.
@@ -176,7 +177,9 @@ extern DECLSPEC void KW_AddGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChang
  * \param   handler The handler to remove.
  * \param   priv The private data to match.
  */
-extern DECLSPEC void KW_RemoveGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, void * priv);
+extern DECLSPEC void KW_RemoveGUIFontChangedHandler(KW_GUI *            gui,
+                                                    KW_OnGUIFontChanged handler,
+                                                    void *              priv);
 
 /**
  * \brief   Add a function to be called when the current GUI text color changes.
@@ -187,7 +190,9 @@ extern DECLSPEC void KW_RemoveGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontCh
  * \param   handler The actual handler.
  * \param   priv Private data that will be passed to the handler.
  */
-extern DECLSPEC void KW_AddGUITextColorChangedHandler(KW_GUI * gui, KW_OnGUITextColorChanged handler, void * priv);
+extern DECLSPEC void
+KW_AddGUITextColorChangedHandler(KW_GUI * gui, KW_OnGUITextColorChanged handler,
+                                 void * priv);
 
 /**
  * \brief   Remove a previously added text color changed handler.
@@ -196,7 +201,8 @@ extern DECLSPEC void KW_AddGUITextColorChangedHandler(KW_GUI * gui, KW_OnGUIText
  * \param   handler The handler to remove.
  * \param   priv The private data to match.
  */
-extern DECLSPEC void KW_RemoveGUITextColorChangedHandler(KW_GUI * gui, KW_OnGUITextColorChanged handler, void * priv);
+extern DECLSPEC void KW_RemoveGUITextColorChangedHandler(
+    KW_GUI * gui, KW_OnGUITextColorChanged handler, void * priv);
 
 /**
  * \brief   Get the current font associated with a KW_GUI instance.
@@ -224,17 +230,17 @@ extern DECLSPEC void KW_Paint(KW_GUI * gui);
 /**
  * \brief   Process all pending events (mouse movement, keyboard movement, etc)
  * \details This function should be called before KW_Paint. It will update the state of the
- *          widgets based on the position of the cursor, clicks/touches and keyboard inputs.
- *          Most input based callbacks will be called before this function returns.
- * \param   gui The KW_GUI instance holding the widget tree.
+ *          widgets based on the position of the cursor, clicks/touches and
+ * keyboard inputs. Most input based callbacks will be called before this
+ * function returns. \param   gui The KW_GUI instance holding the widget tree.
  */
 extern DECLSPEC void KW_ProcessEvents(KW_GUI * gui);
 
 /**
  * \brief   Hides GUI
  * \details This function is used to hide the gui to stop the events being handled.
- *          This will prevent the eventqueue from filling up, overflowing and causing
- *          a segmentation fault if events are not handled for a while.
+ *          This will prevent the eventqueue from filling up, overflowing and
+ * causing a segmentation fault if events are not handled for a while.
  * \param   gui The KW_GUI instance holding the widget tree.
  */
 extern DECLSPEC void KW_HideGUI(KW_GUI * gui);

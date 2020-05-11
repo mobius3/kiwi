@@ -29,30 +29,30 @@
 
 /* Some compilers use a special export keyword */
 #ifndef DECLSPEC
-# if defined(__WIN32__) || defined (_MSC_VER)
-#  ifdef __BORLANDC__
-#   ifdef KiWi_EXPORTS
-#    define DECLSPEC
-#   else
-#    define DECLSPEC    __declspec(dllimport)
-#   endif
-#  else
-#   define DECLSPEC __declspec(dllexport)
-#  endif
-# else
-#  if defined(__GNUC__) && __GNUC__ >= 4
-#   define DECLSPEC __attribute__ ((visibility("default")))
-#  elif defined(__GNUC__) && __GNUC__ >= 2
-#   define DECLSPEC __declspec(dllexport)
-#  else
-#   define DECLSPEC
-#  endif
-# endif
+#if defined(__WIN32__) || defined(_MSC_VER)
+#ifdef __BORLANDC__
+#ifdef KiWi_EXPORTS
+#define DECLSPEC
+#else
+#define DECLSPEC __declspec(dllimport)
+#endif
+#else
+#define DECLSPEC __declspec(dllexport)
+#endif
+#else
+#if defined(__GNUC__) && __GNUC__ >= 4
+#define DECLSPEC __attribute__((visibility("default")))
+#elif defined(__GNUC__) && __GNUC__ >= 2
+#define DECLSPEC __declspec(dllexport)
+#else
+#define DECLSPEC
+#endif
+#endif
 #endif
 
 /* By default SDL uses the C calling convention */
 #ifndef KIWICALL
-#if (defined(__WIN32__) || defined (_MSC_VER)) && !defined(__GNUC__)
+#if (defined(__WIN32__) || defined(_MSC_VER)) && !defined(__GNUC__)
 #define KIWICALL __cdecl
 #else
 #define KIWICALL

@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 typedef struct KW_Button {
-  KW_Widget * labelwidget; /* the label inside the button frame */
+  KW_Widget *  labelwidget; /* the label inside the button frame */
   KW_Texture * normal;
   KW_Texture * over;
 } KW_Button;

@@ -28,14 +28,13 @@
 
 /**
  * \file KW_button.h
- * 
+ *
  * Declares functions for creating and managing buttons
  */
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 
 /**
  * \brief   Creates a button widget.
@@ -46,7 +45,9 @@ extern "C" {
  * \param   geometry The geometry of this button.
  * \return  The button instance.
  */
-extern DECLSPEC KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, KW_Widget * label, const KW_Rect * geometry);
+extern DECLSPEC KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent,
+                                            KW_Widget *     label,
+                                            const KW_Rect * geometry);
 
 /**
  * \brief   Creates a button widget and a label with the text.
@@ -58,7 +59,10 @@ extern DECLSPEC KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, KW
  * \param   geometry The geometry of this button.
  * \return  The button instance.
  */
-extern DECLSPEC KW_Widget * KW_CreateButtonAndLabel(KW_GUI * gui, KW_Widget * parent, const char * text, const KW_Rect * geometry);
+extern DECLSPEC KW_Widget * KW_CreateButtonAndLabel(KW_GUI *        gui,
+                                                    KW_Widget *     parent,
+                                                    const char *    text,
+                                                    const KW_Rect * geometry);
 
 /**
  * \brief Sets a new widget as a label
@@ -67,7 +71,8 @@ extern DECLSPEC KW_Widget * KW_CreateButtonAndLabel(KW_GUI * gui, KW_Widget * pa
  * \returns The old label, reparented to the root widget.
  * \details You might want to destroy the returning widget if you have no use to it.
  */
-extern DECLSPEC KW_Widget * KW_SetButtonLabel(KW_Widget * button, KW_Widget * label);
+extern DECLSPEC KW_Widget * KW_SetButtonLabel(KW_Widget * button,
+                                              KW_Widget * label);
 
 /**
  * \brief Returns the label associated with this widget.
@@ -75,7 +80,6 @@ extern DECLSPEC KW_Widget * KW_SetButtonLabel(KW_Widget * button, KW_Widget * la
  * \returns The widget set as label
  */
 extern DECLSPEC KW_Widget * KW_GetButtonLabel(KW_Widget * button);
-
 
 #ifdef __cplusplus
 }

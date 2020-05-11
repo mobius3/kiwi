@@ -45,7 +45,8 @@ extern "C" {
  * \param geometry The geometry of this widget. Big toggles may look ugly.
  * \returns The instance of the toggle as a widget
  */
-extern DECLSPEC KW_Widget * KW_CreateToggle(KW_GUI * gui, KW_Widget * parent, const KW_Rect * geometry);
+extern DECLSPEC KW_Widget * KW_CreateToggle(KW_GUI * gui, KW_Widget * parent,
+                                            const KW_Rect * geometry);
 
 /**
  * \brief Returns if the toggle is checked (it was clicked or set) or not

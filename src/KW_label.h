@@ -24,7 +24,7 @@
 
 /**
  * \file KW_label.h
- * 
+ *
  * Declares functions for creating and managing labels.
  */
 
@@ -44,9 +44,11 @@ typedef KW_RenderDriver_TextStyle KW_Label_Style;
  * \details Text is vertically aligned inside its defined geometry
  */
 typedef enum KW_LabelVerticalAlignment {
-  KW_LABEL_ALIGN_TOP,     /** Vertically align label in the top of the geometry. */
-  KW_LABEL_ALIGN_MIDDLE,  /** Vertically align label in the middle of the geometry. */
-  KW_LABEL_ALIGN_BOTTOM   /** Vertically align label in the bottom of the geometry. */
+  KW_LABEL_ALIGN_TOP, /** Vertically align label in the top of the geometry. */
+  KW_LABEL_ALIGN_MIDDLE, /** Vertically align label in the middle of the
+                            geometry. */
+  KW_LABEL_ALIGN_BOTTOM  /** Vertically align label in the bottom of the
+                            geometry. */
 } KW_LabelVerticalAlignment;
 
 /**
@@ -54,22 +56,27 @@ typedef enum KW_LabelVerticalAlignment {
  * \details Text is horizontally aligned inside its defined geometry
  */
 typedef enum KW_LabelHorizontalAlignment {
-  KW_LABEL_ALIGN_LEFT,    /** Horizontally align label in the left part of the geometry. */
-  KW_LABEL_ALIGN_CENTER,  /** Horizontally align label in the center part of the geometry. */
-  KW_LABEL_ALIGN_RIGHT    /** Horizontally align label in the right part of the geometry. */
+  KW_LABEL_ALIGN_LEFT,   /** Horizontally align label in the left part of the
+                            geometry. */
+  KW_LABEL_ALIGN_CENTER, /** Horizontally align label in the center part of the
+                            geometry. */
+  KW_LABEL_ALIGN_RIGHT   /** Horizontally align label in the right part of the
+                            geometry. */
 } KW_LabelHorizontalAlignment;
 
 /**
  * \brief   Creates a label widget.
  * \details The label uses the font specified in the KW_GUI instance unless specified otherwise.
- *          The geometry of the label is used to align horizontally and vertically the label and also
- *          to clip its contents if they exceed it.
+ *          The geometry of the label is used to align horizontally and
+ * vertically the label and also to clip its contents if they exceed it.
  * \param   gui The KW_GUI instance that will hold this widget.
  * \param   parent The parent widget of this widget.
  * \param   geometry The relative geometry of this label.
  * \return  The label instance.
  */
-extern DECLSPEC KW_Widget * KW_CreateLabel(KW_GUI * gui, KW_Widget * parent, const char * text, const KW_Rect * geometry);
+extern DECLSPEC KW_Widget * KW_CreateLabel(KW_GUI * gui, KW_Widget * parent,
+                                           const char *    text,
+                                           const KW_Rect * geometry);
 
 /**
  * \brief   Set the text being rendered in this label.
@@ -108,7 +115,11 @@ extern DECLSPEC void KW_SetLabelFont(KW_Widget * widget, KW_Font * font);
  * \param   valign The vertical alignment used.
  * \param   voffset The vertical offset to be added to the label position after its aligned.
  */
-extern DECLSPEC void KW_SetLabelAlignment(KW_Widget * widget, KW_LabelHorizontalAlignment halign, int hoffset, KW_LabelVerticalAlignment valign, int voffset);
+extern DECLSPEC void KW_SetLabelAlignment(KW_Widget *                 widget,
+                                          KW_LabelHorizontalAlignment halign,
+                                          int                         hoffset,
+                                          KW_LabelVerticalAlignment   valign,
+                                          int                         voffset);
 
 /**
  * \brief   Display an icon in the left side of the text.
@@ -117,7 +128,8 @@ extern DECLSPEC void KW_SetLabelAlignment(KW_Widget * widget, KW_LabelHorizontal
  * \param   iconclip The clipping rect in the tileset to clip the icon from. Set
  *          to NULL to remove the icon.
  */
-extern DECLSPEC void KW_SetLabelIcon(KW_Widget * widget, const KW_Rect * iconclip);
+extern DECLSPEC void KW_SetLabelIcon(KW_Widget *     widget,
+                                     const KW_Rect * iconclip);
 
 /**
  * \brief   Gets the associated font with a label.
@@ -151,10 +163,10 @@ extern DECLSPEC KW_bool KW_WasLabelTextColorSet(KW_Widget * widget);
  */
 extern DECLSPEC void KW_LabelDisableWrap(KW_Widget * widget);
 
- /**
-  * \brief   Sets the Text to Wrap
-  * \param   widget The label widget.
-  */
+/**
+ * \brief   Sets the Text to Wrap
+ * \param   widget The label widget.
+ */
 extern DECLSPEC void KW_LabelEnableWrap(KW_Widget * widget);
 
 #ifdef __cplusplus

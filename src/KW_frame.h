@@ -27,7 +27,7 @@
 
 /**
  * \file KW_frame.h
- * 
+ *
  * Defines functions related to the frame KW_Widget
  */
 
@@ -45,11 +45,11 @@ extern "C" {
  * \param   geometry The relative geometry of this frame.
  * \return  The frame instance.
  */
-extern DECLSPEC KW_Widget * KW_CreateFrame(KW_GUI * gui, KW_Widget * parent, const KW_Rect * geometry);
+extern DECLSPEC KW_Widget * KW_CreateFrame(KW_GUI * gui, KW_Widget * parent,
+                                           const KW_Rect * geometry);
 
 #ifdef __cplusplus
 }
 #endif
-
 
 #endif
