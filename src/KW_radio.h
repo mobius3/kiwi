@@ -35,10 +35,12 @@ struct KW_RadioManager;
 typedef struct KW_RadioManager KW_RadioManager;
 
 extern DECLSPEC KW_RadioManager * KW_CreateRadioManager();
+
 extern DECLSPEC void KW_RadioManagerSetChecked(KW_RadioManager * manager,
                                                KW_Rect *         Rect);
 extern DECLSPEC void KW_RadioManagerSetUnchecked(KW_RadioManager * manager,
                                                  KW_Rect *         Rect);
+
 
 extern DECLSPEC int KW_RadioManagerGetSelected(KW_RadioManager * manager);
 
