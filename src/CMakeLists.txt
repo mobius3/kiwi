@@ -47,6 +47,7 @@ set(LIB_SOURCES
   KW_rect.c
   KW_toggle.c
   KW_checkbox.c
+  KW_checkbox_internal.c
   KW_radio.c
 )
 

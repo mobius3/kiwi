@@ -28,7 +28,7 @@ are needed to reach version 1.0.0. Things might get added periodically.
   - [ ] All include files should be lowercase
   - [ ] Add `c-rez` instead of older resource generator
 - [ ] Widgets (by value and how easy to write)
-  - [ ] Checkbox
+  - [x] Checkbox
   - [x] Radio (with radio group/automatic check control)
   - [ ] Progress bar
   - [ ] Slider
