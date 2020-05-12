@@ -82,7 +82,7 @@ KW_Widget * KW_CreateRadio(KW_GUI * gui, KW_Widget * parent,
 
 int KW_RadioManagerGetSelected(KW_RadioManager * manager) {
   if (manager->checked) {
-    KW_RadioButton * rb = KW_GetWidgetUserData(manager->checked);
+    KW_RadioButton * rb = KW_GetWidgetData(manager->checked, PaintLabel);
     return rb->value;
   }
   return 0;
