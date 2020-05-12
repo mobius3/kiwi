@@ -15,6 +15,7 @@ Here are some screenshots (click on them to see code):
 [![Styleswitcher](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/styleswitcher/styleswitcher-screenshot.gif "Styleswitcher")](https://github.com/mobius3/KiWi/blob/master/examples/styleswitcher/styleswitcher.c)
 
 [![A scrollbox full of dragable buttons](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/scrollbox/scrollbox-screenshot.gif "A scrollbox full of dragable buttons")](https://github.com/mobius3/KiWi/blob/master/examples/scrollbox/scrollbox.c)
+[![Checkboxes and Radio Buttons](https://raw.githubusercontent.com/mobius3/KiWi/master/examples/checkbox-radio/checkbox-radio-screenshot.png)](https://github.com/mobius3/KiWi/blob/master/examples/checkbox-radio/checkbox-radio.c)
 
 **Road to 1.0.0**
 
@@ -27,7 +28,7 @@ in the future. We're heading towards a 1.0.0 release. Checkout the [roadmap].
 
 ## Basic usage
 
-Here is a very basic code that draws a label on screen (taken from the 
+Here is a very basic code that draws a label on screen (taken from the
 [label] example):
 
 ```cpp

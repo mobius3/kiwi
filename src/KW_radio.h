@@ -31,20 +31,68 @@
 extern "C" {
 #endif
 
+/**
+ * KW_RadioManager type. You need one manager for every set of radio buttons (of
+ * which only one of these may be selected at a time)
+ */
 struct KW_RadioManager;
 typedef struct KW_RadioManager KW_RadioManager;
 
+/**
+ * allocates a Radio object, will need to be freed at the end of use (after all
+ * managed radio buttons are destroyed)
+ */
 extern DECLSPEC KW_RadioManager * KW_CreateRadioManager();
-extern DECLSPEC void KW_RadioManagerSetChecked(KW_RadioManager * manager, KW_Rect * Rect);
-extern DECLSPEC void KW_RadioManagerSetUnchecked(KW_RadioManager * manager, KW_Rect * Rect);
 
+/**
+ * \brief Sets the checked icon to be used
+ * \param manager the manager to be used
+ * \param Rect the icon sprite
+ */
+extern DECLSPEC void KW_RadioManagerSetCheckedIcon(KW_RadioManager * manager,
+                                                   KW_Rect *         Rect);
+
+/**
+ * \brief Sets the unchecked icon to be used
+ * \param manager the manager to be used
+ * \param Rect the icon sprite
+ */
+extern DECLSPEC void KW_RadioManagerSetUncheckedIcon(KW_RadioManager * manager,
+                                                     KW_Rect *         Rect);
+
+/**
+ * \brief Gets the int/enum of the selected element
+ * \param manager the set of radiobuttons to get the selected value
+ * \returns the value of the selected value, 0 otherwise
+ */
 extern DECLSPEC int KW_RadioManagerGetSelected(KW_RadioManager * manager);
 
+/**
+ * \brief   Creates a radio widget.
+ * \details Create Radio widget, very similar to the KW_CreateLabel function, but there are two added arguments
+ * \param   gui The KW_GUI instance that will hold this widget.
+ * \param   parent The parent widget of this widget.
+ * \param manager the radio manager the radiobox needs to be added to
+ * \param value the enum value that will be returned by KW_RadioManagerGetSelected if it is selected
+ * \param   geometry The relative geometry of this label.
+ * \return  The radiobutton instance.
+ * \sa KW_CreateLabel
+ */
 extern DECLSPEC KW_Widget * KW_CreateRadio(KW_GUI * gui, KW_Widget * parent,
                                            KW_RadioManager * manager,
                                            const char * text, int value,
                                            const KW_Rect * geometry);
 
+/**
+ * \return the userdata stored in the KW_RadioManager*
+ */
+extern DECLSPEC void * KW_GetRadioManagerUserData(KW_RadioManager * manager);
+
+/**
+ * \brief sets the userdata stored in the KW_RadioManager*
+ */
+extern DECLSPEC void KW_SetRadioManagerUserData(KW_RadioManager * manager,
+                                                void *            data);
 #ifdef __cplusplus
 }
 #endif

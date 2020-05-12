@@ -22,6 +22,8 @@
      distribution.
 */
 
+#include "KW_label_internal.h"
+
 #ifndef KW_RADIO_INTERNAL
 #define KW_RADIO_INTERNAL
 
@@ -35,9 +37,11 @@ struct KW_RadioManager {
   KW_Widget * checked;
   KW_Rect     selected;
   KW_Rect     unselected;
+  void *      userdata;
 };
 
 typedef struct KW_RadioButton {
+  KW_Label          label;
   KW_RadioManager * manager;
   int               value;
 } KW_RadioButton;

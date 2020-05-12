@@ -37,3 +37,6 @@ add_subdirectory(drag)
 
 # Debug gizmos example
 add_subdirectory(debug-gizmos)
+
+# Checkbox Radio example
+add_subdirectory(checkbox-radio)
