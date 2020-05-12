@@ -31,7 +31,7 @@
 extern "C" {
 #endif
 
-/*
+/**
  * \brief   Creates a checkbox widget.
  * \param   gui The KW_GUI instance that will hold this widget.
  * \param   parent The parent widget of this widget.
@@ -49,14 +49,14 @@ extern DECLSPEC KW_Widget * KW_CreateCheckbox(KW_GUI * gui, KW_Widget * parent,
  */
 extern DECLSPEC KW_bool KW_IsCheckboxChecked(KW_Widget * widget);
 
-/*
+/**
  * \brief Sets the checked icon to be used
  * \param widget the widget to be used
  * \param Rect the icon sprite
  */
 extern DECLSPEC void KW_CheckboxSetChecked(KW_Widget * widget, KW_Rect * Rect);
 
-/*
+/**
  * \brief Sets the unchecked icon to be used
  * \param widget the widget to be used
  * \param Rect the icon sprite
