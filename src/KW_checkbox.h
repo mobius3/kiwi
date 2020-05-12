@@ -54,15 +54,16 @@ extern DECLSPEC KW_bool KW_IsCheckboxChecked(KW_Widget * widget);
  * \param widget the widget to be used
  * \param Rect the icon sprite
  */
-extern DECLSPEC void KW_CheckboxSetChecked(KW_Widget * widget, KW_Rect * Rect);
+extern DECLSPEC void KW_CheckboxSetCheckedIcon(KW_Widget * widget,
+                                               KW_Rect *   Rect);
 
 /**
  * \brief Sets the unchecked icon to be used
  * \param widget the widget to be used
  * \param Rect the icon sprite
  */
-extern DECLSPEC void KW_CheckboxSetUnchecked(KW_Widget * widget,
-                                             KW_Rect *   Rect);
+extern DECLSPEC void KW_CheckboxSetUncheckedIcon(KW_Widget * widget,
+                                                 KW_Rect *   Rect);
 
 #ifdef __cplusplus
 }

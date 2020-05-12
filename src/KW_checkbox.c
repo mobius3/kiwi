@@ -36,14 +36,14 @@ KW_Widget * KW_CreateCheckbox(KW_GUI * gui, KW_Widget * parent,
   return widget;
 }
 
-void KW_CheckboxSetChecked(KW_Widget * widget, KW_Rect * Rect) {
+void KW_CheckboxSetCheckedIcon(KW_Widget * widget, KW_Rect * Rect) {
   KW_Checkbox * checkbox = (KW_Checkbox *) KW_GetWidgetData(widget, PaintLabel);
   checkbox->selected = *Rect;
   if (checkbox->checked) {
     KW_SetLabelIcon(widget, &checkbox->selected);
   }
 }
-void KW_CheckboxSetUnchecked(KW_Widget * widget, KW_Rect * Rect) {
+void KW_CheckboxSetUncheckedIcon(KW_Widget * widget, KW_Rect * Rect) {
   KW_Checkbox * checkbox = (KW_Checkbox *) KW_GetWidgetData(widget, PaintLabel);
   checkbox->unselected = *Rect;
   if (!checkbox->checked) {

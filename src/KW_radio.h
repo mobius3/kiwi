@@ -49,16 +49,16 @@ extern DECLSPEC KW_RadioManager * KW_CreateRadioManager();
  * \param manager the manager to be used
  * \param Rect the icon sprite
  */
-extern DECLSPEC void KW_RadioManagerSetChecked(KW_RadioManager * manager,
-                                               KW_Rect *         Rect);
+extern DECLSPEC void KW_RadioManagerSetCheckedIcon(KW_RadioManager * manager,
+                                                   KW_Rect *         Rect);
 
 /**
  * \brief Sets the unchecked icon to be used
  * \param manager the manager to be used
  * \param Rect the icon sprite
  */
-extern DECLSPEC void KW_RadioManagerSetUnchecked(KW_RadioManager * manager,
-                                                 KW_Rect *         Rect);
+extern DECLSPEC void KW_RadioManagerSetUncheckedIcon(KW_RadioManager * manager,
+                                                     KW_Rect *         Rect);
 
 /**
  * \brief Gets the int/enum of the selected element
@@ -91,8 +91,8 @@ extern DECLSPEC void * KW_GetRadioManagerUserData(KW_RadioManager * manager);
 /**
  * \brief sets the userdata stored in the KW_RadioManager*
  */
-extern DECLSPEC void   KW_SetRadioManagerUserData(KW_RadioManager * manager,
-                                                  void *            data);
+extern DECLSPEC void KW_SetRadioManagerUserData(KW_RadioManager * manager,
+                                                void *            data);
 #ifdef __cplusplus
 }
 #endif

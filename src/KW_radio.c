@@ -10,14 +10,15 @@ KW_RadioManager * KW_CreateRadioManager() {
   return radiomanager;
 }
 
-void KW_RadioManagerSetChecked(KW_RadioManager * manager, KW_Rect * Rect) {
+void KW_RadioManagerSetCheckedIcon(KW_RadioManager * manager, KW_Rect * Rect) {
   manager->selected = *Rect;
   if (manager->checked) {
     KW_SetLabelIcon(manager->checked, &manager->selected);
   }
 }
 
-void KW_RadioManagerSetUnchecked(KW_RadioManager * manager, KW_Rect * Rect) {
+void KW_RadioManagerSetUncheckedIcon(KW_RadioManager * manager,
+                                     KW_Rect *         Rect) {
   int i;
   manager->unselected = *Rect;
   for (i = 0; i < manager->current_items; i++) {

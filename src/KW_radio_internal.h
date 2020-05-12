@@ -37,7 +37,7 @@ struct KW_RadioManager {
   KW_Widget * checked;
   KW_Rect     selected;
   KW_Rect     unselected;
-  void*       userdata;
+  void *      userdata;
 };
 
 typedef struct KW_RadioButton {
