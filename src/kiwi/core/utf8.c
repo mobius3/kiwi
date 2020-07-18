@@ -24,6 +24,12 @@
 
 #include "kiwi/core/utf8.h"
 
+#ifdef __GNUC__
+#define FALLTHROUGH __attribute__ ((fallthrough))
+#else
+#define FALLTHROUGH
+#endif
+
 static const uint32_t offsetsFromUTF8[6] = {
     0x00000000UL, 0x00003080UL, 0x000E2080UL,
     0x03C82080UL, 0xFA082080UL, 0x82082080UL
@@ -75,13 +81,9 @@ int u8_toucs(uint32_t *dest, int sz, char *src, int srcsz)
         }
         ch = 0;
         switch (nb) {
-        // fall through
-        case 3: ch += (unsigned char)*src++; ch <<= 6;
-        // fall through
-        case 2: ch += (unsigned char)*src++; ch <<= 6;
-        // fall through
-        case 1: ch += (unsigned char)*src++; ch <<= 6;
-        // fall through
+        case 3: ch += (unsigned char)*src++; ch <<= 6; FALLTHROUGH;
+        case 2: ch += (unsigned char)*src++; ch <<= 6; FALLTHROUGH;
+        case 1: ch += (unsigned char)*src++; ch <<= 6; FALLTHROUGH;
         case 0: ch += (unsigned char)*src++;
         }
         ch -= offsetsFromUTF8[nb];
