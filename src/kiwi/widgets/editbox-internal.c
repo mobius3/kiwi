@@ -1,5 +1,5 @@
 #include "kiwi/widgets/editbox.h"
-#include "editbox_internal.h"
+#include "editbox-internal.h"
 #include "kiwi/core/tilerenderer.h"
 #include "kiwi/core/utf8.h"
 

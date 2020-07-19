@@ -1,6 +1,6 @@
 #include "kiwi/core/gui.h"
 #include "kiwi/core/tilerenderer.h"
-#include "frame_internal.h"
+#include "frame-internal.h"
 
 void PaintFrame(KW_Widget * widget, const KW_Rect * absolute, void * data);
 

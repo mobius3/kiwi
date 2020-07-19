@@ -1,7 +1,7 @@
 #include "kiwi/widgets/editbox.h"
 #include "kiwi/core/widget.h"
 #include "kiwi/core/gui.h"
-#include "editbox_internal.h"
+#include "editbox-internal.h"
 
 /* public functions */
 KW_Widget * KW_CreateEditbox(KW_GUI * gui, KW_Widget * parent, const char * text, const KW_Rect * geometry) {

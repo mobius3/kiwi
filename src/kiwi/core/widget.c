@@ -1,8 +1,8 @@
 
 #include "kiwi/core/widget.h"
 #include "kiwi/core/gui.h"
-#include "widget_internal.h"
-#include "gui_internal.h"
+#include "widget-internal.h"
+#include "gui-internal.h"
 #include <stdlib.h>
 #include <stdio.h>
 

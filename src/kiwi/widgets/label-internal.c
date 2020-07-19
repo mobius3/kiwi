@@ -1,5 +1,5 @@
 #include "kiwi/widgets/label.h"
-#include "label_internal.h"
+#include "label-internal.h"
 
 void LabelFontChanged(KW_GUI * gui, void * data, KW_Font * font) {
   (void)font; (void) gui;

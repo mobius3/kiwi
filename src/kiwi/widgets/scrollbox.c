@@ -1,7 +1,7 @@
 #include "kiwi/widgets/scrollbox.h"
 #include "kiwi/widgets/button.h"
 #include "kiwi/core/tilerenderer.h"
-#include "scrollbox_internal.h"
+#include "scrollbox-internal.h"
 
 KW_Widget * KW_CreateScrollbox(KW_GUI * gui, KW_Widget * parent, const KW_Rect * geometry) {
   /* creates root scrollbox widget */

@@ -6,8 +6,8 @@
 #include "kiwi/core/eventwatcher.h"
 #include "kiwi/core/renderdriver.h"
 
-#include "widget_internal.h"
-#include "gui_internal.h"
+#include "widget-internal.h"
+#include "gui-internal.h"
 
 KW_GUI * KW_CreateGUI(KW_RenderDriver * renderer, KW_Surface * tileset) {
   struct KW_GUI * gui = calloc(sizeof(*gui), 1);

@@ -1,6 +1,6 @@
 #include "kiwi/core/widget.h"
 #include "kiwi/core/tilerenderer.h"
-#include "frame_internal.h"
+#include "frame-internal.h"
 #include "SDL.h"
 
 KW_Frame * AllocFrame() {

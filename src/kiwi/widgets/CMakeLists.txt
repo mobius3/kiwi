@@ -9,22 +9,22 @@ set(KIWI_WIDGETS_SOURCE_FILES
   button.c
   checkbox.c
   editbox.c
-  editbox_internal.c
+  editbox-internal.c
   frame.c
-  frame_internal.c
+  frame-internal.c
   label.c
-  label_internal.c
+  label-internal.c
   scrollbox.c
-  scrollbox_internal.c
+  scrollbox-internal.c
   toggle.c
 )
 
 set(KIWI_WIDGETS_PRIVATE_INCLUDE_FILES
-  button_internal.h
-  editbox_internal.h
-  frame_internal.h
-  label_internal.h
-  scrollbox_internal.h
+  button-internal.h
+  editbox-internal.h
+  frame-internal.h
+  label-internal.h
+  scrollbox-internal.h
 )
 
 set(I ../../../include/kiwi)

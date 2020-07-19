@@ -1,4 +1,4 @@
-#include "scrollbox_internal.h"
+#include "scrollbox-internal.h"
 #include "kiwi/core/widget.h"
 #include "kiwi/widgets/scrollbox.h"
 #include "kiwi/core/tilerenderer.h"

@@ -10,16 +10,16 @@ set(KIWI_CORE_SOURCE_FILES
   gui.c
   rect.c
   renderdriver.c
-  renderdriver_sdl2.c
+  renderdriver-sdl2.c
   tilerenderer.c
   utf8.c
   widget.c
-  widget_eventhandlers.c
+  widget-eventhandlers.c
 )
 
 set(KIWI_CORE_PRIVATE_INCLUDE_FILES
-  gui_internal.h
-  widget_internal.h
+  gui-internal.h
+  widget-internal.h
 )
 
 set(I ../../../include/kiwi)
@@ -30,7 +30,7 @@ set(KIWI_CORE_PUBLIC_INCLUDE_FILES
   ${I}/core/gui.h
   ${I}/core/rect.h
   ${I}/core/renderdriver.h
-  ${I}/core/renderdriver_sdl2.h
+  ${I}/core/renderdriver-sdl2.h
   ${I}/core/tilerenderer.h
   ${I}/core/utf8.h
   ${I}/core/widget.h

@@ -1,4 +1,4 @@
-#include "widget_internal.h"
+#include "widget-internal.h"
 
 void AddWidgetHandler(KW_Widget * widget, KW_WidgetEventHandlerType handlertype, WidgetHandler handler) {
   /* don't add multiple mouse over handlers */

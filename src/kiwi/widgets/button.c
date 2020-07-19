@@ -1,5 +1,5 @@
 #include "kiwi/widgets/button.h"
-#include "button_internal.h"
+#include "button-internal.h"
 #include "kiwi/widgets/label.h"
 #include "kiwi/core/tilerenderer.h"
 #include "kiwi/core/gui.h"
