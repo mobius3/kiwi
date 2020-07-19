@@ -4,6 +4,7 @@
 #include "kiwi/core/core-export.h"
 #include "widget.h"
 #include "renderdriver.h"
+#include "input-event.h"
 
 /** 
  * \file KW_gui.h
@@ -218,6 +219,8 @@ extern DECLSPEC void KW_HideGUI(KW_GUI * gui);
  * \param   gui The KW_GUI instance holding the widget tree.
  */
 extern DECLSPEC void KW_ShowGUI(KW_GUI * gui);
+
+extern DECLSPEC void KW_PostGUIInputEvent(KW_GUI * gui, KW_InputEvent const * event);
 
 #ifdef __cplusplus
 }

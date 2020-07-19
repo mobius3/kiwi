@@ -667,7 +667,7 @@ void KW_AddWidgetTilesetChangeHandler(KW_Widget * widget, KW_OnWidgetTilesetChan
 void KW_RemoveWidgetTilesetChangeHandler(KW_Widget * widget, KW_OnWidgetTilesetChange handler) {
   KW_GUI * gui = KW_GetGUI(widget);
   RemoveWidgetHandler(widget, KW_ON_TILESETCHANGE, (WidgetHandler) handler);
-  RemoveGUItHandler(gui, KW_GUI_ONTILESETCHANGED, (GUIHandler) handler, widget);
+  RemoveGUIHandler(gui, KW_GUI_ONTILESETCHANGED, (GUIHandler) handler, widget);
 }
 
 KW_bool KW_IsCursorOverWidget(KW_Widget * widget) {

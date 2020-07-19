@@ -3,7 +3,6 @@
 
 #include "kiwi/core/widget.h"
 #include "kiwi/core/gui.h"
-#include "kiwi/core/eventwatcher.h"
 #include "kiwi/core/renderdriver.h"
 
 #include "widget-internal.h"
@@ -17,7 +16,6 @@ KW_GUI * KW_CreateGUI(KW_RenderDriver * renderer, KW_Surface * tileset) {
   gui->rootwidget->gui = gui;
   gui->evqueuelock = SDL_CreateMutex();
   gui->handleevents = SDL_TRUE;
-  SDL_AddEventWatch(KW_EventWatcher, (void*)gui);
   srand((unsigned) time(NULL));
   
   return gui;
@@ -55,7 +53,6 @@ KW_Surface * KW_GetGUITilesetSurface(KW_GUI * gui) {
 
 
 void KW_DestroyGUI(KW_GUI * gui) {
-  SDL_DelEventWatch(KW_EventWatcher, (void*)gui);
   KW_DestroyWidget(gui->rootwidget, 1);
   KW_ReleaseFont(gui->renderer, gui->defaultfont);
   KW_ReleaseTexture(gui->renderer, gui->tilesettexture);
@@ -83,7 +80,6 @@ void KW_SetGUITextColor(KW_GUI * gui, KW_Color color) {
     handler = (KW_OnGUITextColorChanged) gui->eventhandlers[KW_GUI_ONTEXTCOLORCHANGED].handlers[i].handler;
     handler(gui, gui->eventhandlers[KW_GUI_ONTEXTCOLORCHANGED].handlers[i].priv, color);
   }
-  return;
 }
 
 void KW_AddGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, void * priv) {
@@ -91,7 +87,7 @@ void KW_AddGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, void
 }
 
 void KW_RemoveGUIFontChangedHandler(KW_GUI * gui, KW_OnGUIFontChanged handler, void * priv) {
-  RemoveGUItHandler(gui, KW_GUI_ONFONTCHANGED, (GUIHandler) handler, priv);
+  RemoveGUIHandler(gui, KW_GUI_ONFONTCHANGED, (GUIHandler) handler, priv);
 }
 
 void KW_AddGUITextColorChangedHandler(KW_GUI * gui, KW_OnGUITextColorChanged handler, void * priv) {
@@ -99,7 +95,7 @@ void KW_AddGUITextColorChangedHandler(KW_GUI * gui, KW_OnGUITextColorChanged han
 }
 
 void KW_RemoveGUITextColorChangedHandler(KW_GUI * gui, KW_OnGUITextColorChanged handler, void * priv) {
-  RemoveGUItHandler(gui, KW_GUI_ONTEXTCOLORCHANGED, (GUIHandler) handler, priv);
+  RemoveGUIHandler(gui, KW_GUI_ONTEXTCOLORCHANGED, (GUIHandler) handler, priv);
 }
 
 KW_Font * KW_GetGUIFont(KW_GUI * gui) {
@@ -139,7 +135,7 @@ void AddGUIHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, GUIHandler 
   gui->eventhandlers[handlertype].handlers[(*count) - 1].priv = priv;
 }
 
-void RemoveGUItHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, GUIHandler handler, void * priv) {
+void RemoveGUIHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, GUIHandler handler, void * priv) {
   unsigned i; int j = -1;
   unsigned int * count = &(gui->eventhandlers[handlertype].count);
   
@@ -178,6 +174,47 @@ void KW_ShowGUI(KW_GUI * gui) {
   SDL_LockMutex(gui->evqueuelock);
   gui->handleevents = SDL_TRUE;
   /* make sure the queue is emptied */
+  gui->evqueuesize = 0;
+  SDL_UnlockMutex(gui->evqueuelock);
+}
+
+void KW_PostGUIInputEvent(KW_GUI * gui, KW_InputEvent const * event) {
+  if(!gui->handleevents) return;
+  gui->inputEventQueue[(gui->evqueuesize)++] = *event;
+}
+
+
+void KW_ProcessGUIEvents(KW_GUI * gui) {
+  int i = 0;
+  gui->cursorwasdown = SDL_FALSE;
+  for (i = 0; i < gui->evqueuesize; i++) {
+    KW_InputEvent * event = gui->inputEventQueue + i;
+    switch (event->type) {
+      case KW_INPUT_CURSOR_MOTION:
+        MouseMoved(gui, event->cursorMotion.x, event->cursorMotion.y, event->cursorMotion.xMotion, event->cursorMotion.yMotion);
+        break;
+      case KW_INPUT_CURSOR_BUTTON_DOWN:
+        MousePressed(gui, event->cursorButtonDown.x, event->cursorButtonDown.y, event->cursorButtonDown.button);
+        break;
+
+      case KW_INPUT_CURSOR_BUTTON_UP:
+        MouseReleased(gui, event->cursorButtonUp.x, event->cursorButtonUp.y, event->cursorButtonUp.button);
+        break;
+
+      case KW_INPUT_TEXT:
+        TextInputReady(gui, event->text.text);
+        break;
+
+      case KW_INPUT_KEY_DOWN:
+        KeyDown(gui, event->keyUp.key);
+        break;
+      case KW_INPUT_KEY_UP:
+        KeyUp(gui, event->keyDown.key);
+        break;
+      default:
+        break;
+    }
+  }
   gui->evqueuesize = 0;
   SDL_UnlockMutex(gui->evqueuelock);
 }

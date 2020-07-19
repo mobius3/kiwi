@@ -49,8 +49,8 @@ void EditboxMousePress(KW_Widget * widget, int b);
 void EditboxMouseRelease(KW_Widget * widget, int b);
 void EditboxFocusGain(KW_Widget * widget);
 void EditboxFocusLose(KW_Widget * widget);
-void EditboxTextInput(KW_Widget * widget, const char * text);
-void EditboxKeyDown(KW_Widget * widget, SDL_Keycode key, SDL_Scancode sym);
+void EditboxTextInput(KW_Widget * widget, uint8_t const * text);
+void EditboxKeyDown(KW_Widget * widget, KW_InputKey key);
 void EditboxFontChanged(KW_GUI * gui, void * priv, KW_Font * font);
 
 #ifdef __cplusplus

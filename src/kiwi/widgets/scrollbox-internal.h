@@ -24,7 +24,7 @@ typedef struct KW_Scrollbox {
 KW_Scrollbox * AllocScrollbox();
 void PaintScrollboxFrame(KW_Widget * widget, const KW_Rect * absolute, void * data);
 void DestroyScrollboxFrame(KW_Widget * widget);
-void ScrollboxKeyUp(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode code);
+void ScrollboxKeyUp(KW_Widget * widget, KW_InputKey key);
 void VerticalBarDrag(KW_Widget * widget, int x, int y, int xrel, int yrel);
 void HorizontalBarDrag(KW_Widget * widget, int x, int y, int xrel, int yrel);
 void ChildrenChange(KW_Widget * widget, KW_WidgetChildrenChangeEvent what, KW_Widget * children);

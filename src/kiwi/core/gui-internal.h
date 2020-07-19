@@ -1,6 +1,7 @@
 #ifndef KW_KW_INTERNAL_H
 #define KW_KW_INTERNAL_H
 
+#include <kiwi/core/input-event.h>
 #include "kiwi/core/widget.h"
 #include "kiwi/core/renderdriver.h"
 
@@ -33,7 +34,7 @@ struct KW_GUI {
   SDL_bool cursorwasdown;
   
   SDL_bool handleevents;
-  SDL_Event evqueue[1024];
+  KW_InputEvent inputEventQueue[1024];
   int evqueuesize;
   SDL_mutex * evqueuelock;
   
@@ -47,7 +48,13 @@ struct KW_GUI {
 };
 
 void AddGUIHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, GUIHandler handler, void * priv);
-void RemoveGUItHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, GUIHandler handler, void * priv);
+void RemoveGUIHandler(KW_GUI * gui, KW_GUIEventHandlerType handlertype, GUIHandler handler, void * priv);
+void MouseMoved(KW_GUI * gui, int mousex, int mousey, int xrel, int yrel);
+void MousePressed(KW_GUI * gui, int mousex, int mousey, int button);
+void MouseReleased(KW_GUI * gui, int mousex, int mousey, int button);
+void TextInputReady(KW_GUI * gui, uint8_t const * text);
+void KeyUp(KW_GUI * gui, KW_InputKey key);
+void KeyDown(KW_GUI * gui, KW_InputKey key);
 
 #ifdef __cplusplus
 }

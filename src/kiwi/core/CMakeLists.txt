@@ -8,6 +8,7 @@ include(GenerateExportHeader)
 set(KIWI_CORE_SOURCE_FILES
   eventwatcher.c
   gui.c
+  gui-internal.c
   rect.c
   renderdriver.c
   renderdriver-sdl2.c
@@ -26,7 +27,8 @@ set(I ../../../include/kiwi)
 
 set(KIWI_CORE_PUBLIC_INCLUDE_FILES
   ${I}/core/bool.h
-  ${I}/core/eventwatcher.h
+  ${I}/core/input-event.h
+  ${I}/core/input-key.h
   ${I}/core/gui.h
   ${I}/core/rect.h
   ${I}/core/renderdriver.h

@@ -145,17 +145,15 @@ void HorizontalBarDrag(KW_Widget * widget, int x, int y, int xrel, int yrel) {
   KW_ScrollboxHorizontalScroll(sb->root, (int)(-xrel * (sb->innercomposite.w / outergeom.w * 1.0f)));
 }
 
-
-void ScrollboxKeyUp(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode code) {
+void ScrollboxKeyUp(KW_Widget * widget, KW_InputKey key) {
   KW_Scrollbox * scrollbox = KW_GetWidgetData(widget, PaintScrollboxFrame);
-  (void) sym;
   if (scrollbox == NULL)
     scrollbox = KW_GetWidgetData(widget, PaintScrollboxFrame);
-  switch (code) {
-    case SDL_SCANCODE_UP:
+  switch (key) {
+    case KW_INPUTKEY_UP:
       KW_ScrollboxVerticalScroll(scrollbox->root, -5);
       break;
-    case SDL_SCANCODE_DOWN:
+    case KW_INPUTKEY_DOWN:
       KW_ScrollboxVerticalScroll(scrollbox->root, 5);
       break;
     default:

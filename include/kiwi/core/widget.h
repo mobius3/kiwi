@@ -5,6 +5,7 @@
 #include "renderdriver.h"
 #include "bool.h"
 #include "SDL.h"
+#include "kiwi/core/input-key.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -49,9 +50,9 @@ typedef void (*KW_OnFocusGain)(KW_Widget * widget);
 typedef void (*KW_OnFocusLose)(KW_Widget * widget);
 
 /* text and keyboard callbacks */
-typedef void (*KW_OnTextInput)(KW_Widget * widget, const char * text);
-typedef void (*KW_OnKeyDown)(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode code);
-typedef void (*KW_OnKeyUp)(KW_Widget * widget, SDL_Keycode sym, SDL_Scancode code);
+typedef void (*KW_OnTextInput)(KW_Widget * widget, uint8_t const * text);
+typedef void (*KW_OnKeyDown)(KW_Widget * widget, KW_InputKey key);
+typedef void (*KW_OnKeyUp)(KW_Widget * widget, KW_InputKey key);
 
 /* widget internal events */
 typedef void (*KW_OnGeometryChange)(KW_Widget * widget, const KW_Rect * newgeom, const KW_Rect * oldgeom);

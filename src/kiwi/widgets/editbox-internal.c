@@ -181,31 +181,30 @@ void TextDelete(KW_Editbox * editbox) {
 }
 
 /* KiWi callbacks */
-void EditboxKeyDown(KW_Widget * widget, SDL_Keycode key, SDL_Scancode scan) {
+void EditboxKeyDown(KW_Widget * widget, KW_InputKey key) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, PaintEditbox);
-  (void) key;
-  switch (scan) {
+  switch (key) {
     /* set up cursor states */
-    case SDL_SCANCODE_LEFT:
+    case KW_INPUTKEY_LEFT:
       AdjustCursor(editbox, -1);
       break;
-    case SDL_SCANCODE_RIGHT:
+    case KW_INPUTKEY_RIGHT:
       AdjustCursor(editbox, 1);
       break;
       
-    case SDL_SCANCODE_BACKSPACE:
+    case KW_INPUTKEY_BACKSPACE:
       TextBackspace(editbox);
       break;
       
-    case SDL_SCANCODE_DELETE:
+    case KW_INPUTKEY_DELETE:
       TextDelete(editbox);
       break;
       
-    case SDL_SCANCODE_HOME:
+    case KW_INPUTKEY_HOME:
       AdjustCursor(editbox, -u8_strlen(editbox->text));
       break;
       
-    case SDL_SCANCODE_END:
+    case KW_INPUTKEY_END:
       AdjustCursor(editbox, u8_strlen(editbox->text));
       break;
       
@@ -214,13 +213,13 @@ void EditboxKeyDown(KW_Widget * widget, SDL_Keycode key, SDL_Scancode scan) {
   }
 }
 
-void EditboxTextInput(KW_Widget * widget, const char * text) {
+void EditboxTextInput(KW_Widget * widget, uint8_t const * text) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, PaintEditbox);
   unsigned i = 0, insertlen, textlen, cursoradjust;
 
   /* make room in the middle */
   i = editbox->cursor;
-  insertlen = (int)SDL_strlen(text);
+  insertlen = (int)SDL_strlen((const char *) text);
   cursoradjust = insertlen;
   textlen = (int)SDL_strlen(editbox->text);
 
@@ -234,7 +233,7 @@ void EditboxTextInput(KW_Widget * widget, const char * text) {
   
   /* correct insertlen if its utf8 because AdjustCursor is in terms
    *  of perceived chars */
-  cursoradjust = u8_strlen(text);
+  cursoradjust = u8_strlen((const char *) text);
   AdjustCursor(editbox, cursoradjust);
   RenderEditboxText(editbox);
 }
