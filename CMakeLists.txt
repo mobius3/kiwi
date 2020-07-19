@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.0)
 project(kiwi LANGUAGES C VERSION 1.0.0)
 
 # Respect VISIBILITY_PRESET
+
+cmake_policy(PUSH)
 cmake_policy(SET CMP0063 NEW)
 
 # new behavior for <package>_ROOT variable handling
@@ -32,3 +34,5 @@ add_subdirectory(src)
 
 include(cmake/setup-exports.cmake)
 include(cmake/kiwi-cpack.cmake)
+
+cmake_policy(POP)
