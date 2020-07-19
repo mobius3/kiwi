@@ -54,7 +54,7 @@ if (WIN32)
 endif()
 
 generate_export_header(
-  core
+  widgets
   BASE_NAME KIWI_WIDGETS
   EXPORT_FILE_NAME kiwi/widgets/widgets-export.h
 )

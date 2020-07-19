@@ -1,4 +1,5 @@
-#include "kiwi/core/gui.h"
+#include "kiwi/widgets/frame.h"
+
 #include "kiwi/core/tilerenderer.h"
 #include "frame-internal.h"
 
