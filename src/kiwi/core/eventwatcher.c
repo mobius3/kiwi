@@ -137,7 +137,7 @@ int KW_EventWatcher(void * data, SDL_Event * event) {
   return 0;
 }
 
-void KW_ProcessEvents(KW_GUI * gui) {
+void KW_ProcessGUIEvents(KW_GUI * gui) {
   int i = 0;
   SDL_LockMutex(gui->evqueuelock);
   gui->cursorwasdown = SDL_FALSE;

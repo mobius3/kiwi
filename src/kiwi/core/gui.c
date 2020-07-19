@@ -23,8 +23,6 @@ KW_GUI * KW_CreateGUI(KW_RenderDriver * renderer, KW_Surface * tileset) {
   return gui;
 }
 
-
-
 void KW_SetGUIRenderer(KW_GUI * gui, KW_RenderDriver * renderer) {
   gui->renderer = renderer;
 }

@@ -7,7 +7,6 @@
 extern "C" {
 #endif
 
-
 typedef struct KW_Scrollbox {
   KW_Widget   * root;
   KW_Widget   * outer;

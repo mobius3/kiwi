@@ -76,7 +76,7 @@ extern KIWI_CORE_EXPORT void KW_DestroyGUI(KW_GUI * gui);
  * \param   gui The KW_GUI instance.
  * \param   render The KW_RenderDriver instance.
  */
-extern KIWI_CORE_EXPORT void KW_SetRenderer(KW_GUI * gui, KW_RenderDriver * renderer);
+extern KIWI_CORE_EXPORT void KW_SetGUIRenderer(KW_GUI * gui, KW_RenderDriver * renderer);
 
 /**
  * \brief   Returns the current associated renderer with a KW_GUI instance.
@@ -200,7 +200,7 @@ extern KIWI_CORE_EXPORT void KW_PaintGUI(KW_GUI * gui);
  *          Most input based callbacks will be called before this function returns.
  * \param   gui The KW_GUI instance holding the widget tree.
  */
-extern KIWI_CORE_EXPORT void KW_ProcessEvents(KW_GUI * gui);
+extern KIWI_CORE_EXPORT void KW_ProcessGUIEvents(KW_GUI * gui);
 
 /**
  * \brief   Hides GUI
