@@ -28,7 +28,7 @@ are needed to reach version 1.0.0. Things might get added periodically.
   - [x] All include files should be lowercase
   - [x] Add `c-rez` instead of older resource generator
   - [ ] SDL should not be called explicitly on core and widgets
-    - [ ] Create and support an event backend
+    - [x] Create and support an event backend
       - Expose all "interesting" events as functions the render driver can call
         to warn KiWi it happened.
     - [ ] Create/refactor a new, easy render backend

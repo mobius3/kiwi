@@ -9,7 +9,6 @@
 
 #include "kiwi/core/widget.h"
 #include "kiwi/widgets/widgets-export.h"
-#include "SDL_ttf.h"
 
 #ifdef __cplusplus
 extern "C" {

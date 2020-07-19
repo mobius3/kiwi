@@ -2,7 +2,6 @@
 #define KIWI_CORE_H
 
 #include "kiwi/core/bool.h"
-#include "kiwi/core/eventwatcher.h"
 #include "kiwi/core/gui.h"
 #include "kiwi/core/renderdriver.h"
 #include "kiwi/core/renderdriver-sdl2.h" // TODO: uncouple
