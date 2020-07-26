@@ -67,7 +67,7 @@ void * KW_GetWidgetData(const KW_Widget * widget, KW_WidgetPaintFunction paint) 
   return widget->privdata;
 }
 
-KW_RenderDriver * KW_GetWidgetRenderer(const KW_Widget * widget) {
+KW_OldRenderDriver * KW_GetWidgetRenderer(const KW_Widget * widget) {
   return KW_GetGUIRenderer(KW_GetGUI(widget));
 }
 
@@ -417,7 +417,7 @@ void KW_PaintWidget(KW_Widget * root) {
   unsigned i = 0;
   KW_Rect cliprect;
   KW_bool clipenabled = KW_FALSE;
-  KW_RenderDriver * renderer = KW_GetWidgetRenderer(root);
+  KW_OldRenderDriver * renderer = KW_GetWidgetRenderer(root);
 
   if (KW_IsWidgetHidden(root)) return;
 
@@ -450,7 +450,7 @@ void KW_PaintWidget(KW_Widget * root) {
 static void DrawDebugGizmos(KW_Widget * widget, KW_Color * color) {
   KW_Rect dbgrect;
   KW_Rect viewport;
-  KW_RenderDriver * renderer;
+  KW_OldRenderDriver * renderer;
   static KW_Texture * text = NULL;
   static KW_Widget * old = NULL;
   KW_Color newcolor;

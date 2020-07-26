@@ -16,7 +16,7 @@ int main(int argc, char ** argv) {
 
   /* Now we are going to use the SDL2 Render Driver. Users can implement their own
    * render driver, as long as it complies to the KW_RenderDriver structure */
-  KW_RenderDriver * driver = KW_CreateSDL2RenderDriver(renderer, window);
+  KW_OldRenderDriver * driver = KW_CreateSDL2RenderDriver(renderer, window);
 
   /* Loads the "tileset.png" file as a surface */
   KW_Surface * set = KW_LoadSurface(driver, "tileset.png");

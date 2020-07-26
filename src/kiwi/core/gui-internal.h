@@ -3,7 +3,7 @@
 
 #include <kiwi/core/input-event.h>
 #include "kiwi/core/widget.h"
-#include "kiwi/core/renderdriver.h"
+#include "kiwi/core/old-renderdriver.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -21,7 +21,7 @@ typedef enum KW_GUIEventHandlerType {
 struct KW_GUI {
   KW_Texture * tilesettexture;
   KW_Surface * tilesetsurface;
-  KW_RenderDriver * renderer;
+  KW_OldRenderDriver * renderer;
   KW_Widget * rootwidget; /* the parent to all parent-less widgets :) */
   KW_Font * font;
   KW_Font * defaultfont;

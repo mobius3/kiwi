@@ -10,8 +10,8 @@ set(KIWI_CORE_SOURCE_FILES
   gui.c
   gui-internal.c
   rect.c
-  renderdriver.c
-  renderdriver-sdl2.c
+  old-renderdriver.c
+  old-renderdriver-sdl2.c
   tilerenderer.c
   utf8.c
   widget.c
@@ -31,8 +31,8 @@ set(KIWI_CORE_PUBLIC_INCLUDE_FILES
   ${I}/core/input-key.h
   ${I}/core/gui.h
   ${I}/core/rect.h
-  ${I}/core/renderdriver.h
-  ${I}/core/renderdriver-sdl2.h
+  ${I}/core/old-renderdriver.h
+  ${I}/core/old-renderdriver-sdl2.h
   ${I}/core/tilerenderer.h
   ${I}/core/utf8.h
   ${I}/core/widget.h

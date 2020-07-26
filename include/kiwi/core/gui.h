@@ -3,7 +3,7 @@
 
 #include "kiwi/core/core-export.h"
 #include "widget.h"
-#include "renderdriver.h"
+#include "old-renderdriver.h"
 #include "input-event.h"
 
 /** 
@@ -59,7 +59,7 @@ typedef void (*KW_OnGUITextColorChanged)(KW_GUI * gui, void * data, KW_Color col
  * \param   tileset The tile surface to use as a tileset.
  * \returns A initialized KW_GUI instance.
  */
-extern KIWI_CORE_EXPORT KW_GUI * KW_CreateGUI(KW_RenderDriver * renderer, KW_Surface * tileset);
+extern KIWI_CORE_EXPORT KW_GUI * KW_CreateGUI(KW_OldRenderDriver * renderer, KW_Surface * tileset);
 
 /**
  * \brief   Quits this KW_GUI instance and free its resources.
@@ -77,7 +77,7 @@ extern KIWI_CORE_EXPORT void KW_DestroyGUI(KW_GUI * gui);
  * \param   gui The KW_GUI instance.
  * \param   render The KW_RenderDriver instance.
  */
-extern KIWI_CORE_EXPORT void KW_SetGUIRenderer(KW_GUI * gui, KW_RenderDriver * renderer);
+extern KIWI_CORE_EXPORT void KW_SetGUIRenderer(KW_GUI * gui, KW_OldRenderDriver * renderer);
 
 /**
  * \brief   Returns the current associated renderer with a KW_GUI instance.
@@ -86,7 +86,7 @@ extern KIWI_CORE_EXPORT void KW_SetGUIRenderer(KW_GUI * gui, KW_RenderDriver * r
  * \param   gui The KW_GUI instance.
  * \return  The associated KW_RenderDriver instance.
  */
-extern KIWI_CORE_EXPORT KW_RenderDriver * KW_GetGUIRenderer(KW_GUI * gui);
+extern KIWI_CORE_EXPORT KW_OldRenderDriver * KW_GetGUIRenderer(KW_GUI * gui);
 
 /**
  * \brief   Set a new tileset surface to be used in this KW_GUI instance.

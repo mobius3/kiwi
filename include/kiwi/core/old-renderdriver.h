@@ -1,5 +1,5 @@
-#ifndef KIWI_CORE_RENDERDRIVER_H
-#define KIWI_CORE_RENDERDRIVER_H
+#ifndef KIWI_CORE_OLD_RENDERDRIVER_H
+#define KIWI_CORE_OLD_RENDERDRIVER_H
 
 /**
  * \file KW_renderdriver.h
@@ -54,7 +54,7 @@ typedef struct KW_Color {
  */
 extern KIWI_CORE_EXPORT KW_Color KW_MultiplyColor(KW_Color color, float amount);
 
-typedef struct KW_RenderDriver KW_RenderDriver;
+typedef struct KW_OldRenderDriver KW_OldRenderDriver;
 
 /**
  * \brief Defines how text should be rendered
@@ -78,7 +78,7 @@ typedef enum KW_RenderDriver_TextStyle {
  * \param   clip the clipping rectangle for the source texture (in pixels)
  * \param   dstRect the destination rect. If different that clipping rectangle, it should scale to fit.
  */
-typedef void (*KW_RenderCopyFunction)(KW_RenderDriver * driver, KW_Texture * src, const KW_Rect * clip, const KW_Rect * dstRect);
+typedef void (*KW_RenderCopyFunction)(KW_OldRenderDriver * driver, KW_Texture * src, const KW_Rect * clip, const KW_Rect * dstRect);
 
 /**
  * \brief   Declares the prototype for a UTF8TextSize function
@@ -90,7 +90,7 @@ typedef void (*KW_RenderCopyFunction)(KW_RenderDriver * driver, KW_Texture * src
  * \param   width The returned width
  * \param   height The returned height
  */
-typedef void (*KW_UTF8TextSizeFunction)(KW_RenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height);
+typedef void (*KW_UTF8TextSizeFunction)(KW_OldRenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height);
 
 /**
  * \brief   Declares the prototype for a RenderText function.
@@ -103,7 +103,7 @@ typedef void (*KW_UTF8TextSizeFunction)(KW_RenderDriver * driver, KW_Font * font
  * \param   style the KW_RenderDriver_TextStyle style to apply.
  * \return  a KW_Texture with the rendered text
  */
-typedef KW_Texture * (*KW_RenderTextFunction)(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
+typedef KW_Texture * (*KW_RenderTextFunction)(KW_OldRenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
 
 /**
  * \brief   Declares the prototype for a RenderTextWrapped function.
@@ -117,7 +117,7 @@ typedef KW_Texture * (*KW_RenderTextFunction)(KW_RenderDriver * driver, KW_Font 
  * \param   wrapwidth the width at which to wrap the text, or 0 if not wrapping should occur
  * \return  a KW_Texture with the rendered text
  */
-typedef KW_Texture * (*KW_RenderTextWrappedFunction)(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style, int wrapwidth);
+typedef KW_Texture * (*KW_RenderTextWrappedFunction)(KW_OldRenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style, int wrapwidth);
 
 /**
  * \brief   Declares the prototype for a LoadFont function.
@@ -126,7 +126,7 @@ typedef KW_Texture * (*KW_RenderTextWrappedFunction)(KW_RenderDriver * driver, K
  * \param   fontFile the file containing the font (usually .ttf)
  * \return   a KW_Font suitable to use with KW_RenderText
  */
-typedef KW_Font * (*KW_LoadFontFunction)(KW_RenderDriver * driver, const char * fontFile, unsigned ptSize);
+typedef KW_Font * (*KW_LoadFontFunction)(KW_OldRenderDriver * driver, const char * fontFile, unsigned ptSize);
 
 /**
  * \brief   Declares the prototype for a LoadFontFromMemory function.
@@ -136,7 +136,7 @@ typedef KW_Font * (*KW_LoadFontFunction)(KW_RenderDriver * driver, const char * 
  * \param   memSize the size of the buffer
  * \return   a KW_Font suitable to use with KW_RenderText
  */
-typedef KW_Font * (*KW_LoadFontFromMemoryFunction)(KW_RenderDriver * driver, const void * fontMemory, unsigned long memSize, unsigned ptSize);
+typedef KW_Font * (*KW_LoadFontFromMemoryFunction)(KW_OldRenderDriver * driver, const void * fontMemory, unsigned long memSize, unsigned ptSize);
 
 /**
  * \brief   Declares the prototype for a CreateTexture function.
@@ -145,7 +145,7 @@ typedef KW_Font * (*KW_LoadFontFromMemoryFunction)(KW_RenderDriver * driver, con
  * \param   src the source KW_Surface.
  * \return  a KW_Texture in suitable to use with KW_RenderCopy
  */
-typedef KW_Texture * (*KW_CreateTextureFunction)(KW_RenderDriver * driver, KW_Surface * src);
+typedef KW_Texture * (*KW_CreateTextureFunction)(KW_OldRenderDriver * driver, KW_Surface * src);
 
 
 /**
@@ -155,7 +155,7 @@ typedef KW_Texture * (*KW_CreateTextureFunction)(KW_RenderDriver * driver, KW_Su
  * \param   file the file name with the pixeldata.
  * \return  a KW_Texture suitable to use with KW_RenderCopy
  */
-typedef KW_Texture * (*KW_LoadTextureFunction)(KW_RenderDriver * driver, const char * file);
+typedef KW_Texture * (*KW_LoadTextureFunction)(KW_OldRenderDriver * driver, const char * file);
 
 /**
  * \brief   Declares the prototype for a LoadSurface function.
@@ -164,19 +164,19 @@ typedef KW_Texture * (*KW_LoadTextureFunction)(KW_RenderDriver * driver, const c
  * \param   file the file name with the pixeldata.
  * \return  a KW_Surface.
  */
-typedef KW_Surface * (*KW_LoadSurfaceFunction)(KW_RenderDriver * driver, const char * file);
-typedef void (*KW_ReleaseTextureFunction)(KW_RenderDriver * driver, KW_Texture * texture);
-typedef void (*KW_ReleaseSurfaceFunction)(KW_RenderDriver * driver, KW_Surface * surface);
-typedef void (*KW_ReleaseFontFunction)(KW_RenderDriver * driver, KW_Font * font);
-typedef KW_Surface * (*KW_CreateSurfaceFunction)(KW_RenderDriver * driver, unsigned width, unsigned height);
-typedef void (*KW_GetSurfaceExtentsFunction)(KW_RenderDriver * driver, const KW_Surface * surface, unsigned * width, unsigned * height);
-typedef void (*KW_GetTextureExtentsFunction)(KW_RenderDriver * driver, KW_Texture * texture, unsigned * width, unsigned * height);
-typedef void (*KW_BlitSurfaceFunction)(KW_RenderDriver * driver, KW_Surface * src, const KW_Rect * srcRect, KW_Surface * dst, const KW_Rect * dstRect);
-typedef void (*KW_SetClipRectFunction)(KW_RenderDriver * driver, const KW_Rect * clip, int force);
-typedef KW_bool (*KW_GetClipRectFunction)(KW_RenderDriver * driver, KW_Rect * clip);
-typedef unsigned int (*KW_GetPixelFunction)(KW_RenderDriver * driver, KW_Surface * surface, unsigned px, unsigned py);
-typedef void (*KW_RenderRectFunction)(KW_RenderDriver * driver, KW_Rect * rect, KW_Color color);
-typedef void (*KW_GetViewportSizeFunction)(KW_RenderDriver * driver, KW_Rect * rect);
+typedef KW_Surface * (*KW_LoadSurfaceFunction)(KW_OldRenderDriver * driver, const char * file);
+typedef void (*KW_ReleaseTextureFunction)(KW_OldRenderDriver * driver, KW_Texture * texture);
+typedef void (*KW_ReleaseSurfaceFunction)(KW_OldRenderDriver * driver, KW_Surface * surface);
+typedef void (*KW_ReleaseFontFunction)(KW_OldRenderDriver * driver, KW_Font * font);
+typedef KW_Surface * (*KW_CreateSurfaceFunction)(KW_OldRenderDriver * driver, unsigned width, unsigned height);
+typedef void (*KW_GetSurfaceExtentsFunction)(KW_OldRenderDriver * driver, const KW_Surface * surface, unsigned * width, unsigned * height);
+typedef void (*KW_GetTextureExtentsFunction)(KW_OldRenderDriver * driver, KW_Texture * texture, unsigned * width, unsigned * height);
+typedef void (*KW_BlitSurfaceFunction)(KW_OldRenderDriver * driver, KW_Surface * src, const KW_Rect * srcRect, KW_Surface * dst, const KW_Rect * dstRect);
+typedef void (*KW_SetClipRectFunction)(KW_OldRenderDriver * driver, const KW_Rect * clip, int force);
+typedef KW_bool (*KW_GetClipRectFunction)(KW_OldRenderDriver * driver, KW_Rect * clip);
+typedef unsigned int (*KW_GetPixelFunction)(KW_OldRenderDriver * driver, KW_Surface * surface, unsigned px, unsigned py);
+typedef void (*KW_RenderRectFunction)(KW_OldRenderDriver * driver, KW_Rect * rect, KW_Color color);
+typedef void (*KW_GetViewportSizeFunction)(KW_OldRenderDriver * driver, KW_Rect * rect);
 
 /**
  * \brief   Declares the prototype for a ReleaseDriver function.
@@ -184,9 +184,9 @@ typedef void (*KW_GetViewportSizeFunction)(KW_RenderDriver * driver, KW_Rect * r
  *                        and the KW_RenderDriver struct itself.
  * \param   driver the RenderDriver that will be released.
  */
-typedef void (*KW_ReleaseDriverFunction)(KW_RenderDriver * driver);
+typedef void (*KW_ReleaseDriverFunction)(KW_OldRenderDriver * driver);
 
-struct KW_RenderDriver {
+struct KW_OldRenderDriver {
   KW_RenderCopyFunction        renderCopy;
   KW_RenderTextFunction        renderText;
   KW_RenderRectFunction        renderRect;
@@ -219,28 +219,28 @@ struct KW_RenderDriver {
   KW_RenderTextWrappedFunction renderTextWrapped;
 };
 
-extern KIWI_CORE_EXPORT void KW_RenderRect(KW_RenderDriver * driver, KW_Rect * rect, KW_Color color);
-extern KIWI_CORE_EXPORT void KW_BlitSurface(KW_RenderDriver * driver, KW_Surface * src, const KW_Rect * srcRect, KW_Surface * dst, const KW_Rect * dstRect);
-extern KIWI_CORE_EXPORT KW_Surface * KW_CreateSurface(KW_RenderDriver * driver, unsigned width, unsigned height);
-extern KIWI_CORE_EXPORT void KW_GetSurfaceExtents(KW_RenderDriver * driver, const KW_Surface * surface, unsigned * width, unsigned * height);
-extern KIWI_CORE_EXPORT void KW_GetTextureExtents(KW_RenderDriver * driver, KW_Texture * texture, unsigned * width, unsigned * height);
-extern KIWI_CORE_EXPORT void KW_RenderCopy(KW_RenderDriver * driver, KW_Texture * src, const KW_Rect * clip, const KW_Rect * dstRect);
-extern KIWI_CORE_EXPORT KW_Texture * KW_RenderText(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
-extern KIWI_CORE_EXPORT KW_Texture * KW_RenderTextWrapped(KW_RenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style, int wrapwidth);
-extern KIWI_CORE_EXPORT KW_Font * KW_LoadFont(KW_RenderDriver * driver, const char * fontFile, unsigned ptSize);
-extern KIWI_CORE_EXPORT KW_Font * KW_LoadFontFromMemory(KW_RenderDriver * driver, const void * fontMemory, unsigned long memSize, unsigned ptSize);
-extern KIWI_CORE_EXPORT KW_Texture * KW_CreateTexture(KW_RenderDriver * driver, KW_Surface * surface);
-extern KIWI_CORE_EXPORT KW_Texture * KW_LoadTexture(KW_RenderDriver * driver, const char * file);
-extern KIWI_CORE_EXPORT KW_Surface * KW_LoadSurface(KW_RenderDriver * driver, const char * file);
-extern KIWI_CORE_EXPORT void KW_ReleaseTexture(KW_RenderDriver * driver, KW_Texture * texture);
-extern KIWI_CORE_EXPORT void KW_ReleaseSurface(KW_RenderDriver * driver, KW_Surface * surface);
-extern KIWI_CORE_EXPORT void KW_ReleaseFont(KW_RenderDriver * driver, KW_Font * font);
-extern KIWI_CORE_EXPORT KW_bool KW_GetClipRect(KW_RenderDriver * driver, KW_Rect * clip);
-extern KIWI_CORE_EXPORT void KW_GetViewportSize(KW_RenderDriver * driver, KW_Rect * rect);
-extern KIWI_CORE_EXPORT void KW_SetClipRect(KW_RenderDriver * driver, const KW_Rect * clip, int force);
-extern KIWI_CORE_EXPORT void KW_ReleaseRenderDriver(KW_RenderDriver * driver);
-extern KIWI_CORE_EXPORT void KW_UTF8TextSize(KW_RenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height);
-extern KIWI_CORE_EXPORT unsigned int KW_GetPixel(KW_RenderDriver * driver, KW_Surface * surface, unsigned x, unsigned y);
+extern KIWI_CORE_EXPORT void KW_RenderRect(KW_OldRenderDriver * driver, KW_Rect * rect, KW_Color color);
+extern KIWI_CORE_EXPORT void KW_BlitSurface(KW_OldRenderDriver * driver, KW_Surface * src, const KW_Rect * srcRect, KW_Surface * dst, const KW_Rect * dstRect);
+extern KIWI_CORE_EXPORT KW_Surface * KW_CreateSurface(KW_OldRenderDriver * driver, unsigned width, unsigned height);
+extern KIWI_CORE_EXPORT void KW_GetSurfaceExtents(KW_OldRenderDriver * driver, const KW_Surface * surface, unsigned * width, unsigned * height);
+extern KIWI_CORE_EXPORT void KW_GetTextureExtents(KW_OldRenderDriver * driver, KW_Texture * texture, unsigned * width, unsigned * height);
+extern KIWI_CORE_EXPORT void KW_RenderCopy(KW_OldRenderDriver * driver, KW_Texture * src, const KW_Rect * clip, const KW_Rect * dstRect);
+extern KIWI_CORE_EXPORT KW_Texture * KW_RenderText(KW_OldRenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
+extern KIWI_CORE_EXPORT KW_Texture * KW_RenderTextWrapped(KW_OldRenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style, int wrapwidth);
+extern KIWI_CORE_EXPORT KW_Font * KW_LoadFont(KW_OldRenderDriver * driver, const char * fontFile, unsigned ptSize);
+extern KIWI_CORE_EXPORT KW_Font * KW_LoadFontFromMemory(KW_OldRenderDriver * driver, const void * fontMemory, unsigned long memSize, unsigned ptSize);
+extern KIWI_CORE_EXPORT KW_Texture * KW_CreateTexture(KW_OldRenderDriver * driver, KW_Surface * surface);
+extern KIWI_CORE_EXPORT KW_Texture * KW_LoadTexture(KW_OldRenderDriver * driver, const char * file);
+extern KIWI_CORE_EXPORT KW_Surface * KW_LoadSurface(KW_OldRenderDriver * driver, const char * file);
+extern KIWI_CORE_EXPORT void KW_ReleaseTexture(KW_OldRenderDriver * driver, KW_Texture * texture);
+extern KIWI_CORE_EXPORT void KW_ReleaseSurface(KW_OldRenderDriver * driver, KW_Surface * surface);
+extern KIWI_CORE_EXPORT void KW_ReleaseFont(KW_OldRenderDriver * driver, KW_Font * font);
+extern KIWI_CORE_EXPORT KW_bool KW_GetClipRect(KW_OldRenderDriver * driver, KW_Rect * clip);
+extern KIWI_CORE_EXPORT void KW_GetViewportSize(KW_OldRenderDriver * driver, KW_Rect * rect);
+extern KIWI_CORE_EXPORT void KW_SetClipRect(KW_OldRenderDriver * driver, const KW_Rect * clip, int force);
+extern KIWI_CORE_EXPORT void KW_ReleaseRenderDriver(KW_OldRenderDriver * driver);
+extern KIWI_CORE_EXPORT void KW_UTF8TextSize(KW_OldRenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height);
+extern KIWI_CORE_EXPORT unsigned int KW_GetPixel(KW_OldRenderDriver * driver, KW_Surface * surface, unsigned x, unsigned y);
 
 #ifdef __cplusplus
 }

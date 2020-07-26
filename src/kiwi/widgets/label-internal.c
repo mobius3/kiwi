@@ -44,7 +44,7 @@ void PaintLabel(KW_Widget * widget, const KW_Rect * absolute, void * data) {
   KW_Rect dst = *absolute, icondst;
   KW_Rect src, iconsrc;
   
-  KW_RenderDriver * renderer = KW_GetWidgetRenderer(widget);
+  KW_OldRenderDriver * renderer = KW_GetWidgetRenderer(widget);
   
   /* query actual w and h */
   src.x = src.y = 0;

@@ -1,6 +1,6 @@
 #include "kiwi/core/tilerenderer.h"
 
-void KW_RenderTile(KW_RenderDriver * renderer, KW_Texture * tileset, int column, int line, int x, int y) {
+void KW_RenderTile(KW_OldRenderDriver * renderer, KW_Texture * tileset, int column, int line, int x, int y) {
   KW_Rect clip;
   KW_Rect target;
   clip.x = column * TILESIZE;
@@ -16,7 +16,7 @@ void KW_RenderTile(KW_RenderDriver * renderer, KW_Texture * tileset, int column,
   KW_RenderCopy(renderer, tileset, &clip, &target);
 }
 
-void KW_BlitTile(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * tileset, int column, int line, int x, int y) {
+void KW_BlitTile(KW_OldRenderDriver * renderer, KW_Surface * dst, KW_Surface * tileset, int column, int line, int x, int y) {
   KW_Rect clip;
   KW_Rect target;
   clip.x = column * TILESIZE;
@@ -33,7 +33,7 @@ void KW_BlitTile(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * tile
 }
 
 
-void KW_RenderTileFill(KW_RenderDriver * renderer, KW_Texture * tileset, int column, int line, int x, int y, int w, int h, KW_bool stretch) {
+void KW_RenderTileFill(KW_OldRenderDriver * renderer, KW_Texture * tileset, int column, int line, int x, int y, int w, int h, KW_bool stretch) {
  
   int i;
   int j;
@@ -96,7 +96,7 @@ void KW_RenderTileFill(KW_RenderDriver * renderer, KW_Texture * tileset, int col
   }
 }
 
-void KW_BlitTileFill(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * tileset, int column, int line, int x, int y, int w, int h, KW_bool stretch) {
+void KW_BlitTileFill(KW_OldRenderDriver * renderer, KW_Surface * dst, KW_Surface * tileset, int column, int line, int x, int y, int w, int h, KW_bool stretch) {
   int i;
   int j;
   
@@ -159,7 +159,7 @@ void KW_BlitTileFill(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * 
 }
 
 
-void KW_RenderTileFrame(KW_RenderDriver * renderer, KW_Texture * tileset, int startcolumn, int startline, const KW_Rect * fillrect, KW_bool stretchcenter, KW_bool stretchsides) {
+void KW_RenderTileFrame(KW_OldRenderDriver * renderer, KW_Texture * tileset, int startcolumn, int startline, const KW_Rect * fillrect, KW_bool stretchcenter, KW_bool stretchsides) {
   int x = fillrect->x, y = fillrect->y, w = fillrect->w, h = fillrect->h;
 
   /* fill with background */
@@ -190,7 +190,7 @@ void KW_RenderTileFrame(KW_RenderDriver * renderer, KW_Texture * tileset, int st
   KW_RenderTile(renderer, tileset, startcolumn + 2, startline + 2, x + (w - TILESIZE), y + h - TILESIZE);
 }
 
-void KW_BlitTileFrame(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface * tileset, int startcolumn, int startline, const KW_Rect * fillrect, KW_bool stretchcenter, KW_bool stretchsides) {
+void KW_BlitTileFrame(KW_OldRenderDriver * renderer, KW_Surface * dst, KW_Surface * tileset, int startcolumn, int startline, const KW_Rect * fillrect, KW_bool stretchcenter, KW_bool stretchsides) {
   int x = fillrect->x, y = fillrect->y, w = fillrect->w, h = fillrect->h;
   KW_bool stretchleft, stretchright, stretchtop, stretchbottom;
 
@@ -227,7 +227,7 @@ void KW_BlitTileFrame(KW_RenderDriver * renderer, KW_Surface * dst, KW_Surface *
   KW_BlitTile(renderer, dst, tileset, startcolumn + 2, startline + 2, x + (w - TILESIZE), y + h - TILESIZE);
 }
 
-KW_Texture * KW_CreateTileFrameTexture(KW_RenderDriver * renderer, KW_Surface * tileset, int startcolumn, int startline, int w, int h, KW_bool stretchcenter, KW_bool stretchsides) {
+KW_Texture * KW_CreateTileFrameTexture(KW_OldRenderDriver * renderer, KW_Surface * tileset, int startcolumn, int startline, int w, int h, KW_bool stretchcenter, KW_bool stretchsides) {
   KW_Surface * target;
   KW_Texture * result;
   KW_Rect fillrect;
@@ -239,7 +239,7 @@ KW_Texture * KW_CreateTileFrameTexture(KW_RenderDriver * renderer, KW_Surface * 
   KW_ReleaseSurface(renderer, target);
   return result;
 }
-KW_bool KW_IsTileStretchable(KW_RenderDriver * renderer, KW_Surface * tileset, int line, int column) {
+KW_bool KW_IsTileStretchable(KW_OldRenderDriver * renderer, KW_Surface * tileset, int line, int column) {
   unsigned i = 0, j = 0;
   unsigned int lastpixel = KW_GetPixel(renderer, tileset, line * TILESIZE, column * TILESIZE);
   unsigned int pixel;

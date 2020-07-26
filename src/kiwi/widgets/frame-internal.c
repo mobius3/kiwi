@@ -32,7 +32,7 @@ void RenderFrame(KW_Widget * widget) {
 void PaintFrame(KW_Widget * widget, const KW_Rect * absolute, void * data) {
   KW_Frame * frame = (KW_Frame *) data;
   KW_Rect targetgeom = *absolute;
-  KW_RenderDriver * renderer = KW_GetWidgetRenderer(widget);
+  KW_OldRenderDriver * renderer = KW_GetWidgetRenderer(widget);
 
   if (!KW_QueryWidgetHint(widget, KW_WIDGETHINT_ALLOWTILESTRETCH)) {
     KW_RenderCopy(renderer, frame->framerender, NULL, &targetgeom);

@@ -2,7 +2,7 @@
 #define KIWI_CORE_WIDGET_H
 
 #include "kiwi/core/core-export.h"
-#include "renderdriver.h"
+#include "old-renderdriver.h"
 #include "bool.h"
 #include "SDL.h"
 #include "kiwi/core/input-key.h"
@@ -24,7 +24,7 @@ struct KW_GUI;
 typedef struct KW_GUI KW_GUI;
 
 /* forward declarations of these */
-extern KIWI_CORE_EXPORT KW_RenderDriver * KW_GetGUIRenderer(KW_GUI * gui);
+extern KIWI_CORE_EXPORT KW_OldRenderDriver * KW_GetGUIRenderer(KW_GUI * gui);
 extern KIWI_CORE_EXPORT KW_GUI * KW_GetGUI(const KW_Widget * widget);
 
 
@@ -32,7 +32,7 @@ extern KIWI_CORE_EXPORT KW_GUI * KW_GetGUI(const KW_Widget * widget);
 typedef void (*KW_WidgetPaintFunction)(KW_Widget * widget, const KW_Rect * absolute, void * data);
 typedef void (*KW_WidgetDestroyFunction)(KW_Widget * widget);
 
-typedef KW_Texture* (*KW_CustomRenderFunction)(KW_RenderDriver * renderer, KW_Widget * widget, KW_Surface * tileset, int w, int h);
+typedef KW_Texture* (*KW_CustomRenderFunction)(KW_OldRenderDriver * renderer, KW_Widget * widget, KW_Surface * tileset, int w, int h);
 
 /* mouse callbacks */
 typedef void (*KW_OnMouseOver)(KW_Widget * widget);
@@ -254,7 +254,7 @@ extern KIWI_CORE_EXPORT KW_GUI * KW_GetWidgetGUI(const KW_Widget * widget);
  * \param   widget The widget to get the KW_RenderDriver instance from.
  * \returns The associated KW_RenderDriver instance.
  */
-extern KIWI_CORE_EXPORT KW_RenderDriver * KW_GetWidgetRenderer(const KW_Widget * widget);
+extern KIWI_CORE_EXPORT KW_OldRenderDriver * KW_GetWidgetRenderer(const KW_Widget * widget);
 
 /**
  * \brief		Get custom draw-widget function

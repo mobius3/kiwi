@@ -3,12 +3,12 @@
 
 #include "kiwi/core/widget.h"
 #include "kiwi/core/gui.h"
-#include "kiwi/core/renderdriver.h"
+#include "kiwi/core/old-renderdriver.h"
 
 #include "widget-internal.h"
 #include "gui-internal.h"
 
-KW_GUI * KW_CreateGUI(KW_RenderDriver * renderer, KW_Surface * tileset) {
+KW_GUI * KW_CreateGUI(KW_OldRenderDriver * renderer, KW_Surface * tileset) {
   struct KW_GUI * gui = calloc(sizeof(*gui), 1);
   gui->renderer = renderer;
   KW_SetGUITilesetSurface(gui, tileset);
@@ -21,7 +21,7 @@ KW_GUI * KW_CreateGUI(KW_RenderDriver * renderer, KW_Surface * tileset) {
   return gui;
 }
 
-void KW_SetGUIRenderer(KW_GUI * gui, KW_RenderDriver * renderer) {
+void KW_SetGUIRenderer(KW_GUI * gui, KW_OldRenderDriver * renderer) {
   gui->renderer = renderer;
 }
 
@@ -39,7 +39,7 @@ void KW_SetGUITilesetSurface(KW_GUI * gui, KW_Surface * tileset) {
 }
 
 
-KW_RenderDriver * KW_GetGUIRenderer(KW_GUI * gui) {
+KW_OldRenderDriver * KW_GetGUIRenderer(KW_GUI * gui) {
   return gui->renderer;
 }
 

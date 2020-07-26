@@ -40,7 +40,7 @@ KW_Widget * KW_CreateButton(KW_GUI * gui, KW_Widget * parent, KW_Widget * label,
 /** internal stuff **/
 void PaintButton(KW_Widget * widget, const KW_Rect * absolute, void * data) {
   KW_Button * button = (KW_Button *) data;
-  KW_RenderDriver * renderer = KW_GetWidgetRenderer(widget);
+  KW_OldRenderDriver * renderer = KW_GetWidgetRenderer(widget);
   /* don't draw frame if requested. */
   if (KW_QueryWidgetHint(widget, KW_WIDGETHINT_FRAMELESS) == KW_TRUE)
     return;
@@ -55,7 +55,7 @@ void RenderButton(KW_Widget * widget) {
   KW_Rect targetgeom;
   KW_Surface * tileset = KW_GetWidgetTilesetSurface(widget);
   KW_Button * button = KW_GetWidgetData(widget, PaintButton);
-  KW_RenderDriver * driver = KW_GetWidgetRenderer(widget);
+  KW_OldRenderDriver * driver = KW_GetWidgetRenderer(widget);
   KW_GetWidgetAbsoluteGeometry(widget, &targetgeom);  
   if (button->normal != NULL) KW_ReleaseTexture(driver, button->normal);
   button->normal = KW_CreateTileFrameTexture(KW_GetWidgetRenderer(widget), tileset, 3, 3, targetgeom.w, targetgeom.h, KW_FALSE, KW_FALSE);
@@ -65,7 +65,7 @@ void RenderButton(KW_Widget * widget) {
 
 void DestroyButton(KW_Widget * widget) {
   KW_Button * button = KW_GetWidgetData(widget, PaintButton);
-  KW_RenderDriver * driver = KW_GetWidgetRenderer(widget);
+  KW_OldRenderDriver * driver = KW_GetWidgetRenderer(widget);
   KW_ReleaseTexture(driver, button->over);
   KW_ReleaseTexture(driver, button->normal);
   free(button);

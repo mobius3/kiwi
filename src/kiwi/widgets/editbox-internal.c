@@ -6,7 +6,7 @@
 /* private functions */
 void PaintEditbox(KW_Widget * widget, const KW_Rect * absolute, void * data) {
   KW_Rect targetgeom = *absolute;
-  KW_RenderDriver * renderer;
+  KW_OldRenderDriver * renderer;
   KW_Texture * tileset;
   KW_Editbox * editbox = (KW_Editbox *) data;
   /* base column for tile rendering */
@@ -36,7 +36,7 @@ void PaintEditboxText(KW_Editbox * editbox, KW_Rect * _dst) {
   KW_Rect src;         /* text clipping */
   int cursorx;
 
-  KW_RenderDriver * renderer = KW_GetWidgetRenderer(editbox->widget);
+  KW_OldRenderDriver * renderer = KW_GetWidgetRenderer(editbox->widget);
   KW_Texture * tileset = KW_GetWidgetTilesetTexture(editbox->widget);
 
   /* query actual w and h */

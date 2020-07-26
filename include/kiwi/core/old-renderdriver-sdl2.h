@@ -17,7 +17,7 @@ struct SDL_Window;
  * \param   window The SDL2 window
  * \returns A KW_RenderDriver instance
  */
-extern KIWI_CORE_EXPORT struct KW_RenderDriver *KW_CreateSDL2RenderDriver(struct SDL_Renderer *renderer, struct SDL_Window *window);
+extern KIWI_CORE_EXPORT struct KW_OldRenderDriver *KW_CreateSDL2RenderDriver(struct SDL_Renderer *renderer, struct SDL_Window *window);
 
 /**
  * \brief   Gives back the SDL2 renderer used to create this RenderDriver
@@ -25,7 +25,7 @@ extern KIWI_CORE_EXPORT struct KW_RenderDriver *KW_CreateSDL2RenderDriver(struct
  * \returns The SDL_Renderer used
  * \sa      KW_RenderDriverGetSDL2Window
  */
-extern KIWI_CORE_EXPORT struct SDL_Renderer *KW_RenderDriverGetSDL2Renderer(struct KW_RenderDriver *driver);
+extern KIWI_CORE_EXPORT struct SDL_Renderer *KW_RenderDriverGetSDL2Renderer(struct KW_OldRenderDriver *driver);
 
 /**
  * \brief   Gives back the SDL2 window used to create this RenderDriver
@@ -33,7 +33,7 @@ extern KIWI_CORE_EXPORT struct SDL_Renderer *KW_RenderDriverGetSDL2Renderer(stru
  * \returns The SDL_Window used
  * \sa      KW_RenderDriverGetSDL2Renderer
  */
-extern KIWI_CORE_EXPORT struct SDL_Window *KW_RenderDriverGetSDL2Window(struct KW_RenderDriver *driver);
+extern KIWI_CORE_EXPORT struct SDL_Window *KW_RenderDriverGetSDL2Window(struct KW_OldRenderDriver *driver);
 
 #ifdef __cplusplus
 }
