@@ -1,5 +1,6 @@
-#include "SDL.h"
 #include "kiwi/widgets/label.h"
+
+#include "SDL.h"
 #include "label-internal.h"
 #include "kiwi/core/tilerenderer.h"
 #include "kiwi/core/gui.h"
