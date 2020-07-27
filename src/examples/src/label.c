@@ -19,7 +19,7 @@ int main(int argc, char ** argv) {
   KW_OldRenderDriver * driver = KW_CreateSDL2RenderDriver(renderer, window);
 
   /* Loads the "tileset.png" file as a surface */
-  KW_Surface * set = KW_LoadSurface(driver, "tileset.png");
+  KW_Surface * set = KW_LoadSurface(driver, "basic.png");
 
   /* At this point we can create the GUI. You can have multiple GUI instances
    * in the same window (or even different windows, its up to the Render Driver) */
