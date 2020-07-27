@@ -43,7 +43,7 @@ KW_OldRenderDriver * KW_GetGUIRenderer(KW_GUI * gui) {
   return gui->renderer;
 }
 
-KW_Texture * KW_GetGUITilesetTexture(KW_GUI * gui) {
+KW_OldTexture * KW_GetGUITilesetTexture(KW_GUI * gui) {
   return gui->tilesettexture;
 }
 
@@ -59,7 +59,7 @@ void KW_DestroyGUI(KW_GUI * gui) {
   free(gui);
 }
 
-void KW_SetGUIFont(KW_GUI * gui, KW_Font * font) {
+void KW_SetGUIFont(KW_GUI * gui, KW_OldFont * font) {
   unsigned i = 0;
   KW_OnGUIFontChanged handler;
   if (font == NULL) return;
@@ -98,7 +98,7 @@ void KW_RemoveGUITextColorChangedHandler(KW_GUI * gui, KW_OnGUITextColorChanged 
   RemoveGUIHandler(gui, KW_GUI_ONTEXTCOLORCHANGED, (GUIHandler) handler, priv);
 }
 
-KW_Font * KW_GetGUIFont(KW_GUI * gui) {
+KW_OldFont * KW_GetGUIFont(KW_GUI * gui) {
   return gui->font ? gui->font : gui->defaultfont;
 }
 

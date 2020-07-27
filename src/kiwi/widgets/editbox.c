@@ -33,7 +33,7 @@ unsigned int KW_GetEditboxCursorPosition(KW_Widget * widget) {
   return editbox->cursor;
 }
 
-KW_Font * KW_GetEditboxFont(KW_Widget * widget) {
+KW_OldFont * KW_GetEditboxFont(KW_Widget * widget) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, PaintEditbox);
   return editbox->font == NULL ? KW_GetGUIFont(KW_GetGUI(widget)) : editbox->font;
 }
@@ -48,7 +48,7 @@ void KW_SetEditboxCursorPosition(KW_Widget * widget, unsigned int pos) {
   editbox->cursor = pos;
 }
 
-void KW_SetEditboxFont(KW_Widget * widget, KW_Font * font) {
+void KW_SetEditboxFont(KW_Widget * widget, KW_OldFont * font) {
   KW_Editbox * editbox = KW_GetWidgetData(widget, PaintEditbox);
   editbox->font = font;
   RenderEditboxText(editbox);

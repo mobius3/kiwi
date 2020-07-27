@@ -24,12 +24,12 @@ void KW_SetLabelAlignment(KW_Widget * widget, KW_LabelHorizontalAlignment halign
 }
 
 
-KW_Font * KW_GetLabelFont(KW_Widget * widget) {
+KW_OldFont * KW_GetLabelFont(KW_Widget * widget) {
   KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, PaintLabel);
   return label->font == NULL ? KW_GetGUIFont(KW_GetGUI(widget)) : label->font;
 }
 
-void KW_SetLabelFont(KW_Widget * widget, KW_Font * font) {
+void KW_SetLabelFont(KW_Widget * widget, KW_OldFont * font) {
   KW_Label * label = (KW_Label *) KW_GetWidgetData(widget, PaintLabel);
   label->font = font;
   RenderLabelText(widget);

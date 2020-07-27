@@ -12,21 +12,21 @@ void KW_GetSurfaceExtents(KW_OldRenderDriver * driver, const KW_Surface * surfac
     driver->getSurfaceExtents(driver, surface, width, height);
 }
 
-void KW_GetTextureExtents(KW_OldRenderDriver * driver, KW_Texture * texture, unsigned * width, unsigned * height) {
+void KW_GetTextureExtents(KW_OldRenderDriver * driver, KW_OldTexture * texture, unsigned * width, unsigned * height) {
     driver->getTextureExtents(driver, texture, width, height);
 }
 
-void KW_RenderCopy(KW_OldRenderDriver * driver, KW_Texture * src, const KW_Rect * clip, const KW_Rect * dstRect) {
+void KW_RenderCopy(KW_OldRenderDriver * driver, KW_OldTexture * src, const KW_Rect * clip, const KW_Rect * dstRect) {
     driver->renderCopy(driver, src, clip, dstRect);
 }
 
-KW_Texture * KW_RenderText(KW_OldRenderDriver * driver, KW_Font * font, const char * text, KW_Color color,
-                           KW_RenderDriver_TextStyle style) {
+KW_OldTexture * KW_RenderText(KW_OldRenderDriver * driver, KW_OldFont * font, const char * text, KW_Color color,
+                              KW_RenderDriver_TextStyle style) {
     return driver->renderText(driver, font, text, color, style);
 }
 
-KW_Texture * KW_RenderTextWrapped(KW_OldRenderDriver * driver, KW_Font * font, const char * text, KW_Color color,
-                                  KW_RenderDriver_TextStyle style, int wrapwidth) {
+KW_OldTexture * KW_RenderTextWrapped(KW_OldRenderDriver * driver, KW_OldFont * font, const char * text, KW_Color color,
+                                     KW_RenderDriver_TextStyle style, int wrapwidth) {
     return driver->renderTextWrapped(driver, font, text, color, style, wrapwidth);
 }
 
@@ -34,19 +34,19 @@ void KW_RenderRect(KW_OldRenderDriver * driver, KW_Rect * rect, KW_Color color) 
     driver->renderRect(driver, rect, color);
 }
 
-KW_Font * KW_LoadFont(KW_OldRenderDriver * driver, const char * fontFile, unsigned ptSize) {
+KW_OldFont * KW_LoadFont(KW_OldRenderDriver * driver, const char * fontFile, unsigned ptSize) {
     return driver->loadFont(driver, fontFile, ptSize);
 }
 
-KW_Font * KW_LoadFontFromMemory(KW_OldRenderDriver * driver, const void * fontMemory, unsigned long memSize, unsigned ptSize) {
+KW_OldFont * KW_LoadFontFromMemory(KW_OldRenderDriver * driver, const void * fontMemory, unsigned long memSize, unsigned ptSize) {
     return driver->loadFontFromMemory(driver, fontMemory, memSize, ptSize);
 }
 
-KW_Texture * KW_CreateTexture(KW_OldRenderDriver * driver, KW_Surface * surface) {
+KW_OldTexture * KW_CreateTexture(KW_OldRenderDriver * driver, KW_Surface * surface) {
     return driver->createTexture(driver, surface);
 }
 
-KW_Texture * KW_LoadTexture(KW_OldRenderDriver * driver, const char * file) {
+KW_OldTexture * KW_LoadTexture(KW_OldRenderDriver * driver, const char * file) {
     return driver->loadTexture(driver, file);
 }
 
@@ -58,7 +58,7 @@ KW_Surface * KW_LoadSurfaceFromMemory(KW_OldRenderDriver * driver, const char * 
   return driver->loadSurface(driver, file);
 }
 
-void KW_ReleaseTexture(KW_OldRenderDriver * driver, KW_Texture * texture) {
+void KW_ReleaseTexture(KW_OldRenderDriver * driver, KW_OldTexture * texture) {
     driver->releaseTexture(driver, texture);
 }
 
@@ -66,7 +66,7 @@ void KW_ReleaseSurface(KW_OldRenderDriver * driver, KW_Surface * surface) {
     driver->releaseSurface(driver, surface);
 }
 
-void KW_ReleaseFont(KW_OldRenderDriver * driver, KW_Font * font) {
+void KW_ReleaseFont(KW_OldRenderDriver * driver, KW_OldFont * font) {
     driver->releaseFont(driver, font);
 }
 
@@ -80,7 +80,7 @@ void KW_ReleaseRenderDriver(KW_OldRenderDriver * driver) {
     driver->release(driver);
 }
 
-void KW_UTF8TextSize(KW_OldRenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height) {
+void KW_UTF8TextSize(KW_OldRenderDriver * driver, KW_OldFont * font, const char * text, unsigned * width, unsigned * height) {
     driver->utf8TextSize(driver, font, text, width, height);
 }
 

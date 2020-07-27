@@ -19,12 +19,12 @@ typedef enum KW_GUIEventHandlerType {
 } KW_GUIEventHandlerType;
 
 struct KW_GUI {
-  KW_Texture * tilesettexture;
+  KW_OldTexture * tilesettexture;
   KW_Surface * tilesetsurface;
   KW_OldRenderDriver * renderer;
   KW_Widget * rootwidget; /* the parent to all parent-less widgets :) */
-  KW_Font * font;
-  KW_Font * defaultfont;
+  KW_OldFont * font;
+  KW_OldFont * defaultfont;
   KW_Color textcolor;
   
   KW_Widget * currentmouseover; /* the current widget that has mouse over */

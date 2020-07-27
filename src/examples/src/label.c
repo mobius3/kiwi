@@ -27,7 +27,7 @@ int main(int argc, char ** argv) {
 
   /* Loads a font and sets it. KiWi does not manage foreign memory (it does not own
    * your pointers), so you must keep them to release later. */
-  KW_Font * font = KW_LoadFont(driver, "Fontin-Regular.ttf", 12);
+  KW_OldFont * font = KW_LoadFont(driver, "Fontin-Regular.ttf", 12);
   KW_SetGUIFont(gui, font);
 
   /* Define a geometry and create a frame */

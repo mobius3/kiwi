@@ -54,7 +54,7 @@ void KW_SetWidgetTilesetSurface(KW_Widget * widget, KW_Surface * tileset) {
   }
 }
 
-KW_Texture * KW_GetWidgetTilesetTexture(KW_Widget * widget) {
+KW_OldTexture * KW_GetWidgetTilesetTexture(KW_Widget * widget) {
   return widget->tilesettexture == NULL ? widget->gui->tilesettexture : widget->tilesettexture;
 }
 
@@ -451,7 +451,7 @@ static void DrawDebugGizmos(KW_Widget * widget, KW_Color * color) {
   KW_Rect dbgrect;
   KW_Rect viewport;
   KW_OldRenderDriver * renderer;
-  static KW_Texture * text = NULL;
+  static KW_OldTexture * text = NULL;
   static KW_Widget * old = NULL;
   KW_Color newcolor;
   KW_bool clipenabled = KW_FALSE;

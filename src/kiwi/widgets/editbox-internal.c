@@ -7,7 +7,7 @@
 void PaintEditbox(KW_Widget * widget, const KW_Rect * absolute, void * data) {
   KW_Rect targetgeom = *absolute;
   KW_OldRenderDriver * renderer;
-  KW_Texture * tileset;
+  KW_OldTexture * tileset;
   KW_Editbox * editbox = (KW_Editbox *) data;
   /* base column for tile rendering */
   int basec = 0;
@@ -37,7 +37,7 @@ void PaintEditboxText(KW_Editbox * editbox, KW_Rect * _dst) {
   int cursorx;
 
   KW_OldRenderDriver * renderer = KW_GetWidgetRenderer(editbox->widget);
-  KW_Texture * tileset = KW_GetWidgetTilesetTexture(editbox->widget);
+  KW_OldTexture * tileset = KW_GetWidgetTilesetTexture(editbox->widget);
 
   /* query actual w and h */
   src.x = src.y = 0; src.w = editbox->textwidth; src.h = editbox->textheight;
@@ -273,7 +273,7 @@ void EditboxFocusLose(KW_Widget * widget) {
   SDL_StopTextInput();
 }
 
-void EditboxFontChanged(KW_GUI * gui, void * priv, KW_Font * font) {
+void EditboxFontChanged(KW_GUI * gui, void * priv, KW_OldFont * font) {
   KW_Editbox * editbox = KW_GetWidgetData((KW_Widget*)priv, PaintEditbox);
   (void) font; (void) gui;
   RenderEditboxText(editbox);

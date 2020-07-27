@@ -45,7 +45,7 @@ struct KW_Widget {
   struct KW_Widget *  parent;
 
   
-  KW_Texture *       tilesettexture;
+  KW_OldTexture *       tilesettexture;
   KW_Surface *       tilesetsurface;
   
   KW_WidgetPaintFunction paint;

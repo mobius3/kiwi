@@ -1,6 +1,6 @@
 #include "kiwi/core/tilerenderer.h"
 
-void KW_RenderTile(KW_OldRenderDriver * renderer, KW_Texture * tileset, int column, int line, int x, int y) {
+void KW_RenderTile(KW_OldRenderDriver * renderer, KW_OldTexture * tileset, int column, int line, int x, int y) {
   KW_Rect clip;
   KW_Rect target;
   clip.x = column * TILESIZE;
@@ -33,7 +33,7 @@ void KW_BlitTile(KW_OldRenderDriver * renderer, KW_Surface * dst, KW_Surface * t
 }
 
 
-void KW_RenderTileFill(KW_OldRenderDriver * renderer, KW_Texture * tileset, int column, int line, int x, int y, int w, int h, KW_bool stretch) {
+void KW_RenderTileFill(KW_OldRenderDriver * renderer, KW_OldTexture * tileset, int column, int line, int x, int y, int w, int h, KW_bool stretch) {
  
   int i;
   int j;
@@ -159,7 +159,7 @@ void KW_BlitTileFill(KW_OldRenderDriver * renderer, KW_Surface * dst, KW_Surface
 }
 
 
-void KW_RenderTileFrame(KW_OldRenderDriver * renderer, KW_Texture * tileset, int startcolumn, int startline, const KW_Rect * fillrect, KW_bool stretchcenter, KW_bool stretchsides) {
+void KW_RenderTileFrame(KW_OldRenderDriver * renderer, KW_OldTexture * tileset, int startcolumn, int startline, const KW_Rect * fillrect, KW_bool stretchcenter, KW_bool stretchsides) {
   int x = fillrect->x, y = fillrect->y, w = fillrect->w, h = fillrect->h;
 
   /* fill with background */
@@ -227,9 +227,9 @@ void KW_BlitTileFrame(KW_OldRenderDriver * renderer, KW_Surface * dst, KW_Surfac
   KW_BlitTile(renderer, dst, tileset, startcolumn + 2, startline + 2, x + (w - TILESIZE), y + h - TILESIZE);
 }
 
-KW_Texture * KW_CreateTileFrameTexture(KW_OldRenderDriver * renderer, KW_Surface * tileset, int startcolumn, int startline, int w, int h, KW_bool stretchcenter, KW_bool stretchsides) {
+KW_OldTexture * KW_CreateTileFrameTexture(KW_OldRenderDriver * renderer, KW_Surface * tileset, int startcolumn, int startline, int w, int h, KW_bool stretchcenter, KW_bool stretchsides) {
   KW_Surface * target;
-  KW_Texture * result;
+  KW_OldTexture * result;
   KW_Rect fillrect;
   fillrect.x = 0; fillrect.y = 0; fillrect.w = w;  fillrect.h = h;
   target = KW_CreateSurface(renderer, (unsigned)w, (unsigned)h);

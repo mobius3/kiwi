@@ -3,10 +3,11 @@
 
 #include "kiwi/core/core-export.h"
 #include "widget.h"
-#include "old-renderdriver.h"
 #include "input-event.h"
 
-/** 
+struct KW_OldRenderDriver;
+
+/**
  * \file KW_gui.h
  * 
  * Main include for the KiWi library.
@@ -38,7 +39,7 @@ extern "C" {
  * \brief The type of a font changed handler
  * \sa KW_AddGUITextChangedHandler
  */
-typedef void (*KW_OnGUIFontChanged)(KW_GUI * gui, void * data, KW_Font * font);
+typedef void (*KW_OnGUIFontChanged)(KW_GUI * gui, void * data, KW_OldFont * font);
 
 /**
  * \brief The type of a text color changed handler
@@ -59,7 +60,7 @@ typedef void (*KW_OnGUITextColorChanged)(KW_GUI * gui, void * data, KW_Color col
  * \param   tileset The tile surface to use as a tileset.
  * \returns A initialized KW_GUI instance.
  */
-extern KIWI_CORE_EXPORT KW_GUI * KW_CreateGUI(KW_OldRenderDriver * renderer, KW_Surface * tileset);
+extern KIWI_CORE_EXPORT KW_GUI * KW_CreateGUI(struct KW_OldRenderDriver * renderer, KW_Surface * tileset);
 
 /**
  * \brief   Quits this KW_GUI instance and free its resources.
@@ -77,7 +78,7 @@ extern KIWI_CORE_EXPORT void KW_DestroyGUI(KW_GUI * gui);
  * \param   gui The KW_GUI instance.
  * \param   render The KW_RenderDriver instance.
  */
-extern KIWI_CORE_EXPORT void KW_SetGUIRenderer(KW_GUI * gui, KW_OldRenderDriver * renderer);
+extern KIWI_CORE_EXPORT void KW_SetGUIRenderer(KW_GUI * gui, struct KW_OldRenderDriver * renderer);
 
 /**
  * \brief   Returns the current associated renderer with a KW_GUI instance.
@@ -86,7 +87,7 @@ extern KIWI_CORE_EXPORT void KW_SetGUIRenderer(KW_GUI * gui, KW_OldRenderDriver 
  * \param   gui The KW_GUI instance.
  * \return  The associated KW_RenderDriver instance.
  */
-extern KIWI_CORE_EXPORT KW_OldRenderDriver * KW_GetGUIRenderer(KW_GUI * gui);
+extern KIWI_CORE_EXPORT struct KW_OldRenderDriver * KW_GetGUIRenderer(KW_GUI * gui);
 
 /**
  * \brief   Set a new tileset surface to be used in this KW_GUI instance.
@@ -103,7 +104,7 @@ extern KIWI_CORE_EXPORT void KW_SetGUITilesetSurface(KW_GUI * gui, KW_Surface * 
  *          texture as it is managed by KiWi.
  * \param   gui The KW_GUI instance to get the tileset from.
  */
-extern KIWI_CORE_EXPORT KW_Texture * KW_GetGUITilesetTexture(KW_GUI * gui);
+extern KIWI_CORE_EXPORT KW_OldTexture * KW_GetGUITilesetTexture(KW_GUI * gui);
 
 /**
  * \brief   Gets the tileset surface associated with a KW_GUI instance.
@@ -120,7 +121,7 @@ extern KIWI_CORE_EXPORT KW_Surface * KW_GetGUITilesetSurface(KW_GUI * gui);
  * \param   gui The KW_GUI instance to set the font.
  * \param   font The font to associate with a KW_GUI instance.
  */
-extern KIWI_CORE_EXPORT void KW_SetGUIFont(KW_GUI * gui, KW_Font * font);
+extern KIWI_CORE_EXPORT void KW_SetGUIFont(KW_GUI * gui, KW_OldFont * font);
 /**
  * \brief   Sets a uniform font conlor to be used in label-rendering widgets.
  * \details All widgets that render text will use by default the font color set with this function unless
@@ -177,7 +178,7 @@ extern KIWI_CORE_EXPORT void KW_RemoveGUITextColorChangedHandler(KW_GUI * gui, K
  * \param   gui The KW_GUI instance to get the font from.
  * \return  The current font associated with the KW_GUI instance.
  */
-extern KIWI_CORE_EXPORT KW_Font * KW_GetGUIFont(KW_GUI * gui);
+extern KIWI_CORE_EXPORT KW_OldFont * KW_GetGUIFont(KW_GUI * gui);
 
 /**
  * \brief   Get the current font color associated with a KW_GUI instance.

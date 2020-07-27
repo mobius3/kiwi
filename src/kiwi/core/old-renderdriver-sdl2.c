@@ -11,25 +11,25 @@ typedef struct KWSDL {
     SDL_Window * window;
 } KWSDL;
 
-static void KWSDL_renderCopy(KW_OldRenderDriver * driver, KW_Texture * texture, const KW_Rect * src, const KW_Rect * dst);
-static KW_Texture * KWSDL_renderText(KW_OldRenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
-static KW_Texture * KWSDL_renderTextWrapped(KW_OldRenderDriver * driver, KW_Font * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style, int wrapwidth);
-static KW_Font * KWSDL_loadFont(KW_OldRenderDriver * driver, const char * font, unsigned ptSize);
-static KW_Font * KWSDL_loadFontFromMemory(KW_OldRenderDriver * driver, const void * fontMemory, unsigned long memSize, unsigned ptSize);
-static KW_Texture * KWSDL_createTexture(KW_OldRenderDriver * driver, KW_Surface * surface);
+static void KWSDL_renderCopy(KW_OldRenderDriver * driver, KW_OldTexture * texture, const KW_Rect * src, const KW_Rect * dst);
+static KW_OldTexture * KWSDL_renderText(KW_OldRenderDriver * driver, KW_OldFont * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style);
+static KW_OldTexture * KWSDL_renderTextWrapped(KW_OldRenderDriver * driver, KW_OldFont * font, const char * text, KW_Color color, KW_RenderDriver_TextStyle style, int wrapwidth);
+static KW_OldFont * KWSDL_loadFont(KW_OldRenderDriver * driver, const char * font, unsigned ptSize);
+static KW_OldFont * KWSDL_loadFontFromMemory(KW_OldRenderDriver * driver, const void * fontMemory, unsigned long memSize, unsigned ptSize);
+static KW_OldTexture * KWSDL_createTexture(KW_OldRenderDriver * driver, KW_Surface * surface);
 static KW_Surface * KWSDL_createRGBA32Surface(KW_OldRenderDriver * driver, unsigned width, unsigned height);
-static KW_Texture * KWSDL_loadTexture(KW_OldRenderDriver * driver, const char * texturefile);
+static KW_OldTexture * KWSDL_loadTexture(KW_OldRenderDriver * driver, const char * texturefile);
 static KW_Surface * KWSDL_loadSurface(KW_OldRenderDriver * driver, const char * texturefile);
 static void KWSDL_getSurfaceExtents(KW_OldRenderDriver * driver, const KW_Surface * surface, unsigned * width, unsigned * height);
-static void KWSDL_getTextureExtents(KW_OldRenderDriver * driver, KW_Texture * texture, unsigned * width, unsigned * height);
-static void KWSDL_releaseTexture(KW_OldRenderDriver * driver, KW_Texture * texture);
-static void KWSDL_releaseFont(KW_OldRenderDriver * driver, KW_Font * font);
+static void KWSDL_getTextureExtents(KW_OldRenderDriver * driver, KW_OldTexture * texture, unsigned * width, unsigned * height);
+static void KWSDL_releaseTexture(KW_OldRenderDriver * driver, KW_OldTexture * texture);
+static void KWSDL_releaseFont(KW_OldRenderDriver * driver, KW_OldFont * font);
 static void KWSDL_blitSurface(KW_OldRenderDriver * driver, KW_Surface * src, const KW_Rect * srcRect, KW_Surface * dst, const KW_Rect * dstRect);
 static void KWSDL_releaseSurface(KW_OldRenderDriver * driver, KW_Surface * font);
 static void KWSDL_setClipRect(KW_OldRenderDriver * driver, const KW_Rect * clip, int force);
 static KW_bool KWSDL_getClipRect(KW_OldRenderDriver * driver, KW_Rect * clip);
 static void KWSDL_release(KW_OldRenderDriver * driver);
-static void KWSDL_utf8TextSize(KW_OldRenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height);
+static void KWSDL_utf8TextSize(KW_OldRenderDriver * driver, KW_OldFont * font, const char * text, unsigned * width, unsigned * height);
 static unsigned KWSDL_getPixel(KW_OldRenderDriver * driver, KW_Surface * surface, unsigned px, unsigned py);
 static void KWSDL_renderRect(KW_OldRenderDriver * driver, KW_Rect * rect, KW_Color color);
 static void KWSDL_getViewportSize(KW_OldRenderDriver * driver, KW_Rect * rect);
@@ -80,7 +80,7 @@ void KWSDL_getViewportSize(KW_OldRenderDriver * driver, KW_Rect * rect) {
   rect->h = r.h;
 }
 
-void KWSDL_utf8TextSize(KW_OldRenderDriver * driver, KW_Font * font, const char * text, unsigned * width, unsigned * height) {
+void KWSDL_utf8TextSize(KW_OldRenderDriver * driver, KW_OldFont * font, const char * text, unsigned * width, unsigned * height) {
   (void) driver;
   TTF_SizeUTF8(font->font, text, (int*)width, (int*)height);
 }
@@ -111,8 +111,8 @@ struct SDL_Window * KW_RenderDriverGetSDL2Window(struct KW_OldRenderDriver * dri
   return kwsdl->window;
 }
 
-static KW_Texture * KWSDL_wrapTexture(SDL_Texture * texture) {
-  KW_Texture * t = SDL_malloc(sizeof(KW_Texture));
+static KW_OldTexture * KWSDL_wrapTexture(SDL_Texture * texture) {
+  KW_OldTexture * t = SDL_malloc(sizeof(KW_OldTexture));
   t->texture = texture;
   return t;
 }
@@ -123,13 +123,13 @@ static KW_Surface * KWSDL_wrapSurface(SDL_Surface * surface) {
   return s;
 }
 
-static KW_Font * KWSDL_wrapFont(TTF_Font * font) {
-  KW_Font * f = SDL_malloc(sizeof(KW_Font));
+static KW_OldFont * KWSDL_wrapFont(TTF_Font * font) {
+  KW_OldFont * f = SDL_malloc(sizeof(KW_OldFont));
   f->font = font;
   return f;
 }
 
-static KW_Texture * KWSDL_createTexture(KW_OldRenderDriver * driver, KW_Surface * surface) {
+static KW_OldTexture * KWSDL_createTexture(KW_OldRenderDriver * driver, KW_Surface * surface) {
   KWSDL * kwsdl = (KWSDL *) driver->priv;
   SDL_Texture * t = SDL_CreateTextureFromSurface(kwsdl->renderer, surface->surface);
   SDL_SetTextureBlendMode(t, SDL_BLENDMODE_BLEND);
@@ -156,7 +156,7 @@ static KW_Surface * KWSDL_createRGBA32Surface(KW_OldRenderDriver * driver, unsig
   return KWSDL_wrapSurface(s);
 }
 
-static KW_Font * KWSDL_loadFont(KW_OldRenderDriver * driver, const char * font, unsigned ptSize) {
+static KW_OldFont * KWSDL_loadFont(KW_OldRenderDriver * driver, const char * font, unsigned ptSize) {
   TTF_Font * f = TTF_OpenFont(font, ptSize);
   (void)driver;
   if (f == NULL) {
@@ -166,7 +166,7 @@ static KW_Font * KWSDL_loadFont(KW_OldRenderDriver * driver, const char * font, 
   return KWSDL_wrapFont(f);
 }
 
-static KW_Font * KWSDL_loadFontFromMemory(KW_OldRenderDriver * driver, const void * font, unsigned long memsize, unsigned ptSize) {
+static KW_OldFont * KWSDL_loadFontFromMemory(KW_OldRenderDriver * driver, const void * font, unsigned long memsize, unsigned ptSize) {
   TTF_Font * f = TTF_OpenFontRW(SDL_RWFromConstMem(font, memsize), SDL_FALSE, ptSize);
   (void)driver;
   if (f == NULL) {
@@ -192,7 +192,7 @@ static void KWSDL_getSurfaceExtents(KW_OldRenderDriver * driver, const KW_Surfac
   if (height) *height = (unsigned)((SDL_Surface*)surface->surface)->h;
 }
 
-static void KWSDL_getTextureExtents(KW_OldRenderDriver * driver, KW_Texture * texture, unsigned * width, unsigned * height) {
+static void KWSDL_getTextureExtents(KW_OldRenderDriver * driver, KW_OldTexture * texture, unsigned * width, unsigned * height) {
   int w, h;
   (void)driver;
   SDL_QueryTexture(texture->texture, NULL, NULL, &w, &h);
@@ -213,7 +213,7 @@ static void KWSDL_blitSurface(KW_OldRenderDriver * driver, KW_Surface * src, con
   }
 }
 
-static KW_Texture * KWSDL_loadTexture(KW_OldRenderDriver * driver, const char * texturefile) {
+static KW_OldTexture * KWSDL_loadTexture(KW_OldRenderDriver * driver, const char * texturefile) {
   KWSDL * kwsdl = (KWSDL *) driver->priv;
   SDL_Texture * t = IMG_LoadTexture(kwsdl->renderer, texturefile);
   if (t == NULL) {
@@ -225,7 +225,7 @@ static KW_Texture * KWSDL_loadTexture(KW_OldRenderDriver * driver, const char * 
   return KWSDL_wrapTexture(t);
 }
 
-static KW_Texture * KWSDL_renderTextWrapped(KW_OldRenderDriver * driver, KW_Font * kwfont, const char * text, KW_Color color, KW_RenderDriver_TextStyle style, int wrapwidth) {
+static KW_OldTexture * KWSDL_renderTextWrapped(KW_OldRenderDriver * driver, KW_OldFont * kwfont, const char * text, KW_Color color, KW_RenderDriver_TextStyle style, int wrapwidth) {
   KWSDL * kwsdl = (KWSDL *) driver->priv;
   int previousstyle;
   SDL_Color sdlcolor;
@@ -250,12 +250,12 @@ static KW_Texture * KWSDL_renderTextWrapped(KW_OldRenderDriver * driver, KW_Font
   return KWSDL_wrapTexture(ret);
 }
 
-static KW_Texture * KWSDL_renderText(KW_OldRenderDriver * driver, KW_Font * kwfont, const char * text, KW_Color color, KW_RenderDriver_TextStyle style) {
+static KW_OldTexture * KWSDL_renderText(KW_OldRenderDriver * driver, KW_OldFont * kwfont, const char * text, KW_Color color, KW_RenderDriver_TextStyle style) {
   /* save on duplicated code, this function should probably be removed in the future */
   return KWSDL_renderTextWrapped(driver, kwfont, text, color, style, 0);
 }
 
-static void KWSDL_releaseTexture(KW_OldRenderDriver * driver, KW_Texture * texture) {
+static void KWSDL_releaseTexture(KW_OldRenderDriver * driver, KW_OldTexture * texture) {
   (void)driver;
   SDL_DestroyTexture(texture->texture);
   SDL_free(texture);
@@ -267,13 +267,13 @@ static void KWSDL_releaseSurface(KW_OldRenderDriver * driver, KW_Surface * surfa
   SDL_free(surface);
 }
 
-static void KWSDL_releaseFont(KW_OldRenderDriver * driver, KW_Font * font) {
+static void KWSDL_releaseFont(KW_OldRenderDriver * driver, KW_OldFont * font) {
   (void)driver;
   TTF_CloseFont(font->font);
   SDL_free(font);
 }
 
-static void KWSDL_renderCopy(KW_OldRenderDriver * driver, KW_Texture * texture, const KW_Rect * src, const KW_Rect * dst) {
+static void KWSDL_renderCopy(KW_OldRenderDriver * driver, KW_OldTexture * texture, const KW_Rect * src, const KW_Rect * dst) {
   KWSDL * kwsdl = (KWSDL *) driver->priv;
   SDL_Rect srcRect, dstRect;
   if (src) { srcRect.x = src->x; srcRect.y = src->y; srcRect.w = src->w; srcRect.h = src->h; }

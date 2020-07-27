@@ -9,7 +9,7 @@ extern "C" {
 #endif
 
 typedef struct KW_Frame {
-  KW_Texture * framerender;
+  KW_OldTexture * framerender;
 } KW_Frame;
 
 KW_Frame * AllocFrame();

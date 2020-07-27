@@ -12,10 +12,10 @@ extern "C" {
 typedef
 struct KW_Label {
   char * text;
-  KW_Texture * textrender;
+  KW_OldTexture * textrender;
   KW_Color color;
   KW_Label_Style style;
-  KW_Font * font;
+  KW_OldFont * font;
   KW_LabelHorizontalAlignment halign;
   KW_LabelVerticalAlignment valign;
   int hoffset;
@@ -39,7 +39,7 @@ struct KW_Label {
 void PaintLabel(KW_Widget * widget, const KW_Rect * absolute, void * data);
 void RenderLabelText(KW_Widget * widget);
 void DestroyLabel(KW_Widget * widget);
-void LabelFontChanged(KW_GUI * gui, void * data, KW_Font * font);
+void LabelFontChanged(KW_GUI * gui, void * data, KW_OldFont * font);
 
 #ifdef __cplusplus
 }

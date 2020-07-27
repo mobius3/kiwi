@@ -32,7 +32,7 @@ extern KIWI_CORE_EXPORT KW_GUI * KW_GetGUI(const KW_Widget * widget);
 typedef void (*KW_WidgetPaintFunction)(KW_Widget * widget, const KW_Rect * absolute, void * data);
 typedef void (*KW_WidgetDestroyFunction)(KW_Widget * widget);
 
-typedef KW_Texture* (*KW_CustomRenderFunction)(KW_OldRenderDriver * renderer, KW_Widget * widget, KW_Surface * tileset, int w, int h);
+typedef KW_OldTexture* (*KW_CustomRenderFunction)(KW_OldRenderDriver * renderer, KW_Widget * widget, KW_Surface * tileset, int w, int h);
 
 /* mouse callbacks */
 typedef void (*KW_OnMouseOver)(KW_Widget * widget);
@@ -681,7 +681,7 @@ extern KIWI_CORE_EXPORT void KW_SetWidgetTilesetSurface(KW_Widget * widget, KW_S
  * \param   widget The widget to retrieve the tileset from.
  * \returns A pointer to the KW_Texture being used as a tileset.
  */
-extern KIWI_CORE_EXPORT KW_Texture * KW_GetWidgetTilesetTexture(KW_Widget * widget);
+extern KIWI_CORE_EXPORT KW_OldTexture * KW_GetWidgetTilesetTexture(KW_Widget * widget);
 
 /**
  * \brief   Returns the current tileset being used by the widget.

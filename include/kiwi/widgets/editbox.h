@@ -60,16 +60,16 @@ extern KIWI_WIDGETS_EXPORT unsigned int KW_GetEditboxCursorPosition(KW_Widget * 
 /**
  * \brief Changes the current font used to render edtibox text.
  * \param widget The editbox widget to change font
- * \param font the KW_Font instance to use
+ * \param font the KW_OldFont instance to use
  */
-extern KIWI_WIDGETS_EXPORT void KW_SetEditboxFont(KW_Widget * widget, KW_Font * font);
+extern KIWI_WIDGETS_EXPORT void KW_SetEditboxFont(KW_Widget * widget, KW_OldFont * font);
 
 /**
- * \brief Returns the current KW_Font being used in the editbox
+ * \brief Returns the current KW_OldFont being used in the editbox
  * \param widget the editbox widget to get the font from
  * \return the font being used
  */
-extern KIWI_WIDGETS_EXPORT KW_Font * KW_GetEditboxFont(KW_Widget * widget);
+extern KIWI_WIDGETS_EXPORT KW_OldFont * KW_GetEditboxFont(KW_Widget * widget);
 
 /**
  * \brief   Gets the associated text color with an editbox.

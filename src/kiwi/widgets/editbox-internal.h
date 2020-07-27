@@ -12,8 +12,8 @@ typedef struct KW_Edtibox {
   KW_Widget * widget;         /* the widget we pertain to */
   
   char text[1024];            /* the actual text */
-  KW_Texture * textrender;   /* the rendered text */
-  KW_Font * font;            /* font used to render text */
+  KW_OldTexture * textrender;   /* the rendered text */
+  KW_OldFont * font;            /* font used to render text */
   unsigned int cursor;        /* in which char index is the cursor */
   KW_bool mouseover;         /* is mouse over the editbox */
   KW_bool clicked;           /* was the editbox clicked */
@@ -51,7 +51,7 @@ void EditboxFocusGain(KW_Widget * widget);
 void EditboxFocusLose(KW_Widget * widget);
 void EditboxTextInput(KW_Widget * widget, uint8_t const * text);
 void EditboxKeyDown(KW_Widget * widget, KW_InputKey key);
-void EditboxFontChanged(KW_GUI * gui, void * priv, KW_Font * font);
+void EditboxFontChanged(KW_GUI * gui, void * priv, KW_OldFont * font);
 
 #ifdef __cplusplus
 }

@@ -12,7 +12,7 @@ typedef struct KW_Scrollbox {
   KW_Widget   * outer;
   KW_Widget   * inner;
   KW_Rect      innercomposite;
-  KW_Texture * framerender;
+  KW_OldTexture * framerender;
   int           x;
   int           y;
   KW_Widget   * vscroll;

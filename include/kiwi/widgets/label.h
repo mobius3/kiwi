@@ -75,7 +75,7 @@ extern KIWI_WIDGETS_EXPORT void KW_SetLabelTextColor(KW_Widget * widget, KW_Colo
  * \param   widget The label widget.
  * \param   font The font to assign to the label.
  */
-extern KIWI_WIDGETS_EXPORT void KW_SetLabelFont(KW_Widget * widget, KW_Font * font);
+extern KIWI_WIDGETS_EXPORT void KW_SetLabelFont(KW_Widget * widget, KW_OldFont * font);
 
 /**
  * \brief   Sets label alignment inside a geometry.
@@ -99,9 +99,9 @@ extern KIWI_WIDGETS_EXPORT void KW_SetLabelIcon(KW_Widget * widget, const KW_Rec
 /**
  * \brief   Gets the associated font with a label.
  * \param   widget The label widget.
- * \returns A KW_Font pointer to the currently label's associated font.
+ * \returns A KW_OldFont pointer to the currently label's associated font.
  */
-extern KIWI_WIDGETS_EXPORT KW_Font * KW_GetLabelFont(KW_Widget * widget);
+extern KIWI_WIDGETS_EXPORT KW_OldFont * KW_GetLabelFont(KW_Widget * widget);
 
 /**
  * \brief   Gets the associated font color with a label.
