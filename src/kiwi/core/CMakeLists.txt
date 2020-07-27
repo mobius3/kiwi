@@ -6,6 +6,7 @@ include(GNUInstallDirs)
 include(GenerateExportHeader)
 
 set(KIWI_CORE_SOURCE_FILES
+  driver.c
   eventwatcher.c
   gui.c
   gui-internal.c
@@ -29,6 +30,7 @@ set(KIWI_CORE_PUBLIC_INCLUDE_FILES
   ${I}/core/bool.h
   ${I}/core/input-event.h
   ${I}/core/input-key.h
+  ${I}/core/driver.h
   ${I}/core/gui.h
   ${I}/core/rect.h
   ${I}/core/old-renderdriver.h
