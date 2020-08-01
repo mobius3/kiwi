@@ -13,6 +13,7 @@ add_library(kiwi-sdl2
   sdl2-font.c
   sdl2-memory.c
   sdl2-texture.c
+  sdl2-update.c
 )
 
 add_library(kiwi::sdl2 ALIAS kiwi-sdl2)

@@ -5,6 +5,7 @@
 #include "input-key.h"
 
 typedef enum KW_InputEventType {
+  KW_INPUT_UNKNOWN,
   KW_INPUT_CURSOR_MOTION,
   KW_INPUT_CURSOR_BUTTON_DOWN,
   KW_INPUT_CURSOR_BUTTON_UP,
