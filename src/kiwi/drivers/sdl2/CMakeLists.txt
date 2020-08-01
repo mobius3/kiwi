@@ -10,6 +10,7 @@ set(KIWI_CORE_PUBLIC_INCLUDE_FILES
 add_library(kiwi-sdl2
   sdl2-driver.c
   sdl2-memory.c
+  sdl2-texture.c
 )
 
 add_library(kiwi::sdl2 ALIAS kiwi-sdl2)
