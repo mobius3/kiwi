@@ -1,4 +1,5 @@
 find_package(SDL2 REQUIRED)
+find_package(font-chef REQUIRED)
 include(GNUInstallDirs)
 include(GenerateExportHeader)
 
@@ -9,6 +10,7 @@ set(KIWI_CORE_PUBLIC_INCLUDE_FILES
 
 add_library(kiwi-sdl2
   sdl2-driver.c
+  sdl2-font.c
   sdl2-memory.c
   sdl2-texture.c
 )
@@ -28,7 +30,7 @@ target_include_directories(kiwi-sdl2 PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
   $<INSTALL_INTERFACE:include>
 )
-target_link_libraries(kiwi-sdl2 PUBLIC kiwi::core SDL2)
+target_link_libraries(kiwi-sdl2 PUBLIC kiwi::core font-chef SDL2)
 
 generate_export_header(
   kiwi-sdl2

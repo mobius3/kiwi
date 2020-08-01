@@ -4,6 +4,7 @@
 #include "kiwi/core/driver.h"
 #include "sdl2-memory.h"
 #include "sdl2-texture.h"
+#include "sdl2-font.h"
 
 void KW_Rect2Rect(KW_Rect const * src, SDL_Rect * dst) {
   dst->x = src->x;
@@ -24,5 +25,8 @@ KW_Driver * KWSDL2_CreateDriver(SDL_Window * window) {
   driver->createTexture = KWSDL2_CreateTexture;
   driver->destroyTexture = KWSDL2_DestroyTexture;
   driver->renderTexture = KWSDL2_RenderTexture;
+  driver->createFont = KWSDL2_CreateFont;
+  driver->destoryFont = KWSDL2_DestroyFont;
+  driver->renderText = KWSDL2_RenderText;
   return driver;
 }
