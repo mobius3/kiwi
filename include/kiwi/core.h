@@ -8,5 +8,6 @@
 #include "kiwi/core/tilerenderer.h"
 #include "kiwi/core/utf8.h"
 #include "kiwi/core/widget.h"
+#include "kiwi/core/driver.h"
 
 #endif
