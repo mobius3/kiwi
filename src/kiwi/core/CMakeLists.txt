@@ -28,6 +28,7 @@ set(I ../../../include/kiwi)
 
 set(KIWI_CORE_PUBLIC_INCLUDE_FILES
   ${I}/core/bool.h
+  ${I}/core/color.h
   ${I}/core/input-event.h
   ${I}/core/input-key.h
   ${I}/core/driver.h

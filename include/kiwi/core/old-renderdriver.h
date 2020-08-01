@@ -19,6 +19,7 @@
 #include "kiwi/core/core-export.h"
 #include "rect.h"
 #include "bool.h"
+#include "color.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -35,16 +36,6 @@ typedef struct KW_OldFont {
 typedef struct KW_Surface {
   void * surface;
 } KW_Surface;
-
-/**
- * \brief Holds a color in the RGBA format
- **/
-typedef struct KW_Color {
-  unsigned char r;
-  unsigned char g;
-  unsigned char b;
-  unsigned char a;
-} KW_Color;
 
 /**
  * \brief Multiply a color by a percent amount;
